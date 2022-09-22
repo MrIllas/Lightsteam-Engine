@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -27,7 +28,7 @@ bool ModuleEditor::Init()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -41,7 +42,12 @@ bool ModuleEditor::Init()
 		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 	}
 
-	ImGui_ImplSDL2_InitForOpenGL(App->window->GetSDLWindow(), App->window->GetGLContext());
+	return true;
+}
+
+bool ModuleEditor::Start()
+{
+	ImGui_ImplSDL2_InitForOpenGL(App->window->GetSDLWindow(), App->renderer3D->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
 
 	return true;
@@ -82,17 +88,29 @@ void ModuleEditor::BeginRender()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();// App->window->GetSDLWindow());
 	ImGui::NewFrame();
+
+	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 }
 
 void ModuleEditor::EndRender()
 {
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+		SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+	}
 }
 #pragma endregion Editor Render methods
 
 #pragma region GUI
-UpdateStatus ModuleEditor::MainMenuBar()
+void ModuleEditor::MainMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{

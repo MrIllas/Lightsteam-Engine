@@ -39,14 +39,11 @@ private:
 	//The surface contained by the window
 	SDL_Surface* screen_surface = nullptr;
 
-	SDL_GLContext glContext;
-
 	bool fullScreenDesktop = false;
 
 public:
 	SDL_Window* GetSDLWindow() { return window; }
 	SDL_Surface* GetSDLSurface() { return screen_surface; }
-	SDL_GLContext GetGLContext() { return glContext; }
 };
 
 #endif // __ModuleWindow_H__

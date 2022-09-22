@@ -66,15 +66,6 @@ bool ModuleWindow::Init()
 			screen_surface = SDL_GetWindowSurface(window);
 		}
 
-		glContext = SDL_GL_CreateContext(window);
-		if (glContext == NULL)
-		{
-			LOG("GL Context could not be created! SDL_Error: %s\n", SDL_GetError());
-			return false;
-		}
-		SDL_GL_MakeCurrent(window, glContext);
-		SDL_GL_SetSwapInterval(1); //Enable vsync
-
 		SDL_SetWindowMinimumSize(window, wProps.wMin, wProps.hMin);
 	}
 
@@ -85,11 +76,6 @@ bool ModuleWindow::Init()
 bool ModuleWindow::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
-
-	if (glContext != NULL)
-	{
-		SDL_GL_DeleteContext(glContext);
-	}
 
 	//Destroy window
 	if(window != NULL)

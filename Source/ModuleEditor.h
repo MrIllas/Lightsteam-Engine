@@ -13,6 +13,7 @@ public:
 	virtual ~ModuleEditor();
 
 	bool Init();
+	bool Start();
 	bool CleanUp();
 
 	UpdateStatus PostUpdate();
@@ -23,7 +24,7 @@ private:
 	void BeginRender();
 	void EndRender();
 
-	UpdateStatus MainMenuBar();
+	void MainMenuBar();
 };
 
 #endif // __ModuleEditor_H__
