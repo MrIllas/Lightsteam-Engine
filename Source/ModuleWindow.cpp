@@ -12,9 +12,6 @@ WindowProperties::WindowProperties()
 	wMin = 640;
 	hMin = 360;
 	flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED;
-	ccR = static_cast<float>(0x64) / static_cast<float>(0xFF);
-	ccG = static_cast<float>(0x95) / static_cast<float>(0xFF);
-	ccB = static_cast<float>(0xED) / static_cast<float>(0xFF);
 }
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)

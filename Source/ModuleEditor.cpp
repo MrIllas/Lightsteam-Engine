@@ -129,7 +129,5 @@ void ModuleEditor::MainMenuBar()
 		}
 		ImGui::EndMainMenuBar();
 	}
-
-	return UPDATE_CONTINUE;
 }
 #pragma endregion Gui Elements of the editor
