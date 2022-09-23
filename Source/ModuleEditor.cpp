@@ -8,9 +8,11 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
+#include "External/MathGeoLib/include/MathGeoLib.h"
+
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-
+	float3 d = float3 (0,0,0);
 }
 
 ModuleEditor::~ModuleEditor()
