@@ -94,7 +94,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)Source\External\ImGui;$(SolutionDir)Source\External\Glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Source\External\ImGui;$(SolutionDir)Source\External\Glew\include;$(SolutionDir)Source\External\RapidJson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -281,6 +281,41 @@
     <ClInclude Include="External\MathGeoLib\include\Math\sse_mathfun.h" />
     <ClInclude Include="External\MathGeoLib\include\Math\TransformOps.h" />
     <ClInclude Include="External\MathGeoLib\include\Time\Clock.h" />
+    <ClInclude Include="External\RapidJson\allocators.h" />
+    <ClInclude Include="External\RapidJson\document.h" />
+    <ClInclude Include="External\RapidJson\encodedstream.h" />
+    <ClInclude Include="External\RapidJson\encodings.h" />
+    <ClInclude Include="External\RapidJson\error\en.h" />
+    <ClInclude Include="External\RapidJson\error\error.h" />
+    <ClInclude Include="External\RapidJson\filereadstream.h" />
+    <ClInclude Include="External\RapidJson\filewritestream.h" />
+    <ClInclude Include="External\RapidJson\fwd.h" />
+    <ClInclude Include="External\RapidJson\internal\biginteger.h" />
+    <ClInclude Include="External\RapidJson\internal\diyfp.h" />
+    <ClInclude Include="External\RapidJson\internal\dtoa.h" />
+    <ClInclude Include="External\RapidJson\internal\ieee754.h" />
+    <ClInclude Include="External\RapidJson\internal\itoa.h" />
+    <ClInclude Include="External\RapidJson\internal\meta.h" />
+    <ClInclude Include="External\RapidJson\internal\pow10.h" />
+    <ClInclude Include="External\RapidJson\internal\regex.h" />
+    <ClInclude Include="External\RapidJson\internal\stack.h" />
+    <ClInclude Include="External\RapidJson\internal\strfunc.h" />
+    <ClInclude Include="External\RapidJson\internal\strtod.h" />
+    <ClInclude Include="External\RapidJson\internal\swap.h" />
+    <ClInclude Include="External\RapidJson\istreamwrapper.h" />
+    <ClInclude Include="External\RapidJson\memorybuffer.h" />
+    <ClInclude Include="External\RapidJson\memorystream.h" />
+    <ClInclude Include="External\RapidJson\msinttypes\inttypes.h" />
+    <ClInclude Include="External\RapidJson\msinttypes\stdint.h" />
+    <ClInclude Include="External\RapidJson\ostreamwrapper.h" />
+    <ClInclude Include="External\RapidJson\pointer.h" />
+    <ClInclude Include="External\RapidJson\prettywriter.h" />
+    <ClInclude Include="External\RapidJson\rapidjson.h" />
+    <ClInclude Include="External\RapidJson\reader.h" />
+    <ClInclude Include="External\RapidJson\schema.h" />
+    <ClInclude Include="External\RapidJson\stream.h" />
+    <ClInclude Include="External\RapidJson\stringbuffer.h" />
+    <ClInclude Include="External\RapidJson\writer.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="List.h" />

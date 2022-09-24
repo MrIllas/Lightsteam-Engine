@@ -414,6 +414,111 @@
     <ClInclude Include="External\MathGeoLib\include\Geometry\TriangleMesh.h">
       <Filter>External\MathGeoLib</Filter>
     </ClInclude>
+    <ClInclude Include="External\RapidJson\allocators.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\biginteger.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\diyfp.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\document.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\dtoa.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\error\en.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\encodedstream.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\encodings.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\error\error.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\filereadstream.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\filewritestream.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\fwd.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\ieee754.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\msinttypes\inttypes.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\istreamwrapper.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\itoa.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\memorybuffer.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\memorystream.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\meta.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\ostreamwrapper.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\pointer.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\pow10.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\prettywriter.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\rapidjson.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\reader.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\regex.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\schema.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\stack.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\msinttypes\stdint.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\stream.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\strfunc.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\stringbuffer.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\strtod.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\internal\swap.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="External\RapidJson\writer.h">
+      <Filter>External\RapidJson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -460,6 +565,9 @@
     </Filter>
     <Filter Include="External\MathGeoLib">
       <UniqueIdentifier>{9a10caf7-0fb4-44ec-a20c-5f92d19d6090}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\RapidJson">
+      <UniqueIdentifier>{928dcbd8-ba9f-4038-ac26-2d1c13dc7fde}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
