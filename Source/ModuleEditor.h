@@ -2,6 +2,7 @@
 #define __ModuleEditor_H__
 
 #include "Module.h"
+#include "SegmentAbout.h"
 
 class Application;
 
@@ -24,7 +25,18 @@ private:
 	void BeginRender();
 	void EndRender();
 
+	void UpdateSegments();
+
 	void MainMenuBar();
+
+
+
+private:
+	bool showAppConsole = false;
+	bool showAppConfiguration = false;
+	bool showAppAbout = false;
+
+	SegmentAbout* segAbout = nullptr;
 };
 
 #endif // __ModuleEditor_H__

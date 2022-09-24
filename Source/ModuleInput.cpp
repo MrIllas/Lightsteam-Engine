@@ -2,7 +2,7 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 
-#include "imgui_impl_sdl.h"
+#include "ImGui\imgui_impl_sdl.h"
 
 #define MAX_KEYS 300
 
@@ -118,8 +118,9 @@ UpdateStatus ModuleInput::PreUpdate()
 		}
 	}
 
-	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
-		return UPDATE_STOP;
+	//Esc for exit
+	/*if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
+		return UPDATE_STOP;*/
 
 	return UPDATE_CONTINUE;
 }

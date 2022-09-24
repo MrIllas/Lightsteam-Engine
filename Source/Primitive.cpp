@@ -1,6 +1,6 @@
 #include "Globals.h"
 #include "Primitive.h"
-#include "glew.h"
+#include "Glew\include\glew.h"
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)

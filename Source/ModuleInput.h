@@ -59,7 +59,6 @@ public:
 	{
 		return mouse_y_motion;
 	}
-
 private:
 	KEY_STATE* keyboard = nullptr;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];

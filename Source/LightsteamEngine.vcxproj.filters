@@ -160,6 +160,12 @@
     <ClCompile Include="External\MathGeoLib\include\Geometry\TriangleMesh.cpp">
       <Filter>External\MathGeoLib</Filter>
     </ClCompile>
+    <ClCompile Include="Segment.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentAbout.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -519,6 +525,12 @@
     <ClInclude Include="External\RapidJson\writer.h">
       <Filter>External\RapidJson</Filter>
     </ClInclude>
+    <ClInclude Include="Segment.h">
+      <Filter>Header\Core\Segments</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentAbout.h">
+      <Filter>Header\Core\Segments</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -568,6 +580,12 @@
     </Filter>
     <Filter Include="External\RapidJson">
       <UniqueIdentifier>{928dcbd8-ba9f-4038-ac26-2d1c13dc7fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Core\Segments">
+      <UniqueIdentifier>{e839b8ee-fa0e-4750-8206-8a63aede297b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Segments">
+      <UniqueIdentifier>{f0d3c58e-3caa-44d0-b3a3-20cd718c03c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

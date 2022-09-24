@@ -1,6 +1,7 @@
 #ifndef __GLOBALS_H__
 #define __GLOBALS_H__
 
+#define NOMINMAX //Solves an error with Rapid Json where the lib tries to use a min max macro but it gets the windows.h macro
 #include <windows.h>
 #include <stdio.h>
 #include <time.h> 
