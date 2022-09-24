@@ -531,6 +531,9 @@
     <ClInclude Include="SegmentAbout.h">
       <Filter>Header\Core\Segments</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuiUtils.h">
+      <Filter>Header\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

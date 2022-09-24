@@ -3,7 +3,7 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 
-#include "Glew\include\glew.h"
+#include "Glew/include/glew.h"
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

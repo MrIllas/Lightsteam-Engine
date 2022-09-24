@@ -319,6 +319,7 @@
     <ClInclude Include="External\RapidJson\stringbuffer.h" />
     <ClInclude Include="External\RapidJson\writer.h" />
     <ClInclude Include="glmath.h" />
+    <ClInclude Include="ImGuiUtils.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="MemLeaks.h" />
