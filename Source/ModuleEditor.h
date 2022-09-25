@@ -2,9 +2,11 @@
 #define __ModuleEditor_H__
 
 #include "Module.h"
-#include "SegmentAbout.h"
 
 class Application;
+
+class SegmentAbout;
+class SegmentConfiguration;
 
 class ModuleEditor : public Module
 {
@@ -33,10 +35,10 @@ private:
 
 private:
 	bool showAppConsole = false;
-	bool showAppConfiguration = false;
 	bool showAppAbout = false;
 
 	SegmentAbout* segAbout = nullptr;
+	SegmentConfiguration* segConfiguration = nullptr;
 };
 
 #endif // __ModuleEditor_H__

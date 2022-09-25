@@ -7,6 +7,8 @@
 #include "ModuleEditor.h"
 #include "ModuleRenderer3D.h"
 
+Application* Application::APP = nullptr;
+
 Application::Application()
 {
 	window = new ModuleWindow(this, true);
@@ -93,14 +95,14 @@ UpdateStatus Application::Update()
 		ret = list_modules[i]->PostUpdate();
 	}
 
-	dt = timer.getDeltaTime();
+	deltaTime = timer.getDeltaTime();
 
-	if (dt < fps)
+	if (deltaTime < fps)
 	{
-		float sleepTime = (fps - dt) * 1000;
+		float sleepTime = (fps - deltaTime) * 1000;
 		Sleep(sleepTime);
 	}
-
+	
 	timer.Reset();
 
 	FinishUpdate();

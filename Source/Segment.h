@@ -8,7 +8,11 @@
 class Segment
 {
 public:
-	Segment() {};
+	Segment(std::string name, bool enabled = false) 
+	{
+		this->name = name;
+		this->enabled = enabled;
+	};
 	virtual ~Segment() {};
 
 	virtual void Update(){};

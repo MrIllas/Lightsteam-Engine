@@ -13,10 +13,19 @@ struct WindowProperties
 	std::string title;
 	int x, y, w, h;
 	int wMin, hMin;
+	int wMax, hMax;
 	int flags;
 	float ccR, ccG, ccB;
+	float brightness;
 
 	WindowProperties();
+
+	static WindowProperties* Instance();
+
+	static void Delete();
+
+private:
+	static WindowProperties* wProps;
 };
 
 class ModuleWindow : public Module
@@ -29,8 +38,14 @@ public:
 	bool Init();
 	bool CleanUp();
 
+	UpdateStatus PreUpdate();
+
 	void SetTitle(const char* title);
 	void ToggleFullScreen();
+
+public:
+	SDL_Window* GetSDLWindow() { return window; }
+	SDL_Surface* GetSDLSurface() { return screen_surface; }
 
 private:
 	//The window we'll be rendering to
@@ -41,9 +56,8 @@ private:
 
 	bool fullScreenDesktop = false;
 
-public:
-	SDL_Window* GetSDLWindow() { return window; }
-	SDL_Surface* GetSDLSurface() { return screen_surface; }
+	WindowProperties* wProps = nullptr;
+
 };
 
 #endif // __ModuleWindow_H__

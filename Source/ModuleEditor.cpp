@@ -5,6 +5,9 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
 
+#include "SegmentAbout.h"
+#include "SegmentConfiguration.h"
+
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
@@ -35,7 +38,7 @@ bool ModuleEditor::Init()
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-
+	
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsLight();
@@ -58,6 +61,7 @@ bool ModuleEditor::Start()
 
 	//Generate the segments
 	segAbout = new SegmentAbout("About", true);
+	segConfiguration = new SegmentConfiguration("Configuration", true);
 
 	return true;
 }
@@ -69,7 +73,8 @@ bool ModuleEditor::CleanUp()
 	ImGui::DestroyContext();
 
 	//Clean Segments
-	delete segAbout;
+	RELEASE(segAbout);
+	RELEASE(segConfiguration);
 
 	return true;
 }
@@ -152,7 +157,7 @@ void ModuleEditor::MainMenuBar()
 				}*/
 			}
 
-			if (ImGui::MenuItem("Configuration", "F4", &showAppConfiguration) || App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+			if (ImGui::MenuItem("Configuration", "F4", &segConfiguration->enabled) || App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 			{
 
 			}
@@ -181,5 +186,9 @@ void ModuleEditor::UpdateSegments()
 		segAbout->Update();
 	}
 	
+	if (segConfiguration->enabled)
+	{
+		segConfiguration->Update();
+	}
 }
 #pragma endregion Gui Elements of the editor

@@ -3,13 +3,12 @@
 #include "SDL/include/SDL.h"
 #include "RapidJson/rapidjson.h"
 #include "MathGeoLib/include/MathGeoLib.h"
-//#include "Glew\include\glew.h"
+#include "Glew/include/glew.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
-SegmentAbout::SegmentAbout(std::string name, bool enabled)
+SegmentAbout::SegmentAbout(std::string name, bool enabled) : Segment(name, enabled)
 {
-	this->name = name;
-	this->enabled = enabled;
-
 	//Versions
 	SDL_version version;
 	SDL_GetVersion(&version);
@@ -17,9 +16,12 @@ SegmentAbout::SegmentAbout(std::string name, bool enabled)
 	vSdl = "SDL " + std::to_string(version.major) + "." + std::to_string(version.minor) + "." + std::to_string(version.patch);
 	vImGui = "DearImGui " + std::string(ImGui::GetVersion());
 	vMathGeoLib = "MathGeoLib 1.5";
-	/*vGlew = (const char)glewGetString(GL_VERSION);
-	vOpenGl = (const char) glGetString(GL_VERSION);*/
+	vGlew = "Glew ";
+	vGlew += (const char*)glewGetString(GLEW_VERSION);
+	vOpenGl = "OpenGl ";
+	vOpenGl += (const char*)glGetString(GL_VERSION);
 	vRapidJson = "RapidJson " + std::to_string(RAPIDJSON_MAJOR_VERSION) + "." + std::to_string(RAPIDJSON_MINOR_VERSION) + "." + std::to_string(RAPIDJSON_PATCH_VERSION);
+
 }
 
 SegmentAbout::~SegmentAbout()
@@ -41,12 +43,9 @@ void SegmentAbout::Update()
 		ThirdPartyLibs();
 
 		ImGui::NewLine();
-		MyLicense();
-		
-
-		ImGui::End();
+		MyLicense();	
 	}
-
+	ImGui::End();
 }
 
 #pragma region Text
@@ -59,22 +58,17 @@ void SegmentAbout::ThirdPartyLibs()
 	ImGui::BulletText("");
 	ImGui::TextURL(vImGui.c_str(), "https://github.com/ocornut/imgui", 1, 0);
 
-	/*ImGui::BulletText("");
-	ImGui::TextURL(vGlew.c_str(), "", 1, 0);
+	ImGui::BulletText("");
+	ImGui::TextURL(vGlew.c_str(), "http://glew.sourceforge.net", 1, 0);
 
 	ImGui::BulletText("");
-	ImGui::TextURL(vOpenGl.c_str(), ""), 1, 0;*/
+	ImGui::TextURL(vOpenGl.c_str(), "https://www.opengl.org", 1, 0);
 
 	ImGui::BulletText("");
 	ImGui::TextURL(vRapidJson.c_str(), "https://github.com/Tencent/rapidjson", 1, 0);
 
 	ImGui::BulletText("");
 	ImGui::TextURL(vMathGeoLib.c_str(), "https://github.com/juj/MathGeoLib", 1, 0);
-
-	
-
-	
-
 }
 
 void SegmentAbout::MyLicense()

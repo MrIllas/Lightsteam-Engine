@@ -25,11 +25,12 @@ public:
 	Timer timer;
 
 private:
-	
-	float	dt = 0;
+	float deltaTime = 0;
 	List<Module*> list_modules;
 
 	bool isStopping = false;
+
+	static Application* APP;
 
 public:
 	Application();
@@ -41,11 +42,13 @@ public:
 
 	void StopEngine();
 
-private:
+	static Application* Instance();
 
+private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
 };
 
 #endif // !__APPLICATION_H__

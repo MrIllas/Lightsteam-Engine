@@ -166,6 +166,9 @@
     <ClCompile Include="SegmentAbout.cpp">
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>
+    <ClCompile Include="SegmentConfiguration.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -533,6 +536,9 @@
     </ClInclude>
     <ClInclude Include="ImGuiUtils.h">
       <Filter>Header\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentConfiguration.h">
+      <Filter>Header\Core\Segments</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
