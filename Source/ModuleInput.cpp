@@ -119,8 +119,8 @@ UpdateStatus ModuleInput::PreUpdate()
 	}
 
 	//Esc for exit
-	/*if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
-		return UPDATE_STOP;*/
+	if(quit == true)
+		return UPDATE_STOP;
 
 	return UPDATE_CONTINUE;
 }
