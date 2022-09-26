@@ -1,5 +1,10 @@
 #include "SegmentConfiguration.h"
 
+#include "Glew/include/glew.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include "SDL/include/SDL.h"
+
 SegmentConfiguration::SegmentConfiguration(std::string name, bool enabled) : Segment(name, enabled)
 {
 	wProps = WindowProperties::Instance();
@@ -25,7 +30,13 @@ void SegmentConfiguration::Update()
 #pragma region Configurations
 void SegmentConfiguration::ApplicationHeader()
 {
-
+	ImGui::Text("System info: ");
+	ImGui::NewLine();
+	ImGui::Text("Platform : %s ", SDL_GetPlatform());
+	ImGui::Text("RAM : %i MB", SDL_GetSystemRAM());
+	ImGui::Text("CPU cores : %i ", SDL_GetCPUCount());
+	ImGui::Text("GPU : %s %s", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+	
 }
 
 void SegmentConfiguration::WindowHeader()
