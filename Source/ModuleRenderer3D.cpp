@@ -22,7 +22,7 @@ bool ModuleRenderer3D::Init()
 	bool ret = true;
 	
 	//Create context
-	context = SDL_GL_CreateContext(App->window->GetSDLWindow());
+	context = SDL_GL_CreateContext(WindowProperties::Instance()->window);
 	if(context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -31,9 +31,8 @@ bool ModuleRenderer3D::Init()
 	
 	if(ret == true)
 	{
-		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		//VSync
+		Time::Instance()->SwitchVSync(Time::Instance()->vsync);
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -126,8 +125,7 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 // PostUpdate present buffer to screen
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
-
-	SDL_GL_SwapWindow(App->window->GetSDLWindow());
+	SDL_GL_SwapWindow(WindowProperties::Instance()->window);
 	return UPDATE_CONTINUE;
 }
 
@@ -143,7 +141,6 @@ bool ModuleRenderer3D::CleanUp()
 
 	return true;
 }
-
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {

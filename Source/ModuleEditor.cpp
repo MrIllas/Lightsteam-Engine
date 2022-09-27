@@ -56,7 +56,7 @@ bool ModuleEditor::Init()
 
 bool ModuleEditor::Start()
 {
-	ImGui_ImplSDL2_InitForOpenGL(App->window->GetSDLWindow(), App->renderer3D->GetGLContext());
+	ImGui_ImplSDL2_InitForOpenGL(WindowProperties::Instance()->window, App->renderer3D->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
 
 	//Generate the segments
@@ -136,7 +136,7 @@ void ModuleEditor::MainMenuBar()
 		{
 			if (ImGui::MenuItem("Fullscreen Borderless", "F11") || App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 			{
-				App->window->ToggleFullScreen();
+				//App->window->ToggleFullscreenDesktop();
 			}
 
 			if (ImGui::MenuItem("Exit", "ALT+F4"))

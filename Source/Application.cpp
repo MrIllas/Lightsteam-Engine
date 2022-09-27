@@ -7,7 +7,36 @@
 #include "ModuleEditor.h"
 #include "ModuleRenderer3D.h"
 
-Application* Application::APP = nullptr;
+#pragma region Time
+Time::Time()
+{
+}
+
+Time* Time::Instance()
+{
+	if (G_Time == nullptr) G_Time = new Time();
+	return G_Time;
+}
+
+void Time::Delete()
+{
+	if (G_Time != nullptr)
+	{
+		RELEASE(G_Time);
+	}
+}
+
+void Time::SwitchVSync(bool value)
+{
+	vsync = value;
+	SDL_GL_SetSwapInterval(value);
+
+	std::string v = value ? "ON" : "OFF";
+	LOG("VSync has been switch %s", v);
+}
+
+Time* Time::G_Time = nullptr;
+#pragma endregion Time Singleton struct
 
 Application::Application()
 {
@@ -53,6 +82,8 @@ bool Application::Init()
 		list_modules[i]->Start();
 	}
 
+	G_Time = Time::Instance();
+
 	//ms_timer.Start();
 	return ret;
 }
@@ -95,11 +126,11 @@ UpdateStatus Application::Update()
 		ret = list_modules[i]->PostUpdate();
 	}
 
-	deltaTime = timer.getDeltaTime();
-
-	if (deltaTime < fps)
+	G_Time->deltaTime = timer.getDeltaTime();
+	float frameTime = 1.0f / G_Time->frameCap;
+	if (G_Time->deltaTime < frameTime)
 	{
-		float sleepTime = (fps - deltaTime) * 1000;
+		float sleepTime = (frameTime - G_Time->deltaTime) * 1000;
 		Sleep(sleepTime);
 	}
 	
@@ -122,6 +153,9 @@ bool Application::CleanUp()
 	{
 		RELEASE(list_modules[i]);
 	}
+
+	//Cleans the global Timer
+	G_Time->Delete();
 
 	return ret;
 }

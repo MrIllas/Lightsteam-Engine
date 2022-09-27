@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
+#pragma region WindowProperties
 WindowProperties::WindowProperties()
 {
 	title = "Lightsteam Engine";
@@ -13,7 +14,7 @@ WindowProperties::WindowProperties()
 	hMin = 360;
 	wMax = 1920;
 	hMax = 1080;
-	flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED;
+	flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MAXIMIZED;
 	brightness = 1.0f;
 }
 
@@ -28,15 +29,48 @@ void WindowProperties::Delete()
 {
 	if (wProps != nullptr)
 	{
+
+		//Destroy window
+		if (wProps->window != NULL)
+		{
+			SDL_DestroyWindow(wProps->window);
+		}
+
 		RELEASE(wProps);
 	}
 }
 
+#pragma region FlagToggles
+void WindowProperties::ToggleFullscreenDesktop()
+{
+	if (fullScreenDesktop)	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else SDL_SetWindowFullscreen(window, 0);
+}
+
+void WindowProperties::ToggleFullscreen()
+{
+	if (fullscreen) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	else SDL_SetWindowFullscreen(window, 0);
+}
+
+void WindowProperties::ToggleResizable()
+{
+	if (resizable) SDL_SetWindowResizable(window, SDL_TRUE);
+	else SDL_SetWindowResizable(window, SDL_FALSE);
+}
+
+void WindowProperties::ToggleBorderless()
+{
+	if (borderless) SDL_SetWindowBordered(window, SDL_FALSE);
+	else SDL_SetWindowBordered(window, SDL_TRUE);
+}
+#pragma endregion All flag toggles
+
 WindowProperties* WindowProperties::wProps = nullptr;
+#pragma endregion Window Properties Singelon Struct
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	window = nullptr;
 	screen_surface = nullptr;
 }
 
@@ -70,9 +104,14 @@ bool ModuleWindow::Init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
 		//Window Creation
-		window = SDL_CreateWindow(wProps->title.c_str(), wProps->x, wProps->y, wProps->w, wProps->h, wProps->flags);
+		wProps->window = SDL_CreateWindow(wProps->title.c_str(), wProps->x, wProps->y, wProps->w, wProps->h, wProps->flags);
 
-		if(window == NULL)
+		wProps->ToggleBorderless();
+		wProps->ToggleFullscreen();
+		wProps->ToggleResizable();
+		wProps->ToggleFullscreenDesktop();
+
+		if(wProps->window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			return false;
@@ -80,10 +119,10 @@ bool ModuleWindow::Init()
 		else
 		{
 			//Get window surface
-			screen_surface = SDL_GetWindowSurface(window);
+			screen_surface = SDL_GetWindowSurface(wProps->window);
 		}
 
-		SDL_SetWindowMinimumSize(window, wProps->wMin, wProps->hMin);
+		SDL_SetWindowMinimumSize(wProps->window, wProps->wMin, wProps->hMin);
 	}
 
 	return ret;
@@ -92,8 +131,8 @@ bool ModuleWindow::Init()
 UpdateStatus ModuleWindow::PreUpdate()
 {
 	//WProps pointer
-	SDL_GetWindowSize(window, &wProps->w, &wProps->h);
-	SDL_SetWindowBrightness(window, wProps->brightness);
+	SDL_GetWindowSize(wProps->window, &wProps->w, &wProps->h);
+	SDL_SetWindowBrightness(wProps->window, wProps->brightness);
 
 	return UPDATE_CONTINUE;
 }
@@ -106,14 +145,6 @@ bool ModuleWindow::CleanUp()
 	//Window Properties Struct singleton
 	WindowProperties::Delete();
 
-	//Destroy window
-	if(window != NULL)
-	{
-		SDL_DestroyWindow(window);
-	}
-
-	
-
 	//Quit SDL subsystems
 	SDL_Quit();
 	return true;
@@ -121,19 +152,5 @@ bool ModuleWindow::CleanUp()
 
 void ModuleWindow::SetTitle(const char* title)
 {
-	SDL_SetWindowTitle(window, title);
-}
-
-void ModuleWindow::ToggleFullScreen()
-{
-	fullScreenDesktop = !fullScreenDesktop;
-
-	if (fullScreenDesktop)
-	{
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-	}
-	else
-	{
-		SDL_SetWindowFullscreen(window, 0);
-	}
+	SDL_SetWindowTitle(wProps->window, title);
 }

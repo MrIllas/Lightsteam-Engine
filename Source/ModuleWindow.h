@@ -24,8 +24,23 @@ struct WindowProperties
 
 	static void Delete();
 
+	void ToggleBorderless();
+	void ToggleFullscreen();
+	void ToggleResizable();
+	void ToggleFullscreenDesktop();
+public:
+	//The window we'll be rendering to
+	SDL_Window* window = nullptr;
+
+	bool fullScreenDesktop = false;
+	bool fullscreen = false;
+	bool resizable = true;
+	bool borderless = false;
+
 private:
 	static WindowProperties* wProps;
+
+
 };
 
 class ModuleWindow : public Module
@@ -41,20 +56,16 @@ public:
 	UpdateStatus PreUpdate();
 
 	void SetTitle(const char* title);
-	void ToggleFullScreen();
 
 public:
-	SDL_Window* GetSDLWindow() { return window; }
+	//SDL_Window* GetSDLWindow() { return window; }
 	SDL_Surface* GetSDLSurface() { return screen_surface; }
 
 private:
-	//The window we'll be rendering to
-	SDL_Window* window = nullptr;
+	
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface = nullptr;
-
-	bool fullScreenDesktop = false;
 
 	WindowProperties* wProps = nullptr;
 

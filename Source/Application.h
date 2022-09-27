@@ -12,6 +12,26 @@ class ModuleEditor;
 
 class ModuleRenderer3D;
 
+struct Time
+{
+	int frameCap = 60;
+	float frameTime = 1.0f / frameCap;
+	float deltaTime = 0;
+
+	bool vsync = false;
+
+	Time();
+	
+	static Time* Instance();
+
+	static void Delete();
+
+	void SwitchVSync(bool value);
+
+private:
+	static Time* G_Time;
+};
+
 class Application
 {
 public:
@@ -30,7 +50,7 @@ private:
 
 	bool isStopping = false;
 
-	static Application* APP;
+	Time* G_Time = nullptr;
 
 public:
 	Application();
