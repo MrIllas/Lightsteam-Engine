@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+	<Application>
+		<FpsCap value="100" />
+	</Application>
+	<Window>
+		<FullscreenDesktop value="false" />
+		<Fullscreen value="false" />
+		<Borderless value="false" />
+		<Resizable value="true" />
+	</Window>
+	<Renderer3D>
+		<Vsync value="false" />
+	</Renderer3D>
+	<Editor>
+		<SegmentConfiguration value="true" />
+		<SegmentAbout value="false" />
+	</Editor>
+</config>

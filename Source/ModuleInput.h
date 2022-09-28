@@ -25,6 +25,10 @@ public:
 	UpdateStatus PreUpdate();
 	bool CleanUp();
 
+	void SaveSettingsData(pugi::xml_node& save) override;
+
+	void LoadSettingsData(pugi::xml_node& load) override;
+
 	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];

@@ -20,6 +20,10 @@ public:
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
 
+	void SaveSettingsData(pugi::xml_node& save) override;
+
+	void LoadSettingsData(pugi::xml_node& load) override;
+
 	//void SetTarget(Vehicle* tg, vec3 offset);
 	//void RemoveTarget();
 

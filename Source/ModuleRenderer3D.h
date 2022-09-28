@@ -6,6 +6,24 @@
 
 #define MAX_LIGHTS 8
 
+struct RenderProperties
+{
+public:
+	bool vsync = false;
+
+	RenderProperties();
+
+	static RenderProperties* Instance();
+
+	static void Delete();
+
+	void ToggleVsync();
+
+private:
+	static RenderProperties* rProps;
+
+};
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -16,6 +34,10 @@ public:
 	UpdateStatus PreUpdate();
 	UpdateStatus PostUpdate();
 	bool CleanUp();
+
+	void SaveSettingsData(pugi::xml_node& save) override;
+
+	void LoadSettingsData(pugi::xml_node& load) override;
 
 	void OnResize(int width, int height);
 
@@ -30,6 +52,8 @@ public:
 
 private:
 	SDL_GLContext context;
+
+	RenderProperties* rProps = nullptr;
 };
 
 #endif // !__MODULERENDERER3D_H__

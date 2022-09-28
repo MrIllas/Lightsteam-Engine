@@ -10,10 +10,11 @@
 SegmentConfiguration::SegmentConfiguration(std::string name, bool enabled) : Segment(name, enabled)
 {
 	wProps = WindowProperties::Instance();
+	rProps = RenderProperties::Instance();
 	time = Time::Instance();
 
 	//GetCaps();
-	vsync = Time::Instance()->vsync;
+	vsync = rProps->vsync;
 
 	//framerate queue
 	for (int i = 0; i < 99; i++)
@@ -110,9 +111,9 @@ void SegmentConfiguration::InputHeader()
 
 void SegmentConfiguration::RenderingHeader()
 {
-	if (ImGui::Checkbox("Vsync ", &vsync))
+	if (ImGui::Checkbox("Vsync ", &rProps->vsync))
 	{
-		time->SwitchVSync(vsync);
+		rProps->ToggleVsync();
 	}
 
 	ImGui::Separator();

@@ -67,10 +67,12 @@ void WindowProperties::ToggleBorderless()
 #pragma endregion All flag toggles
 
 WindowProperties* WindowProperties::wProps = nullptr;
+
 #pragma endregion Window Properties Singelon Struct
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "Window";
 	screen_surface = nullptr;
 }
 
@@ -105,11 +107,6 @@ bool ModuleWindow::Init()
 
 		//Window Creation
 		wProps->window = SDL_CreateWindow(wProps->title.c_str(), wProps->x, wProps->y, wProps->w, wProps->h, wProps->flags);
-
-		wProps->ToggleBorderless();
-		wProps->ToggleFullscreen();
-		wProps->ToggleResizable();
-		wProps->ToggleFullscreenDesktop();
 
 		if(wProps->window == NULL)
 		{
@@ -154,3 +151,28 @@ void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(wProps->window, title);
 }
+
+#pragma region Save/Load Settings
+
+void ModuleWindow::LoadSettingsData(pugi::xml_node& load)
+{
+	wProps->fullScreenDesktop = load.child("FullscreenDesktop").attribute("value").as_bool();
+	wProps->fullscreen = load.child("Fullscreen").attribute("value").as_bool();
+	wProps->resizable = load.child("Resizable").attribute("value").as_bool();
+	wProps->borderless = load.child("Borderless").attribute("value").as_bool();
+
+	wProps->ToggleBorderless();
+	wProps->ToggleFullscreen();
+	wProps->ToggleResizable();
+	wProps->ToggleFullscreenDesktop();
+}
+
+void ModuleWindow::SaveSettingsData(pugi::xml_node& save)
+{
+	save.child("FullscreenDesktop").attribute("value") = wProps->fullScreenDesktop;
+	save.child("fullscreen").attribute("value") = wProps->fullscreen;
+	save.child("Resizable").attribute("value") = wProps->resizable;
+	save.child("Borderless").attribute("value") = wProps->borderless;
+}
+
+#pragma endregion Save & Load of Settings

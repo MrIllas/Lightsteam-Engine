@@ -8,6 +8,7 @@
 
 ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "Input";
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
@@ -119,8 +120,8 @@ UpdateStatus ModuleInput::PreUpdate()
 	}
 
 	//Esc for exit
-	if(quit == true)
-		return UPDATE_STOP;
+	if (quit == true)
+		App->StopEngine();
 
 	return UPDATE_CONTINUE;
 }
@@ -132,3 +133,17 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
+
+#pragma region Save/Load Settings
+
+void ModuleInput::LoadSettingsData(pugi::xml_node& load)
+{
+
+}
+
+void ModuleInput::SaveSettingsData(pugi::xml_node& save)
+{
+
+}
+
+#pragma endregion Save & Load of Settings

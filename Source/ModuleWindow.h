@@ -10,6 +10,7 @@ class Application;
 
 struct WindowProperties
 {
+public:
 	std::string title;
 	int x, y, w, h;
 	int wMin, hMin;
@@ -28,13 +29,13 @@ struct WindowProperties
 	void ToggleFullscreen();
 	void ToggleResizable();
 	void ToggleFullscreenDesktop();
-public:
+
 	//The window we'll be rendering to
 	SDL_Window* window = nullptr;
 
 	bool fullScreenDesktop = false;
 	bool fullscreen = false;
-	bool resizable = true;
+	bool resizable = false;
 	bool borderless = false;
 
 private:
@@ -56,6 +57,10 @@ public:
 	UpdateStatus PreUpdate();
 
 	void SetTitle(const char* title);
+
+	void SaveSettingsData(pugi::xml_node& save) override;
+
+	void LoadSettingsData(pugi::xml_node& load) override;
 
 public:
 	//SDL_Window* GetSDLWindow() { return window; }

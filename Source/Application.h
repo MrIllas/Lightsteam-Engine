@@ -4,6 +4,9 @@
 #include "List.h"
 #include "Timer.hpp"
 
+
+#define CONFIG_FILENAME "config.xml"
+
 class Module;
 class ModuleWindow;
 class ModuleInput;
@@ -18,15 +21,11 @@ struct Time
 	float frameTime = 1.0f / frameCap;
 	float deltaTime = 0;
 
-	bool vsync = false;
-
 	Time();
 	
 	static Time* Instance();
 
 	static void Delete();
-
-	void SwitchVSync(bool value);
 
 private:
 	static Time* G_Time;
@@ -41,7 +40,7 @@ public:
 	ModuleEditor* editor = nullptr;
 	ModuleRenderer3D* renderer3D = nullptr;
 
-	float fps = 1.0f/60.0f;
+	float fps = 1.0f / 60.0f;
 	Timer timer;
 
 private:
@@ -68,6 +67,9 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	void SaveEditorConfiguration();
+	void LoadEditorConfiguration();
 
 };
 

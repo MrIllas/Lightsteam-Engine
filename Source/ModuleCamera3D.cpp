@@ -5,6 +5,8 @@
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "Camera3D";
+
 	CalculateViewMatrix();
 
 	X = vec3(1.0f, 0.0f, 0.0f);
@@ -176,3 +178,17 @@ void ModuleCamera3D::CalculateViewMatrix()
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
 }
+
+#pragma region Save/Load Settings
+
+void ModuleCamera3D::LoadSettingsData(pugi::xml_node& load)
+{
+
+}
+
+void ModuleCamera3D::SaveSettingsData(pugi::xml_node& save)
+{
+
+}
+
+#pragma endregion Save & Load of Settings

@@ -2,7 +2,7 @@
 #include "Segment.h"
 #include "Application.h"
 #include "ModuleWindow.h"
-
+#include "ModuleRenderer3D.h"
 
 #include <iostream>
 #include <queue>
@@ -25,6 +25,7 @@ private:
 
 private:
 	ImGuiIO io;
+	RenderProperties* rProps = nullptr;
 	WindowProperties* wProps = nullptr;
 	Time* time = nullptr;
 

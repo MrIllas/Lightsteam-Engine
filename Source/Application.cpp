@@ -7,6 +7,7 @@
 #include "ModuleEditor.h"
 #include "ModuleRenderer3D.h"
 
+
 #pragma region Time
 Time::Time()
 {
@@ -24,15 +25,6 @@ void Time::Delete()
 	{
 		RELEASE(G_Time);
 	}
-}
-
-void Time::SwitchVSync(bool value)
-{
-	vsync = value;
-	SDL_GL_SetSwapInterval(value);
-
-	std::string v = value ? "ON" : "OFF";
-	LOG("VSync has been switch %s", v);
 }
 
 Time* Time::G_Time = nullptr;
@@ -68,6 +60,8 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	G_Time = Time::Instance();
+
 	// Call Init() in all modules
 	for (int i = 0, count = list_modules.count() ; i <count ; i++)
 	{
@@ -82,9 +76,9 @@ bool Application::Init()
 		list_modules[i]->Start();
 	}
 
-	G_Time = Time::Instance();
+	//Load Editor Configuration
+	LoadEditorConfiguration();
 
-	//ms_timer.Start();
 	return ret;
 }
 
@@ -160,7 +154,50 @@ bool Application::CleanUp()
 	return ret;
 }
 
+void Application::LoadEditorConfiguration()
+{
+
+	pugi::xml_document config;
+
+	pugi::xml_parse_result result = config.load_file(CONFIG_FILENAME);
+
+	for (int i = 0, count = list_modules.count(); i < count; i++)
+	{
+		pugi::xml_node data = config.child("config").child(list_modules[i]->name.c_str());
+		list_modules[i]->LoadSettingsData(data);
+		
+	}
+
+	//Load fps cap
+	G_Time->frameCap = config.first_child().child("Application").child("FpsCap").attribute("value").as_int();
+	
+}
+
+void Application::SaveEditorConfiguration()
+{
+	pugi::xml_document config;
+
+	pugi::xml_parse_result result = config.load_file(CONFIG_FILENAME);
+
+	//LOG(result);
+
+	for (int i = 0, count = list_modules.count(); i < count; i++)
+	{
+		pugi::xml_node data = config.first_child().child(list_modules[i]->name.c_str());
+		list_modules[i]->SaveSettingsData(data);
+
+	}
+
+	//Save fps cap
+	config.first_child().child("Application").child("FpsCap").attribute("value") = G_Time->frameCap;
+
+	config.save_file(CONFIG_FILENAME);
+
+}
+
 void Application::StopEngine()
 {
 	isStopping = true;
+
+	SaveEditorConfiguration();
 }

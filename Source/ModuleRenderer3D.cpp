@@ -7,8 +7,45 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#pragma region RenderProperties
+
+RenderProperties::RenderProperties()
+{
+}
+
+RenderProperties* RenderProperties::Instance()
+{
+	if (rProps == nullptr) rProps = new RenderProperties();
+
+	return rProps;
+}
+
+void RenderProperties::Delete()
+{
+	if (rProps != nullptr)
+	{
+		RELEASE(rProps);
+	}
+}
+
+void RenderProperties::ToggleVsync()
+{
+	SDL_GL_SetSwapInterval(vsync);
+
+	/*vsync = value;
+	SDL_GL_SetSwapInterval(value);
+
+	std::string v = value ? "ON" : "OFF";
+	LOG("VSync has been switch %s", v);*/
+}
+
+RenderProperties* RenderProperties::rProps = nullptr;
+
+#pragma endregion Render Properties Singleton Struct
+
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "Renderer3D";
 }
 
 // Destructor
@@ -31,8 +68,10 @@ bool ModuleRenderer3D::Init()
 	
 	if(ret == true)
 	{
+		rProps = RenderProperties::Instance();
+
 		//VSync
-		Time::Instance()->SwitchVSync(Time::Instance()->vsync);
+		rProps->ToggleVsync();
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -134,6 +173,9 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 
+	//Render Properties Struct singleton
+	RenderProperties::Delete();
+
 	if (context != NULL)
 	{
 		SDL_GL_DeleteContext(context);
@@ -154,3 +196,19 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+#pragma region Save/Load Settings
+
+void ModuleRenderer3D::LoadSettingsData(pugi::xml_node& load)
+{
+	rProps->vsync = load.child("Vsync").attribute("value").as_bool();
+
+	rProps->ToggleVsync();
+}
+
+void ModuleRenderer3D::SaveSettingsData(pugi::xml_node& save)
+{
+	save.child("Vsync").attribute("value") = rProps->vsync;
+}
+
+#pragma endregion Save & Load of Settings

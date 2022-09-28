@@ -12,14 +12,11 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
-#include "RapidJson/document.h"
-#include "RapidJson/writer.h"
-#include "RapidJson/stringbuffer.h"
 #include <iostream>
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	
+	name = "Editor";
 }
 
 ModuleEditor::~ModuleEditor()
@@ -134,11 +131,6 @@ void ModuleEditor::MainMenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Fullscreen Borderless", "F11") || App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-			{
-				//App->window->ToggleFullscreenDesktop();
-			}
-
 			if (ImGui::MenuItem("Exit", "ALT+F4"))
 			{
 				App->StopEngine();
@@ -192,3 +184,19 @@ void ModuleEditor::UpdateSegments()
 	}
 }
 #pragma endregion Gui Elements of the editor
+
+#pragma region Save/Load Settings
+
+void ModuleEditor::LoadSettingsData(pugi::xml_node& load)
+{
+	segConfiguration->enabled = load.child("SegmentConfiguration").attribute("value").as_bool();
+	segAbout->enabled = load.child("SegmentAbout").attribute("value").as_bool();
+}
+
+void ModuleEditor::SaveSettingsData(pugi::xml_node& save)
+{
+	save.child("SegmentConfiguration").attribute("value") = segConfiguration->enabled;
+	save.child("SegmentAbout").attribute("value") = segAbout->enabled;
+}
+
+#pragma endregion Save & Load of Settings
