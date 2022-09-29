@@ -3,11 +3,14 @@
 #include "SDL/include/SDL.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "Glew/include/glew.h"
+#include "Simdjson/simdjson.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-SegmentAbout::SegmentAbout(std::string name, bool enabled) : Segment(name, enabled)
+SegmentAbout::SegmentAbout(bool enabled) : Segment(enabled)
 {
+	name = "About";
+
 	//Versions
 	SDL_version version;
 	SDL_GetVersion(&version);
@@ -19,6 +22,8 @@ SegmentAbout::SegmentAbout(std::string name, bool enabled) : Segment(name, enabl
 	vGlew += (const char*)glewGetString(GLEW_VERSION);
 	vOpenGl = "OpenGl ";
 	vOpenGl += (const char*)glGetString(GL_VERSION);
+	vSimdjson = "Simdjson ";
+	vSimdjson += std::to_string(simdjson::SIMDJSON_VERSION_MAJOR) + "." + std::to_string(simdjson::SIMDJSON_VERSION_MINOR) + "." + std::to_string(simdjson::SIMDJSON_VERSION_REVISION);
 	//vRapidJson = "RapidJson " + std::to_string(RAPIDJSON_MAJOR_VERSION) + "." + std::to_string(RAPIDJSON_MINOR_VERSION) + "." + std::to_string(RAPIDJSON_PATCH_VERSION);
 
 }
@@ -63,8 +68,8 @@ void SegmentAbout::ThirdPartyLibs()
 	ImGui::BulletText("");
 	ImGui::TextURL(vOpenGl.c_str(), "https://www.opengl.org", 1, 0);
 
-	//ImGui::BulletText("");
-	//ImGui::TextURL(vRapidJson.c_str(), "https://github.com/Tencent/rapidjson", 1, 0);
+	ImGui::BulletText("");
+	ImGui::TextURL(vSimdjson.c_str(), "https://github.com/Tencent/rapidjson", 1, 0);
 
 	ImGui::BulletText("");
 	ImGui::TextURL(vMathGeoLib.c_str(), "https://github.com/juj/MathGeoLib", 1, 0);

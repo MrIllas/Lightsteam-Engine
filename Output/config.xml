@@ -13,7 +13,7 @@
 		<Vsync value="false" />
 	</Renderer3D>
 	<Editor>
-		<SegmentConfiguration value="true" />
-		<SegmentAbout value="false" />
+		<Configuration value="true" />
+		<About value="true" />
 	</Editor>
 </config>

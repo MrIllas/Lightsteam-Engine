@@ -3,8 +3,12 @@
 
 #include "Module.h"
 
+#include <iostream>
+#include <vector>
+
 class Application;
 
+class Segment;
 class SegmentAbout;
 class SegmentConfiguration;
 
@@ -39,8 +43,7 @@ private:
 	bool showAppConsole = false;
 	bool showAppAbout = false;
 
-	SegmentAbout* segAbout = nullptr;
-	SegmentConfiguration* segConfiguration = nullptr;
+	std::vector<Segment*> segments;
 };
 
 #endif // __ModuleEditor_H__

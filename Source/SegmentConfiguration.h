@@ -10,7 +10,7 @@
 class SegmentConfiguration : public Segment
 {
 public:
-	SegmentConfiguration(std::string name, bool enabled = false);
+	SegmentConfiguration(bool enabled = false);
 	~SegmentConfiguration();
 
 	void Update() override;

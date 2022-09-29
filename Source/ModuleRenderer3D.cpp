@@ -65,6 +65,12 @@ bool ModuleRenderer3D::Init()
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+
+	GLenum glewErr = glewInit();
+	if (glewErr != GLEW_OK)
+	{
+		printf("Glew could not be initialized! Glew_error: %s \n", glewGetErrorString(glewErr));
+	}
 	
 	if(ret == true)
 	{

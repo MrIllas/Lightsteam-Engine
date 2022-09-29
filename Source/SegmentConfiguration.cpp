@@ -7,8 +7,10 @@
 #include <gl/GLU.h>
 #include "SDL/include/SDL.h"
 
-SegmentConfiguration::SegmentConfiguration(std::string name, bool enabled) : Segment(name, enabled)
+SegmentConfiguration::SegmentConfiguration(bool enabled) : Segment(enabled)
 {
+	name = "Configuration";
+
 	wProps = WindowProperties::Instance();
 	rProps = RenderProperties::Instance();
 	time = Time::Instance();

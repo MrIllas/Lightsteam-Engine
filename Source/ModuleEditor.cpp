@@ -5,14 +5,13 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
 
+#include "Segment.h"
 #include "SegmentAbout.h"
 #include "SegmentConfiguration.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
-
-#include <iostream>
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -53,12 +52,12 @@ bool ModuleEditor::Init()
 
 bool ModuleEditor::Start()
 {
+	//Create Segments
+	segments.emplace_back(new SegmentConfiguration());
+	segments.emplace_back(new SegmentAbout());
+
 	ImGui_ImplSDL2_InitForOpenGL(WindowProperties::Instance()->window, App->renderer3D->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
-
-	//Generate the segments
-	segAbout = new SegmentAbout("About", true);
-	segConfiguration = new SegmentConfiguration("Configuration", true);
 
 	return true;
 }
@@ -70,8 +69,12 @@ bool ModuleEditor::CleanUp()
 	ImGui::DestroyContext();
 
 	//Clean Segments
-	RELEASE(segAbout);
-	RELEASE(segConfiguration);
+	 for (int i = 0; i < segments.size(); ++i)
+	{
+		 RELEASE(segments[i]);
+	}
+	//RELEASE(segAbout);
+	//RELEASE(segConfiguration);
 
 	return true;
 }
@@ -129,6 +132,7 @@ void ModuleEditor::MainMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
+		//FILE
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Exit", "ALT+F4"))
@@ -138,28 +142,28 @@ void ModuleEditor::MainMenuBar()
 			ImGui::EndMenu();
 		}
 
+		//VIEW
 		if (ImGui::BeginMenu("View"))
 		{
-			if (ImGui::MenuItem("Console", "F1", &showAppConsole) || App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+
+			for (int i = 0; i < (segments.size()-1); ++i)
 			{
-				/*if (ImGui::Begin("Console", showAppConsole))
+				if (ImGui::MenuItem(segments[i]->name.c_str(), NULL, &segments[i]->enabled))
 				{
+					/*if (ImGui::Begin("Console", showAppConsole))
+					{
 
-					ImGui::End();
-				}*/
+						ImGui::End();
+					}*/
+				}
 			}
-
-			if (ImGui::MenuItem("Configuration", "F4", &segConfiguration->enabled) || App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-			{
-
-			}
-
 			ImGui::EndMenu();
 		}
 
+		//HELP
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("About", "F12", &segAbout->enabled) || App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN)
+			if (ImGui::MenuItem(segments[segments.size()-1]->name.c_str(), NULL, &segments[segments.size()-1]->enabled))
 			{
 
 			}
@@ -173,14 +177,12 @@ void ModuleEditor::MainMenuBar()
 
 void ModuleEditor::UpdateSegments()
 {
-	if (segAbout->enabled)
+	for (int i = 0; i < segments.size(); ++i)
 	{
-		segAbout->Update();
-	}
-	
-	if (segConfiguration->enabled)
-	{
-		segConfiguration->Update();
+		if (segments[i]->enabled)
+		{
+			segments[i]->Update();
+		}
 	}
 }
 #pragma endregion Gui Elements of the editor
@@ -189,14 +191,18 @@ void ModuleEditor::UpdateSegments()
 
 void ModuleEditor::LoadSettingsData(pugi::xml_node& load)
 {
-	segConfiguration->enabled = load.child("SegmentConfiguration").attribute("value").as_bool();
-	segAbout->enabled = load.child("SegmentAbout").attribute("value").as_bool();
+	for (int i = 0; i < segments.size(); ++i)
+	{
+		segments[i]->enabled = load.child(segments[i]->name.c_str()).attribute("value").as_bool();
+	}
 }
 
 void ModuleEditor::SaveSettingsData(pugi::xml_node& save)
 {
-	save.child("SegmentConfiguration").attribute("value") = segConfiguration->enabled;
-	save.child("SegmentAbout").attribute("value") = segAbout->enabled;
+	for (int i = 0; i < segments.size(); ++i)
+	{
+		save.child(segments[i]->name.c_str()).attribute("value") = segments[i]->enabled;
+	}
 }
 
 #pragma endregion Save & Load of Settings

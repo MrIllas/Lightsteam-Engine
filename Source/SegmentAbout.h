@@ -4,7 +4,7 @@
 class SegmentAbout : public Segment
 {
 public:
-	SegmentAbout(std::string name, bool enabled = false);
+	SegmentAbout(bool enabled = false);
 	~SegmentAbout();
 
 	void Update() override;
@@ -22,6 +22,6 @@ private:
 	std::string vMathGeoLib;
 	std::string vOpenGl;
 	std::string vGlew;
-	std::string vRapidJson;
+	std::string vSimdjson;
 };
 
