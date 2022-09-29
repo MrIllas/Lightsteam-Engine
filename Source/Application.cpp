@@ -1,4 +1,6 @@
-#include "Application.h"
+﻿#include "Application.h"
+
+#include "Loggs.h"
 
 //Modules
 #include "ModuleWindow.h"
@@ -61,6 +63,7 @@ bool Application::Init()
 	bool ret = true;
 
 	G_Time = Time::Instance();
+	Loggs::Instance();
 
 	// Call Init() in all modules
 	for (int i = 0, count = list_modules.count() ; i <count ; i++)
@@ -198,6 +201,14 @@ void Application::SaveEditorConfiguration()
 void Application::StopEngine()
 {
 	isStopping = true;
+
+	LOG("'||'''|,                      |'   .         .   `| ");
+	LOG(" ||   ||                     |'  .| |,     .| |,  `|");
+	LOG(" ||;;;;   '||  ||` .|''|,    |   |   |     |   |   |");
+	LOG(" ||   ||   `|..||  ||..||    |,                   ,|");
+	LOG(".||...|'       ||  `|...      |.                 .|");
+	LOG("            ,  |'                      ....        ");
+	LOG("             ''                                      ");
 
 	SaveEditorConfiguration();
 }

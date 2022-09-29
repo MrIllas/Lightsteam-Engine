@@ -1,11 +1,13 @@
 #pragma once
 #include "Segment.h"
-#include "Application.h"
-#include "ModuleWindow.h"
-#include "ModuleRenderer3D.h"
 
 #include <iostream>
 #include <queue>
+
+class Time;
+class RenderProperties;
+class WindowProperties;
+class EditorProperties;
 
 class SegmentConfiguration : public Segment
 {
@@ -20,6 +22,7 @@ private:
 	void WindowHeader();
 	void InputHeader();
 	void RenderingHeader();
+	void EditorHeader();
 
 	void GetCaps();
 
@@ -27,6 +30,7 @@ private:
 	ImGuiIO io;
 	RenderProperties* rProps = nullptr;
 	WindowProperties* wProps = nullptr;
+	EditorProperties* eProps = nullptr;
 	Time* time = nullptr;
 
 	bool vsync = false;

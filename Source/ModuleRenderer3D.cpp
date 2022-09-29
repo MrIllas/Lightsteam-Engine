@@ -4,6 +4,7 @@
 #include "ModuleCamera3D.h"
 
 #include "Glew/include/glew.h"
+#include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -28,16 +29,12 @@ void RenderProperties::Delete()
 	}
 }
 
-void RenderProperties::ToggleVsync()
-{
-	SDL_GL_SetSwapInterval(vsync);
-
-	/*vsync = value;
-	SDL_GL_SetSwapInterval(value);
-
-	std::string v = value ? "ON" : "OFF";
-	LOG("VSync has been switch %s", v);*/
-}
+void RenderProperties::ToggleVsync() { SDL_GL_SetSwapInterval(vsync); }
+void RenderProperties::ToggleDepthTest() { glEnable(GL_DEPTH_TEST); }
+void RenderProperties::ToggleCullFace() { glEnable(GL_CULL_FACE); }
+void RenderProperties::ToggleLighting() { glEnable(GL_LIGHTING); }
+void RenderProperties::ToggleColorMaterial() { glEnable(GL_COLOR_MATERIAL); }
+void RenderProperties::ToggleTexture2D() { glEnable(GL_TEXTURE_2D); }
 
 RenderProperties* RenderProperties::rProps = nullptr;
 
@@ -58,6 +55,16 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
+	//Set context attributes
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+
 	//Create context
 	context = SDL_GL_CreateContext(WindowProperties::Instance()->window);
 	if(context == NULL)
@@ -66,17 +73,29 @@ bool ModuleRenderer3D::Init()
 		ret = false;
 	}
 
-	GLenum glewErr = glewInit();
-	if (glewErr != GLEW_OK)
+	//Initialize glew
+	GLenum error = glewInit();
+	if (error != GLEW_OK)
 	{
-		printf("Glew could not be initialized! Glew_error: %s \n", glewGetErrorString(glewErr));
+		printf("Glew could not be initialized! Glew_error: %s \n", glewGetErrorString(error));
+	}
+	else
+	{
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		LOG("	Vendor: %s", glGetString(GL_VENDOR));
+		LOG("	Renderer: %s", glGetString(GL_RENDERER));
+		LOG("	OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG("	GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	}
 	
 	if(ret == true)
 	{
-		rProps = RenderProperties::Instance();
+		//Get instance of WindowProperties
+		wProps = WindowProperties::Instance();
 
-		//VSync
+		//Render properties singleton
+		rProps = RenderProperties::Instance();
+			//Settings
 		rProps->ToggleVsync();
 
 		//Initialize Projection Matrix
@@ -84,10 +103,10 @@ bool ModuleRenderer3D::Init()
 		glLoadIdentity();
 
 		//Check for error
-		GLenum error = glGetError();
+		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			//LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
@@ -99,7 +118,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			//LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 		
@@ -113,9 +132,11 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			//LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
+
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -132,19 +153,22 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
+		//rProps->ToggleDepthTest();
+		//rProps->ToggleCullFace();
 		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
+		//rProps->ToggleLighting();
+		//rProps->ToggleColorMaterial();
 
 		// Enable opacity
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Enable textures
+		//rProps->ToggleTexture2D();
 	}
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	//OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	return ret;
 }
@@ -152,6 +176,8 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 UpdateStatus ModuleRenderer3D::PreUpdate()
 {
+	//Color c = App->camera->g
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -170,18 +196,28 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 // PostUpdate present buffer to screen
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
-	SDL_GL_SwapWindow(WindowProperties::Instance()->window);
+	//Draw 3D Graphics
+	/*glLineWidth(2.0f);
+	glBegin(GL_LINES);
+		glVertex3f(0.f, 0.f, 0.f);
+		glVertex3f(0.f, 10.f, 0.f);
+	glEnd();*/
+
+
+
+
+	//Swap Buffer
+	SDL_GL_SwapWindow(wProps->window);
 	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
-
 	//Render Properties Struct singleton
 	RenderProperties::Delete();
 
+	LOG("Destroying 3D Renderer");
 	if (context != NULL)
 	{
 		SDL_GL_DeleteContext(context);
@@ -208,13 +244,28 @@ void ModuleRenderer3D::OnResize(int width, int height)
 void ModuleRenderer3D::LoadSettingsData(pugi::xml_node& load)
 {
 	rProps->vsync = load.child("Vsync").attribute("value").as_bool();
+	rProps->depthTest = load.child("DepthTest").attribute("value").as_bool();
+	rProps->cullFace = load.child("CullFace").attribute("value").as_bool();
+	rProps->lighting = load.child("Lighting").attribute("value").as_bool();
+	rProps->colorMaterial = load.child("ColorMaterial").attribute("value").as_bool();
+	rProps->texture2D = load.child("Texture2D").attribute("value").as_bool();
 
 	rProps->ToggleVsync();
+	rProps->ToggleDepthTest();
+	rProps->ToggleCullFace();
+	rProps->ToggleLighting();
+	rProps->ToggleColorMaterial();
+	rProps->ToggleTexture2D();
 }
 
 void ModuleRenderer3D::SaveSettingsData(pugi::xml_node& save)
 {
 	save.child("Vsync").attribute("value") = rProps->vsync;
+	save.child("DepthTest").attribute("value") = rProps->depthTest;
+	save.child("CullFace").attribute("value") = rProps->cullFace;
+	save.child("Lighting").attribute("value") = rProps->lighting;
+	save.child("ColorMaterial").attribute("value") = rProps->colorMaterial;
+	save.child("Texture2D").attribute("value") = rProps->texture2D;
 }
 
 #pragma endregion Save & Load of Settings

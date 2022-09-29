@@ -34,7 +34,7 @@
     <ClCompile Include="glmath.cpp">
       <Filter>Source\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
+    <ClCompile Include="Loggs.cpp">
       <Filter>Source\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -174,6 +174,12 @@
     </ClCompile>
     <ClCompile Include="External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentConsole.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
+    <ClCompile Include="Singleton.cpp">
+      <Filter>Source\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -449,6 +455,12 @@
     </ClInclude>
     <ClInclude Include="External\PugiXml\src\pugiconfig.hpp">
       <Filter>External\PugiXml</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentConsole.h">
+      <Filter>Header\Core\Segments</Filter>
+    </ClInclude>
+    <ClInclude Include="Loggs.h">
+      <Filter>Header\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

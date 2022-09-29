@@ -10,6 +10,11 @@ struct RenderProperties
 {
 public:
 	bool vsync = false;
+	bool depthTest = false;
+	bool cullFace = false;
+	bool lighting = false;
+	bool colorMaterial = false;
+	bool texture2D = false;
 
 	RenderProperties();
 
@@ -18,11 +23,18 @@ public:
 	static void Delete();
 
 	void ToggleVsync();
+	void ToggleDepthTest();
+	void ToggleCullFace();
+	void ToggleLighting();
+	void ToggleColorMaterial();
+	void ToggleTexture2D();
 
 private:
 	static RenderProperties* rProps;
 
 };
+
+class WindowProperties;
 
 class ModuleRenderer3D : public Module
 {
@@ -54,6 +66,7 @@ private:
 	SDL_GLContext context;
 
 	RenderProperties* rProps = nullptr;
+	WindowProperties* wProps = nullptr;
 };
 
 #endif // !__MODULERENDERER3D_H__

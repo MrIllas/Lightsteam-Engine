@@ -1,19 +1,27 @@
 <?xml version="1.0"?>
 <config>
 	<Application>
-		<FpsCap value="100" />
+		<FpsCap value="108" />
 	</Application>
 	<Window>
+		<Brightness value="1" />
 		<FullscreenDesktop value="false" />
 		<Fullscreen value="false" />
 		<Borderless value="false" />
-		<Resizable value="true" />
+		<Resizable value="false" />
 	</Window>
 	<Renderer3D>
 		<Vsync value="false" />
+		<DepthTest value="true" />
+		<CullFace value="true" />
+		<Lighting value="true" />
+		<ColorMaterial value="true" />
+		<Texture2D value="true" />
 	</Renderer3D>
 	<Editor>
 		<Configuration value="true" />
-		<About value="true" />
+		<About value="false" />
+		<Console value="true" />
+		<ColorMode value="2" />
 	</Editor>
 </config>

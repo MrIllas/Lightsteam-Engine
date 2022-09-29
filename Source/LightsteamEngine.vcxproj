@@ -201,7 +201,7 @@
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Globals.h" />
     <ClCompile Include="Light.cpp" />
-    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Loggs.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
@@ -213,6 +213,8 @@
     <ClCompile Include="Segment.cpp" />
     <ClCompile Include="SegmentAbout.cpp" />
     <ClCompile Include="SegmentConfiguration.cpp" />
+    <ClCompile Include="SegmentConsole.cpp" />
+    <ClCompile Include="Singleton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -305,6 +307,8 @@
     <ClInclude Include="Segment.h" />
     <ClInclude Include="SegmentAbout.h" />
     <ClInclude Include="SegmentConfiguration.h" />
+    <ClInclude Include="SegmentConsole.h" />
+    <ClInclude Include="Loggs.h" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>
   <ItemGroup>

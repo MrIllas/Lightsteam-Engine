@@ -96,15 +96,6 @@ bool ModuleWindow::Init()
 	}
 	else
 	{
-		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
-		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
-
-		//Use OpenGL 2.1
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-
 		//Window Creation
 		wProps->window = SDL_CreateWindow(wProps->title.c_str(), wProps->x, wProps->y, wProps->w, wProps->h, wProps->flags);
 
@@ -156,11 +147,13 @@ void ModuleWindow::SetTitle(const char* title)
 
 void ModuleWindow::LoadSettingsData(pugi::xml_node& load)
 {
+	wProps->brightness = load.child("Brightness").attribute("value").as_float();
 	wProps->fullScreenDesktop = load.child("FullscreenDesktop").attribute("value").as_bool();
 	wProps->fullscreen = load.child("Fullscreen").attribute("value").as_bool();
 	wProps->resizable = load.child("Resizable").attribute("value").as_bool();
 	wProps->borderless = load.child("Borderless").attribute("value").as_bool();
 
+	//SDL_SetWindowBrightness(wProps->window, wProps->brightness);
 	wProps->ToggleBorderless();
 	wProps->ToggleFullscreen();
 	wProps->ToggleResizable();
@@ -169,6 +162,7 @@ void ModuleWindow::LoadSettingsData(pugi::xml_node& load)
 
 void ModuleWindow::SaveSettingsData(pugi::xml_node& save)
 {
+	save.child("Brightness").attribute("value") = wProps->brightness;
 	save.child("FullscreenDesktop").attribute("value") = wProps->fullScreenDesktop;
 	save.child("fullscreen").attribute("value") = wProps->fullscreen;
 	save.child("Resizable").attribute("value") = wProps->resizable;

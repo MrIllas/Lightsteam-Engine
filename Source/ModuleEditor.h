@@ -12,6 +12,30 @@ class Segment;
 class SegmentAbout;
 class SegmentConfiguration;
 
+enum COLORMODE
+{
+	LightMode = 0,
+	DarkMode,
+	ClassicMode
+};
+
+struct EditorProperties
+{
+public:
+	COLORMODE colorMode = COLORMODE::DarkMode;
+
+	EditorProperties();
+
+	static EditorProperties* Instance();
+
+	static void Delete();
+
+	void SwitchColorMode();
+
+private:
+	static EditorProperties* instance;
+};
+
 class ModuleEditor : public Module
 {
 public:
@@ -40,10 +64,9 @@ private:
 	void LoadSettingsData(pugi::xml_node& load) override;
 
 private:
-	bool showAppConsole = false;
-	bool showAppAbout = false;
-
 	std::vector<Segment*> segments;
+
+	EditorProperties* eProps = nullptr;
 };
 
 #endif // __ModuleEditor_H__
