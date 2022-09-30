@@ -63,8 +63,8 @@ UpdateStatus ModuleInput::PreUpdate()
 
 	Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
 
-	/*mouse_x /= SCREEN_SIZE;
-	mouse_y /= SCREEN_SIZE;*/
+	mouse_x /= 1;
+	mouse_y /= 1;
 	mouse_z = 0;
 
 	for(int i = 0; i < 5; ++i)
@@ -100,11 +100,11 @@ UpdateStatus ModuleInput::PreUpdate()
 			break;
 
 			case SDL_MOUSEMOTION:
-			//mouse_x = e.motion.x / SCREEN_SIZE;
-			//mouse_y = e.motion.y / SCREEN_SIZE;
+			mouse_x = e.motion.x / 1;
+			mouse_y = e.motion.y / 1;
 
-			//mouse_x_motion = e.motion.xrel / SCREEN_SIZE;
-			//mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
+			mouse_x_motion = e.motion.xrel / 1;
+			mouse_y_motion = e.motion.yrel / 1;
 			break;
 
 			case SDL_QUIT:

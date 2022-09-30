@@ -139,6 +139,12 @@ void SegmentConfiguration::RenderingHeader()
 		LOG("Vsync '%s'", rProps->vsync ? "ON" : "OFF");
 	}
 
+	if (ImGui::Checkbox("Wireframe", &rProps->wireframe))
+	{
+		rProps->ToggleWireframe();
+		LOG("Wireframe '%s'", rProps->wireframe ? "ON" : "OFF");
+	}
+
 	if (ImGui::Checkbox("DepthTest", &rProps->depthTest))
 	{
 		rProps->ToggleDepthTest();
@@ -155,6 +161,12 @@ void SegmentConfiguration::RenderingHeader()
 	{
 		rProps->ToggleLighting();
 		LOG("Lighting '%s'", rProps->lighting ? "ON" : "OFF");
+	}
+
+	if (ImGui::Checkbox("Fog", &rProps->fog))
+	{
+		rProps->ToggleFog();
+		LOG("Fog '%s'", rProps->fog ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("Color Material", &rProps->colorMaterial))

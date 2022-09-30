@@ -214,6 +214,7 @@
     <ClCompile Include="SegmentAbout.cpp" />
     <ClCompile Include="SegmentConfiguration.cpp" />
     <ClCompile Include="SegmentConsole.cpp" />
+    <ClCompile Include="SegmentScene.cpp" />
     <ClCompile Include="Singleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +310,7 @@
     <ClInclude Include="SegmentConfiguration.h" />
     <ClInclude Include="SegmentConsole.h" />
     <ClInclude Include="Loggs.h" />
+    <ClInclude Include="SegmentScene.h" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>
   <ItemGroup>

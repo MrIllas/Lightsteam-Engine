@@ -9,6 +9,7 @@
 #include "SegmentAbout.h"
 #include "SegmentConfiguration.h"
 #include "SegmentConsole.h"
+#include "SegmentScene.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -87,6 +88,7 @@ bool ModuleEditor::Start()
 	//Create Segments
 	segments.emplace_back(new SegmentConfiguration());
 	segments.emplace_back(new SegmentConsole());
+	segments.emplace_back(new SegmentScene());
 		//Always last
 	segments.emplace_back(new SegmentAbout());
 
@@ -132,7 +134,7 @@ void ModuleEditor::DrawEditorGui()
 	UpdateSegments();
 
 	//Demo
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	EndRender();
 }
@@ -162,7 +164,7 @@ void ModuleEditor::EndRender()
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
 }
-#pragma endregion Editor Render methods
+#pragma endregion Imgui Render methods
 
 #pragma region GUI
 void ModuleEditor::MainMenuBar()

@@ -12,7 +12,7 @@ public:
 	SegmentConsole(bool enabled = false);
 	~SegmentConsole();
 
-	void Update();
+	void Update() override;
 
 private:
 	Loggs* loggs;

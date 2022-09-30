@@ -10,9 +10,11 @@ struct RenderProperties
 {
 public:
 	bool vsync = false;
+	bool wireframe = false;
 	bool depthTest = false;
 	bool cullFace = false;
 	bool lighting = false;
+	bool fog = false;
 	bool colorMaterial = false;
 	bool texture2D = false;
 
@@ -23,9 +25,11 @@ public:
 	static void Delete();
 
 	void ToggleVsync();
+	void ToggleWireframe();
 	void ToggleDepthTest();
 	void ToggleCullFace();
 	void ToggleLighting();
+	void ToggleFog();
 	void ToggleColorMaterial();
 	void ToggleTexture2D();
 

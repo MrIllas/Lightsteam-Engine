@@ -30,11 +30,13 @@ void RenderProperties::Delete()
 }
 
 void RenderProperties::ToggleVsync() { SDL_GL_SetSwapInterval(vsync); }
-void RenderProperties::ToggleDepthTest() { glEnable(GL_DEPTH_TEST); }
-void RenderProperties::ToggleCullFace() { glEnable(GL_CULL_FACE); }
-void RenderProperties::ToggleLighting() { glEnable(GL_LIGHTING); }
-void RenderProperties::ToggleColorMaterial() { glEnable(GL_COLOR_MATERIAL); }
-void RenderProperties::ToggleTexture2D() { glEnable(GL_TEXTURE_2D); }
+void RenderProperties::ToggleWireframe() { wireframe ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
+void RenderProperties::ToggleDepthTest() { depthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST); }
+void RenderProperties::ToggleCullFace() { cullFace ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE); }
+void RenderProperties::ToggleLighting() { lighting ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING); }
+void RenderProperties::ToggleFog() { fog ? glEnable(GL_FOG) : glDisable(GL_FOG); }
+void RenderProperties::ToggleColorMaterial() { colorMaterial ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL); }
+void RenderProperties::ToggleTexture2D() { texture2D ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D); }
 
 RenderProperties* RenderProperties::rProps = nullptr;
 
@@ -95,8 +97,6 @@ bool ModuleRenderer3D::Init()
 
 		//Render properties singleton
 		rProps = RenderProperties::Instance();
-			//Settings
-		rProps->ToggleVsync();
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -153,22 +153,28 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		//rProps->ToggleDepthTest();
-		//rProps->ToggleCullFace();
+		/*glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);*/
 		lights[0].Active(true);
-		//rProps->ToggleLighting();
-		//rProps->ToggleColorMaterial();
+		/*glEnable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);*/
 
 		// Enable opacity
-		glEnable(GL_BLEND);
+		//glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Enable textures
-		//rProps->ToggleTexture2D();
+		//glEnable(GL_TEXTURE_2D);
+		glFogi(GL_FOG_MODE, GL_LINEAR);
+		glFogf(GL_FOG_START, 1.0f);
+		glFogf(GL_FOG_END, 10.0f);
+		float fogC[] = { 0.5, 0.5, 0.5, 1.0 };
+		glFogfv(GL_FOG_COLOR, fogC);
+		//glEnable(GL_FOG);
 	}
 
 	// Projection matrix for
-	//OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		OnResize(wProps->w, wProps->h);
 
 	return ret;
 }
@@ -177,12 +183,13 @@ bool ModuleRenderer3D::Init()
 UpdateStatus ModuleRenderer3D::PreUpdate()
 {
 	//Color c = App->camera->g
-
+	//Cleaning
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
+
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -197,14 +204,77 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
 	//Draw 3D Graphics
-	/*glLineWidth(2.0f);
-	glBegin(GL_LINES);
-		glVertex3f(0.f, 0.f, 0.f);
-		glVertex3f(0.f, 10.f, 0.f);
-	glEnd();*/
 
+	glLineWidth(2.0f);
 
+	glBegin(GL_TRIANGLES);
 
+	// front face =================
+	//glVertex3f(1.0f, 1.0f, 1.0f); //0    
+	//glVertex3f(-1.0, 1.0, 1.0); //1
+	//glVertex3f(-1.0, -1.0, 1.0); //2
+
+	//glVertex3f(1.0, -1.0, 1.0);  //3  
+	//glVertex3f(1.0, -1.0, -1.0); //4
+	//glVertex3f(1.0, 1.0, -1.0); //5
+	//glVertex3f(-1.0, 1.0, -1.0); //6
+	//glVertex3f(-1.0, -1.0, -1.0); //7
+
+	// front face =================
+	glColor3f(1.0f, 0.0f, 0.0f);  // Red
+	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v1-v2
+	glVertex3f(-1.0, 1.0, 1.0);
+	glVertex3f(-1.0, -1.0, 1.0);
+	glVertex3f(-1.0, -1.0, 1.0);   // v2-v3-v0
+	glVertex3f(1.0, -1.0, 1.0);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+
+	// right face =================
+	glColor3f(1.0f, 0.0f, 1.0f);  // Violet
+	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v3-v4
+	glVertex3f(1.0, -1.0, 1.0);
+	glVertex3f(1.0, -1.0, -1.0);
+	glVertex3f(1.0, -1.0, -1.0);    // v4-v5-v0
+	glVertex3f(1.0, 1.0, -1.0);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+
+	// top face ===================
+	glColor3f(0.0f, 1.0f, 0.0f);  // Green
+	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v5-v6
+	glVertex3f(1.0, 1.0, -1.0);
+	glVertex3f(-1.0, 1.0, -1.0);
+	glVertex3f(-1.0, 1.0, -1.0);    // v6-v1-v0
+	glVertex3f(-1.0, 1.0, 1.0);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+
+	// back face =================
+	glColor3f(1.0f, 1.0f, 0.0f); // Yellow
+	glVertex3f(-1.0, 1.0, -1.0); // 6-5-7
+	glVertex3f(1.0, 1.0, -1.0);
+	glVertex3f(-1.0, -1.0, -1.0);
+	glVertex3f(-1.0, -1.0, -1.0); //7-4-5
+	glVertex3f(1.0, -1.0, -1.0);
+	glVertex3f(1.0, 1.0, -1.0);
+
+	// left face =================
+	glColor3f(0.0f, 0.0f, 1.0f);  // Blue
+	glVertex3f(-1.0, 1.0, 1.0); //1-6-7
+	glVertex3f(-1.0, 1.0, -1.0);
+	glVertex3f(-1.0, -1.0, -1.0);
+	glVertex3f(-1.0, -1.0, -1.0); //7-2-1
+	glVertex3f(-1.0, -1.0, 1.0);
+	glVertex3f(-1.0, 1.0, 1.0);
+
+	// Bottom face =================
+	glColor3f(1.0f, 0.5f, 0.0f); // Orange
+	glVertex3f(-1.0, -1.0, -1.0); //7-2-3
+	glVertex3f(-1.0, -1.0, 1.0);
+	glVertex3f(1.0, -1.0, 1.0);
+	glVertex3f(1.0, -1.0, 1.0); //3-4-7
+	glVertex3f(1.0, -1.0, -1.0);
+	glVertex3f(-1.0, -1.0, -1.0);
+
+	glEnd();
 
 	//Swap Buffer
 	SDL_GL_SwapWindow(wProps->window);
@@ -244,16 +314,20 @@ void ModuleRenderer3D::OnResize(int width, int height)
 void ModuleRenderer3D::LoadSettingsData(pugi::xml_node& load)
 {
 	rProps->vsync = load.child("Vsync").attribute("value").as_bool();
+	rProps->wireframe = load.child("Wireframe").attribute("value").as_bool();
 	rProps->depthTest = load.child("DepthTest").attribute("value").as_bool();
 	rProps->cullFace = load.child("CullFace").attribute("value").as_bool();
 	rProps->lighting = load.child("Lighting").attribute("value").as_bool();
+	rProps->fog = load.child("Fog").attribute("value").as_bool();
 	rProps->colorMaterial = load.child("ColorMaterial").attribute("value").as_bool();
 	rProps->texture2D = load.child("Texture2D").attribute("value").as_bool();
 
 	rProps->ToggleVsync();
+	rProps->ToggleWireframe();
 	rProps->ToggleDepthTest();
 	rProps->ToggleCullFace();
 	rProps->ToggleLighting();
+	rProps->ToggleFog();
 	rProps->ToggleColorMaterial();
 	rProps->ToggleTexture2D();
 }
@@ -261,6 +335,8 @@ void ModuleRenderer3D::LoadSettingsData(pugi::xml_node& load)
 void ModuleRenderer3D::SaveSettingsData(pugi::xml_node& save)
 {
 	save.child("Vsync").attribute("value") = rProps->vsync;
+	save.child("Wireframe").attribute("value") = rProps->wireframe;
+	save.child("Fog").attribute("value") = rProps->fog;
 	save.child("DepthTest").attribute("value") = rProps->depthTest;
 	save.child("CullFace").attribute("value") = rProps->cullFace;
 	save.child("Lighting").attribute("value") = rProps->lighting;

@@ -181,6 +181,9 @@
     <ClCompile Include="Singleton.cpp">
       <Filter>Source\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="SegmentScene.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -461,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="Loggs.h">
       <Filter>Header\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentScene.h">
+      <Filter>Header\Core\Segments</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

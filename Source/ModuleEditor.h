@@ -9,8 +9,6 @@
 class Application;
 
 class Segment;
-class SegmentAbout;
-class SegmentConfiguration;
 
 enum COLORMODE
 {
