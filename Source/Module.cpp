@@ -43,13 +43,15 @@ bool Module::CleanUp()
 	return true;
 }
 
+void Module::SaveSettingsData(pugi::xml_node& save)
+{
+
+}
+
 void Module::LoadSettingsData(pugi::xml_node& load)
 {
 
 }
 
-void Module::SaveSettingsData(pugi::xml_node& save)
-{
 
-}
 

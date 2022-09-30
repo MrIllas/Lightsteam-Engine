@@ -164,7 +164,7 @@ void ModuleWindow::SaveSettingsData(pugi::xml_node& save)
 {
 	save.child("Brightness").attribute("value") = wProps->brightness;
 	save.child("FullscreenDesktop").attribute("value") = wProps->fullScreenDesktop;
-	save.child("fullscreen").attribute("value") = wProps->fullscreen;
+	save.child("Fullscreen").attribute("value") = wProps->fullscreen;
 	save.child("Resizable").attribute("value") = wProps->resizable;
 	save.child("Borderless").attribute("value") = wProps->borderless;
 }

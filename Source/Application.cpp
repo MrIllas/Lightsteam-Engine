@@ -65,6 +65,7 @@ bool Application::Init()
 	G_Time = Time::Instance();
 	Loggs::Instance();
 
+	LOG("-------------- Initializing Modules --------------");
 	// Call Init() in all modules
 	for (int i = 0, count = list_modules.count() ; i <count ; i++)
 	{
@@ -72,7 +73,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	LOG("-------------- Starting Modules --------------");
 
 	for (int i = 0, count = list_modules.count(); i < count; i++)
 	{
@@ -164,6 +165,8 @@ void Application::LoadEditorConfiguration()
 
 	pugi::xml_parse_result result = config.load_file(CONFIG_FILENAME);
 
+	//LOG("%s", result.description());
+
 	for (int i = 0, count = list_modules.count(); i < count; i++)
 	{
 		pugi::xml_node data = config.child("config").child(list_modules[i]->name.c_str());
@@ -181,8 +184,6 @@ void Application::SaveEditorConfiguration()
 	pugi::xml_document config;
 
 	pugi::xml_parse_result result = config.load_file(CONFIG_FILENAME);
-
-	//LOG(result);
 
 	for (int i = 0, count = list_modules.count(); i < count; i++)
 	{
