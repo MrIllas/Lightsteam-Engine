@@ -2,6 +2,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
+#include "FrameBuffer.h"
 
 #include "Glew/include/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -153,26 +154,18 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		/*glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);*/
 		lights[0].Active(true);
-		/*glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);*/
 
-		// Enable opacity
-		//glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		// Enable textures
-		//glEnable(GL_TEXTURE_2D);
+		// FOG
 		glFogi(GL_FOG_MODE, GL_LINEAR);
 		glFogf(GL_FOG_START, 1.0f);
-		glFogf(GL_FOG_END, 10.0f);
+		glFogf(GL_FOG_END, 30.0f);
 		float fogC[] = { 0.5, 0.5, 0.5, 1.0 };
 		glFogfv(GL_FOG_COLOR, fogC);
-		//glEnable(GL_FOG);
 	}
-
+	frameBuffer = FrameBuffer::Instance();
 	// Projection matrix for
 		OnResize(wProps->w, wProps->h);
 
@@ -190,7 +183,6 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
-
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
@@ -204,6 +196,13 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
 	//Draw 3D Graphics
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetFrameBuffer());
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+
+	
+
 
 	glLineWidth(2.0f);
 
@@ -276,6 +275,8 @@ UpdateStatus ModuleRenderer3D::PostUpdate()
 
 	glEnd();
 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	//Swap Buffer
 	SDL_GL_SwapWindow(wProps->window);
 	return UPDATE_CONTINUE;
@@ -292,6 +293,8 @@ bool ModuleRenderer3D::CleanUp()
 	{
 		SDL_GL_DeleteContext(context);
 	}
+
+	frameBuffer->Delete();
 
 	return true;
 }

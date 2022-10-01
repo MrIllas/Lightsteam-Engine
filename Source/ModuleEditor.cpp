@@ -92,6 +92,12 @@ bool ModuleEditor::Start()
 		//Always last
 	segments.emplace_back(new SegmentAbout());
 
+	//START
+	for (int i = 0; i < segments.size(); ++i)
+	{
+		segments[i]->Start();
+	}
+	//
 	ImGui_ImplSDL2_InitForOpenGL(WindowProperties::Instance()->window, App->renderer3D->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
 

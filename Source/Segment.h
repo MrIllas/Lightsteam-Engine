@@ -15,6 +15,8 @@ public:
 	};
 	virtual ~Segment() {};
 
+	virtual void Start() {};
+
 	virtual void Update(){};
 
 public:

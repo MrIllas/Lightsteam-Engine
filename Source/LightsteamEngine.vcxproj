@@ -198,6 +198,7 @@
     <ClCompile Include="External\MathGeoLib\include\Time\Clock.cpp" />
     <ClCompile Include="External\PugiXml\src\pugixml.cpp" />
     <ClCompile Include="External\Simdjson\simdjson.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Globals.h" />
     <ClCompile Include="Light.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="External\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="External\PugiXml\src\pugixml.hpp" />
     <ClInclude Include="External\Simdjson\simdjson.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="ImGuiUtils.h" />
     <ClInclude Include="Light.h" />

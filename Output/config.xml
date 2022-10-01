@@ -24,7 +24,7 @@
 		<Configuration value="true" />
 		<About value="false" />
 		<Console value="true" />
-		<Scene value="false" />
+		<Scene value="true" />
 		<ColorMode value="1" />
 	</Editor>
 </config>

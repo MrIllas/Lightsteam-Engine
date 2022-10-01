@@ -4,12 +4,17 @@ SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 {
 	name = "Scene";
 
-
+	frameBuffer = FrameBuffer::Instance();
 }
 
 SegmentScene::~SegmentScene()
 {
+	frameBuffer->Delete();
+}
 
+void SegmentScene::Start()
+{
+	//frameBuffer->CreateBuffer();
 }
 
 void SegmentScene::Update()
@@ -23,5 +28,5 @@ void SegmentScene::Update()
 
 void SegmentScene::RenderSpace()
 {
-
+	ImGui::Image((ImTextureID)frameBuffer->GetTextureBuffer(), {1280, 720}, ImVec2(0, 1), ImVec2(1, 0));
 }
