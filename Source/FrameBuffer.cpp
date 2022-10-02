@@ -4,38 +4,14 @@
 FrameBuffer::FrameBuffer()
 {
 	frameBuffer = 0;
+	textureColorbuffer = 0;
+	renderBuffer = 0;
 }
 
 FrameBuffer::~FrameBuffer()
 {
 
 }
-
-#pragma region Singleton
-
-FrameBuffer* FrameBuffer::Instance()
-{
-	if (instance == nullptr)
-	{
-		instance = new FrameBuffer();
-
-		instance->CreateBuffer();
-	}
-
-	return instance;
-}
-
-void FrameBuffer::Delete()
-{
-	if (instance != nullptr)
-	{
-		RELEASE(instance);
-	}
-}
-
-FrameBuffer* FrameBuffer::instance = nullptr;
-
-#pragma endregion Singleton
 
 void FrameBuffer::CreateBuffer(int width, int height)
 {
@@ -54,10 +30,9 @@ void FrameBuffer::CreateBuffer(int width, int height)
 	//and stencil testing.
 	RenderBufferAttachment(width, height);
 
-
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 	{
-		LOG("SUCCESS: Framebuffer is complete!");
+		//LOG("SUCCESS: Framebuffer is complete!");
 	}
 	else
 	{
@@ -69,9 +44,10 @@ void FrameBuffer::CreateBuffer(int width, int height)
 
 void FrameBuffer::CleanBuffer()
 {
-	glDeleteFramebuffers(1, &frameBuffer);
-	glDeleteTextures(1, &textureColorbuffer);
-	glDeleteRenderbuffers(1, &renderBuffer);
+	if(frameBuffer != 0) glDeleteFramebuffers(1, &frameBuffer);
+	if(textureColorbuffer != 0) glDeleteTextures(1, &textureColorbuffer);
+	if(renderBuffer != 0) glDeleteRenderbuffers(1, &renderBuffer);
+	
 }
 
 #pragma region Attachments

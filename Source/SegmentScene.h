@@ -1,6 +1,6 @@
 #pragma once
 #include "Segment.h"
-#include "FrameBuffer.h"
+#include "Renderer.h"
 
 class SegmentScene : public Segment
 {
@@ -16,6 +16,7 @@ private:
 	void RenderSpace();
 
 private:
-	FrameBuffer* frameBuffer = nullptr;
+	ImVec2 segmentSize = { 0, 0 };
+	Renderer* renderer = nullptr;
 };
 

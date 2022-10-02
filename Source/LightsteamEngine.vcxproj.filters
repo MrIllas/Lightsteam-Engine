@@ -185,7 +185,10 @@
       <Filter>Source\Core\Modules</Filter>
     </ClCompile>
     <ClCompile Include="FrameBuffer.cpp">
-      <Filter>Source\Core\Others</Filter>
+      <Filter>Source\Core\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source\Core\Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,7 +475,10 @@
       <Filter>Header\Core\Modules</Filter>
     </ClInclude>
     <ClInclude Include="FrameBuffer.h">
-      <Filter>Header\Core\Others</Filter>
+      <Filter>Header\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header\Core\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -527,10 +533,10 @@
     <Filter Include="External\PugiXml">
       <UniqueIdentifier>{f8881b98-e933-410c-a28a-aa1bb21e9281}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Core\Others">
-      <UniqueIdentifier>{e5899fd4-cbcd-44d5-b01b-37085111be20}</UniqueIdentifier>
+    <Filter Include="Source\Core\Render">
+      <UniqueIdentifier>{187aa605-02a2-43d0-ae04-e4020b139f66}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\Core\Others">
+    <Filter Include="Header\Core\Render">
       <UniqueIdentifier>{6a658b6b-685f-4368-8ef9-c552adf0d3cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

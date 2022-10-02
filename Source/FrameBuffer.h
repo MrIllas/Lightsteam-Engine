@@ -12,7 +12,6 @@ public:
 	~FrameBuffer();
 
 	void CreateBuffer(int width = 1280, int height = 720);
-	void CleanBuffer();
 
 	//GETTERS
 	int GetFrameBuffer() { return frameBuffer; }
@@ -20,20 +19,17 @@ public:
 	int GetDepthAndStencilBuffer() { return depthAndStencilBuffer; }
 	int GetRenderBuffer() { return renderBuffer; }
 
-	static FrameBuffer* Instance();
-	static void Delete();
-
 private:
 	void TextureAttachment(int width, int height);
 	void DepthAndStencilAttachment(int width, int height);
 	void RenderBufferAttachment(int width, int height);
 
-private:
-	unsigned int frameBuffer;
-	unsigned int textureColorbuffer;
-	unsigned int depthAndStencilBuffer;
-	unsigned int renderBuffer;
+	void CleanBuffer();
 
-	static FrameBuffer* instance;
+private:
+	unsigned int frameBuffer = 0;
+	unsigned int textureColorbuffer = 0;
+	unsigned int depthAndStencilBuffer = 0;
+	unsigned int renderBuffer = 0;
 };
 

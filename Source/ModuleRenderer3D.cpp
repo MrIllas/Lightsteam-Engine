@@ -2,7 +2,6 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
-#include "FrameBuffer.h"
 
 #include "Glew/include/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -165,7 +164,6 @@ bool ModuleRenderer3D::Init()
 		float fogC[] = { 0.5, 0.5, 0.5, 1.0 };
 		glFogfv(GL_FOG_COLOR, fogC);
 	}
-	frameBuffer = FrameBuffer::Instance();
 	// Projection matrix for
 		OnResize(wProps->w, wProps->h);
 
@@ -195,88 +193,6 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 // PostUpdate present buffer to screen
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
-	//Draw 3D Graphics
-
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetFrameBuffer());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-
-	
-
-
-	glLineWidth(2.0f);
-
-	glBegin(GL_TRIANGLES);
-
-	// front face =================
-	//glVertex3f(1.0f, 1.0f, 1.0f); //0    
-	//glVertex3f(-1.0, 1.0, 1.0); //1
-	//glVertex3f(-1.0, -1.0, 1.0); //2
-
-	//glVertex3f(1.0, -1.0, 1.0);  //3  
-	//glVertex3f(1.0, -1.0, -1.0); //4
-	//glVertex3f(1.0, 1.0, -1.0); //5
-	//glVertex3f(-1.0, 1.0, -1.0); //6
-	//glVertex3f(-1.0, -1.0, -1.0); //7
-
-	// front face =================
-	glColor3f(1.0f, 0.0f, 0.0f);  // Red
-	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v1-v2
-	glVertex3f(-1.0, 1.0, 1.0);
-	glVertex3f(-1.0, -1.0, 1.0);
-	glVertex3f(-1.0, -1.0, 1.0);   // v2-v3-v0
-	glVertex3f(1.0, -1.0, 1.0);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	// right face =================
-	glColor3f(1.0f, 0.0f, 1.0f);  // Violet
-	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v3-v4
-	glVertex3f(1.0, -1.0, 1.0);
-	glVertex3f(1.0, -1.0, -1.0);
-	glVertex3f(1.0, -1.0, -1.0);    // v4-v5-v0
-	glVertex3f(1.0, 1.0, -1.0);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	// top face ===================
-	glColor3f(0.0f, 1.0f, 0.0f);  // Green
-	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v5-v6
-	glVertex3f(1.0, 1.0, -1.0);
-	glVertex3f(-1.0, 1.0, -1.0);
-	glVertex3f(-1.0, 1.0, -1.0);    // v6-v1-v0
-	glVertex3f(-1.0, 1.0, 1.0);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	// back face =================
-	glColor3f(1.0f, 1.0f, 0.0f); // Yellow
-	glVertex3f(-1.0, 1.0, -1.0); // 6-5-7
-	glVertex3f(1.0, 1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0); //7-4-5
-	glVertex3f(1.0, -1.0, -1.0);
-	glVertex3f(1.0, 1.0, -1.0);
-
-	// left face =================
-	glColor3f(0.0f, 0.0f, 1.0f);  // Blue
-	glVertex3f(-1.0, 1.0, 1.0); //1-6-7
-	glVertex3f(-1.0, 1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0); //7-2-1
-	glVertex3f(-1.0, -1.0, 1.0);
-	glVertex3f(-1.0, 1.0, 1.0);
-
-	// Bottom face =================
-	glColor3f(1.0f, 0.5f, 0.0f); // Orange
-	glVertex3f(-1.0, -1.0, -1.0); //7-2-3
-	glVertex3f(-1.0, -1.0, 1.0);
-	glVertex3f(1.0, -1.0, 1.0);
-	glVertex3f(1.0, -1.0, 1.0); //3-4-7
-	glVertex3f(1.0, -1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0);
-
-	glEnd();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 	//Swap Buffer
 	SDL_GL_SwapWindow(wProps->window);
 	return UPDATE_CONTINUE;
@@ -293,8 +209,6 @@ bool ModuleRenderer3D::CleanUp()
 	{
 		SDL_GL_DeleteContext(context);
 	}
-
-	frameBuffer->Delete();
 
 	return true;
 }

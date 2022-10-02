@@ -39,7 +39,6 @@ private:
 };
 
 class WindowProperties;
-class FrameBuffer;
 
 class ModuleRenderer3D : public Module
 {
@@ -72,8 +71,6 @@ private:
 
 	RenderProperties* rProps = nullptr;
 	WindowProperties* wProps = nullptr;
-
-	FrameBuffer* frameBuffer = nullptr;
 };
 
 #endif // !__MODULERENDERER3D_H__
