@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+//#include "Primitive.h"
 
 Renderer::Renderer(float2 size)
 {
@@ -19,7 +20,7 @@ void Renderer::Init()
 
 void Renderer::Start()
 {
-	
+	meshes.emplace_back(MeshRenderer());
 }
 
 void Renderer::CleanUp()
@@ -51,74 +52,10 @@ void Renderer::PreUpdate()
 
 void Renderer::Update()
 {
-	glBegin(GL_TRIANGLES);
-
-	// front face =================
-	//glVertex3f(1.0f, 1.0f, 1.0f); //0    
-	//glVertex3f(-1.0, 1.0, 1.0); //1
-	//glVertex3f(-1.0, -1.0, 1.0); //2
-
-	//glVertex3f(1.0, -1.0, 1.0);  //3  
-	//glVertex3f(1.0, -1.0, -1.0); //4
-	//glVertex3f(1.0, 1.0, -1.0); //5
-	//glVertex3f(-1.0, 1.0, -1.0); //6
-	//glVertex3f(-1.0, -1.0, -1.0); //7
-
-	// front face =================
-	glColor3f(1.0f, 0.0f, 0.0f);  // Red
-	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v1-v2
-	glVertex3f(-1.0, 1.0, 1.0);
-	glVertex3f(-1.0, -1.0, 1.0);
-	glVertex3f(-1.0, -1.0, 1.0);   // v2-v3-v0
-	glVertex3f(1.0, -1.0, 1.0);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	// right face =================
-	glColor3f(1.0f, 0.0f, 1.0f);  // Violet
-	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v3-v4
-	glVertex3f(1.0, -1.0, 1.0);
-	glVertex3f(1.0, -1.0, -1.0);
-	glVertex3f(1.0, -1.0, -1.0);    // v4-v5-v0
-	glVertex3f(1.0, 1.0, -1.0);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	// top face ===================
-	glColor3f(0.0f, 1.0f, 0.0f);  // Green
-	glVertex3f(1.0f, 1.0f, 1.0f);    // v0-v5-v6
-	glVertex3f(1.0, 1.0, -1.0);
-	glVertex3f(-1.0, 1.0, -1.0);
-	glVertex3f(-1.0, 1.0, -1.0);    // v6-v1-v0
-	glVertex3f(-1.0, 1.0, 1.0);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	// back face =================
-	glColor3f(1.0f, 1.0f, 0.0f); // Yellow
-	glVertex3f(-1.0, 1.0, -1.0); // 6-5-7
-	glVertex3f(1.0, 1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0); //7-4-5
-	glVertex3f(1.0, -1.0, -1.0);
-	glVertex3f(1.0, 1.0, -1.0);
-
-	// left face =================
-	glColor3f(0.0f, 0.0f, 1.0f);  // Blue
-	glVertex3f(-1.0, 1.0, 1.0); //1-6-7
-	glVertex3f(-1.0, 1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0); //7-2-1
-	glVertex3f(-1.0, -1.0, 1.0);
-	glVertex3f(-1.0, 1.0, 1.0);
-
-	// Bottom face =================
-	glColor3f(1.0f, 0.5f, 0.0f); // Orange
-	glVertex3f(-1.0, -1.0, -1.0); //7-2-3
-	glVertex3f(-1.0, -1.0, 1.0);
-	glVertex3f(1.0, -1.0, 1.0);
-	glVertex3f(1.0, -1.0, 1.0); //3-4-7
-	glVertex3f(1.0, -1.0, -1.0);
-	glVertex3f(-1.0, -1.0, -1.0);
-
-	glEnd();
+	for (uint i = 0; i < meshes.size(); ++i)
+	{
+		//meshes[i].Draw();
+	}
 }
 
 void Renderer::PostUpdate()

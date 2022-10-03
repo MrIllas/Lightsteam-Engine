@@ -3,6 +3,9 @@
 #include "FrameBuffer.h"
 
 #include "MathGeoLib/include/Math/float2.h"
+
+#include "MeshRenderer.h"
+
 class Renderer
 {
 public:
@@ -24,6 +27,8 @@ private:
 	void PreUpdate();
 	void Update();
 	void PostUpdate();
+
+	std::vector<MeshRenderer> meshes;
 
 private:
 	FrameBuffer* frameBuffer = nullptr;

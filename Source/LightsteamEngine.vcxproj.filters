@@ -190,6 +190,9 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source\Core\Render</Filter>
     </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Source\Core\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -478,6 +481,9 @@
       <Filter>Header\Core\Render</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
+      <Filter>Header\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
       <Filter>Header\Core\Render</Filter>
     </ClInclude>
   </ItemGroup>
