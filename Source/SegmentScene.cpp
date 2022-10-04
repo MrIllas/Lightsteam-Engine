@@ -15,8 +15,6 @@ SegmentScene::~SegmentScene()
 
 void SegmentScene::Start()
 {
-	renderer = new Renderer({ segmentSize.x, segmentSize.y });
-	renderer->Start();
 }
 
 void SegmentScene::Update()
@@ -29,7 +27,11 @@ void SegmentScene::Update()
 		{
 			segmentSize.x = aux.x;
 			segmentSize.y = aux.y;
-			if (renderer == nullptr) renderer = new Renderer({ segmentSize.x, segmentSize.y });
+			if (renderer == nullptr)
+			{
+				renderer = new Renderer({ segmentSize.x, segmentSize.y });
+				renderer->Start();
+			}
 			else renderer->Resize({ segmentSize.x, segmentSize.y });
 		}
 

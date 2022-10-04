@@ -24,7 +24,6 @@ void Primitive::Init(PrimitiveTypes primitiveType, float3 position, float3 size)
 
 void Primitive::Cube()
 {
-
 	float x, y, z;
 	x = size.x * 1.0f;
 	y = size.y * 1.0f;
@@ -51,4 +50,9 @@ void Primitive::Cube()
 		1,6,7,7,2,1,
 		7,2,3,3,4,7
 	};
+}
+
+void Primitive::Sphere()
+{
+
 }

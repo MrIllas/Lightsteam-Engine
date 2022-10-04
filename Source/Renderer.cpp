@@ -20,12 +20,16 @@ void Renderer::Init()
 
 void Renderer::Start()
 {
-	meshes.emplace_back(MeshRenderer());
+	meshes.emplace_back(new MeshRenderer());
 }
 
 void Renderer::CleanUp()
 {
 	RELEASE(frameBuffer);
+	for (uint i = 0; i < meshes.size(); ++i)
+	{
+		RELEASE(meshes[i]);
+	}
 }
 
 void Renderer::Draw()
@@ -54,7 +58,7 @@ void Renderer::Update()
 {
 	for (uint i = 0; i < meshes.size(); ++i)
 	{
-		//meshes[i].Draw();
+		meshes[i]->Draw();
 	}
 }
 

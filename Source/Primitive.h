@@ -9,7 +9,8 @@
 
 enum PrimitiveTypes
 {
-	CUBE
+	CUBE,
+	SPHERE
 };
 
 class Primitive
@@ -25,6 +26,7 @@ public:
 
 private:
 	void Cube();
+	void Sphere();
 	
 	float3 size = { 1, 1, 1};
 	float3 position = { 0, 0, 0}; 

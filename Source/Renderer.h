@@ -28,7 +28,7 @@ private:
 	void Update();
 	void PostUpdate();
 
-	std::vector<MeshRenderer> meshes;
+	std::vector<MeshRenderer*> meshes;
 
 private:
 	FrameBuffer* frameBuffer = nullptr;
