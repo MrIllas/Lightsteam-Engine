@@ -12,6 +12,10 @@ public:
 	void Update();
 
 private:
+	void PrepareCubeBuffer();
+	void PrepareSphereBuffer();
+
+private:
 	GLuint vertexBuffer;
 	GLuint indexBuffer;
 	Primitive meshData;

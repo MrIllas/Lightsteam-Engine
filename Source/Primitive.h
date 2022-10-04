@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 
+#include "MathGeoLib/include/Math/float2.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "Color.h"
 #include <vector>
@@ -10,7 +11,9 @@
 enum PrimitiveTypes
 {
 	CUBE,
-	SPHERE
+	SPHERE,
+	PYRAMID,
+	CYLINDER
 };
 
 class Primitive
@@ -23,16 +26,20 @@ public:
 
 	std::vector<float3> GetVertex() { return vertex; };
 	std::vector<uint> GetIndex() { return index; };
+	//std::vector<float2> GetTexcoords() { return texcoords; }
 
 private:
 	void Cube();
 	void Sphere();
+	void Pyramid();
+	void Cylinder();
 	
 	float3 size = { 1, 1, 1};
 	float3 position = { 0, 0, 0}; 
 
 private:
 	std::vector<float3> vertex;
+	//std::vector<float2> texcoords;
 	std::vector<uint> index;
 
 };
