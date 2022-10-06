@@ -193,6 +193,10 @@
     <ClCompile Include="MeshRenderer.cpp">
       <Filter>Source\Core\Render</Filter>
     </ClCompile>
+    <ClCompile Include="AssetImporter.cpp" />
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Source\Core\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -485,6 +489,10 @@
     </ClInclude>
     <ClInclude Include="MeshRenderer.h">
       <Filter>Header\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetImporter.h" />
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Header\Core\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

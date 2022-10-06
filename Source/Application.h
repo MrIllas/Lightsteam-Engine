@@ -10,6 +10,7 @@
 class Module;
 class ModuleWindow;
 class ModuleInput;
+class ModuleFileSystem;
 class ModuleCamera3D;
 class ModuleEditor;
 
@@ -36,6 +37,7 @@ class Application
 public:
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
+	ModuleFileSystem* fileSystem = nullptr;
 	ModuleCamera3D* camera = nullptr;
 	ModuleEditor* editor = nullptr;
 	ModuleRenderer3D* renderer3D = nullptr;
