@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 
 class AssetImporter
 {
@@ -9,6 +10,9 @@ public:
 
 	void Start();
 	void CleanUp();
+
+public:
+	void LoadFile( std::string filePath);
 };
 
 

@@ -53,9 +53,10 @@ UpdateStatus ModuleCamera3D::Update()
 		// Now we can make this movememnt frame rate independant!
 
 		vec3 newPos(0, 0, 0);
-		float speed = 3.0f * App->fps;
+		float speed = 3.0f;
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed = 10.0f * App->fps;
+			speed = speed * 2.0f;
+		speed *= App->fps;
 
 		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
 		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;

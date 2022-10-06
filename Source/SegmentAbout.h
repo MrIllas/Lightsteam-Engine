@@ -23,5 +23,8 @@ private:
 	std::string vOpenGl;
 	std::string vGlew;
 	std::string vSimdjson;
+	std::string vAssimp;
+	std::string vPhysfs;
+	std::string vPugiXml;
 };
 

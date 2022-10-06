@@ -6,6 +6,9 @@
 #include "Simdjson/simdjson.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "Assimp/include/version.h"
+#include "PhysFS/include/physfs.h"
+#include "PugiXml/src/pugixml.hpp"
 
 SegmentAbout::SegmentAbout(bool enabled) : Segment(enabled)
 {
@@ -14,6 +17,9 @@ SegmentAbout::SegmentAbout(bool enabled) : Segment(enabled)
 	//Versions
 	SDL_version version;
 	SDL_GetVersion(&version);
+
+	PHYSFS_Version versionPhys;
+	PHYSFS_getLinkedVersion(&versionPhys);
 
 	vSdl = "SDL " + std::to_string(version.major) + "." + std::to_string(version.minor) + "." + std::to_string(version.patch);
 	vImGui = "DearImGui " + std::string(ImGui::GetVersion());
@@ -24,7 +30,18 @@ SegmentAbout::SegmentAbout(bool enabled) : Segment(enabled)
 	vOpenGl += (const char*)glGetString(GL_VERSION);
 	vSimdjson = "Simdjson ";
 	vSimdjson += std::to_string(simdjson::SIMDJSON_VERSION_MAJOR) + "." + std::to_string(simdjson::SIMDJSON_VERSION_MINOR) + "." + std::to_string(simdjson::SIMDJSON_VERSION_REVISION);
-	//vRapidJson = "RapidJson " + std::to_string(RAPIDJSON_MAJOR_VERSION) + "." + std::to_string(RAPIDJSON_MINOR_VERSION) + "." + std::to_string(RAPIDJSON_PATCH_VERSION);
+	vAssimp = "Assimp " + std::to_string(aiGetVersionMajor()) + "." + std::to_string(aiGetVersionMinor()) + "." + std::to_string(aiGetVersionRevision());
+	vPhysfs = "PhysFS " + std::to_string(versionPhys.major) + "." + std::to_string(versionPhys.minor) + "." + std::to_string(versionPhys.patch);
+	
+	vPugiXml = "PugiXML ";
+	std::string auxV = std::to_string(PUGIXML_VERSION);
+	for (int i = 0; i < auxV.size(); ++i)
+	{
+		vPugiXml += auxV[i];
+
+		if (i != auxV.size()-1)
+			vPugiXml += ".";
+	}
 
 }
 
@@ -73,6 +90,15 @@ void SegmentAbout::ThirdPartyLibs()
 
 	ImGui::BulletText("");
 	ImGui::TextURL(vMathGeoLib.c_str(), "https://github.com/juj/MathGeoLib", 1, 0);
+
+	ImGui::BulletText("");
+	ImGui::TextURL(vAssimp.c_str(), "https://github.com/assimp/assimp", 1, 0);
+
+	ImGui::BulletText("");
+	ImGui::TextURL(vPhysfs.c_str(), "https://github.com/icculus/physfs", 1, 0);
+
+	ImGui::BulletText("");
+	ImGui::TextURL(vPugiXml.c_str(), "https://pugixml.org", 1, 0);
 }
 
 void SegmentAbout::MyLicense()

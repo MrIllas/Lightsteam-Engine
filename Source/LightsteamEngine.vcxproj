@@ -99,8 +99,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\Glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Debug;$(SolutionDir)Source\External\Assimp\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;MathGeoLib.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\Glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Debug;$(SolutionDir)Source\External\Assimp\libx86;$(SolutionDir)Source\External\Physfs\libx86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;MathGeoLib.lib;assimp.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,8 +119,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Release;$(SolutionDir)Source\External\Assimp\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Release;$(SolutionDir)Source\External\Assimp\libx86;$(SolutionDir)Source\External\PhysFS\libx86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;assimp.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -215,7 +215,6 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Segment.cpp" />
     <ClCompile Include="SegmentAbout.cpp" />
     <ClCompile Include="SegmentConfiguration.cpp" />
     <ClCompile Include="SegmentConsole.cpp" />

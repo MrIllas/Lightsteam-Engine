@@ -157,9 +157,6 @@
     <ClCompile Include="External\MathGeoLib\include\Geometry\TriangleMesh.cpp">
       <Filter>External\MathGeoLib</Filter>
     </ClCompile>
-    <ClCompile Include="Segment.cpp">
-      <Filter>Source\Core\Segments</Filter>
-    </ClCompile>
     <ClCompile Include="SegmentAbout.cpp">
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>

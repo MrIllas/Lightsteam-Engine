@@ -1,5 +1,7 @@
 #include "AssetImporter.h"
 
+#include "GLOBALS.h"
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -30,3 +32,18 @@ void AssetImporter::CleanUp()
 	aiDetachAllLogStreams();
 }
 
+void AssetImporter::LoadFile(std::string filePath)
+{
+	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	
+	if (scene != nullptr && scene->HasMeshes())
+	{
+		// Use scene->mNumMeshes to iterate on scene->mMeshes array
+		aiReleaseImport(scene);
+	}
+	else
+	{
+		LOG("Error loading scene %s", filePath.c_str());
+	}
+}
+		

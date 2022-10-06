@@ -106,22 +106,22 @@ bool ModuleEditor::Start()
 
 bool ModuleEditor::CleanUp()
 {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
+ImGui_ImplOpenGL3_Shutdown();
+ImGui_ImplSDL2_Shutdown();
+ImGui::DestroyContext();
 
-	//Clean Segments
-	for (int i = 0; i < segments.size(); ++i)
-	{
-		 RELEASE(segments[i]);
-	}
+//Clean Segments
+for (int i = 0; i < segments.size(); ++i)
+{
+	RELEASE(segments[i]);
+}
 
-	//Delete Editor Properties
-	eProps->Delete();
-	//RELEASE(segAbout);
-	//RELEASE(segConfiguration);
+//Delete Editor Properties
+eProps->Delete();
+//RELEASE(segAbout);
+//RELEASE(segConfiguration);
 
-	return true;
+return true;
 }
 
 UpdateStatus ModuleEditor::PostUpdate()
@@ -191,7 +191,7 @@ void ModuleEditor::MainMenuBar()
 		if (ImGui::BeginMenu("View"))
 		{
 
-			for (int i = 0; i < (segments.size()-1); ++i)
+			for (int i = 0; i < (segments.size() - 1); ++i)
 			{
 				if (ImGui::MenuItem(segments[i]->name.c_str(), NULL, &segments[i]->enabled))
 				{
@@ -204,6 +204,11 @@ void ModuleEditor::MainMenuBar()
 		//HELP
 		if (ImGui::BeginMenu("Help"))
 		{
+			if (ImGui::MenuItem("Visit Github", ""))
+			{
+				ShellExecute(0, 0, "https://github.com/MrIllas/Lightsteam-Engine", 0, 0, SW_SHOW);
+			}
+
 			if (ImGui::MenuItem(segments[segments.size()-1]->name.c_str(), NULL, &segments[segments.size()-1]->enabled))
 			{
 				LOG("%s '%s'", segments[segments.size() - 1]->name.c_str(), segments[segments.size() - 1]->enabled ? "OPENED" : "CLOSED");
