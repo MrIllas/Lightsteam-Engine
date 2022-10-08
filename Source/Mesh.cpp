@@ -1,17 +1,17 @@
-#include "Primitive.h"
+#include "Mesh.h"
 
 #include "glmath.h"
 
-Primitive::Primitive()
+Mesh::Mesh()
 {
 }
 
-Primitive::~Primitive()
+Mesh::~Mesh()
 {
 
 }
 
-void Primitive::Init(PrimitiveTypes primitiveType, float3 position, float3 size)
+void Mesh::Init(PrimitiveTypes primitiveType, float3 position, float3 size)
 {
 	this->position = position;
 	this->size = size;
@@ -33,7 +33,13 @@ void Primitive::Init(PrimitiveTypes primitiveType, float3 position, float3 size)
 	}
 }
 
-void Primitive::Cube()
+void Mesh::InitMesh()
+{
+
+}
+
+#pragma region Primitives
+void Mesh::Cube()
 {
 	float x, y, z;
 	x = size.x * 1.0f;
@@ -64,7 +70,7 @@ void Primitive::Cube()
 	};
 }
 
-void Primitive::Sphere()
+void Mesh::Sphere()
 {
 	float radius = 1.0f;
 	int rings = 15;
@@ -104,7 +110,7 @@ void Primitive::Sphere()
 	}
 }
 
-void Primitive::Pyramid()
+void Mesh::Pyramid()
 {
 	float x, y, z;
 	x = size.x * 1.0f;
@@ -130,7 +136,7 @@ void Primitive::Pyramid()
 	};
 }
 
-void Primitive::Cylinder()
+void Mesh::Cylinder()
 {
 	int sector = 3;
 	float height = 1.0f;
@@ -259,3 +265,4 @@ void Primitive::Cylinder()
 		}
 	}
 }
+#pragma endregion Primitives

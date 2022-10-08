@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 
-class AssetImporter;
+class MeshImporter;
 
 class ModuleFileSystem : public Module
 {
@@ -22,6 +22,6 @@ public:
 	void LoadSettingsData(pugi::xml_node& load) override;
 
 private:
-	AssetImporter* assImp = nullptr;
+	MeshImporter* meshImp = nullptr;
 };
 

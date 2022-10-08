@@ -12,9 +12,9 @@
 	</Window>
 	<Renderer3D>
 		<Vsync value="false" />
-		<Wireframe value="false" />
+		<Wireframe value="true" />
 		<DepthTest value="true" />
-		<CullFace value="true" />
+		<CullFace value="false" />
 		<Lighting value="true" />
 		<Fog value="true" />
 		<ColorMaterial value="true" />

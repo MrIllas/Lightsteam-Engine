@@ -156,7 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="AssetImporter.cpp" />
+    <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="External\ImGui\imgui.cpp" />
     <ClCompile Include="External\ImGui\imgui_demo.cpp" />
@@ -213,7 +213,7 @@
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="Primitive.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SegmentAbout.cpp" />
     <ClCompile Include="SegmentConfiguration.cpp" />
@@ -223,7 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="AssetImporter.h" />
+    <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="External\ImGui\imconfig.h" />
     <ClInclude Include="External\ImGui\imgui.h" />
@@ -312,7 +312,7 @@
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Segment.h" />
     <ClInclude Include="SegmentAbout.h" />

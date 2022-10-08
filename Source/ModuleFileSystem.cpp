@@ -2,7 +2,7 @@
 
 #include "PhysFS/include/physfs.h"
 
-#include "AssetImporter.h"
+#include "MeshImporter.h"
 
 ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -18,7 +18,7 @@ bool ModuleFileSystem::Init()
 {
 	bool ret = true;
 
-	assImp = new AssetImporter();
+	meshImp = new MeshImporter();
 
 	return ret;
 }
@@ -27,7 +27,7 @@ bool ModuleFileSystem::Start()
 {
 	bool ret = true;
 
-	assImp->Start();
+	meshImp->Start();
 
 	return ret;
 }
@@ -36,8 +36,8 @@ bool ModuleFileSystem::CleanUp()
 {
 	bool ret = true;
 
-	assImp->CleanUp();
-	RELEASE(assImp);
+	meshImp->CleanUp();
+	RELEASE(meshImp);
 
 	return ret;
 }

@@ -25,7 +25,7 @@
     <ClCompile Include="Application.cpp">
       <Filter>Source\Globals</Filter>
     </ClCompile>
-    <ClCompile Include="Primitive.cpp">
+    <ClCompile Include="Mesh.cpp">
       <Filter>Source\Tools</Filter>
     </ClCompile>
     <ClCompile Include="glmath.cpp">
@@ -190,9 +190,11 @@
     <ClCompile Include="MeshRenderer.cpp">
       <Filter>Source\Core\Render</Filter>
     </ClCompile>
-    <ClCompile Include="AssetImporter.cpp" />
     <ClCompile Include="ModuleFileSystem.cpp">
       <Filter>Source\Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshImporter.cpp">
+      <Filter>Source\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +228,7 @@
     <ClInclude Include="Point.h">
       <Filter>Header\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.h">
+    <ClInclude Include="Mesh.h">
       <Filter>Header\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Timer.hpp">
@@ -487,9 +489,11 @@
     <ClInclude Include="MeshRenderer.h">
       <Filter>Header\Core\Render</Filter>
     </ClInclude>
-    <ClInclude Include="AssetImporter.h" />
     <ClInclude Include="ModuleFileSystem.h">
       <Filter>Header\Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshImporter.h">
+      <Filter>Header\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -549,6 +553,12 @@
     </Filter>
     <Filter Include="Header\Core\Render">
       <UniqueIdentifier>{6a658b6b-685f-4368-8ef9-c552adf0d3cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mesh">
+      <UniqueIdentifier>{d52aab9c-2a65-421e-8df4-738ab49e465a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Data">
+      <UniqueIdentifier>{f30258d8-ee07-4b72-83d8-5aa311529acf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -16,11 +16,13 @@ enum PrimitiveTypes
 	CYLINDER
 };
 
-class Primitive
+class Mesh
 {
 public:
-	Primitive();
-	~Primitive();
+	Mesh();
+	~Mesh();
+
+	void InitMesh();
 
 	void Init(PrimitiveTypes primitiveType, float3 position = { 0, 0, 0 }, float3 size = { 1, 1, 1});
 
@@ -37,10 +39,10 @@ private:
 	float3 size = { 1, 1, 1};
 	float3 position = { 0, 0, 0}; 
 
-private:
+public:
 	std::vector<float3> vertex;
-	//std::vector<float2> texcoords;
 	std::vector<uint> index;
+	//std::vector<float2> texcoords;
 
 };
 #endif // !__PRIMITIVE_H__
