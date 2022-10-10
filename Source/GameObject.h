@@ -5,6 +5,7 @@
 #include "Component.h"
 
 #include <vector>
+#include <map>
 
 class GameObject
 {
@@ -16,18 +17,16 @@ public:
 
 
 	Component* CreateComponent(CO_TYPE type);
-	Component* GetComponent();
-	Component* GetComponentInChildren();
+	void DeleteComponent(CO_TYPE type);
+	Component* GetComponent(CO_TYPE type);
+	Component* GetComponentInChildren(CO_TYPE type);
 
 public:
 	std::string name;
 
-	std::vector<Component*> components;
+	std::map<CO_TYPE, Component*> components;
 
-	GameObject* parent = nullptr;
 	std::vector<GameObject*> children;
-
-private:
-	bool CheckComponents(CO_TYPE type);
+	GameObject* parent = nullptr;
 };
 

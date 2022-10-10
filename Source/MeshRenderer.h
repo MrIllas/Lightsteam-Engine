@@ -15,7 +15,6 @@ public:
 	~MeshRenderer();
 
 	void Draw();
-	void Update();
 
 	float3 GetPosition();
 	float3 GetRotation();

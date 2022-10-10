@@ -202,6 +202,12 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="CompTransform.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CompMeshRenderer.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -506,6 +512,12 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CompTransform.h">
+      <Filter>Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CompMeshRenderer.h">
+      <Filter>Header\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

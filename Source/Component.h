@@ -4,27 +4,29 @@
 
 enum CO_TYPE
 {
-	EMPTY,
+	NONE,
 	TRANSFORM,
-	MESH,
+	MESH_RENDERER,
 	MATERIAL
 };
 
+class GameObject;
 
 class Component
 {
 public:
-	Component(){};
-	~Component(){};
+	Component(GameObject* owner);
+	~Component();
 
-	virtual void Enable() { enabled = true; };
-	virtual void Disable() { enabled = false; };
+	virtual void Init();
+	virtual void Update();
 
-	virtual void Update() {};
+	void Enable();
+	void Disable();
 
 public:
-	CO_TYPE type = CO_TYPE::EMPTY;
-	bool enabled = true;
+	CO_TYPE type;
+	bool active;
 	
 	GameObject* owner = nullptr;
 };

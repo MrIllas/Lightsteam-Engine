@@ -45,11 +45,6 @@ void MeshRenderer::Draw()
 	}
 }
 
-void MeshRenderer::Update()
-{
-
-}
-
 #pragma region Getters and Setters
 float3 MeshRenderer::GetPosition()
 {

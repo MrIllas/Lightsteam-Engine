@@ -156,7 +156,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CompMeshRenderer.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="CompTransform.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -225,7 +227,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="CompMeshRenderer.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="CompTransform.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Color.h" />
