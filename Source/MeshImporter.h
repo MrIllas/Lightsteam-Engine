@@ -2,7 +2,9 @@
 
 #include <string>
 #include <vector>
+
 class aiMesh;
+class aiNode;
 class Mesh;
 
 class MeshImporter
@@ -18,7 +20,8 @@ public:
 	static std::vector<Mesh> LoadMeshFile( std::string filePath);
 
 private:
-	static Mesh LoadMeshNode(aiMesh* mesh);
+	static Mesh LoadMesh(aiMesh* mesh);
+	static void LoadNode(aiNode* node);
 };
 
 

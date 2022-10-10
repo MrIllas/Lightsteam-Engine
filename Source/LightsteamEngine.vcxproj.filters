@@ -196,6 +196,12 @@
     <ClCompile Include="MeshImporter.cpp">
       <Filter>Source\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -495,6 +501,12 @@
     <ClInclude Include="MeshImporter.h">
       <Filter>Header\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -559,6 +571,12 @@
     </Filter>
     <Filter Include="Header\Data">
       <UniqueIdentifier>{f30258d8-ee07-4b72-83d8-5aa311529acf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Components">
+      <UniqueIdentifier>{c3d00459-5a83-42bc-8b44-2e3d94b96891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Components">
+      <UniqueIdentifier>{6c7edacd-4189-44ed-b82c-3ec70c6cb1ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

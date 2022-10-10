@@ -44,7 +44,7 @@ std::vector<Mesh> MeshImporter::LoadMeshFile(std::string filePath)
 	{
 		for(uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			 toReturn.emplace_back(LoadMeshNode(scene->mMeshes[i]));
+			 toReturn.emplace_back(LoadMesh(scene->mMeshes[i]));
 		}
 
 		aiReleaseImport(scene);
@@ -57,8 +57,12 @@ std::vector<Mesh> MeshImporter::LoadMeshFile(std::string filePath)
 	return toReturn;
 }
 
+void MeshImporter::LoadNode(aiNode* node)
+{
 
-Mesh MeshImporter::LoadMeshNode(aiMesh* mesh)
+}
+
+Mesh MeshImporter::LoadMesh(aiMesh* mesh)
 {
 	Mesh newMesh = Mesh();
 	newMesh.InitMesh();
