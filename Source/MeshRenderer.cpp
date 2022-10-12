@@ -4,45 +4,45 @@
 
 MeshRenderer::MeshRenderer()
 {
-	meshData = MeshImporter::LoadMeshFile("../Output/Assets/BakerHouse.fbx");
+	indexBuffer = 0;
+	vertexBuffer = 0;
+}
 
-	vertexBuffer.resize(meshData.size());
-	indexBuffer.resize(meshData.size());
+MeshRenderer::MeshRenderer(Mesh meshData)
+{
+	//this->meshData = MeshImporter::LoadMeshFile("../Output/Assets/BakerHouse.fbx");
+	this->meshData = meshData;
 
 	//Vertex Buffer creation
 	//Creates a new Buffer that is sent to the VRam
-	for(uint i = 0; i < meshData.size(); ++i)
-	{
-		glGenBuffers(1, &vertexBuffer[i]);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer[i]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * meshData[i].GetVertex().size(), &meshData[i].GetVertex()[0], GL_STATIC_DRAW);
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * meshData.GetVertex().size(), &meshData.GetVertex()[0], GL_STATIC_DRAW);
 
-		glEnableClientState(GL_VERTEX_ARRAY); //Type of data
-		glVertexPointer(3, GL_FLOAT, 0, NULL); //Use bind buffer as vertices
+	glEnableClientState(GL_VERTEX_ARRAY); //Type of data
+	glVertexPointer(3, GL_FLOAT, 0, NULL); //Use bind buffer as vertices
 
-		//Index Buffer creation
-		glGenBuffers(1, &indexBuffer[i]);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer[i]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * meshData[i].GetIndex().size(), &meshData[i].GetIndex()[0], GL_STATIC_DRAW);
-	}
+	//Index Buffer creation
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * meshData.GetIndex().size(), &meshData.GetIndex()[0], GL_STATIC_DRAW);
 }
+
 
 MeshRenderer::~MeshRenderer()
 {
-	for (uint i = 0; i < meshData.size(); ++i)
-	{
-		glDeleteBuffers(1, &vertexBuffer[i]);
-		glDeleteBuffers(1, &indexBuffer[i]);
-	}
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &indexBuffer);
 }
 
 void MeshRenderer::Draw()
 {
-	for (uint i = 0; i < meshData.size(); ++i)
+	if (indexBuffer != 0)
 	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer[i]);
-		glDrawElements(GL_TRIANGLES, meshData[i].GetIndex().size(), GL_UNSIGNED_INT, NULL);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		glDrawElements(GL_TRIANGLES, meshData.GetIndex().size(), GL_UNSIGNED_INT, NULL);
 	}
+	
 }
 
 #pragma region Getters and Setters

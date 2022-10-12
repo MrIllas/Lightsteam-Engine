@@ -12,6 +12,7 @@ class MeshRenderer
 {
 public:
 	MeshRenderer();
+	MeshRenderer(Mesh meshData);
 	~MeshRenderer();
 
 	void Draw();
@@ -27,8 +28,8 @@ public:
 private:
 	float4x4 matrix;
 
-	std::vector<GLuint> vertexBuffer;
-	std::vector<GLuint> indexBuffer;
-	std::vector<Mesh> meshData;
+	GLuint vertexBuffer;
+	GLuint indexBuffer;
+	Mesh meshData;
 };
 

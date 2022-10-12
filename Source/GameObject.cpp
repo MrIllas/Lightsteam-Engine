@@ -3,11 +3,11 @@
 #include "CompTransform.h"
 #include "CompMeshRenderer.h"
 
-GameObject::GameObject()
+GameObject::GameObject(bool spatial)
 {
-	name = "GameObject";
+	name = "Node";
 
-	CreateComponent(CO_TYPE::TRANSFORM);
+	if(spatial) CreateComponent(CO_TYPE::TRANSFORM);
 }
 
 GameObject::~GameObject()
@@ -67,7 +67,7 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 			break;
 	}
 
-	if (toReturn != nullptr) components.emplace(type, toReturn);
+	if (toReturn != nullptr) components[type] = toReturn;
 
 	return toReturn;
 }
@@ -79,8 +79,8 @@ void GameObject::DeleteComponent(CO_TYPE type)
 	if (comp != nullptr)
 	{
 		RELEASE(comp);
-		components.erase(type);
 	}
+	components.erase(type);
 }
 
 Component* GameObject::GetComponent(CO_TYPE type)

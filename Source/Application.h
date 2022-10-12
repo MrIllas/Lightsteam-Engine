@@ -5,7 +5,7 @@
 #include "Timer.hpp"
 
 
-#define CONFIG_FILENAME "config.xml"
+#define CONFIG_FILENAME "Settings/config.xml"
 
 class Module;
 class ModuleWindow;
@@ -13,6 +13,7 @@ class ModuleInput;
 class ModuleFileSystem;
 class ModuleCamera3D;
 class ModuleEditor;
+class ModuleScene;
 
 class ModuleRenderer3D;
 
@@ -39,6 +40,7 @@ public:
 	ModuleInput* input = nullptr;
 	ModuleFileSystem* fileSystem = nullptr;
 	ModuleCamera3D* camera = nullptr;
+	ModuleScene* scene = nullptr;
 	ModuleEditor* editor = nullptr;
 	ModuleRenderer3D* renderer3D = nullptr;
 

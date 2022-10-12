@@ -9,6 +9,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleScene.h"
 
 
 #pragma region Time
@@ -39,6 +40,7 @@ Application::Application()
 	input = new ModuleInput(this, true);
 	fileSystem = new ModuleFileSystem(this, true);
 	camera = new ModuleCamera3D(this, true);
+	scene = new ModuleScene(this, true);
 	editor = new ModuleEditor(this, true);
 	renderer3D = new ModuleRenderer3D(this, true);
 	
@@ -51,6 +53,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(fileSystem);
 	AddModule(camera);
+	AddModule(scene);
 	AddModule(editor);
 	
 	// Renderer last!

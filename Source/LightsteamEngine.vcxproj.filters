@@ -199,14 +199,17 @@
     <ClCompile Include="Component.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source\Core</Filter>
-    </ClCompile>
     <ClCompile Include="CompTransform.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="CompMeshRenderer.cpp">
       <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Source\Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -510,14 +513,17 @@
     <ClInclude Include="Component.h">
       <Filter>Header\Components</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header\Core</Filter>
-    </ClInclude>
     <ClInclude Include="CompTransform.h">
       <Filter>Header\Components</Filter>
     </ClInclude>
     <ClInclude Include="CompMeshRenderer.h">
       <Filter>Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Header\Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -589,6 +595,12 @@
     </Filter>
     <Filter Include="Source\Components">
       <UniqueIdentifier>{6c7edacd-4189-44ed-b82c-3ec70c6cb1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\GameObjects">
+      <UniqueIdentifier>{dce66f4e-3fb1-47b2-a91b-2187e72f21d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject">
+      <UniqueIdentifier>{e510e1f8-6a62-44cc-92f6-d5e6ef696735}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

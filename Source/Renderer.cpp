@@ -1,7 +1,5 @@
 #include "Renderer.h"
 
-//#include "Primitive.h"
-
 Renderer::Renderer(float2 size)
 {
 	frameBuffer = new FrameBuffer();
@@ -20,7 +18,7 @@ void Renderer::Init()
 
 void Renderer::Start()
 {
-	meshes.emplace_back(new MeshRenderer());
+	//meshes.emplace_back(new MeshRenderer());
 }
 
 void Renderer::CleanUp()

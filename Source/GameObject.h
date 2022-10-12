@@ -10,7 +10,7 @@
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(bool spatial = true);
 	~GameObject();
 
 	void Update();
@@ -20,6 +20,8 @@ public:
 	void DeleteComponent(CO_TYPE type);
 	Component* GetComponent(CO_TYPE type);
 	Component* GetComponentInChildren(CO_TYPE type);
+
+	bool HasChildren() { return (children.size() != 0) ? true : false; }
 
 public:
 	std::string name;
