@@ -7,6 +7,10 @@
 #include <vector>
 #include <map>
 
+#include <typeinfo>
+
+class CompMeshRenderer;
+
 class GameObject
 {
 public:
@@ -20,6 +24,12 @@ public:
 	void DeleteComponent(CO_TYPE type);
 	Component* GetComponent(CO_TYPE type);
 	Component* GetComponentInChildren(CO_TYPE type);
+
+	template <class T>
+	T* GetComponent(CO_TYPE type)
+	{ 
+		return (T*)components[type];
+	}
 
 	bool HasChildren() { return (children.size() != 0) ? true : false; }
 

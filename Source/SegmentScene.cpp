@@ -1,16 +1,22 @@
 #include "SegmentScene.h"
 
+#include "ModuleRenderer3D.h"
+#include "FrameBuffer.h"
+
 #include "MathGeoLib/include/Math/float2.h"
 #include "ImGui/imgui_internal.h"
+
 SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 {
 	name = "Scene";
+
+	renInstance = RenderProperties::Instance();
 }
 
 SegmentScene::~SegmentScene()
 {
-	renderer->CleanUp();
-	RELEASE(renderer);
+	//renderer->CleanUp();
+	//RELEASE(renderer);
 }
 
 void SegmentScene::Start()
@@ -27,12 +33,12 @@ void SegmentScene::Update()
 		{
 			segmentSize.x = aux.x;
 			segmentSize.y = aux.y;
-			if (renderer == nullptr)
+			if (renInstance->render == nullptr)
 			{
-				renderer = new Renderer({ segmentSize.x, segmentSize.y });
-				renderer->Start();
+				renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
+				//render->render->Start();
 			}
-			else renderer->Resize({ segmentSize.x, segmentSize.y });
+			else renInstance->render->Resize({ segmentSize.x, segmentSize.y });
 		}
 
 		RenderSpace();
@@ -42,6 +48,6 @@ void SegmentScene::Update()
 
 void SegmentScene::RenderSpace()
 {
-	ImGui::Image((ImTextureID)renderer->GetFrameBufffer()->GetTextureBuffer(), { segmentSize.x, segmentSize.y }, ImVec2(0, 1), ImVec2(1, 0));
-	renderer->Draw();
+	ImGui::Image((ImTextureID)renInstance->render->GetFrameBufffer()->GetTextureBuffer(), { segmentSize.x, segmentSize.y }, ImVec2(0, 1), ImVec2(1, 0));
+	//renInstance->render->Draw();
 }

@@ -6,9 +6,12 @@
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 
+#pragma comment (lib, "assimp.lib")
+
 #include "Mesh.h"
 
-#pragma comment (lib, "assimp.lib")
+#include "GameObject.h"
+#include "CompMeshRenderer.h"
 
 MeshImporter::MeshImporter()
 {
@@ -45,6 +48,12 @@ std::vector<Mesh> MeshImporter::LoadMeshFile(std::string filePath)
 		for(uint i = 0; i < scene->mNumMeshes; ++i)
 		{
 			 toReturn.emplace_back(LoadMesh(scene->mMeshes[i]));
+
+			 GameObject go;
+			 go.CreateComponent(MESH_RENDERER);
+			 MeshRenderer mesh = LoadMesh(scene->mMeshes[i]);
+			 go.GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(&mesh);
+
 		}
 
 		aiReleaseImport(scene);

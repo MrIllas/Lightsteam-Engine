@@ -1,14 +1,16 @@
 #pragma once
 
-#include "FrameBuffer.h"
-
 #include "MathGeoLib/include/Math/float2.h"
 
-#include "MeshRenderer.h"
+#include <queue>
+
+class FrameBuffer;
+class CompMeshRenderer;
 
 class Renderer
 {
 public:
+	Renderer(){};
 	Renderer(float2 size);
 	~Renderer();
 
@@ -16,19 +18,23 @@ public:
 	void Start();
 	void CleanUp();
 
-	void Draw();
+	void Render();
 	void Resize(float2 size);
 
 	FrameBuffer* GetFrameBufffer() { return frameBuffer; }
 
+	void QueueMesh(CompMeshRenderer* mesh) { meshes.push(mesh); }
+
 public:
 	float2 size = {0, 0};
+
 private:
 	void PreUpdate();
 	void Update();
 	void PostUpdate();
 
-	std::vector<MeshRenderer*> meshes;
+	//std::vector<MeshRenderer*> meshes;
+	std::queue<CompMeshRenderer*> meshes;
 
 private:
 	FrameBuffer* frameBuffer = nullptr;

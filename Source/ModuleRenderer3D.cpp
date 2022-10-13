@@ -8,6 +8,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "Renderer.h"
+
 #pragma region RenderProperties
 
 RenderProperties::RenderProperties()
@@ -193,6 +195,9 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 // PostUpdate present buffer to screen
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
+	rProps->render->Render();
+
+
 	//Swap Buffer
 	SDL_GL_SwapWindow(wProps->window);
 	return UPDATE_CONTINUE;
@@ -202,6 +207,11 @@ UpdateStatus ModuleRenderer3D::PostUpdate()
 bool ModuleRenderer3D::CleanUp()
 {
 	//Render Properties Struct singleton
+	if (rProps->render != nullptr)
+	{
+		rProps->render->CleanUp();
+		RELEASE(rProps->render);
+	}
 	RenderProperties::Delete();
 
 	LOG("Destroying 3D Renderer");

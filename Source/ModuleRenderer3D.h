@@ -6,6 +6,10 @@
 
 #define MAX_LIGHTS 8
 
+#include "External/SDL/include/SDL.h"
+
+class Renderer;
+
 struct RenderProperties
 {
 public:
@@ -17,6 +21,8 @@ public:
 	bool fog = false;
 	bool colorMaterial = false;
 	bool texture2D = false;
+
+	Renderer* render = nullptr;
 
 	RenderProperties();
 

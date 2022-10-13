@@ -3,6 +3,9 @@
 
 #include "MeshRenderer.h"
 
+
+struct RenderProperties;
+
 class CompMeshRenderer : public Component
 {
 public:
@@ -11,10 +14,14 @@ public:
 
 	void Update() override;
 
+	void Render();
+
 	MeshRenderer* GetMesh();
 	void SetMesh(MeshRenderer* mesh);
 	
 private:
 	MeshRenderer* mesh = nullptr;
+
+	RenderProperties* renInstance = nullptr;
 };
 

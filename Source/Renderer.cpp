@@ -1,5 +1,8 @@
 #include "Renderer.h"
 
+#include "FrameBuffer.h"
+#include "CompMeshRenderer.h"
+
 Renderer::Renderer(float2 size)
 {
 	frameBuffer = new FrameBuffer();
@@ -24,13 +27,18 @@ void Renderer::Start()
 void Renderer::CleanUp()
 {
 	RELEASE(frameBuffer);
-	for (uint i = 0; i < meshes.size(); ++i)
+
+	
+
+	/*for (uint i = 0; i < meshes.size(); ++i)
 	{
-		RELEASE(meshes[i]);
+		 RELEASE(meshes.front());
+		 meshes.pop();
 	}
+	meshes.empty();*/
 }
 
-void Renderer::Draw()
+void Renderer::Render()
 {
 	PreUpdate();
 	Update();
@@ -56,7 +64,8 @@ void Renderer::Update()
 {
 	for (uint i = 0; i < meshes.size(); ++i)
 	{
-		meshes[i]->Draw();
+		meshes.front()->Render();
+		meshes.pop();
 	}
 }
 

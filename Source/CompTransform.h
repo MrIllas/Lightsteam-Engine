@@ -4,7 +4,7 @@
 #include "MathGeoLib/include/Math/float4x4.h"
 #include "MathGeoLib/include/Math/float3.h"
 
-class CompTransform : public Component
+class CompTransform : public Component 
 {
 public:
 	CompTransform(GameObject* owner);

@@ -42,7 +42,6 @@ void MeshRenderer::Draw()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 		glDrawElements(GL_TRIANGLES, meshData.GetIndex().size(), GL_UNSIGNED_INT, NULL);
 	}
-	
 }
 
 #pragma region Getters and Setters
