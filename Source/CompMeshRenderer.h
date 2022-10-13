@@ -10,7 +10,7 @@ class CompMeshRenderer : public Component
 {
 public:
 	CompMeshRenderer(GameObject* owner);
-	~CompMeshRenderer();
+	~CompMeshRenderer() override;
 
 	void Update() override;
 

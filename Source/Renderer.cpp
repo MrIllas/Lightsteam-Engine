@@ -7,6 +7,7 @@ Renderer::Renderer(float2 size)
 {
 	frameBuffer = new FrameBuffer();
 	Resize(size);
+
 }
 
 Renderer::~Renderer()
@@ -74,3 +75,8 @@ void Renderer::PostUpdate()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 #pragma endregion Renderer Update Phaces
+
+void Renderer::QueueMesh(CompMeshRenderer* mesh)
+{
+	meshes.emplace(mesh);
+}

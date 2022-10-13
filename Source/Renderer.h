@@ -23,7 +23,7 @@ public:
 
 	FrameBuffer* GetFrameBufffer() { return frameBuffer; }
 
-	void QueueMesh(CompMeshRenderer* mesh) { meshes.push(mesh); }
+	void QueueMesh(CompMeshRenderer* mesh);
 
 public:
 	float2 size = {0, 0};

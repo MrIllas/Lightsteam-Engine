@@ -53,8 +53,8 @@ Application::Application()
 	AddModule(input);
 	AddModule(fileSystem);
 	AddModule(camera);
-	AddModule(scene);
 	AddModule(editor);
+	AddModule(scene);
 	
 	// Renderer last!
 	AddModule(renderer3D);

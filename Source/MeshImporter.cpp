@@ -13,6 +13,8 @@
 #include "GameObject.h"
 #include "CompMeshRenderer.h"
 
+#include"ModuleScene.h"
+
 MeshImporter::MeshImporter()
 {
 
@@ -37,7 +39,7 @@ void MeshImporter::CleanUp()
 	aiDetachAllLogStreams();
 }
 
-std::vector<Mesh> MeshImporter::LoadMeshFile(std::string filePath)
+void MeshImporter::LoadMeshFile(std::string filePath)
 {
 	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	
@@ -49,11 +51,14 @@ std::vector<Mesh> MeshImporter::LoadMeshFile(std::string filePath)
 		{
 			 toReturn.emplace_back(LoadMesh(scene->mMeshes[i]));
 
-			 GameObject go;
-			 go.CreateComponent(MESH_RENDERER);
-			 MeshRenderer mesh = LoadMesh(scene->mMeshes[i]);
-			 go.GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(&mesh);
+			 /*CHECK THIS - NOT WORKING, SHOULD LOAD MESHES; CREATE THE COMP ANDD ADD IT TO THE SCENE*/
+			 GameObject* go = new GameObject();
+			 go->CreateComponent(MESH_RENDERER);
 
+			 MeshRenderer* meshRenderer = new MeshRenderer(LoadMesh(scene->mMeshes[i]));
+
+			 go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
+			 SceneProperties::Instance()->root->AddChildren(go);
 		}
 
 		aiReleaseImport(scene);
@@ -62,8 +67,6 @@ std::vector<Mesh> MeshImporter::LoadMeshFile(std::string filePath)
 	{
 		LOG("Error loading scene %s", filePath.c_str());
 	}
-
-	return toReturn;
 }
 
 void MeshImporter::LoadNode(aiNode* node)

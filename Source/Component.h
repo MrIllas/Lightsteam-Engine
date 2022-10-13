@@ -16,7 +16,7 @@ class Component
 {
 public:
 	Component(GameObject* owner);
-	~Component();
+	virtual ~Component();
 
 	virtual void Init();
 	virtual void Update();

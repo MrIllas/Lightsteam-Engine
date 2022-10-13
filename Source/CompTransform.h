@@ -8,7 +8,7 @@ class CompTransform : public Component
 {
 public:
 	CompTransform(GameObject* owner);
-	~CompTransform();
+	~CompTransform() override;
 
 	void Init() override;
 	void Update() override;

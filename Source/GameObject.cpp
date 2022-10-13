@@ -35,6 +35,8 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+	if (components.empty()) return;
+
 	for (auto const& comp : components)
 	{
 		if (comp.second->active)
@@ -102,3 +104,7 @@ Component* GameObject::GetComponentInChildren(CO_TYPE type)
 	return nullptr; 
 }
 
+void GameObject::AddChildren(GameObject* go)
+{
+	children.emplace_back(go);
+}

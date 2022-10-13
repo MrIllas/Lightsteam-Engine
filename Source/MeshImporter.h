@@ -17,7 +17,7 @@ public:
 	void CleanUp();
 
 public:
-	static std::vector<Mesh> LoadMeshFile( std::string filePath);
+	static void LoadMeshFile( std::string filePath);
 
 private:
 	static Mesh LoadMesh(aiMesh* mesh);

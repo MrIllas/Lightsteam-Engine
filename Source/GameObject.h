@@ -31,6 +31,8 @@ public:
 		return (T*)components[type];
 	}
 
+	void AddChildren(GameObject* go);
+
 	bool HasChildren() { return (children.size() != 0) ? true : false; }
 
 public:

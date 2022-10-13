@@ -2,6 +2,35 @@
 
 #include "GameObject.h"
 
+#include "MeshImporter.h"
+
+
+#pragma region SceneProperties
+SceneProperties::SceneProperties()
+{
+	root = new GameObject();
+	root->DeleteComponent(TRANSFORM);
+}
+
+SceneProperties* SceneProperties::Instance()
+{
+	if (instance == nullptr) instance = new SceneProperties();
+
+	return instance;
+}
+
+void SceneProperties::Delete()
+{
+	if (instance != nullptr)
+	{
+		RELEASE(instance);
+	}
+}
+
+SceneProperties* SceneProperties::instance = nullptr;
+
+#pragma endregion Scene Properties Singleton Struct
+
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -15,24 +44,22 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init()
 {
-	root = new GameObject();
-	root->DeleteComponent(TRANSFORM);
+	sProps = sProps->Instance();
 
 	return true;
 }
 
 bool ModuleScene::Start()
 {
-
-
-
+	MeshImporter::LoadMeshFile("../Output/Assets/BakerHouse.fbx");
 
 	return true;
 }
 
 bool ModuleScene::CleanUp()
 {
-	RELEASE(root);
+	RELEASE(sProps->root);
+	sProps->Delete();
 
 	return true;
 }
@@ -48,7 +75,7 @@ UpdateStatus ModuleScene::Update()
 {
 
 	//Update Game Objects
-	UpdateGameObject(root);
+	UpdateGameObject(sProps->root);
 
 
 	return UPDATE_CONTINUE;

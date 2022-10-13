@@ -5,6 +5,22 @@
 
 class GameObject;
 
+
+struct SceneProperties
+{
+public:
+	GameObject* root = nullptr;
+
+	SceneProperties();
+
+	static SceneProperties* Instance();
+
+	static void Delete();
+
+private:
+	static SceneProperties* instance;
+};
+
 class ModuleScene : public Module
 {
 public:
@@ -24,8 +40,8 @@ public:
 	void LoadSettingsData(pugi::xml_node& load) override;
 
 
-public:
-	GameObject* root;
+private:
+	SceneProperties* sProps = nullptr;
 
 private:
 	void UpdateGameObject(GameObject* go);

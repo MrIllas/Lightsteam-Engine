@@ -21,6 +21,7 @@ SegmentScene::~SegmentScene()
 
 void SegmentScene::Start()
 {
+	renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
 }
 
 void SegmentScene::Update()
