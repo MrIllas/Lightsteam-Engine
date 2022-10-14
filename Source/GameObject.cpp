@@ -6,6 +6,7 @@
 GameObject::GameObject(bool spatial)
 {
 	name = "Node";
+	selected = false;
 
 	if(spatial) CreateComponent(CO_TYPE::TRANSFORM);
 }

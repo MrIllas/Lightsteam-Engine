@@ -37,6 +37,7 @@ public:
 
 public:
 	std::string name;
+	bool selected;
 
 	std::map<CO_TYPE, Component*> components;
 
