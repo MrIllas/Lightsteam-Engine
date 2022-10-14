@@ -211,6 +211,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="SegmentHierarchy.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -524,6 +527,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentHierarchy.h">
+      <Filter>Header\Core\Segments</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

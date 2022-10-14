@@ -10,6 +10,7 @@
 #include "SegmentConfiguration.h"
 #include "SegmentConsole.h"
 #include "SegmentScene.h"
+#include "SegmentHierarchy.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -89,6 +90,7 @@ bool ModuleEditor::Start()
 	segments.emplace_back(new SegmentConfiguration());
 	segments.emplace_back(new SegmentConsole());
 	segments.emplace_back(new SegmentScene());
+	segments.emplace_back(new SegmentHierarchy());
 		//Always last
 	segments.emplace_back(new SegmentAbout());
 
@@ -140,7 +142,7 @@ void ModuleEditor::DrawEditorGui()
 	UpdateSegments();
 
 	//Demo
-	//ImGui::ShowDemoWindow();
+	ImGui::ShowDemoWindow();
 
 	EndRender();
 }
