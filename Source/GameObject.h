@@ -14,7 +14,7 @@ class CompMeshRenderer;
 class GameObject
 {
 public:
-	GameObject(bool spatial = true);
+	GameObject(std::string name = "Spatial Node", bool spatial = true);
 	~GameObject();
 
 	void Update();

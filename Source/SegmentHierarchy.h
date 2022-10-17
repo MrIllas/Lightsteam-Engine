@@ -17,7 +17,7 @@ public:
 private:
 	void DisplayGameObject(GameObject* go);
 
-	void RightClickMenu();
+	void RightClickMenu(GameObject* go = nullptr);
 
 	void GetSelectedNode(GameObject* go);
 	inline bool CleanSelected(GameObject* go);

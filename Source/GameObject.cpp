@@ -3,9 +3,9 @@
 #include "CompTransform.h"
 #include "CompMeshRenderer.h"
 
-GameObject::GameObject(bool spatial)
+GameObject::GameObject(std::string name, bool spatial)
 {
-	name = "Node";
+	this->name = name;
 	selected = false;
 
 	if(spatial) CreateComponent(CO_TYPE::TRANSFORM);

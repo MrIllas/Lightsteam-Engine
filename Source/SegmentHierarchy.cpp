@@ -23,16 +23,17 @@ void SegmentHierarchy::Update()
 	if (ImGui::Begin(name.c_str()))
 	{
 		DisplayGameObject(sceneInstance->root);
-		RightClickMenu();
+		//RightClickMenu();
+		
 	}
 	ImGui::End();
+
 }
 
 void SegmentHierarchy::DisplayGameObject(GameObject* go)
 {
-	//else { go->selected = false; }
-	//Get Node Flags
 	ImGuiTreeNodeFlags nodeFlags = ImGuiDockNodeFlags_None;
+	nodeFlags += ImGuiTreeNodeFlags_SpanAvailWidth;
 	
 	if (go->selected) nodeFlags += ImGuiTreeNodeFlags_Selected;
 	//else nodeFlags += ImGuiTreeNodeFlags_None;
@@ -45,6 +46,9 @@ void SegmentHierarchy::DisplayGameObject(GameObject* go)
 	{
 		if (ImGui::IsItemClicked()) { GetSelectedNode(go); }
 
+		//if (ImGui::IsItemHovered()) hoveredGO = go;
+		RightClickMenu(go);
+
 		for (int i = 0; i < go->children.size(); ++i)
 		{
 			DisplayGameObject(go->children[i]);
@@ -52,28 +56,42 @@ void SegmentHierarchy::DisplayGameObject(GameObject* go)
 		
 		ImGui::TreePop();
 	}
+	
 }
 
-void SegmentHierarchy::RightClickMenu()
+void SegmentHierarchy::RightClickMenu(GameObject* go)
 {
-	bool win = ImGui::BeginPopupContextWindow();
-	//bool item = ImGui::BeginPopupContextItem();
-	
-	//if (ImGui::BeginPopupContextWindow() || ImGui::BeginPopupContextItem())
-	if(win)
-	{
-		if (ImGui::MenuItem("Add Node"))
-		{
+	GameObject* auxGO = nullptr;
+	if (go == nullptr) auxGO = sceneInstance->root;
+	else auxGO = go;
 
+	bool pop = ImGui::BeginPopupContextWindow();
+	if (pop)
+	{
+		if (ImGui::BeginMenu("Nodes"))
+		{
+			if (ImGui::MenuItem("Empty Node"))	auxGO->AddChildren(new GameObject("Empty Node", false));
+			if (ImGui::MenuItem("Spatial Node")) auxGO->AddChildren(new GameObject("Spatial Node"));
+			if (ImGui::MenuItem("Mesh Node")) auxGO->AddChildren(new GameObject());
+
+			if (ImGui::BeginMenu("Primitives"))
+			{
+				if (ImGui::MenuItem("Cube Node")) auxGO->AddChildren(new GameObject());
+				if (ImGui::MenuItem("Sphere Node")) auxGO->AddChildren(new GameObject());
+				if (ImGui::MenuItem("Pyramid Node")) auxGO->AddChildren(new GameObject());
+
+				ImGui::EndMenu();
+			}
+			
+			ImGui::EndMenu();
 		}
 
-		if (ImGui::MenuItem("DELETE"))
+		if (ImGui::MenuItem("DELETE", 0,false, go == nullptr ? false : true))
 		{
-
+			LOG("DELETE GAMEOBJECT %s", go->name.c_str());
 		}
 		ImGui::EndPopup();
 	}
-	
 }
 
 void SegmentHierarchy::GetSelectedNode(GameObject* go)
