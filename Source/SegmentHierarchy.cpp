@@ -56,10 +56,11 @@ void SegmentHierarchy::DisplayGameObject(GameObject* go)
 
 void SegmentHierarchy::RightClickMenu()
 {
-	//
+	bool win = ImGui::BeginPopupContextWindow();
+	//bool item = ImGui::BeginPopupContextItem();
 	
 	//if (ImGui::BeginPopupContextWindow() || ImGui::BeginPopupContextItem())
-	if(ImGui::BeginPopupContextItem())
+	if(win)
 	{
 		if (ImGui::MenuItem("Add Node"))
 		{
@@ -77,6 +78,23 @@ void SegmentHierarchy::RightClickMenu()
 
 void SegmentHierarchy::GetSelectedNode(GameObject* go)
 {
-	go->selected = true;
 	cleanSelected = true;
+
+	cleanSelected = CleanSelected(sceneInstance->root);
+	go->selected = true;
+}
+
+bool SegmentHierarchy::CleanSelected(GameObject* go)
+{
+	if (!cleanSelected) return false;
+
+	go->selected = false;
+	if (go->HasChildren())
+	{
+		for (int i = 0; i < go->children.size(); ++i)
+		{
+			CleanSelected(go->children[i]);
+		}
+	}
+	return false;
 }

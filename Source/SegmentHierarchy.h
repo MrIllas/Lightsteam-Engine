@@ -20,6 +20,7 @@ private:
 	void RightClickMenu();
 
 	void GetSelectedNode(GameObject* go);
+	inline bool CleanSelected(GameObject* go);
 
 private:
 	SceneProperties* sceneInstance = nullptr;

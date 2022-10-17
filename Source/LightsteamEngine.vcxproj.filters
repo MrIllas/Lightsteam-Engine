@@ -194,7 +194,7 @@
       <Filter>Source\Core\Modules</Filter>
     </ClCompile>
     <ClCompile Include="MeshImporter.cpp">
-      <Filter>Source\Mesh</Filter>
+      <Filter>Source\Data</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source\Components</Filter>
@@ -590,9 +590,6 @@
     <Filter Include="Header\Core\Render">
       <UniqueIdentifier>{6a658b6b-685f-4368-8ef9-c552adf0d3cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Mesh">
-      <UniqueIdentifier>{d52aab9c-2a65-421e-8df4-738ab49e465a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header\Data">
       <UniqueIdentifier>{f30258d8-ee07-4b72-83d8-5aa311529acf}</UniqueIdentifier>
     </Filter>
@@ -607,6 +604,9 @@
     </Filter>
     <Filter Include="Source\GameObject">
       <UniqueIdentifier>{e510e1f8-6a62-44cc-92f6-d5e6ef696735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Data">
+      <UniqueIdentifier>{d52aab9c-2a65-421e-8df4-738ab49e465a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
