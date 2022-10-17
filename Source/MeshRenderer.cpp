@@ -10,7 +10,6 @@ MeshRenderer::MeshRenderer()
 
 MeshRenderer::MeshRenderer(Mesh meshData)
 {
-	//this->meshData = MeshImporter::LoadMeshFile("../Output/Assets/BakerHouse.fbx");
 	this->meshData = meshData;
 
 	//Vertex Buffer creation

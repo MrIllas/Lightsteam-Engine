@@ -51,7 +51,7 @@ bool ModuleScene::Init()
 
 bool ModuleScene::Start()
 {
-	MeshImporter::LoadMeshFile("../Output/Assets/BakerHouse.fbx");
+	MeshImporter::ImportMesh("../Output/Assets/BakerHouse.fbx");
 
 	return true;
 }

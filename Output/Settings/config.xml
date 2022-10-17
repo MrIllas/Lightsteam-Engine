@@ -25,7 +25,7 @@
 		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />
-		<Hierarchy value="false" />
+		<Hierarchy value="true" />
 		<ColorMode value="1" />
 	</Editor>
 </config>

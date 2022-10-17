@@ -39,42 +39,79 @@ void MeshImporter::CleanUp()
 	aiDetachAllLogStreams();
 }
 
-void MeshImporter::LoadMeshFile(std::string filePath)
+void MeshImporter::ImportMesh(std::string filePath)
 {
 	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
-	
-	std::vector<Mesh> toReturn;
-
+	aiNode* node = nullptr;
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		for(uint i = 0; i < scene->mNumMeshes; ++i)
-		{
-			 toReturn.emplace_back(LoadMesh(scene->mMeshes[i]));
+		node = scene->mRootNode;
 
-			 /*CHECK THIS - NOT WORKING, SHOULD LOAD MESHES; CREATE THE COMP ANDD ADD IT TO THE SCENE*/
-			 GameObject* go = new GameObject();
-			 go->CreateComponent(MESH_RENDERER);
-
-			 MeshRenderer* meshRenderer = new MeshRenderer(LoadMesh(scene->mMeshes[i]));
-
-			 go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
-			 SceneProperties::Instance()->root->AddChildren(go);
-		}
-
-		aiReleaseImport(scene);
-	}
-	else
-	{
-		LOG("Error loading scene %s", filePath.c_str());
+		SceneProperties::Instance()->root->AddChildren(GenerateGameObjects(node, scene));
 	}
 }
 
-void MeshImporter::LoadNode(aiNode* node)
+//void MeshImporter::LoadMeshFile(std::string filePath)
+//{
+//	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+//
+//	if (scene != nullptr && scene->HasMeshes())
+//	{
+//		for (uint i = 0; i < scene->mNumMeshes; ++i)
+//		{
+//			/*CHECK THIS - NOT WORKING, SHOULD LOAD MESHES; CREATE THE COMP ANDD ADD IT TO THE SCENE*/
+//			GameObject* go = new GameObject("nodeName");
+//			go->CreateComponent(MESH_RENDERER);
+//
+//			MeshRenderer* meshRenderer = new MeshRenderer(LoadMesh(scene->mMeshes[i]));
+//
+//			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
+//			SceneProperties::Instance()->root->AddChildren(go);
+//		}
+//
+//		aiReleaseImport(scene);
+//	}
+//	else
+//	{
+//		LOG("Error loading scene %s", filePath.c_str());
+//	}
+//}
+
+GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent)
 {
 
+	if(parent == nullptr) parent = new GameObject(scene->mRootNode->mName.C_Str());
+
+	if (scene->HasMeshes())
+	{
+		/*NOMES L'ULTIMA MESH S'ESTA VISUALITZANT*/
+
+		//Meshes
+		for (uint i = 0; i < scene->mNumMeshes; ++i)
+		{
+			//New Spatial GameObject with MeshRenderer component
+			GameObject* go = new GameObject(node->mChildren[i]->mName.C_Str());
+			go->CreateComponent(MESH_RENDERER);
+
+			//Add Mesh to the gameObject
+			MeshRenderer* meshRenderer = new MeshRenderer(GenerateMesh(scene->mMeshes[i]));
+			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
+
+			//Recursivnes
+			for (uint i2 = 0; i2 < node->mChildren[i]->mNumChildren; ++i2)
+			{
+				go = GenerateGameObjects(node->mChildren[i]->mChildren[i2], scene, go);
+			}
+
+			//Add GameObject to it's parent
+			parent->AddChildren(go);
+		}
+	}
+
+	return parent;
 }
 
-Mesh MeshImporter::LoadMesh(aiMesh* mesh)
+Mesh MeshImporter::GenerateMesh(aiMesh* mesh)
 {
 	Mesh newMesh = Mesh();
 	newMesh.InitMesh();
