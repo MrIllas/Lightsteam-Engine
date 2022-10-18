@@ -59,11 +59,15 @@ void Renderer::PreUpdate()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glLineWidth(2.0f);
+	
+	//glEnableClientState(GL_VERTEX_ARRAY); //Type of data
+	//glVertexPointer(3, GL_FLOAT, 0, NULL); //Use bind buffer as vertices
+
 }
 
 void Renderer::Update()
 {
-	for (uint i = 0; i < meshes.size(); ++i)
+	while (meshes.size())
 	{
 		meshes.front()->Render();
 		meshes.pop();
@@ -73,6 +77,7 @@ void Renderer::Update()
 void Renderer::PostUpdate()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 }
 #pragma endregion Renderer Update Phaces
 

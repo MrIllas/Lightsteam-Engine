@@ -4,42 +4,94 @@
 
 MeshRenderer::MeshRenderer()
 {
-	indexBuffer = 0;
-	vertexBuffer = 0;
 }
 
-MeshRenderer::MeshRenderer(Mesh meshData)
+MeshRenderer::MeshRenderer(Meshe meshData)
 {
-	this->meshData = meshData;
+	this->mesh = meshData;
 
-	//Vertex Buffer creation
-	//Creates a new Buffer that is sent to the VRam
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * meshData.GetVertex().size(), &meshData.GetVertex()[0], GL_STATIC_DRAW);
+	//init
+	VAO = 0;
+	VBO = 0;
+	EBO	 = 0;
+	
+	//Generation of buffers
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
-	glEnableClientState(GL_VERTEX_ARRAY); //Type of data
-	glVertexPointer(3, GL_FLOAT, 0, NULL); //Use bind buffer as vertices
+	glBindVertexArray(VAO);
+	
+	//Vertex
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), &mesh.vertices[0], GL_STATIC_DRAW);
 
-	//Index Buffer creation
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * meshData.GetIndex().size(), &meshData.GetIndex()[0], GL_STATIC_DRAW);
+	//Index
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
+	
+
+	//VERTEX POSITION
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+
+	//VERTEX NORMALS
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) offsetof(Vertex, normal));
+
+	//VERTEX TEXTURE COORDS
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) offsetof(Vertex, texCoords));
+
+	//VERTEX TANGENTS
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(8 * sizeof(GLfloat)));
+
+
+	//Cleaning
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 
 MeshRenderer::~MeshRenderer()
 {
-	glDeleteBuffers(1, &vertexBuffer);
-	glDeleteBuffers(1, &indexBuffer);
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+
+	VAO = 0;
+	VBO = 0;
+	EBO = 0;
 }
 
 void MeshRenderer::Draw()
 {
 	if (indexBuffer != 0)
 	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glDrawElements(GL_TRIANGLES, meshData.GetIndex().size(), GL_UNSIGNED_INT, NULL);
+
+		//unsigned int diffuseNr = 1;
+		//unsigned int specularNr = 1;
+		//for (unsigned int i = 0; i < mesh.textures.size(); i++)
+		//{
+		//	glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
+		//	// retrieve texture number (the N in diffuse_textureN)
+		//	std::string number;
+		//	std::string name = mesh.textures[i].type;
+		//	if (name == "texture_diffuse")
+		//		number = std::to_string(diffuseNr++);
+		//	else if (name == "texture_specular")
+		//		number = std::to_string(specularNr++);
+
+		//	//shader.setInt(("material." + name + number).c_str(), i);
+		//	glBindTexture(GL_TEXTURE_2D, mesh.textures[i].id);
+		//}
+
+		//Draw Mesh
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
+		glBindVertexArray(0);
 	}
 }
 

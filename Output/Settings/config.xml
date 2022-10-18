@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
 	<Application>
-		<FpsCap value="108" />
+		<FpsCap value="180" />
 	</Application>
 	<Window>
 		<Brightness value="1" />
@@ -12,17 +12,17 @@
 	</Window>
 	<Renderer3D>
 		<Vsync value="false" />
-		<Wireframe value="true" />
+		<Wireframe value="false" />
 		<DepthTest value="true" />
 		<CullFace value="false" />
-		<Lighting value="false" />
+		<Lighting value="true" />
 		<Fog value="true" />
 		<ColorMaterial value="true" />
 		<Texture2D value="true" />
 	</Renderer3D>
 	<Editor>
 		<Configuration value="true" />
-		<About value="false" />
+		<About value="true" />
 		<Console value="true" />
 		<Scene value="true" />
 		<Hierarchy value="true" />

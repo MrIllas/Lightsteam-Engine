@@ -9,6 +9,8 @@ class aiScene;
 class Mesh;
 class GameObject;
 
+struct Meshe;
+
 class MeshImporter
 {
 public:
@@ -23,7 +25,7 @@ public:
 	static void LoadMeshFile( std::string filePath);
 
 private:
-	static Mesh GenerateMesh(aiMesh* mesh);
+	static Meshe GenerateMesh(aiMesh* mesh);
 	static GameObject* GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent = nullptr);
 };
 

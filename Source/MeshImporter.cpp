@@ -8,8 +8,6 @@
 
 #pragma comment (lib, "assimp.lib")
 
-#include "Mesh.h"
-
 #include "GameObject.h"
 #include "CompMeshRenderer.h"
 
@@ -51,32 +49,6 @@ void MeshImporter::ImportMesh(std::string filePath)
 	}
 }
 
-//void MeshImporter::LoadMeshFile(std::string filePath)
-//{
-//	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
-//
-//	if (scene != nullptr && scene->HasMeshes())
-//	{
-//		for (uint i = 0; i < scene->mNumMeshes; ++i)
-//		{
-//			/*CHECK THIS - NOT WORKING, SHOULD LOAD MESHES; CREATE THE COMP ANDD ADD IT TO THE SCENE*/
-//			GameObject* go = new GameObject("nodeName");
-//			go->CreateComponent(MESH_RENDERER);
-//
-//			MeshRenderer* meshRenderer = new MeshRenderer(LoadMesh(scene->mMeshes[i]));
-//
-//			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
-//			SceneProperties::Instance()->root->AddChildren(go);
-//		}
-//
-//		aiReleaseImport(scene);
-//	}
-//	else
-//	{
-//		LOG("Error loading scene %s", filePath.c_str());
-//	}
-//}
-
 GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent)
 {
 
@@ -111,22 +83,29 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 	return parent;
 }
 
-Mesh MeshImporter::GenerateMesh(aiMesh* mesh)
+Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 {
-	Mesh newMesh = Mesh();
-	newMesh.InitMesh();
+	Meshe newMesh = Meshe();
+	//newMesh.InitMesh();
 
 	//Vertex
 	for (uint i = 0; i < mesh->mNumVertices; ++i)
 	{
-		newMesh.vertex.emplace_back(float3( mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
+		float3 position = float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
+		float3 normal; 
+		float2 textCoords = float2(0.0f, 0.0f);
+
+		if (mesh->HasNormals()) normal = float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+		if (mesh->HasTextureCoords(i)) textCoords = float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
+
+		newMesh.vertices.emplace_back(position, normal, textCoords);
 	}
 	LOG("New mesh with %d vertices", mesh->mNumVertices);
 
 	//Index
 	if (mesh->HasFaces())
 	{
-		newMesh.index.resize(mesh->mNumFaces * 3);
+		newMesh.indices.resize(mesh->mNumFaces * 3);
 		for (uint i = 0; i < mesh->mNumFaces; ++i)
 		{
 			if (mesh->mFaces[i].mNumIndices != 3) 
@@ -135,7 +114,7 @@ Mesh MeshImporter::GenerateMesh(aiMesh* mesh)
 			}
 			else
 			{
-				memcpy(&newMesh.index[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+				memcpy(&newMesh.indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 			}
 		}
 	}
