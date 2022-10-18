@@ -214,6 +214,9 @@
     <ClCompile Include="SegmentHierarchy.cpp">
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>
+    <ClCompile Include="TextureImporter.cpp">
+      <Filter>Source\Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -531,6 +534,33 @@
     <ClInclude Include="SegmentHierarchy.h">
       <Filter>Header\Core\Segments</Filter>
     </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilut_config.h">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\devil_cpp_wrapper.hpp">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\devil_internal_exports.h">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\il.h">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\il_wrap.h">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilu.h">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilu_region.h">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilut.h">
+      <Filter>External\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureImporter.h">
+      <Filter>Header\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -607,6 +637,9 @@
     </Filter>
     <Filter Include="Source\Data">
       <UniqueIdentifier>{d52aab9c-2a65-421e-8df4-738ab49e465a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\DevIL">
+      <UniqueIdentifier>{e7d5dc44-4c80-4814-91d0-8988f8177134}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

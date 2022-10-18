@@ -1,8 +1,11 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleFileSystem.h"
 
 #include "ImGui\imgui_impl_sdl.h"
+
+#include "MeshImporter.h"
 
 #define MAX_KEYS 300
 
@@ -96,26 +99,29 @@ UpdateStatus ModuleInput::PreUpdate()
 		switch(e.type)
 		{
 			case SDL_MOUSEWHEEL:
-			mouse_z = e.wheel.y;
-			break;
+				mouse_z = e.wheel.y;
+				break;
 
 			case SDL_MOUSEMOTION:
-			mouse_x = e.motion.x / 1;
-			mouse_y = e.motion.y / 1;
+				mouse_x = e.motion.x / 1;
+				mouse_y = e.motion.y / 1;
 
-			mouse_x_motion = e.motion.xrel / 1;
-			mouse_y_motion = e.motion.yrel / 1;
-			break;
+				mouse_x_motion = e.motion.xrel / 1;
+				mouse_y_motion = e.motion.yrel / 1;
+				break;
 
 			case SDL_QUIT:
-			quit = true;
-			break;
+				quit = true;
+				break;
 
 			case SDL_WINDOWEVENT:
-			{
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
 					App->renderer3D->OnResize(e.window.data1, e.window.data2);
-			}
+				break;
+			case SDL_DROPFILE:
+				App->fileSystem->DragAndDrop(e.drop.file);
+				SDL_free(e.drop.file);    // Free dropped_filedir memory
+				break;
 		}
 	}
 

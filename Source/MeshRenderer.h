@@ -9,8 +9,6 @@
 
 #include <vector>
 
-#define VERTEX 3
-
 typedef unsigned int uint;
 
 struct Vertex {
@@ -29,6 +27,7 @@ struct Vertex {
 struct Texture {
 	unsigned int id;
 	std::string type;
+	std::string path; // we store the path of the texture to compare with other textures
 };
 
 struct Meshe

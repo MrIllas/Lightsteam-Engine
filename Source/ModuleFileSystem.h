@@ -21,6 +21,8 @@ public:
 	void SaveSettingsData(pugi::xml_node& save) override;
 	void LoadSettingsData(pugi::xml_node& load) override;
 
+	void DragAndDrop(std::string path);
+
 public:
 	MeshImporter* meshImp = nullptr;
 };

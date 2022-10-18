@@ -1,3 +1,4 @@
+#include "Application.h"
 #include "ModuleFileSystem.h"
 
 #include "PhysFS/include/physfs.h"
@@ -16,11 +17,11 @@ ModuleFileSystem::~ModuleFileSystem()
 
 bool ModuleFileSystem::Init()
 {
-	bool ret = true;
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 
 	meshImp = new MeshImporter();
 
-	return ret;
+	return true;
 }
 
 bool ModuleFileSystem::Start()
@@ -44,7 +45,6 @@ bool ModuleFileSystem::CleanUp()
 
 UpdateStatus ModuleFileSystem::PreUpdate()
 {
-	
 
 	return UPDATE_CONTINUE;
 }
@@ -61,6 +61,11 @@ UpdateStatus ModuleFileSystem::PostUpdate()
 	
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleFileSystem::DragAndDrop(std::string path)
+{
+	MeshImporter::ImportMesh(path, true);
 }
 
 #pragma region Save/Load Settings

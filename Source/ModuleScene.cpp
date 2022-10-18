@@ -1,9 +1,7 @@
 #include "ModuleScene.h"
 
 #include "GameObject.h"
-
 #include "MeshImporter.h"
-
 
 #pragma region SceneProperties
 SceneProperties::SceneProperties()

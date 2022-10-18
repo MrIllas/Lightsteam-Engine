@@ -99,8 +99,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\Glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Debug;$(SolutionDir)Source\External\Assimp\libx86;$(SolutionDir)Source\External\Physfs\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;MathGeoLib.lib;assimp.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\Glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Debug;$(SolutionDir)Source\External\Assimp\libx86;$(SolutionDir)Source\External\Physfs\libx86;$(SolutionDir)Source\External\DevIL\libx86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;MathGeoLib.lib;assimp.lib;physfs.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,8 +119,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Release;$(SolutionDir)Source\External\Assimp\libx86;$(SolutionDir)Source\External\PhysFS\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;assimp.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Source\External\SDL\lib\x86;$(SolutionDir)Source\External\glew\libx86;$(SolutionDir)Source\External\MathGeoLib\libx86\Release;$(SolutionDir)Source\External\Assimp\libx86;$(SolutionDir)Source\External\PhysFS\libx86;$(SolutionDir)Source\External\DevIL\libx86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;opengl32.lib;assimp.lib;physfs.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -226,12 +226,21 @@
     <ClCompile Include="SegmentHierarchy.cpp" />
     <ClCompile Include="SegmentScene.cpp" />
     <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="TextureImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CompMeshRenderer.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CompTransform.h" />
+    <ClInclude Include="External\DevIL\include\devil_cpp_wrapper.hpp" />
+    <ClInclude Include="External\DevIL\include\devil_internal_exports.h" />
+    <ClInclude Include="External\DevIL\include\il.h" />
+    <ClInclude Include="External\DevIL\include\ilu.h" />
+    <ClInclude Include="External\DevIL\include\ilut.h" />
+    <ClInclude Include="External\DevIL\include\ilut_config.h" />
+    <ClInclude Include="External\DevIL\include\ilu_region.h" />
+    <ClInclude Include="External\DevIL\include\il_wrap.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Color.h" />
@@ -332,6 +341,7 @@
     <ClInclude Include="Loggs.h" />
     <ClInclude Include="SegmentHierarchy.h" />
     <ClInclude Include="SegmentScene.h" />
+    <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>
   <ItemGroup>

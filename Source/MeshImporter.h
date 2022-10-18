@@ -21,8 +21,8 @@ public:
 	void CleanUp();
 
 public:
-	static void ImportMesh(std::string filePath);
-	static void LoadMeshFile( std::string filePath);
+	static void ImportMesh(std::string filePath, bool dragAndDrop = false);
+	static void LoadMeshFile(std::string filePath);
 
 private:
 	static Meshe GenerateMesh(aiMesh* mesh);
