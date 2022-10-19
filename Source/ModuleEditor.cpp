@@ -197,7 +197,7 @@ void ModuleEditor::MainMenuBar()
 			{
 				if (ImGui::MenuItem(segments[i]->name.c_str(), NULL, &segments[i]->enabled))
 				{
-					LOG("%s '%s'", segments[i]->name.c_str(), segments[i]->enabled ? "OPENED" : "CLOSED");
+					LOG(LOG_TYPE::ENGINE, "%s '%s'", segments[i]->name.c_str(), segments[i]->enabled ? "OPENED" : "CLOSED");
 				}
 			}
 			ImGui::EndMenu();
@@ -213,7 +213,7 @@ void ModuleEditor::MainMenuBar()
 
 			if (ImGui::MenuItem(segments[segments.size()-1]->name.c_str(), NULL, &segments[segments.size()-1]->enabled))
 			{
-				LOG("%s '%s'", segments[segments.size() - 1]->name.c_str(), segments[segments.size() - 1]->enabled ? "OPENED" : "CLOSED");
+				LOG(LOG_TYPE::ENGINE, "%s '%s'", segments[segments.size() - 1]->name.c_str(), segments[segments.size() - 1]->enabled ? "OPENED" : "CLOSED");
 			}
 
 			ImGui::EndMenu();

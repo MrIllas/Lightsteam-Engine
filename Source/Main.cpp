@@ -29,24 +29,24 @@ int main(int argc, char** argv)
 		{
 		case MAIN_CREATION:
 
-			LOG("-------------- Application Creation --------------");
+			LOG(LOG_TYPE::ENGINE, "-------------- Application Creation --------------");
 			App = new Application();
 			state = MAIN_START;
 			break;
 
 		case MAIN_START:
 
-			LOG("-------------- Application Init --------------");
+			LOG(LOG_TYPE::ENGINE, "-------------- Application Init --------------");
 			if (App->Init() == false)
 			{
-				LOG("Application Init exits with ERROR");
+				LOG(LOG_TYPE::ERRO, "Application Init exits with ERROR");
 				state = MAIN_EXIT;
 			}
 			else
 			{
 				state = MAIN_UPDATE;
 				//LOG("-------------- Application Update --------------");
-				LOG("-------------- Engine Ready --------------");
+				LOG(LOG_TYPE::ENGINE, "-------------- Engine Ready --------------");
 			}
 
 			break;
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 
 			if (update_return == UPDATE_ERROR)
 			{
-				LOG("Application Update exits with ERROR");
+				LOG(LOG_TYPE::ERRO, "Application Update exits with ERROR");
 				state = MAIN_EXIT;
 			}
 
@@ -68,10 +68,10 @@ int main(int argc, char** argv)
 
 		case MAIN_FINISH:
 
-			LOG("-------------- Application CleanUp --------------");
+			LOG(LOG_TYPE::ENGINE, "-------------- Application CleanUp --------------");
 			if (App->CleanUp() == false)
 			{
-				LOG("Application CleanUp exits with ERROR");
+				LOG(LOG_TYPE::ERRO, "Application CleanUp exits with ERROR");
 			}
 			else
 				main_return = EXIT_SUCCESS;
@@ -88,7 +88,7 @@ int main(int argc, char** argv)
 
 	ReportMemoryLeaks();
 
-	LOG("\nBye :)\n");
+	LOG(LOG_TYPE::ENGINE, "\nBye :)\n");
 
 	return main_return;
 }

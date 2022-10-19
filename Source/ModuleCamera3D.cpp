@@ -31,7 +31,7 @@ bool ModuleCamera3D::Start()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::CleanUp()
 {
-	LOG("Cleaning camera");
+	LOG(LOG_TYPE::ENGINE, "Cleaning camera");
 
 	return true;
 }

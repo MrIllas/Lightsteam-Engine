@@ -71,7 +71,7 @@ bool Application::Init()
 	G_Time = Time::Instance();
 	Loggs::Instance();
 
-	LOG("-------------- Initializing Modules --------------");
+	LOG(LOG_TYPE::ENGINE, "-------------- Initializing Modules --------------");
 	// Call Init() in all modules
 	for (int i = 0, count = list_modules.count() ; i <count ; i++)
 	{
@@ -79,7 +79,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("-------------- Starting Modules --------------");
+	LOG(LOG_TYPE::ENGINE, "-------------- Starting Modules --------------");
 
 	for (int i = 0, count = list_modules.count(); i < count; i++)
 	{
@@ -209,13 +209,13 @@ void Application::StopEngine()
 {
 	isStopping = true;
 
-	LOG("'||'''|,                      |'   .         .   `| ");
-	LOG(" ||   ||                     |'  .| |,     .| |,  `|");
-	LOG(" ||;;;;   '||  ||` .|''|,    |   |   |     |   |   |");
-	LOG(" ||   ||   `|..||  ||..||    |,                   ,|");
-	LOG(".||...|'       ||  `|...      |.                 .|");
-	LOG("            ,  |'                      ....        ");
-	LOG("             ''                                      ");
+	LOG(LOG_TYPE::NONE, "'||'''|,                      |'   .         .   `| ");
+	LOG(LOG_TYPE::NONE, " ||   ||                     |'  .| |,     .| |,  `|");
+	LOG(LOG_TYPE::NONE, " ||;;;;   '||  ||` .|''|,    |   |   |     |   |   |");
+	LOG(LOG_TYPE::NONE, " ||   ||   `|..||  ||..||    |,                   ,|");
+	LOG(LOG_TYPE::NONE, ".||...|'       ||  `|...      |.                 .|");
+	LOG(LOG_TYPE::NONE, "            ,  |'                      ....        ");
+	LOG(LOG_TYPE::NONE, "             ''                                      ");
 
 	SaveEditorConfiguration();
 }

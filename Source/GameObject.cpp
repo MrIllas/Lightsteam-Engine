@@ -51,7 +51,7 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 {
 	if (GetComponent(type) != nullptr)
 	{
-		LOG("A component of type %s already exists in %s !", std::to_string(type).c_str(), name.c_str());
+		LOG(LOG_TYPE::ATTENTION, "A component of type %s already exists in %s !", std::to_string(type).c_str(), name.c_str());
 		return nullptr; 
 	}
 

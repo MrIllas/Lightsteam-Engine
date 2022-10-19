@@ -56,7 +56,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG("Creating 3D Renderer context");
+	LOG(LOG_TYPE::ENGINE, "Creating 3D Renderer context");
 	bool ret = true;
 	
 	//Set context attributes
@@ -73,7 +73,7 @@ bool ModuleRenderer3D::Init()
 	context = SDL_GL_CreateContext(WindowProperties::Instance()->window);
 	if(context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG(LOG_TYPE::ERRO, "OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
@@ -85,11 +85,11 @@ bool ModuleRenderer3D::Init()
 	}
 	else
 	{
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-		LOG("	Vendor: %s", glGetString(GL_VENDOR));
-		LOG("	Renderer: %s", glGetString(GL_RENDERER));
-		LOG("	OpenGL version supported %s", glGetString(GL_VERSION));
-		LOG("	GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		LOG(LOG_TYPE::ENGINE, "Using Glew %s", glewGetString(GLEW_VERSION));
+		LOG(LOG_TYPE::ENGINE, "	Vendor: %s", glGetString(GL_VENDOR));
+		LOG(LOG_TYPE::ENGINE, "	Renderer: %s", glGetString(GL_RENDERER));
+		LOG(LOG_TYPE::ENGINE, "	OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG(LOG_TYPE::ENGINE, "	GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	}
 	
 	if(ret == true)
@@ -108,7 +108,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
@@ -120,7 +120,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 		
@@ -134,7 +134,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
@@ -214,7 +214,7 @@ bool ModuleRenderer3D::CleanUp()
 	}
 	RenderProperties::Delete();
 
-	LOG("Destroying 3D Renderer");
+	LOG(LOG_TYPE::ENGINE, "Destroying 3D Renderer");
 	if (context != NULL)
 	{
 		SDL_GL_DeleteContext(context);

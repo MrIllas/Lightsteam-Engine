@@ -61,7 +61,7 @@ uint TextureImporter::ImportTexture(std::string filePath)
 
 	if (!ilLoadImage(filePath.c_str()))
 	{
-		LOG("ERROR: Could not load Texture '%s'", ilutGetString(ilGetError()));
+		LOG(LOG_TYPE::ERRO, "ERROR: Could not load Texture '%s'", ilutGetString(ilGetError()));
 	}
 	
 

@@ -45,14 +45,14 @@ void MeshImporter::ImportMesh(std::string filePath, bool dragAndDrop)
 	aiNode* node = nullptr;
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		if (dragAndDrop) LOG("IMPORTING FILE: %s", filePath.c_str());
+		if (dragAndDrop) LOG(LOG_TYPE::SUCCESS, "IMPORTING FILE: %s", filePath.c_str());
 
 		node = scene->mRootNode;
 
 		SceneProperties::Instance()->root->AddChildren(GenerateGameObjects(node, scene));
 	}
 
-	if(scene == nullptr && dragAndDrop) LOG("ERROR: Importing file: '%s'", filePath.c_str());
+	if(scene == nullptr && dragAndDrop) LOG(LOG_TYPE::ERRO, "ERROR: Importing file: '%s'", filePath.c_str());
 }
 
 GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent)
@@ -106,7 +106,7 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 
 		newMesh.vertices.emplace_back(position, normal, textCoords);
 	}
-	LOG("New mesh with %d vertices", mesh->mNumVertices);
+	LOG(LOG_TYPE::SUCCESS, "New mesh with %d vertices", mesh->mNumVertices);
 
 	//Index
 	if (mesh->HasFaces())
@@ -116,7 +116,7 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 		{
 			if (mesh->mFaces[i].mNumIndices != 3) 
 			{
-				LOG("WARNING, geometry face with != 3 indices!");
+				LOG(LOG_TYPE::ATTENTION, "WARNING, geometry face with != 3 indices!");
 			}
 			else
 			{

@@ -72,7 +72,7 @@ void SegmentConfiguration::ApplicationHeader()
 	
 	//Cap Fps
 	ImGui::SliderInt("Cap FPS", &time->frameCap, 1, 180);
-	if (ImGui::IsItemDeactivatedAfterEdit()) LOG("Fps capped to '%i'", time->frameCap);
+	if (ImGui::IsItemDeactivatedAfterEdit()) LOG(LOG_TYPE::ENGINE, "Fps capped to '%i'", time->frameCap);
 
 	//if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
 	//{
@@ -83,30 +83,30 @@ void SegmentConfiguration::ApplicationHeader()
 void SegmentConfiguration::WindowHeader()
 {
 	ImGui::SliderFloat("Brightness", &wProps->brightness, 0.f, 1.0f);
-	if (ImGui::IsItemDeactivatedAfterEdit()) LOG("Brightness set to '%.2f'", wProps->brightness);
+	if (ImGui::IsItemDeactivatedAfterEdit()) LOG(LOG_TYPE::ENGINE, "Brightness set to '%.2f'", wProps->brightness);
 
 	ImGui::Text("Window Size -> ( %i, %i )", wProps->w, wProps->h);
 
 	if (ImGui::Checkbox("Fullscreen", &wProps->fullscreen))
 	{
 		wProps->ToggleFullscreen();
-		LOG("Fullscreen '%s'", wProps->fullscreen ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Fullscreen '%s'", wProps->fullscreen ? "ON" : "OFF");
 
 	}
 	if (ImGui::Checkbox("Fullscreen Desktop", &wProps->fullScreenDesktop))
 	{
 		wProps->ToggleFullscreenDesktop();
-		LOG("Fullscreen Desktop '%s'", wProps->fullScreenDesktop ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Fullscreen Desktop '%s'", wProps->fullScreenDesktop ? "ON" : "OFF");
 	}
 	if (ImGui::Checkbox("Borderless", &wProps->borderless))
 	{
 		wProps->ToggleBorderless();
-		LOG("Borderless '%s'", wProps->borderless ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Borderless '%s'", wProps->borderless ? "ON" : "OFF");
 	}
 	if (ImGui::Checkbox("Resizable", &wProps->resizable))
 	{
 		wProps->ToggleResizable();
-		LOG("Resizable '%s'", wProps->resizable ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Resizable '%s'", wProps->resizable ? "ON" : "OFF");
 	}
 	//ImGui::togg
 }
@@ -136,49 +136,49 @@ void SegmentConfiguration::RenderingHeader()
 	if (ImGui::Checkbox("Vsync ", &rProps->vsync))
 	{
 		rProps->ToggleVsync(); 
-		LOG("Vsync '%s'", rProps->vsync ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Vsync '%s'", rProps->vsync ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("Wireframe", &rProps->wireframe))
 	{
 		rProps->ToggleWireframe();
-		LOG("Wireframe '%s'", rProps->wireframe ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Wireframe '%s'", rProps->wireframe ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("DepthTest", &rProps->depthTest))
 	{
 		rProps->ToggleDepthTest();
-		LOG("Depth Test '%s'", rProps->depthTest ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Depth Test '%s'", rProps->depthTest ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("Cull Face", &rProps->cullFace))
 	{
 		rProps->ToggleCullFace();
-		LOG("Cull Face '%s'", rProps->cullFace ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Cull Face '%s'", rProps->cullFace ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("Lighting", &rProps->lighting))
 	{
 		rProps->ToggleLighting();
-		LOG("Lighting '%s'", rProps->lighting ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Lighting '%s'", rProps->lighting ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("Fog", &rProps->fog))
 	{
 		rProps->ToggleFog();
-		LOG("Fog '%s'", rProps->fog ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Fog '%s'", rProps->fog ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("Color Material", &rProps->colorMaterial))
 	{
 		rProps->ToggleColorMaterial();
-		LOG("Color Material '%s'", rProps->colorMaterial ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Color Material '%s'", rProps->colorMaterial ? "ON" : "OFF");
 	}
 
 	if (ImGui::Checkbox("Texture 2D", &rProps->texture2D))
 	{
 		rProps->ToggleTexture2D();
-		LOG("Texture 2D '%s'", rProps->texture2D ? "ON" : "OFF");
+		LOG(LOG_TYPE::ENGINE, "Texture 2D '%s'", rProps->texture2D ? "ON" : "OFF");
 	}
 
 	ImGui::Separator();
@@ -208,19 +208,19 @@ void SegmentConfiguration::EditorHeader()
 	{
 		eProps->colorMode = COLORMODE::LightMode;
 		eProps->SwitchColorMode();
-		LOG("Light mode 'ON'");
+		LOG(LOG_TYPE::ENGINE, "Light mode 'ON'");
 	}
 	if (ImGui::RadioButton("Dark mode", (eProps->colorMode == COLORMODE::DarkMode ? true : false)))
 	{
 		eProps->colorMode = COLORMODE::DarkMode;
 		eProps->SwitchColorMode();
-		LOG("Dark mode 'ON'");
+		LOG(LOG_TYPE::ENGINE, "Dark mode 'ON'");
 	}
 	if (ImGui::RadioButton("Classic mode", (eProps->colorMode == COLORMODE::ClassicMode ? true : false)))
 	{
 		eProps->colorMode = COLORMODE::ClassicMode;
 		eProps->SwitchColorMode();
-		LOG("Classic mode 'ON'");
+		LOG(LOG_TYPE::ENGINE, "Classic mode 'ON'");
 	}
 }
 #pragma endregion Configuration methods

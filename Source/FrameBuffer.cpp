@@ -36,7 +36,7 @@ void FrameBuffer::CreateBuffer(int width, int height)
 	}
 	else
 	{
-		LOG("ERROR: Framebuffer is not complete!")
+		LOG(LOG_TYPE::ERRO, "ERROR: Framebuffer is not complete!")
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

@@ -1,6 +1,8 @@
 #include "Loggs.h"
 #include "Globals.h"
 
+#include <atlstr.h>
+
 Loggs* Loggs::instance = nullptr;
 
 Loggs* Loggs::Instance()
@@ -20,7 +22,7 @@ void Loggs::Delete()
 	if (instance != nullptr) RELEASE(instance);
 }
 
-void log(const char file[], int line, const char* format, ...)
+void log(const char file[], int line, LOG_TYPE type, const char* format, ...)
 {
 	static char tmp_string[4096];
 	static char tmp_string2[4096];
@@ -33,5 +35,19 @@ void log(const char file[], int line, const char* format, ...)
 	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
 	OutputDebugString(tmp_string2);
 
-	if(Loggs::HasInstance()) Loggs::Instance()->AddLog(tmp_string);
+	//Time
+	std::string stt;
+	CString cstrMessage;
+	SYSTEMTIME st;
+
+	GetSystemTime(&st);
+
+	cstrMessage.Format("[%02d:%02d:%02d]",
+		st.wHour,
+		st.wMinute,
+		st.wSecond);
+
+	stt = cstrMessage;
+
+	if(Loggs::HasInstance()) Loggs::Instance()->AddLog(tmp_string, type, stt);
 }

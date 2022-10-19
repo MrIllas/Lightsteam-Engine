@@ -19,5 +19,13 @@ private:
 
 	int lastSize = 0;
 	bool scrollDown = false;
+	bool showTime = true;
+	bool collapse = false;
+	
+
+	bool logError = true;
+	bool logAttention = true;
+	bool logEngine = true;
+	bool logSuccess = true;
 };
 

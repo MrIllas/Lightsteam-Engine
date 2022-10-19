@@ -88,7 +88,7 @@ void SegmentHierarchy::RightClickMenu(GameObject* go)
 
 		if (ImGui::MenuItem("DELETE", 0,false, go == nullptr ? false : true))
 		{
-			LOG("DELETE GAMEOBJECT %s", go->name.c_str());
+			LOG(LOG_TYPE::ATTENTION, "DELETE GAMEOBJECT %s", go->name.c_str());
 		}
 		ImGui::EndPopup();
 	}
