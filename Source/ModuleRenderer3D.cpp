@@ -40,6 +40,8 @@ void RenderProperties::ToggleFog() { fog ? glEnable(GL_FOG) : glDisable(GL_FOG);
 void RenderProperties::ToggleColorMaterial() { colorMaterial ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL); }
 void RenderProperties::ToggleTexture2D() { texture2D ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D); }
 
+float* RenderProperties::GetProjectionMatrix() { return &ProjectionMatrix.M[0]; }
+
 RenderProperties* RenderProperties::rProps = nullptr;
 
 #pragma endregion Render Properties Singleton Struct
@@ -62,12 +64,14 @@ bool ModuleRenderer3D::Init()
 	//Set context attributes
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
 	//Create context
 	context = SDL_GL_CreateContext(WindowProperties::Instance()->window);
@@ -195,6 +199,7 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 // PostUpdate present buffer to screen
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
+	//Meshes
 	rProps->render->Render();
 
 
@@ -229,8 +234,8 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 2048.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+	rProps->ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 2048.0f);
+	//glLoadMatrixf(&rProps->ProjectionMatrix); //Without shaders
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

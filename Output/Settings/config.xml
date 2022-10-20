@@ -16,7 +16,7 @@
 		<DepthTest value="true" />
 		<CullFace value="false" />
 		<Lighting value="true" />
-		<Fog value="true" />
+		<Fog value="false" />
 		<ColorMaterial value="true" />
 		<Texture2D value="true" />
 	</Renderer3D>

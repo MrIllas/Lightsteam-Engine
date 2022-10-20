@@ -22,6 +22,8 @@ public:
 	bool colorMaterial = false;
 	bool texture2D = false;
 
+	mat4x4 ProjectionMatrix; //FOV
+
 	Renderer* render = nullptr;
 
 	RenderProperties();
@@ -38,6 +40,8 @@ public:
 	void ToggleFog();
 	void ToggleColorMaterial();
 	void ToggleTexture2D();
+
+	float* GetProjectionMatrix();
 
 private:
 	static RenderProperties* rProps;
@@ -70,7 +74,8 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	mat4x4 ModelMatrix, ViewMatrix;
+		//ProjectionMatrix;
 
 private:
 	SDL_GLContext context;

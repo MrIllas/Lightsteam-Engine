@@ -217,6 +217,9 @@
     <ClCompile Include="TextureImporter.cpp">
       <Filter>Source\Data</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source\Core\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -560,6 +563,9 @@
     </ClInclude>
     <ClInclude Include="TextureImporter.h">
       <Filter>Header\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header\Core\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

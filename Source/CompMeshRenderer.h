@@ -6,6 +6,8 @@
 
 struct RenderProperties;
 
+class Shader;
+
 class CompMeshRenderer : public Component
 {
 public:
@@ -14,7 +16,7 @@ public:
 
 	void Update() override;
 
-	void Render();
+	void Render(Shader* shader);
 
 	MeshRenderer* GetMesh();
 	void SetMesh(MeshRenderer* mesh);

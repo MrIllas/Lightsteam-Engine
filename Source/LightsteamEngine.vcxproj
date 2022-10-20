@@ -225,6 +225,7 @@
     <ClCompile Include="SegmentConsole.cpp" />
     <ClCompile Include="SegmentHierarchy.cpp" />
     <ClCompile Include="SegmentScene.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="TextureImporter.cpp" />
   </ItemGroup>
@@ -341,6 +342,7 @@
     <ClInclude Include="Loggs.h" />
     <ClInclude Include="SegmentHierarchy.h" />
     <ClInclude Include="SegmentScene.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>

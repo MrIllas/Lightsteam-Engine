@@ -5,12 +5,31 @@
 #include "Globals.h"
 #include "glmath.h"
 
+struct CameraProperties
+{
+public:
+
+	mat4x4 ViewMatrix;
+
+	CameraProperties();
+
+	static CameraProperties* Instance();
+
+	static void Delete();
+	 
+	float* GetViewMatrix();
+
+private:
+	static CameraProperties* cProps;
+};
+
 class ModuleCamera3D : public Module
 {
 public:
 	ModuleCamera3D(Application* app, bool start_enabled = true);
 	~ModuleCamera3D();
 
+	bool Init() override;
 	bool Start();
 	UpdateStatus Update();
 	bool CleanUp();
@@ -37,7 +56,10 @@ public:
 
 private:
 
-	mat4x4 ViewMatrix, ViewMatrixInverse;
+	CameraProperties* cProps = nullptr;
+
+	//mat4x4 ViewMatrix;//View camera
+	mat4x4 ViewMatrixInverse; 
 
 	//Vehicle* target = nullptr;
 	vec3 offset;

@@ -15,8 +15,18 @@ public:
 	void Update() override;
 
 private:
+	void NormalLog();
+	void CollapseLog();
+
+
+	void ClearGUI();
+	void LogGUI();
+	void OptionsGUI();
+
+private:
 	Loggs* loggs;
 
+	// TODO - Save/Load
 	int lastSize = 0;
 	bool scrollDown = false;
 	bool showTime = true;

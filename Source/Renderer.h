@@ -4,8 +4,13 @@
 
 #include <queue>
 
+#define BASE_VERTEX_SHADER "Shader/base.vs"
+#define BASE_FRAGMENT_SHADER "Shader/base.fs"
+
 class FrameBuffer;
 class CompMeshRenderer;
+
+class Shader;
 
 class Renderer
 {
@@ -38,5 +43,7 @@ private:
 
 private:
 	FrameBuffer* frameBuffer = nullptr;
+
+	Shader* baseShader = nullptr;
 };
 

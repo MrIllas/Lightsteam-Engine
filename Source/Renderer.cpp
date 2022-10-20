@@ -2,12 +2,17 @@
 
 #include "FrameBuffer.h"
 #include "CompMeshRenderer.h"
+#include "Shader.h"
+
+#include "ModuleCamera3D.h"
+#include "ModuleRenderer3D.h"
 
 Renderer::Renderer(float2 size)
 {
 	frameBuffer = new FrameBuffer();
 	Resize(size);
 
+	baseShader = new Shader(BASE_VERTEX_SHADER, BASE_FRAGMENT_SHADER);
 }
 
 Renderer::~Renderer()
@@ -29,7 +34,7 @@ void Renderer::CleanUp()
 {
 	RELEASE(frameBuffer);
 
-	
+	RELEASE(baseShader);
 
 	/*for (uint i = 0; i < meshes.size(); ++i)
 	{
@@ -69,7 +74,7 @@ void Renderer::Update()
 {
 	while (meshes.size())
 	{
-		meshes.front()->Render();
+		meshes.front()->Render(baseShader);
 		meshes.pop();
 	}
 }

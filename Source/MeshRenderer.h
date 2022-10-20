@@ -11,6 +11,9 @@
 
 typedef unsigned int uint;
 
+class Shader;
+class mat4x4;
+
 struct Vertex {
 	Vertex(float3 position, float3 normal, float2 texCoord)
 	{
@@ -44,11 +47,13 @@ public:
 	MeshRenderer(Meshe meshData);
 	~MeshRenderer();
 
-	void Draw();
+	void Draw(Shader* shader);
 
 	float3 GetPosition();
 	float3 GetRotation();
 	float3 GetSize();
+
+	void SetShader(Shader* shader);
 
 	void SetPosition(float3 newPos);
 	void SetRotation(float3 newRot);
@@ -61,7 +66,11 @@ private:
 	uint VBO;
 	uint EBO;
 
-	uint indexBuffer;
+	//uint indexBuffer;
 	Meshe mesh;
+
+	uint textureID;
+
+	Shader* shader = nullptr;
 };
 

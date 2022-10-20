@@ -1,6 +1,15 @@
 #include "MeshRenderer.h"
+#include "TextureImporter.h"
 
 #include "MeshImporter.h"
+
+#include "Shader.h"
+
+#include "glmath.h"
+
+#include "ModuleCamera3D.h"
+#include "ModuleRenderer3D.h"
+
 
 MeshRenderer::MeshRenderer()
 {
@@ -26,11 +35,6 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), &mesh.vertices[0], GL_STATIC_DRAW);
 
-	//Index
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
-	
-
 	//VERTEX POSITION
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
@@ -39,14 +43,23 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) offsetof(Vertex, normal));
 
+
 	//VERTEX TEXTURE COORDS
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) offsetof(Vertex, texCoords));
 
 	//VERTEX TANGENTS
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(8 * sizeof(GLfloat)));
+	/*glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(8 * sizeof(GLfloat)));*/
 
+	/*glEnableVertexAttribArray(7);
+	glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);*/
+
+	//Index
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
+
+	textureID = TextureImporter::CheckerImage();
 
 	//Cleaning
 	glBindVertexArray(0);
@@ -66,27 +79,26 @@ MeshRenderer::~MeshRenderer()
 	EBO = 0;
 }
 
-void MeshRenderer::Draw()
+void MeshRenderer::Draw(Shader* shader)
 {
-	if (indexBuffer != 0)
+	if (this->shader == nullptr) this->shader = shader;
+
+	if (EBO != 0)
 	{
+		this->shader->Use();
 
-		//unsigned int diffuseNr = 1;
-		//unsigned int specularNr = 1;
-		//for (unsigned int i = 0; i < mesh.textures.size(); i++)
-		//{
-		//	glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
-		//	// retrieve texture number (the N in diffuse_textureN)
-		//	std::string number;
-		//	std::string name = mesh.textures[i].type;
-		//	if (name == "texture_diffuse")
-		//		number = std::to_string(diffuseNr++);
-		//	else if (name == "texture_specular")
-		//		number = std::to_string(specularNr++);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetInt("texture_albedo", 0);
+		//
 
-		//	//shader.setInt(("material." + name + number).c_str(), i);
-		//	glBindTexture(GL_TEXTURE_2D, mesh.textures[i].id);
-		//}
+		//glActiveTexture(GL_TEXTURE0);
+
+		mat4x4 identity;
+
+		this->shader->SetMat4("projection", RenderProperties::Instance()->GetProjectionMatrix());
+		this->shader->SetMat4("view", CameraProperties::Instance()->GetViewMatrix());
+		this->shader->SetMat4("model", &identity.M[0]);
 
 		//Draw Mesh
 		glBindVertexArray(VAO);
@@ -96,6 +108,11 @@ void MeshRenderer::Draw()
 }
 
 #pragma region Getters and Setters
+void MeshRenderer::SetShader(Shader* shader)
+{
+	this->shader = shader;
+}
+
 float3 MeshRenderer::GetPosition()
 {
 	float3 toReturn = { 0 , 0 ,0 };

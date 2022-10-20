@@ -3,9 +3,46 @@
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 
+
+#pragma region CameraProperties
+CameraProperties::CameraProperties()
+{
+
+}
+
+CameraProperties* CameraProperties::Instance()
+{
+	if (cProps == nullptr) cProps = new CameraProperties();
+
+	return cProps;
+}
+
+void CameraProperties::Delete()
+{
+	if (cProps != nullptr)
+	{
+		RELEASE(cProps);
+	}
+}
+
+float* CameraProperties::GetViewMatrix() { return &ViewMatrix.M[0]; }
+
+CameraProperties* CameraProperties::cProps = nullptr;
+#pragma endregion Camera Properties Singleton Struct
+
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name = "Camera3D";
+
+	
+}
+
+ModuleCamera3D::~ModuleCamera3D()
+{}
+
+bool ModuleCamera3D::Init()
+{
+	cProps = CameraProperties::Instance();
 
 	CalculateViewMatrix();
 
@@ -15,10 +52,10 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
+
+	return true;
 }
 
-ModuleCamera3D::~ModuleCamera3D()
-{}
 
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
@@ -32,6 +69,9 @@ bool ModuleCamera3D::Start()
 bool ModuleCamera3D::CleanUp()
 {
 	LOG(LOG_TYPE::ENGINE, "Cleaning camera");
+
+
+	CameraProperties::Delete();
 
 	return true;
 }
@@ -158,7 +198,7 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 // -----------------------------------------------------------------
 float* ModuleCamera3D::GetViewMatrix()
 {
-	return &ViewMatrix;
+	return &cProps->ViewMatrix;
 }
 
 //void ModuleCamera3D::SetTarget(Vehicle* tg, vec3 offset)
@@ -175,8 +215,8 @@ float* ModuleCamera3D::GetViewMatrix()
 // -----------------------------------------------------------------
 void ModuleCamera3D::CalculateViewMatrix()
 {
-	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
-	ViewMatrixInverse = inverse(ViewMatrix);
+	cProps->ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
+	ViewMatrixInverse = inverse(cProps->ViewMatrix);
 }
 
 #pragma region Save/Load Settings

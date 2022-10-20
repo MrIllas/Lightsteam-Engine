@@ -41,7 +41,7 @@ void MeshImporter::ImportMesh(std::string filePath, bool dragAndDrop)
 {
 	//ASK - UTF8 Characters not accepted by ASSIMP on the current lib version(2016) but added in 2017 https://github.com/assimp/assimp/issues/1612
 
-	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs);
 	aiNode* node = nullptr;
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -94,6 +94,8 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 	Meshe newMesh = Meshe();
 	//newMesh.InitMesh();
 
+	bool hasTex = mesh->HasTextureCoords(0);
+
 	//Vertex
 	for (uint i = 0; i < mesh->mNumVertices; ++i)
 	{
@@ -102,7 +104,7 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 		float2 textCoords = float2(0.0f, 0.0f);
 
 		if (mesh->HasNormals()) normal = float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
-		if (mesh->HasTextureCoords(i)) textCoords = float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
+		if (hasTex) textCoords = float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
 
 		newMesh.vertices.emplace_back(position, normal, textCoords);
 	}

@@ -51,3 +51,21 @@ void log(const char file[], int line, LOG_TYPE type, const char* format, ...)
 
 	if(Loggs::HasInstance()) Loggs::Instance()->AddLog(tmp_string, type, stt);
 }
+
+void Loggs::AddLogCollapse(Log log)
+{
+	for (int i = 0; i < logCollapse.size(); ++i)
+	{
+		if (logCollapse[i].log.log.compare(log.log) == 0)
+		{
+			logCollapse[i].count++;
+			logCollapse[i].log.time = log.time;
+			return;
+		}
+	}
+
+	LogCollapse logC;
+	logC.count = 1;
+	logC.log = log;
+	logCollapse.emplace_back(logC);
+}

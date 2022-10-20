@@ -2,6 +2,7 @@
 
 #include "ModuleRenderer3D.h"
 #include "Renderer.h"
+#include "Shader.h"
 
 CompMeshRenderer::CompMeshRenderer(GameObject* owner) : Component(owner)
 {
@@ -25,9 +26,9 @@ void CompMeshRenderer::Update()
 	renInstance->render->QueueMesh(this);
 }
 
-void CompMeshRenderer::Render()
+void CompMeshRenderer::Render(Shader* shader)
 {
-	mesh->Draw();
+	mesh->Draw(shader);
 }
 
 MeshRenderer* CompMeshRenderer::GetMesh()
