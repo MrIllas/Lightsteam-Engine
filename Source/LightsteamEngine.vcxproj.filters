@@ -220,6 +220,9 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source\Core\Render</Filter>
     </ClCompile>
+    <ClCompile Include="SegmentInspector.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -566,6 +569,9 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentInspector.h">
+      <Filter>Header\Core\Segments</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

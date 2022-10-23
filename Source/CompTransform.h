@@ -13,6 +13,8 @@ public:
 	void Init() override;
 	void Update() override;
 
+	void UpdateGUI() override;
+
 public:
 
 	float4x4 localTransform;

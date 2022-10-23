@@ -4,6 +4,10 @@
 #include "Renderer.h"
 #include "Shader.h"
 
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
+
 CompMeshRenderer::CompMeshRenderer(GameObject* owner) : Component(owner)
 {
 	this->type = CO_TYPE::MESH_RENDERER;
@@ -26,8 +30,17 @@ void CompMeshRenderer::Update()
 	renInstance->render->QueueMesh(this);
 }
 
+void CompMeshRenderer::UpdateGUI()
+{
+	if (ImGui::CollapsingHeader("Mesh Renderer", ImGuiTreeNodeFlags_Leaf))
+	{
+		ImGui::Checkbox("Active##MeshRenderer", &this->active);
+	}
+}
+
 void CompMeshRenderer::Render(Shader* shader)
 {
+	if (!active) return;
 	mesh->Draw(shader);
 }
 

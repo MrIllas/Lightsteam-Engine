@@ -25,6 +25,11 @@ void Component::Update()
 
 }
 
+void Component::UpdateGUI()
+{
+
+}
+
 void Component::Enable()
 {
 	active = true;

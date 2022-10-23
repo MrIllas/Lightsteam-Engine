@@ -16,6 +16,8 @@ public:
 
 	void Update() override;
 
+	void UpdateGUI() override;
+
 	void Render(Shader* shader);
 
 	MeshRenderer* GetMesh();

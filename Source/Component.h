@@ -21,6 +21,8 @@ public:
 	virtual void Init();
 	virtual void Update();
 
+	virtual void UpdateGUI();
+
 	void Enable();
 	void Disable();
 
