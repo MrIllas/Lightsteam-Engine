@@ -14,7 +14,7 @@
 		<Vsync value="false" />
 		<Wireframe value="false" />
 		<DepthTest value="true" />
-		<CullFace value="false" />
+		<CullFace value="true" />
 		<Lighting value="false" />
 		<Fog value="false" />
 		<ColorMaterial value="true" />
@@ -22,7 +22,7 @@
 	</Renderer3D>
 	<Editor>
 		<Configuration value="true" />
-		<About value="true" />
+		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />
 		<Hierarchy value="true" />

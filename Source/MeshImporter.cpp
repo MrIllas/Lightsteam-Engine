@@ -58,7 +58,7 @@ void MeshImporter::ImportMesh(std::string filePath, bool dragAndDrop)
 GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent)
 {
 
-	if(parent == nullptr) parent = new GameObject(scene->mRootNode->mName.C_Str());
+	if(parent == nullptr && scene->mNumMeshes > 1) parent = new GameObject(scene->mRootNode->mName.C_Str());
 
 	if (scene->HasMeshes())
 	{
@@ -82,7 +82,8 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 			}
 
 			//Add GameObject to it's parent
-			parent->AddChildren(go);
+			if (parent == nullptr) parent = go;
+			else parent->AddChildren(go);
 		}
 	}
 

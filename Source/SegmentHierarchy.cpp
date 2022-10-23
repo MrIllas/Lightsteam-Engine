@@ -3,6 +3,8 @@
 #include "ModuleScene.h"
 #include "GameObject.h"
 
+#include "MeshImporter.h"
+
 SegmentHierarchy::SegmentHierarchy(bool enabled) : Segment(enabled)
 {
 	name = "Hierarchy";
@@ -76,10 +78,12 @@ void SegmentHierarchy::RightClickMenu(GameObject* go)
 
 			if (ImGui::BeginMenu("Primitives"))
 			{
-				if (ImGui::MenuItem("Cube Node")) auxGO->AddChildren(new GameObject());
-				if (ImGui::MenuItem("Sphere Node")) auxGO->AddChildren(new GameObject());
-				if (ImGui::MenuItem("Pyramid Node")) auxGO->AddChildren(new GameObject());
-
+				if (ImGui::MenuItem("Cube Node")) 	MeshImporter::ImportMesh("../Output/Assets/Primitives/Cube.fbx");
+				if (ImGui::MenuItem("Sphere Node")) 	MeshImporter::ImportMesh("../Output/Assets/Primitives/Sphere.fbx");
+				if (ImGui::MenuItem("Plane Node")) MeshImporter::ImportMesh("../Output/Assets/Primitives/Plane.fbx");
+				if (ImGui::MenuItem("Pyramid Node")) MeshImporter::ImportMesh("../Output/Assets/Primitives/Pyramid.fbx");
+				if (ImGui::MenuItem("Cylinder Node")) MeshImporter::ImportMesh("../Output/Assets/Primitives/Cylinder.fbx");
+				if (ImGui::MenuItem("Capsule Node")) MeshImporter::ImportMesh("../Output/Assets/Primitives/Capsule.fbx");
 				ImGui::EndMenu();
 			}
 			
