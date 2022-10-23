@@ -1,6 +1,6 @@
 #include "SegmentScene.h"
 
-#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
 #include "FrameBuffer.h"
 
 #include "MathGeoLib/include/Math/float2.h"
@@ -10,7 +10,7 @@ SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 {
 	name = "Scene";
 
-	renInstance = RenderProperties::Instance();
+	camInstance = CameraProperties::Instance();
 }
 
 SegmentScene::~SegmentScene()
@@ -21,7 +21,8 @@ SegmentScene::~SegmentScene()
 
 void SegmentScene::Start()
 {
-	renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
+	//renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
+	camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
 }
 
 void SegmentScene::Update()
@@ -34,12 +35,19 @@ void SegmentScene::Update()
 		{
 			segmentSize.x = aux.x;
 			segmentSize.y = aux.y;
-			if (renInstance->render == nullptr)
+			//if (renInstance->render == nullptr)
+			//{
+			//	renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
+			//	//render->render->Start();
+			//}
+			//else renInstance->render->Resize({ segmentSize.x, segmentSize.y });
+			if (camInstance->editorCamera.renderer == nullptr)
 			{
-				renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
+				camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
 				//render->render->Start();
 			}
-			else renInstance->render->Resize({ segmentSize.x, segmentSize.y });
+			else camInstance->editorCamera.renderer->Resize({ segmentSize.x, segmentSize.y });
+
 		}
 
 		RenderSpace();
@@ -49,6 +57,6 @@ void SegmentScene::Update()
 
 void SegmentScene::RenderSpace()
 {
-	ImGui::Image((ImTextureID)renInstance->render->GetFrameBufffer()->GetTextureBuffer(), { segmentSize.x, segmentSize.y }, ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::Image((ImTextureID)camInstance->editorCamera.renderer->GetFrameBufffer()->GetTextureBuffer(), { segmentSize.x, segmentSize.y }, ImVec2(0, 1), ImVec2(1, 0));
 	//renInstance->render->Draw();
 }

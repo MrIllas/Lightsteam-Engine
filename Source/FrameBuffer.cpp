@@ -1,6 +1,8 @@
 #include "FrameBuffer.h"
 
 
+#include "Globals.h"
+
 FrameBuffer::FrameBuffer()
 {
 	frameBuffer = 0;

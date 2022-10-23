@@ -40,8 +40,6 @@ void RenderProperties::ToggleFog() { fog ? glEnable(GL_FOG) : glDisable(GL_FOG);
 void RenderProperties::ToggleColorMaterial() { colorMaterial ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL); }
 void RenderProperties::ToggleTexture2D() { texture2D ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D); }
 
-float* RenderProperties::GetProjectionMatrix() { return &ProjectionMatrix.M[0]; }
-
 RenderProperties* RenderProperties::rProps = nullptr;
 
 #pragma endregion Render Properties Singleton Struct
@@ -104,6 +102,9 @@ bool ModuleRenderer3D::Init()
 		//Render properties singleton
 		rProps = RenderProperties::Instance();
 
+		//Camera properties singleton
+		cProps = CameraProperties::Instance();
+
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -112,7 +113,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
+			//LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
@@ -124,7 +125,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
+			//LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 		
@@ -138,7 +139,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
+			//LOG(LOG_TYPE::ERRO, "ERROR: Initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
@@ -179,19 +180,17 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 UpdateStatus ModuleRenderer3D::PreUpdate()
 {
-	//Color c = App->camera->g
 	//Cleaning
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	/*glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(cProps->editorCamera.GetViewMatrix());
 
-	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(cProps->editorCamera.Position.x, cProps->editorCamera.Position.y, cProps->editorCamera.Position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
+		lights[i].Render();*/
 
 	return UPDATE_CONTINUE;
 }
@@ -200,7 +199,7 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
 	//Meshes
-	rProps->render->Render();
+	cProps->editorCamera.renderer->Render();
 
 
 	//Swap Buffer
@@ -212,11 +211,6 @@ UpdateStatus ModuleRenderer3D::PostUpdate()
 bool ModuleRenderer3D::CleanUp()
 {
 	//Render Properties Struct singleton
-	if (rProps->render != nullptr)
-	{
-		rProps->render->CleanUp();
-		RELEASE(rProps->render);
-	}
 	RenderProperties::Delete();
 
 	LOG(LOG_TYPE::ENGINE, "Destroying 3D Renderer");
@@ -232,13 +226,15 @@ void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	rProps->ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 2048.0f);
+	/*glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();*/
+	//rProps->ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 2048.0f);
+	//rProps->ProjectionMatrix = rProps->ProjectionMatrix.OpenGLPerspProjRH(0.125f, 2048.0f, 60.f, (float)width / (float)height);
+
 	//glLoadMatrixf(&rProps->ProjectionMatrix); //Without shaders
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	/*glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();*/
 }
 
 #pragma region Save/Load Settings

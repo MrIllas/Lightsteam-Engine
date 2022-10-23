@@ -1,6 +1,6 @@
 #include "CompMeshRenderer.h"
 
-#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
 #include "Renderer.h"
 #include "Shader.h"
 
@@ -12,7 +12,7 @@ CompMeshRenderer::CompMeshRenderer(GameObject* owner) : Component(owner)
 {
 	this->type = CO_TYPE::MESH_RENDERER;
 
-	renInstance = RenderProperties::Instance();
+	camInstance = CameraProperties::Instance();
 }
 
 CompMeshRenderer::~CompMeshRenderer()
@@ -27,7 +27,7 @@ void CompMeshRenderer::Update()
 {
 	if (mesh == nullptr) return;
 
-	renInstance->render->QueueMesh(this);
+	camInstance->editorCamera.renderer->QueueMesh(this);
 }
 
 void CompMeshRenderer::UpdateGUI()

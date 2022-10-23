@@ -5,8 +5,6 @@
 
 #include "Shader.h"
 
-#include "glmath.h"
-
 #include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
 
@@ -94,11 +92,13 @@ void MeshRenderer::Draw(Shader* shader)
 
 		//glActiveTexture(GL_TEXTURE0);
 
-		mat4x4 identity;
+		float4x4 identity;
+		identity = identity.identity; 
 
-		this->shader->SetMat4("projection", RenderProperties::Instance()->GetProjectionMatrix());
-		this->shader->SetMat4("view", CameraProperties::Instance()->GetViewMatrix());
-		this->shader->SetMat4("model", &identity.M[0]);
+
+		this->shader->SetMat4("projection", CameraProperties::Instance()->editorCamera.GetProjectionMatrix());
+		this->shader->SetMat4("view", CameraProperties::Instance()->editorCamera.GetViewMatrix());
+		this->shader->SetMat4("model", &identity.v[0][0]);
 
 		//Draw Mesh
 		glBindVertexArray(VAO);

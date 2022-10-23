@@ -22,10 +22,6 @@ public:
 	bool colorMaterial = false;
 	bool texture2D = false;
 
-	mat4x4 ProjectionMatrix; //FOV
-
-	Renderer* render = nullptr;
-
 	RenderProperties();
 
 	static RenderProperties* Instance();
@@ -41,14 +37,13 @@ public:
 	void ToggleColorMaterial();
 	void ToggleTexture2D();
 
-	float* GetProjectionMatrix();
-
 private:
 	static RenderProperties* rProps;
 
 };
 
 class WindowProperties;
+struct CameraProperties;
 
 class ModuleRenderer3D : public Module
 {
@@ -73,8 +68,8 @@ public:
 public:
 
 	Light lights[MAX_LIGHTS];
-	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix;
+	float3x3 NormalMatrix;
+	float4x4 ModelMatrix, ViewMatrix;
 		//ProjectionMatrix;
 
 private:
@@ -82,6 +77,7 @@ private:
 
 	RenderProperties* rProps = nullptr;
 	WindowProperties* wProps = nullptr;
+	CameraProperties* cProps = nullptr;
 };
 
 #endif // !__MODULERENDERER3D_H__

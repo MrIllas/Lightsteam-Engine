@@ -3,24 +3,23 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "glmath.h"
+
+#include "Camera.h"
 
 struct CameraProperties
 {
 public:
-
-	mat4x4 ViewMatrix;
+	Camera editorCamera;
 
 	CameraProperties();
 
 	static CameraProperties* Instance();
 
 	static void Delete();
-	 
-	float* GetViewMatrix();
 
 private:
 	static CameraProperties* cProps;
+
 };
 
 class ModuleCamera3D : public Module
@@ -34,35 +33,36 @@ public:
 	UpdateStatus Update();
 	bool CleanUp();
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
-	float* GetViewMatrix();
+	/*void Look(const float3 &Position, const float3&Reference, bool RotateAroundReference = false);
+	void LookAt(const float3&Spot);
+	void Move(const float3&Movement);*/
+	//float* GetViewMatrix();
 
 	void SaveSettingsData(pugi::xml_node& save) override;
 
 	void LoadSettingsData(pugi::xml_node& load) override;
 
-	//void SetTarget(Vehicle* tg, vec3 offset);
-	//void RemoveTarget();
 
 private:
 
-	void CalculateViewMatrix();
+	void SceneCameraInput();
+	//void CalculateViewMatrix();
 
 public:
 	
-	vec3 X, Y, Z, Position, Reference;
+	//float3 X, Y, Z, Position, Reference;
 
 private:
+
+	
 
 	CameraProperties* cProps = nullptr;
 
 	//mat4x4 ViewMatrix;//View camera
-	mat4x4 ViewMatrixInverse; 
+	//float4x4 ViewMatrixInverse;
 
 	//Vehicle* target = nullptr;
-	vec3 offset;
+	//float3 offset;
 };
 
 #endif // !__MODULECAMERA3D_H__

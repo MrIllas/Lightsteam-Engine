@@ -2,7 +2,7 @@
 #include "Segment.h"
 #include "Renderer.h"
 
-struct RenderProperties;
+struct CameraProperties;
 
 class SegmentScene : public Segment
 {
@@ -21,6 +21,6 @@ private:
 	ImVec2 segmentSize = { 0, 0 };
 	//Renderer* renderer = nullptr;
 
-	RenderProperties* renInstance = nullptr;
+	CameraProperties* camInstance = nullptr;
 };
 
