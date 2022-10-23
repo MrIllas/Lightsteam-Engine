@@ -4,7 +4,7 @@
 #include "MeshRenderer.h"
 
 
-struct RenderProperties;
+struct CameraProperties;
 
 class Shader;
 
@@ -24,6 +24,6 @@ public:
 private:
 	MeshRenderer* mesh = nullptr;
 
-	RenderProperties* renInstance = nullptr;
+	CameraProperties* camInstance = nullptr;
 };
 

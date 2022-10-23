@@ -17,7 +17,9 @@ Renderer::Renderer(float2 size)
 
 Renderer::~Renderer()
 {
+	if (frameBuffer != nullptr) RELEASE(frameBuffer);
 
+	if (baseShader != nullptr) RELEASE(baseShader);
 }
 
 void Renderer::Init()
@@ -27,21 +29,12 @@ void Renderer::Init()
 
 void Renderer::Start()
 {
-	//meshes.emplace_back(new MeshRenderer());
+
 }
 
 void Renderer::CleanUp()
 {
-	RELEASE(frameBuffer);
-
-	RELEASE(baseShader);
-
-	/*for (uint i = 0; i < meshes.size(); ++i)
-	{
-		 RELEASE(meshes.front());
-		 meshes.pop();
-	}
-	meshes.empty();*/
+	
 }
 
 void Renderer::Render()

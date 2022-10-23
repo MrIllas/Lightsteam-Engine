@@ -28,9 +28,6 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Source\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="glmath.cpp">
-      <Filter>Source\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Loggs.cpp">
       <Filter>Source\Tools</Filter>
     </ClCompile>
@@ -220,6 +217,12 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source\Core\Render</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CompCamera.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -256,9 +259,6 @@
       <Filter>Header\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Timer.hpp">
-      <Filter>Header\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="glmath.h">
       <Filter>Header\Tools</Filter>
     </ClInclude>
     <ClInclude Include="External\ImGui\imconfig.h">
@@ -566,6 +566,12 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CompCamera.h">
+      <Filter>Header\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

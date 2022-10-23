@@ -15,7 +15,7 @@
 		<Wireframe value="false" />
 		<DepthTest value="true" />
 		<CullFace value="false" />
-		<Lighting value="true" />
+		<Lighting value="false" />
 		<Fog value="false" />
 		<ColorMaterial value="true" />
 		<Texture2D value="true" />

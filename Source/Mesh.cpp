@@ -1,7 +1,5 @@
 #include "Mesh.h"
 
-#include "glmath.h"
-
 Mesh::Mesh()
 {
 }

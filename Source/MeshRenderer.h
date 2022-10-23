@@ -12,7 +12,6 @@
 typedef unsigned int uint;
 
 class Shader;
-class mat4x4;
 
 struct Vertex {
 	Vertex(float3 position, float3 normal, float2 texCoord)

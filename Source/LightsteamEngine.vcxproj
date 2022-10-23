@@ -156,6 +156,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CompCamera.cpp" />
     <ClCompile Include="CompMeshRenderer.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CompTransform.cpp" />
@@ -204,7 +206,6 @@
     <ClCompile Include="External\PugiXml\src\pugixml.cpp" />
     <ClCompile Include="External\Simdjson\simdjson.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
-    <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Globals.h" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Loggs.cpp" />
@@ -231,6 +232,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CompCamera.h" />
     <ClInclude Include="CompMeshRenderer.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CompTransform.h" />
@@ -318,7 +321,6 @@
     <ClInclude Include="External\PugiXml\src\pugixml.hpp" />
     <ClInclude Include="External\Simdjson\simdjson.h" />
     <ClInclude Include="FrameBuffer.h" />
-    <ClInclude Include="glmath.h" />
     <ClInclude Include="ImGuiUtils.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="List.h" />

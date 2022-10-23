@@ -49,7 +49,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "quaternion.h"
 
 #include <cmath>
-#include "glmath.h"
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 // ---------------------------------------------------------------------------
 template<typename TReal>
