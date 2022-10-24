@@ -85,10 +85,14 @@ void MeshRenderer::Draw(Shader* shader)
 	{
 		this->shader->Use();
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		shader->SetInt("texture_albedo", 0);
-		//
+		if (RenderProperties::Instance()->texture2D)
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			shader->SetInt("texture_albedo", 0);
+		}
+		
+		
 
 		//glActiveTexture(GL_TEXTURE0);
 
@@ -99,6 +103,12 @@ void MeshRenderer::Draw(Shader* shader)
 		this->shader->SetMat4("projection", CameraProperties::Instance()->editorCamera.GetProjectionMatrix());
 		this->shader->SetMat4("view", CameraProperties::Instance()->editorCamera.GetViewMatrix());
 		this->shader->SetMat4("model", &identity.v[0][0]);
+
+		if (RenderProperties::Instance()->lighting)
+		{
+			RenderProperties::Instance()->worldLight->SetShaderData(this->shader);
+		}
+		
 
 		//Draw Mesh
 		glBindVertexArray(VAO);

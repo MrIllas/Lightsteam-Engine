@@ -22,6 +22,8 @@ public:
 	bool colorMaterial = false;
 	bool texture2D = false;
 
+	Light* worldLight;
+
 	RenderProperties();
 
 	static RenderProperties* Instance();
@@ -67,7 +69,7 @@ public:
 
 public:
 
-	Light lights[MAX_LIGHTS];
+	//Light lights[MAX_LIGHTS];
 	float3x3 NormalMatrix;
 	float4x4 ModelMatrix, ViewMatrix;
 		//ProjectionMatrix;

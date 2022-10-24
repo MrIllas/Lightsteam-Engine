@@ -25,7 +25,7 @@ void SegmentHierarchy::Update()
 	if (ImGui::Begin(name.c_str()))
 	{
 		DisplayGameObject(sceneInstance->root);
-		//RightClickMenu();
+		RightClickMenu();
 		
 	}
 	ImGui::End();
@@ -49,7 +49,11 @@ void SegmentHierarchy::DisplayGameObject(GameObject* go)
 		if (ImGui::IsItemClicked()) { GetSelectedNode(go); }
 
 		//if (ImGui::IsItemHovered()) hoveredGO = go;
-		RightClickMenu(go);
+		/*if (ImGui::IsItemClicked(1))
+		{
+			LOG(LOG_TYPE::NONE, "Clicked");*/
+			RightClickMenu(go);
+		//}
 
 		for (int i = 0; i < go->children.size(); ++i)
 		{
@@ -68,6 +72,7 @@ void SegmentHierarchy::RightClickMenu(GameObject* go)
 	else auxGO = go;
 
 	bool pop = ImGui::BeginPopupContextWindow();
+	
 	if (pop)
 	{
 		if (ImGui::BeginMenu("Nodes"))

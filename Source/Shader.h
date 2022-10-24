@@ -19,6 +19,7 @@ public:
 	void SetInt(const std::string &name, int value) const;
 	void SetFloat(const std::string &name, float value) const;
 	void SetMat4(const std::string& name, const float* value) const;
+	void SetVec3(const std::string& name, const float* value) const;
 };
 
 #endif
