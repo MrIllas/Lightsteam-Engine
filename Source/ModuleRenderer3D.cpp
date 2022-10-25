@@ -212,6 +212,7 @@ UpdateStatus ModuleRenderer3D::PostUpdate()
 bool ModuleRenderer3D::CleanUp()
 {
 	//Render Properties Struct singleton
+	RELEASE(rProps->worldLight);
 	RenderProperties::Delete();
 
 	LOG(LOG_TYPE::ENGINE, "Destroying 3D Renderer");

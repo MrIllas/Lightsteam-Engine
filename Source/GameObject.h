@@ -32,6 +32,8 @@ public:
 	}
 
 	void AddChildren(GameObject* go);
+	void RemoveChildren(GameObject* go);
+	void SetParent(GameObject* go);
 
 	bool HasChildren() { return (children.size() != 0) ? true : false; }
 
@@ -43,5 +45,13 @@ public:
 
 	std::vector<GameObject*> children;
 	GameObject* parent = nullptr;
+
+private:
+	//Operator
+	bool operator==(GameObject& other) const
+	{
+		if (this == &other) return true; //This is the pointer for 
+		else return false;
+	}
 };
 

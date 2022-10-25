@@ -15,16 +15,22 @@ public:
 	void Update() override;
 
 private:
-	void DisplayGameObject(GameObject* go);
+	GameObject* DisplayGameObject(GameObject* go);
 
-	void RightClickMenu(GameObject* go = nullptr);
+	void RightClickMenuContextItem(GameObject* go = nullptr);
+	void RightClickMenuContextWindow();
+	void RightClickMenuContent(GameObject* go);
 
 	void GetSelectedNode(GameObject* go);
 	inline bool CleanSelected(GameObject* go);
 
 private:
 	SceneProperties* sceneInstance = nullptr;
+	GameObject* hoverGO = nullptr;
+	GameObject* dropGO = nullptr;
+
 
 	bool cleanSelected = false;
+	bool winHover = false;
 };
 

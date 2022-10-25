@@ -77,6 +77,8 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 
 void GameObject::DeleteComponent(CO_TYPE type)
 {
+	if (components.empty()) return;
+
 	Component* comp = components[type];
 
 	if (comp != nullptr)
@@ -88,12 +90,14 @@ void GameObject::DeleteComponent(CO_TYPE type)
 
 Component* GameObject::GetComponent(CO_TYPE type)
 {
+	if (components.empty()) return nullptr;
 	return components[type];
 }
 
 /*RETURNS ONLY THE FIRST COMPONENT OF THE FIRST CHILDREN THAT HAS IT*/
 Component* GameObject::GetComponentInChildren(CO_TYPE type)
 {
+	if (children.empty()) return nullptr;
 	Component* toReturn = nullptr;
 
 	for (int i = 0; i < children.size(); ++i)
@@ -108,4 +112,29 @@ Component* GameObject::GetComponentInChildren(CO_TYPE type)
 void GameObject::AddChildren(GameObject* go)
 {
 	children.emplace_back(go);
+	if (go->parent == nullptr) go->parent = this;
+}
+
+void GameObject::RemoveChildren(GameObject* go)
+{
+	if (children.empty()) return;
+	for (int i = 0; i < children.size(); ++i)
+	{
+		GameObject* aux = children[i];
+		if (*children[i] == *go)
+		{
+			children.erase(children.begin() + i);
+		}
+	}
+}
+
+void GameObject::SetParent(GameObject* go)
+{
+	if (parent != nullptr)
+	{
+		if (go->parent == this) return;
+		parent->RemoveChildren(this);
+	}
+	parent = go;
+	parent->children.emplace_back(this);
 }

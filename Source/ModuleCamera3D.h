@@ -10,6 +10,7 @@ struct CameraProperties
 {
 public:
 	Camera editorCamera;
+	bool isMouseOnScene = false;
 
 	CameraProperties();
 

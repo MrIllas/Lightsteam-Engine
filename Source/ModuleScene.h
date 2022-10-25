@@ -17,6 +17,8 @@ public:
 
 	static void Delete();
 
+	GameObject* GetSelectedGO(GameObject* go = nullptr);
+
 private:
 	static SceneProperties* instance;
 };

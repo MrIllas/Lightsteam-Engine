@@ -72,6 +72,7 @@ UpdateStatus ModuleCamera3D::Update()
 
 void ModuleCamera3D::SceneCameraInput()
 {
+	if (!cProps->isMouseOnScene) return;
 	float3 empty = { 0,0,0 };
 	Quat lookingDir = Quat::identity;
 	cProps->editorCamera.frustum.WorldMatrix().Decompose(empty, lookingDir, empty);

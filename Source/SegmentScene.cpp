@@ -29,6 +29,17 @@ void SegmentScene::Update()
 {
 	if (ImGui::Begin(name.c_str()))
 	{
+		ImVec2 pos = ImGui::GetWindowPos();
+		ImVec2 size = ImGui::GetWindowSize();
+		size.x += pos.x;
+		size.y += pos.y;
+
+		if (ImGui::IsMouseHoveringRect(pos, size)) camInstance->isMouseOnScene = true;
+		else camInstance->isMouseOnScene = false;
+			
+
+		
+
 		ImVec2 aux = ImGui::GetWindowSize();
 		aux.y -= 35;
 		if (aux.x != segmentSize.x || aux.y != segmentSize.y)

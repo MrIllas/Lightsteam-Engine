@@ -91,9 +91,7 @@ void MeshRenderer::Draw(Shader* shader)
 			glBindTexture(GL_TEXTURE_2D, textureID);
 			shader->SetInt("texture_albedo", 0);
 		}
-		
-		
-
+	
 		//glActiveTexture(GL_TEXTURE0);
 
 		float4x4 identity;
@@ -104,6 +102,7 @@ void MeshRenderer::Draw(Shader* shader)
 		this->shader->SetMat4("view", CameraProperties::Instance()->editorCamera.GetViewMatrix());
 		this->shader->SetMat4("model", &identity.v[0][0]);
 
+		//Light
 		if (RenderProperties::Instance()->lighting)
 		{
 			RenderProperties::Instance()->worldLight->SetShaderData(this->shader);

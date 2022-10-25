@@ -6,7 +6,7 @@
 #pragma region SceneProperties
 SceneProperties::SceneProperties()
 {
-	root = new GameObject();
+	root = new GameObject("Scene");
 	root->DeleteComponent(TRANSFORM);
 }
 
@@ -15,6 +15,25 @@ SceneProperties* SceneProperties::Instance()
 	if (instance == nullptr) instance = new SceneProperties();
 
 	return instance;
+}
+
+GameObject* SceneProperties::GetSelectedGO(GameObject* go)
+{
+	GameObject* toReturn = go;
+	if (go == nullptr) toReturn = root;
+
+	if (toReturn->selected) return toReturn;
+	else
+	{
+		GameObject* aux = nullptr;
+		for (int i = 0; i < toReturn->children.size(); ++i)
+		{
+			aux = GetSelectedGO(toReturn->children[i]);
+			if (aux != nullptr && aux->selected) return aux;
+		}
+	}
+
+	return nullptr;
 }
 
 void SceneProperties::Delete()
@@ -49,6 +68,7 @@ bool ModuleScene::Init()
 
 bool ModuleScene::Start()
 {
+	//Import Example mesh
 	MeshImporter::ImportMesh("../Output/Assets/BakerHouse.fbx");
 
 	return true;

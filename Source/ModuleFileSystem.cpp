@@ -65,7 +65,7 @@ UpdateStatus ModuleFileSystem::PostUpdate()
 
 void ModuleFileSystem::DragAndDrop(std::string path)
 {
-	MeshImporter::ImportMesh(path, true);
+	MeshImporter::ImportMesh(path, nullptr, true);
 }
 
 #pragma region Save/Load Settings

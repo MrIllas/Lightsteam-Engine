@@ -37,7 +37,7 @@ void MeshImporter::CleanUp()
 	aiDetachAllLogStreams();
 }
 
-void MeshImporter::ImportMesh(std::string filePath, bool dragAndDrop)
+void MeshImporter::ImportMesh(std::string filePath, GameObject* parent, bool dragAndDrop)
 {
 	//ASK - UTF8 Characters not accepted by ASSIMP on the current lib version(2016) but added in 2017 https://github.com/assimp/assimp/issues/1612
 
@@ -49,7 +49,10 @@ void MeshImporter::ImportMesh(std::string filePath, bool dragAndDrop)
 
 		node = scene->mRootNode;
 
-		SceneProperties::Instance()->root->AddChildren(GenerateGameObjects(node, scene));
+		if (parent == nullptr)
+			SceneProperties::Instance()->root->AddChildren(GenerateGameObjects(node, scene));
+		else
+			parent->AddChildren(GenerateGameObjects(node, scene));
 	}
 
 	if(scene == nullptr && dragAndDrop) LOG(LOG_TYPE::ERRO, "ERROR: Importing file: '%s'", filePath.c_str());
