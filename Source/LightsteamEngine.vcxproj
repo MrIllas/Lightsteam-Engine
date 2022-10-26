@@ -229,6 +229,7 @@
     <ClCompile Include="SegmentScene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +348,7 @@
     <ClInclude Include="SegmentInspector.h" />
     <ClInclude Include="SegmentScene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 #include "Module.h"
 
 class MeshImporter;
+class TextureImporter;
 
 class ModuleFileSystem : public Module
 {
@@ -25,5 +26,6 @@ public:
 
 public:
 	MeshImporter* meshImp = nullptr;
+	TextureImporter* textImp = nullptr;
 };
 

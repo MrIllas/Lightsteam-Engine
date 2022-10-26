@@ -57,7 +57,8 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
 
-	textureID = TextureImporter::CheckerImage();
+	texture.path = "../Output/Assets/Baker_house.png";
+	texture.id = TextureImporter::ImportTexture(texture.path);
 
 	//Cleaning
 	glBindVertexArray(0);
@@ -88,7 +89,7 @@ void MeshRenderer::Draw(Shader* shader)
 		if (RenderProperties::Instance()->texture2D)
 		{
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, textureID);
+			glBindTexture(GL_TEXTURE_2D, texture.id);
 			shader->SetInt("texture_albedo", 0);
 		}
 	

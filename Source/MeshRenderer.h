@@ -28,8 +28,7 @@ struct Vertex {
 
 struct Texture {
 	unsigned int id;
-	std::string type;
-	std::string path; // we store the path of the texture to compare with other textures
+	std::string path;
 };
 
 struct Meshe
@@ -38,6 +37,8 @@ struct Meshe
 	std::vector<unsigned int> indices;
 	std::vector<Texture>      textures;
 };
+
+struct TextureData;
 
 class MeshRenderer
 {
@@ -58,6 +59,8 @@ public:
 	void SetRotation(float3 newRot);
 	void SetSize(float3 newSize);
 
+public:
+	Texture texture;
 private:
 	float4x4 matrix;
 
@@ -67,8 +70,6 @@ private:
 
 	//uint indexBuffer;
 	Meshe mesh;
-
-	uint textureID;
 
 	Shader* shader = nullptr;
 };

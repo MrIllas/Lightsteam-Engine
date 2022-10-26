@@ -10,8 +10,9 @@ Light::Light() : ref(-1), on(false), position(0.0f, 0.0f, 0.0f)
 	ref = -1;
 	on = false;
 	position = float3(0.0f, 0.0f, 0.0f);
-	lightPosition = float3(5.0f, 5.0f, 0.0f);
-	lightColour = float3(1.0f, 0.0f, 0.0f);
+
+	lightPosition = float3(0.0f, 5.0f, -5.0f);
+	lightColour = float3(1.0f, 1.0f, 1.0f);
 	specularStrength = 0.0f;
 }
 

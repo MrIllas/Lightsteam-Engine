@@ -1,6 +1,5 @@
 #include "TextureImporter.h"
 
-#include"Globals.h"
 
 #include "Glew/include/glew.h"
 
@@ -9,14 +8,20 @@
 
 #include "MeshRenderer.h"
 
+std::vector<TextureData*> TextureImporter::texturesLoaded;
+
 TextureImporter::TextureImporter()
 {
-
+	ilInit();
 }
 
 TextureImporter::~TextureImporter()
 {
-
+	for (int i = 0; i < texturesLoaded.size(); ++i)
+	{
+		RELEASE(texturesLoaded[i]);
+	}
+	texturesLoaded.clear();
 }
 
 uint TextureImporter::CheckerImage()
@@ -53,28 +58,67 @@ uint TextureImporter::CheckerImage()
 
 uint TextureImporter::ImportTexture(std::string filePath)
 {
+	int checkTxt = CheckTexturesLoaded(filePath);
+	if (checkTxt > -1)
+	{
+		LOG(LOG_TYPE::ATTENTION, "ATTENTION: The image '%s' was already imported, loading it from memory.", filePath.c_str());
+		return (uint)checkTxt;
+	}
+
 	ILuint imgID = 0;
-	GLuint texture = ilutGLBindTexImage();
 
 	ilGenImages(1, &imgID);
 	ilBindImage(imgID);
 
-	if (!ilLoadImage(filePath.c_str()))
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+
+	ILboolean success = ilLoadImage(filePath.c_str());
+
+	if (success == IL_TRUE)
+	{
+		uint w = ilGetInteger(IL_IMAGE_WIDTH);
+		uint h = ilGetInteger(IL_IMAGE_HEIGHT);
+		LOG(LOG_TYPE::SUCCESS, "SUCCESS: Loading image '%s' of size (%i x %i) pixels .", filePath.c_str(), w, h);
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+		
+		TextureData* txtData = new TextureData();;
+
+
+		glGenTextures(1, &txtData->id);
+		glBindTexture(GL_TEXTURE_2D, txtData->id);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		txtData->data = ilGetData();
+		glTexImage2D(GL_TEXTURE_2D, 0, IL_RGBA, w, h, 0, IL_RGBA, GL_UNSIGNED_BYTE, txtData->data);
+
+		ilDeleteImages(1, &imgID);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+
+		texturesLoaded.emplace_back(txtData);
+
+		return txtData->id;
+	}
+	else
 	{
 		LOG(LOG_TYPE::ERRO, "ERROR: Could not load Texture '%s'", ilutGetString(ilGetError()));
 	}
 	
+	return CheckerImage();
+}
 
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glGenerateMipmap(GL_TEXTURE_2D);
+int TextureImporter::CheckTexturesLoaded(std::string filePath)
+{
+	for (int i = 0; i < texturesLoaded.size(); ++i)
+	{
+		if (texturesLoaded[i]->path.compare(filePath)) return texturesLoaded[i]->id;
+	}
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	ilDeleteImages(1, &imgID);
-
-	return texture;
+	return -1;
 }

@@ -4,6 +4,7 @@
 #include "PhysFS/include/physfs.h"
 
 #include "MeshImporter.h"
+#include "TextureImporter.h"
 
 ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -20,6 +21,7 @@ bool ModuleFileSystem::Init()
 	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 
 	meshImp = new MeshImporter();
+	textImp = new TextureImporter();
 
 	return true;
 }
@@ -39,6 +41,8 @@ bool ModuleFileSystem::CleanUp()
 
 	meshImp->CleanUp();
 	RELEASE(meshImp);
+
+	RELEASE(textImp);
 
 	return ret;
 }
@@ -65,7 +69,23 @@ UpdateStatus ModuleFileSystem::PostUpdate()
 
 void ModuleFileSystem::DragAndDrop(std::string path)
 {
-	MeshImporter::ImportMesh(path, nullptr, true);
+	std::string extension = "";
+
+	//Find last dot
+	size_t pos = path.find_last_of(".");
+	//make sure the poisition is valid
+	if (pos != std::string::npos)
+		extension = path.substr(pos + 1);
+
+	switch (str2int(extension.c_str()))
+	{
+		case str2int("fbx"):
+			MeshImporter::ImportMesh(path, nullptr, true);
+			break;
+		case str2int("png"):
+			
+			break;
+	}	
 }
 
 #pragma region Save/Load Settings

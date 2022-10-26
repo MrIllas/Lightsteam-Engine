@@ -44,7 +44,6 @@ void main()
 	
 	vec3 objectColour = texture(texture_albedo, TextureCoords).xyz;
 	
-	
 	vec3 phong = (ambient + diffuse) * objectColour;
    // FragColor = ambient * texture(texture_albedo, TextureCoords); //vec4(0.0f, 1.0f, 0.0f, 1.0f);
 	FragColor = vec4(phong, 1.0f);

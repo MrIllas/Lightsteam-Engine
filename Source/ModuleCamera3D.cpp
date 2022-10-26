@@ -74,6 +74,7 @@ void ModuleCamera3D::SceneCameraInput()
 {
 	if (!cProps->isMouseOnScene) return;
 	float3 empty = { 0,0,0 };
+	float3 newPos(.0f, .0f, .0f);
 	Quat lookingDir = Quat::identity;
 	cProps->editorCamera.frustum.WorldMatrix().Decompose(empty, lookingDir, empty);
 
@@ -86,15 +87,22 @@ void ModuleCamera3D::SceneCameraInput()
 
 	float Sensitivity = 0.25f;
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	float speed = 6.0f, zoomSpeed = 8.0f;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		speed *= 2.0f, zoomSpeed *= 2.0f;
+	speed *= App->fps;
+	zoomSpeed *= App->fps;
+
+	//ZOOM-IN/ZOOM-OUT
+	int mouseZ = App->input->GetMouseZ();
+	if (mouseZ != 0)
 	{
-		float3 newPos(.0f, .0f, .0f);
+		newPos += cProps->editorCamera.frustum.front * zoomSpeed * mouseZ;
+	}
 
-		float speed = 3.0f;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed = speed * 2.0f;
-		speed *= App->fps;
-
+	//WASD movement
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{	
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += cProps->editorCamera.frustum.front * speed;
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= cProps->editorCamera.frustum.front * speed;
 
@@ -103,10 +111,6 @@ void ModuleCamera3D::SceneCameraInput()
 
 		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
 		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
-
-		cProps->editorCamera.Position += newPos;
-		cProps->editorCamera.Reference += newPos;
-		cProps->editorCamera.frustum.pos += newPos;
 
 		cProps->editorCamera.Position -= cProps->editorCamera.Reference;
 
@@ -179,17 +183,10 @@ void ModuleCamera3D::SceneCameraInput()
 		cProps->editorCamera.LookAt(dir);
 	}
 
-
-	//ZOOM-IN/ZOOM-OUT
-	int mouseZ = App->input->GetMouseZ();
-	if (mouseZ == 1)
-	{
-
-	}
-	else if (mouseZ == -1)
-	{
-
-	}
+	cProps->editorCamera.Position += newPos;
+	cProps->editorCamera.Reference += newPos;
+	cProps->editorCamera.frustum.pos += newPos;
+	
 }
 
 
