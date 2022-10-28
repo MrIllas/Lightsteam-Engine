@@ -27,8 +27,5 @@ private:
 	MeshRenderer* mesh = nullptr;
 
 	CameraProperties* camInstance = nullptr;
-
-private:
-	void DragAndDrop();
 };
 

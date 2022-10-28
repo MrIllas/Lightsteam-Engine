@@ -55,6 +55,8 @@ public:
 
 	void SetShader(Shader* shader);
 
+	void SetTexture(Texture texture);
+
 	void SetPosition(float3 newPos);
 	void SetRotation(float3 newRot);
 	void SetSize(float3 newSize);

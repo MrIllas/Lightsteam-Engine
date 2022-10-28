@@ -2,6 +2,8 @@
 
 #include "GameObject.h"
 #include "MeshImporter.h"
+#include "TextureImporter.h"
+#include "CompMeshRenderer.h"
 
 #pragma region SceneProperties
 SceneProperties::SceneProperties()
@@ -68,9 +70,20 @@ bool ModuleScene::Init()
 
 bool ModuleScene::Start()
 {
-	//Import Example mesh
-	MeshImporter::ImportMesh("../Output/Assets/BakerHouse.fbx");
+	//Import Example mesh & texture
+	GameObject* aux = MeshImporter::ImportMesh("../Output/Assets/BakerHouse.fbx");
 
+	std::vector<CompMeshRenderer*> auxMesh = aux->GetComponentsInChildrens<CompMeshRenderer>(MESH_RENDERER);
+
+	Texture auxTexture;
+	auxTexture.id = TextureImporter::ImportTexture("../Output/Assets/Baker_house.png");
+	auxTexture.path = "../Output/Assets/Baker_house.png";
+
+	for (int i = 0; i < auxMesh.size(); ++i)
+	{
+		auxMesh[i]->GetMesh()->SetTexture(auxTexture);
+	}
+	///
 	return true;
 }
 

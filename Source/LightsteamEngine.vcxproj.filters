@@ -226,7 +226,6 @@
     <ClCompile Include="CompCamera.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -580,7 +579,6 @@
     <ClInclude Include="CompCamera.h">
       <Filter>Header\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

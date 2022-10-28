@@ -59,18 +59,3 @@ void CompMeshRenderer::SetMesh(MeshRenderer* mesh)
 {
 	this->mesh = mesh;
 }
-
-void CompMeshRenderer::DragAndDrop()
-{
-	if (ImGui::BeginDragDropTarget())
-	{
-		const ImGuiPayload* drop = ImGui::AcceptDragDropPayload("texture");
-		if (drop)
-		{
-			std::string* aux = (std::string*)drop->Data;
-			mesh->texture.path = *aux;
-
-			LOG(LOG_TYPE::NONE, "Drop-> %s", aux)
-		}
-	}
-}

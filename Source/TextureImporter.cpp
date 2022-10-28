@@ -98,7 +98,7 @@ uint TextureImporter::ImportTexture(std::string filePath)
 		ilDeleteImages(1, &imgID);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-
+		txtData->path = filePath;
 		texturesLoaded.emplace_back(txtData);
 
 		if (checkersID == 0) CheckerImage();
@@ -117,7 +117,7 @@ int TextureImporter::CheckTexturesLoaded(std::string filePath)
 {
 	for (int i = 0; i < texturesLoaded.size(); ++i)
 	{
-		if (texturesLoaded[i]->path.compare(filePath)) return texturesLoaded[i]->id;
+		if (!texturesLoaded[i]->path.compare(filePath)) return texturesLoaded[i]->id;
 	}
 
 	return -1;

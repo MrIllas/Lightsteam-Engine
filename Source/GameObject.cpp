@@ -109,6 +109,20 @@ Component* GameObject::GetComponentInChildren(CO_TYPE type)
 	return nullptr; 
 }
 
+//template <class T>
+//std::vector<T*> GameObject::GetComponentsInChildrens(CO_TYPE type)
+//{
+//	//if (children.empty()) return nullptr;
+//	std::vector<T*> toReturn;
+//
+//	for (int i = 0; i < children.size(); ++i)
+//	{
+//		T* aux = children[i]->GetComponent<T>(type);
+//
+//		if(aux != nullptr) toReturn.emplace_back(aux);
+//	}
+//}
+
 void GameObject::AddChildren(GameObject* go)
 {
 	children.emplace_back(go);

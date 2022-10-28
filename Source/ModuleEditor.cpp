@@ -144,7 +144,7 @@ void ModuleEditor::DrawEditorGui()
 	UpdateSegments();
 
 	//Demo
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	EndRender();
 }

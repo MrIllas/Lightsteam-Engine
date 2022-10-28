@@ -59,10 +59,8 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
 
-	texture.path = "../Output/Assets/Baker_house.png";
-	texture.id = TextureImporter::ImportTexture(texture.path);
-
 	checkers = TextureImporter::checkersID;
+	texture.id = checkers;
 
 	//Cleaning
 	glBindVertexArray(0);
@@ -128,6 +126,11 @@ void MeshRenderer::Draw(Shader* shader)
 void MeshRenderer::SetShader(Shader* shader)
 {
 	this->shader = shader;
+}
+
+void MeshRenderer::SetTexture(Texture texture)
+{
+	this->texture = texture;
 }
 
 float3 MeshRenderer::GetPosition()

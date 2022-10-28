@@ -26,9 +26,26 @@ public:
 	Component* GetComponentInChildren(CO_TYPE type);
 
 	template <class T>
+	std::vector<T*> GetComponentsInChildrens(CO_TYPE type)
+	{
+		std::vector<T*> toReturn;
+		
+		for (int i = 0; i < children.size(); ++i)
+		{
+			T* aux = children[i]->GetComponent<T>(type);
+		
+			if(aux != nullptr) toReturn.emplace_back(aux);
+		}
+
+		return toReturn;
+	}
+
+
+	template <class T>
 	T* GetComponent(CO_TYPE type)
 	{ 
-		return (T*)components[type];
+		if (components.count(type)) return (T*)components[type];
+		else nullptr;
 	}
 
 	void AddChildren(GameObject* go);
