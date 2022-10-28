@@ -160,6 +160,7 @@
     <ClCompile Include="CompCamera.cpp" />
     <ClCompile Include="CompMeshRenderer.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="CompTexture.cpp" />
     <ClCompile Include="CompTransform.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="CompCamera.h" />
     <ClInclude Include="CompMeshRenderer.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="CompTexture.h" />
     <ClInclude Include="CompTransform.h" />
     <ClInclude Include="External\DevIL\include\devil_cpp_wrapper.hpp" />
     <ClInclude Include="External\DevIL\include\devil_internal_exports.h" />
