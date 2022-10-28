@@ -16,7 +16,9 @@ CompTransform::~CompTransform()
 
 void CompTransform::Init()
 {
-
+	position = float3(.0f, .0f, .0f);
+	rotation = Quat::identity;
+	localScale = float3(.0f, .0f, .0f);
 }
 
 void CompTransform::Update()

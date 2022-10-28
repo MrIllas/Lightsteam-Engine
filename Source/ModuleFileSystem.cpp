@@ -6,6 +6,10 @@
 #include "MeshImporter.h"
 #include "TextureImporter.h"
 
+#include "ModuleScene.h"
+#include "GameObject.h"
+#include "CompMeshRenderer.h"
+
 ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name = "FileSystem";
@@ -22,6 +26,8 @@ bool ModuleFileSystem::Init()
 
 	meshImp = new MeshImporter();
 	textImp = new TextureImporter();
+
+	sProps = SceneProperties::Instance();
 
 	return true;
 }
@@ -83,7 +89,29 @@ void ModuleFileSystem::DragAndDrop(std::string path)
 			MeshImporter::ImportMesh(path, nullptr, true);
 			break;
 		case str2int("png"):
-			
+		{
+			GameObject* aux = sProps->GetSelectedGO();
+
+			if (aux != nullptr)
+			{
+				CompMeshRenderer* auxMesh = aux->GetComponent<CompMeshRenderer>(MESH_RENDERER);
+
+				if (auxMesh != nullptr)
+				{
+					auxMesh->GetMesh()->texture.id = TextureImporter::ImportTexture(path);
+					auxMesh->GetMesh()->texture.path = path;
+				}
+				else
+				{
+					LOG(LOG_TYPE::ERRO, "ERROR: The selected 'GameObject' doesn't have a 'CompTexture'");
+				}
+				
+			}
+			else
+			{
+				LOG(LOG_TYPE::ERRO, "ERROR: There is no 'GameObject' selected!");
+			}
+		}
 			break;
 	}	
 }

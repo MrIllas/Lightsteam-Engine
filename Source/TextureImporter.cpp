@@ -10,6 +10,8 @@
 
 std::vector<TextureData*> TextureImporter::texturesLoaded;
 
+uint TextureImporter::checkersID = 0;
+
 TextureImporter::TextureImporter()
 {
 	ilInit();
@@ -24,7 +26,7 @@ TextureImporter::~TextureImporter()
 	texturesLoaded.clear();
 }
 
-uint TextureImporter::CheckerImage()
+void TextureImporter::CheckerImage()
 {
 	const uint checkersHeight = 255;
 	const uint checkersWidth = 255;
@@ -40,19 +42,15 @@ uint TextureImporter::CheckerImage()
 		}
 	}
 
-	uint textureID = 0;
-
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	glGenTextures(1, &checkersID);
+	glBindTexture(GL_TEXTURE_2D, checkersID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkersWidth, checkersHeight,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
-
-	return textureID;
 }
 
 
@@ -103,6 +101,8 @@ uint TextureImporter::ImportTexture(std::string filePath)
 
 		texturesLoaded.emplace_back(txtData);
 
+		if (checkersID == 0) CheckerImage();
+
 		return txtData->id;
 	}
 	else
@@ -110,7 +110,7 @@ uint TextureImporter::ImportTexture(std::string filePath)
 		LOG(LOG_TYPE::ERRO, "ERROR: Could not load Texture '%s'", ilutGetString(ilGetError()));
 	}
 	
-	return CheckerImage();
+	return checkersID;
 }
 
 int TextureImporter::CheckTexturesLoaded(std::string filePath)

@@ -11,6 +11,8 @@
 
 MeshRenderer::MeshRenderer()
 {
+	isCheckers = false;
+	checkers = 0;
 }
 
 MeshRenderer::MeshRenderer(Meshe meshData)
@@ -60,6 +62,8 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	texture.path = "../Output/Assets/Baker_house.png";
 	texture.id = TextureImporter::ImportTexture(texture.path);
 
+	checkers = TextureImporter::checkersID;
+
 	//Cleaning
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -89,7 +93,10 @@ void MeshRenderer::Draw(Shader* shader)
 		if (RenderProperties::Instance()->texture2D)
 		{
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, texture.id);
+
+			if (isCheckers) glBindTexture(GL_TEXTURE_2D, checkers);
+			else glBindTexture(GL_TEXTURE_2D, texture.id);
+
 			shader->SetInt("texture_albedo", 0);
 		}
 	

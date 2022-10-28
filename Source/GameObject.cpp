@@ -133,6 +133,7 @@ void GameObject::SetParent(GameObject* go)
 	if (parent != nullptr)
 	{
 		if (go->parent == this) return;
+
 		parent->RemoveChildren(this);
 	}
 	parent = go;

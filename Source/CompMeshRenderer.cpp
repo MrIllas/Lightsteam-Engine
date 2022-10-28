@@ -35,13 +35,12 @@ void CompMeshRenderer::UpdateGUI()
 	if (ImGui::CollapsingHeader("Mesh Renderer", ImGuiTreeNodeFlags_Leaf))
 	{
 		ImGui::Checkbox("Active##MeshRenderer", &this->active);
+		ImGui::SameLine();
+		ImGui::Checkbox("Checkers Texture", &mesh->isCheckers); 
 
-		/*ImGui::Button
-		ImGui::InputText("", mesh->texture.path.c_str(), IM_ARRAYSIZE(mesh->texture.path.c_str()));*/
+		ImGui::NewLine();
 		std::string txtPath = "Texture Path: " + mesh->texture.path;
 		ImGui::Text(txtPath.c_str());
-		ImGui::Button("Diffuse Texture", { 300, 30 });
-		DragAndDrop();
 	}
 }
 

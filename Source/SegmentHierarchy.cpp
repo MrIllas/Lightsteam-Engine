@@ -71,7 +71,7 @@ GameObject* SegmentHierarchy::DisplayGameObject(GameObject* go)
 		//Drop
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Nodes"))
+			if (ImGui::AcceptDragDropPayload("Nodes"))
 			{
 				if (dropGO != nullptr) dropGO->SetParent(go);
 

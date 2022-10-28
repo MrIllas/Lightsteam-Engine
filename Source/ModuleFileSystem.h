@@ -4,6 +4,8 @@
 class MeshImporter;
 class TextureImporter;
 
+struct SceneProperties;
+
 class ModuleFileSystem : public Module
 {
 public:
@@ -27,5 +29,6 @@ public:
 public:
 	MeshImporter* meshImp = nullptr;
 	TextureImporter* textImp = nullptr;
+	SceneProperties* sProps = nullptr;
 };
 

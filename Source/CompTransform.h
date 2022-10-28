@@ -3,6 +3,7 @@
 
 #include "MathGeoLib/include/Math/float4x4.h"
 #include "MathGeoLib/include/Math/float3.h"
+#include "MathGeoLib/include/Math/Quat.h"
 
 class CompTransform : public Component 
 {
@@ -21,7 +22,7 @@ public:
 	float4x4 globalTransform;
 
 	float3 position;
-	float3 rotation;
+	Quat rotation;
 	float3 localScale;
 };
 

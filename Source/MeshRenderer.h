@@ -61,8 +61,13 @@ public:
 
 public:
 	Texture texture;
+
+	bool isCheckers;
+
 private:
 	float4x4 matrix;
+
+	uint checkers;
 
 	uint VAO;
 	uint VBO;
