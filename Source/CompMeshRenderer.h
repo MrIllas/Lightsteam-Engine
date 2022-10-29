@@ -18,7 +18,7 @@ public:
 
 	void UpdateGUI() override;
 
-	void Render(Shader* shader);
+	void Render(Shader* shader, Shader* debugShader);
 
 	MeshRenderer* GetMesh();
 	void SetMesh(MeshRenderer* mesh);
@@ -27,5 +27,10 @@ private:
 	MeshRenderer* mesh = nullptr;
 
 	CameraProperties* camInstance = nullptr;
+
+	bool displayNormals;
+	bool faceNormals;
+
+	float normalsMagnitude;
 };
 

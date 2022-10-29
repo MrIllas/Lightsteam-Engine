@@ -84,6 +84,7 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 			//New Spatial GameObject with MeshRenderer component
 			GameObject* go = new GameObject(node->mChildren[i]->mName.C_Str());
 			go->CreateComponent(MESH_RENDERER);
+			go->CreateComponent(MATERIAL);
 
 			//Add Mesh to the gameObject
 			MeshRenderer* meshRenderer = new MeshRenderer(GenerateMesh(scene->mMeshes[i]));
@@ -110,6 +111,8 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 	//newMesh.InitMesh();
 
 	bool hasTex = mesh->HasTextureCoords(0);
+
+	newMesh.numFaces = mesh->mNumFaces;
 
 	//Vertex
 	for (uint i = 0; i < mesh->mNumVertices; ++i)

@@ -9,6 +9,7 @@
 #include "ModuleScene.h"
 #include "GameObject.h"
 #include "CompMeshRenderer.h"
+#include "CompTexture.h"
 
 ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -94,12 +95,12 @@ void ModuleFileSystem::DragAndDrop(std::string path)
 
 			if (aux != nullptr)
 			{
-				CompMeshRenderer* auxMesh = aux->GetComponent<CompMeshRenderer>(MESH_RENDERER);
+				CompTexture* auxText = nullptr;
+				auxText = aux->GetComponent<CompTexture>(MATERIAL);
 
-				if (auxMesh != nullptr)
+				if (auxText != nullptr)
 				{
-					auxMesh->GetMesh()->texture.id = TextureImporter::ImportTexture(path);
-					auxMesh->GetMesh()->texture.path = path;
+					auxText->SetTexture(TextureImporter::ImportTexture(path));
 				}
 				else
 				{

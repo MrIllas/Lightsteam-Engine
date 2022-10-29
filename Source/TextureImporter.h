@@ -7,17 +7,20 @@
 
 typedef unsigned int uint;
 
+struct Texture {
+	unsigned int id;
+	std::string path;
+	uint w, h;
+};
+
 struct TextureData
 {
 	TextureData()
 	{
-		id = 0;
-		data = nullptr;
-		path = "";
 	}
-	uint id;
+	Texture texture;
 	BYTE* data = nullptr;
-	std::string path;
+
 };
 
 class TextureImporter
@@ -26,15 +29,13 @@ public:
 	TextureImporter();
 	~TextureImporter();
 
-	
-
-	static uint ImportTexture(std::string filePath);
+	static Texture ImportTexture(std::string filePath);
 private:
-	static int CheckTexturesLoaded(std::string filePath);
+	static int CheckTexturesLoaded(std::string filePath, Texture& texture);
 
 	static void CheckerImage();
 public:
-	static uint checkersID;
+	static Texture checkers;
 private:
 	static std::vector<TextureData*> texturesLoaded;
 

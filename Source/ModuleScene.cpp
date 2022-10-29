@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "MeshImporter.h"
 #include "TextureImporter.h"
+#include "CompTexture.h"
 #include "CompMeshRenderer.h"
 
 #pragma region SceneProperties
@@ -73,16 +74,14 @@ bool ModuleScene::Start()
 	//Import Example mesh & texture
 	GameObject* aux = MeshImporter::ImportMesh("../Output/Assets/BakerHouse.fbx");
 
-	std::vector<CompMeshRenderer*> auxMesh = aux->GetComponentsInChildrens<CompMeshRenderer>(MESH_RENDERER);
+	std::vector<GameObject*> vGO = aux->GetChildrens();
 
-	Texture auxTexture;
-	auxTexture.id = TextureImporter::ImportTexture("../Output/Assets/Baker_house.png");
-	auxTexture.path = "../Output/Assets/Baker_house.png";
-
-	for (int i = 0; i < auxMesh.size(); ++i)
+	for (int i = 0; i < vGO.size(); ++i)
 	{
-		auxMesh[i]->GetMesh()->SetTexture(auxTexture);
+		vGO[i]->GetComponent<CompTexture>(MATERIAL)->SetTexture
+		(TextureImporter::ImportTexture("../Output/Assets/Baker_house.png"));
 	}
+
 	///
 	return true;
 }
@@ -97,7 +96,7 @@ bool ModuleScene::CleanUp()
 
 UpdateStatus ModuleScene::PreUpdate()
 {
-
+	InitGameObjects(sProps->root);
 
 	return UPDATE_CONTINUE;
 }
@@ -106,7 +105,7 @@ UpdateStatus ModuleScene::Update()
 {
 
 	//Update Game Objects
-	UpdateGameObject(sProps->root);
+	UpdateGameObjects(sProps->root);
 
 
 	return UPDATE_CONTINUE;
@@ -119,8 +118,20 @@ UpdateStatus ModuleScene::PostUpdate()
 	return UPDATE_CONTINUE;
 }
 
+void ModuleScene::InitGameObjects(GameObject* go)
+{
+	go->Init();
 
-void ModuleScene::UpdateGameObject(GameObject* go)
+	if (go->HasChildren())
+	{
+		for (int i = 0; i < go->children.size(); ++i)
+		{
+			InitGameObjects(go->children[i]);
+		}
+	}
+}
+
+void ModuleScene::UpdateGameObjects(GameObject* go)
 {
 	go->Update();
 
@@ -128,7 +139,7 @@ void ModuleScene::UpdateGameObject(GameObject* go)
 	{
 		for (int i = 0; i < go->children.size(); ++i)
 		{
-			UpdateGameObject(go->children[i]);
+			UpdateGameObjects(go->children[i]);
 		}
 	}
 }

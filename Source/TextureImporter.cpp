@@ -10,7 +10,7 @@
 
 std::vector<TextureData*> TextureImporter::texturesLoaded;
 
-uint TextureImporter::checkersID = 0;
+Texture TextureImporter::checkers;
 
 TextureImporter::TextureImporter()
 {
@@ -43,24 +43,29 @@ void TextureImporter::CheckerImage()
 	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &checkersID);
-	glBindTexture(GL_TEXTURE_2D, checkersID);
+	glGenTextures(1, &checkers.id);
+	glBindTexture(GL_TEXTURE_2D, checkers.id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkersWidth, checkersHeight,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
+	checkers.path = "DEBUG TEXTURE(CHECKERS)";
+	checkers.w = checkersWidth;
+	checkers.h = checkersHeight;
 }
 
 
-uint TextureImporter::ImportTexture(std::string filePath)
+Texture TextureImporter::ImportTexture(std::string filePath)
 {
-	int checkTxt = CheckTexturesLoaded(filePath);
+	Texture auxText;
+	int checkTxt = CheckTexturesLoaded(filePath, auxText);
 	if (checkTxt > -1)
 	{
 		LOG(LOG_TYPE::ATTENTION, "ATTENTION: The image '%s' was already imported, loading it from memory.", filePath.c_str());
-		return (uint)checkTxt;
+		return auxText;
 	}
 
 	ILuint imgID = 0;
@@ -84,9 +89,8 @@ uint TextureImporter::ImportTexture(std::string filePath)
 		
 		TextureData* txtData = new TextureData();;
 
-
-		glGenTextures(1, &txtData->id);
-		glBindTexture(GL_TEXTURE_2D, txtData->id);
+		glGenTextures(1, &txtData->texture.id);
+		glBindTexture(GL_TEXTURE_2D, txtData->texture.id);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -98,26 +102,32 @@ uint TextureImporter::ImportTexture(std::string filePath)
 		ilDeleteImages(1, &imgID);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		txtData->path = filePath;
+		txtData->texture.w = w;
+		txtData->texture.h = h;
+		txtData->texture.path = filePath;
 		texturesLoaded.emplace_back(txtData);
 
-		if (checkersID == 0) CheckerImage();
+		if (checkers.id == 0) CheckerImage();
 
-		return txtData->id;
+		return txtData->texture;
 	}
 	else
 	{
 		LOG(LOG_TYPE::ERRO, "ERROR: Could not load Texture '%s'", ilutGetString(ilGetError()));
 	}
 	
-	return checkersID;
+	return checkers;
 }
 
-int TextureImporter::CheckTexturesLoaded(std::string filePath)
+int TextureImporter::CheckTexturesLoaded(std::string filePath, Texture& texture)
 {
 	for (int i = 0; i < texturesLoaded.size(); ++i)
 	{
-		if (!texturesLoaded[i]->path.compare(filePath)) return texturesLoaded[i]->id;
+		if (!texturesLoaded[i]->texture.path.compare(filePath))
+		{
+			texture = texturesLoaded[i]->texture;
+			return texturesLoaded[i]->texture.id;
+		}
 	}
 
 	return -1;

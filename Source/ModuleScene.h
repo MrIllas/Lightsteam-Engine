@@ -46,6 +46,7 @@ private:
 	SceneProperties* sProps = nullptr;
 
 private:
-	void UpdateGameObject(GameObject* go);
+	void InitGameObjects(GameObject* go);
+	void UpdateGameObjects(GameObject* go);
 };
 

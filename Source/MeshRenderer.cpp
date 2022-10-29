@@ -11,8 +11,6 @@
 
 MeshRenderer::MeshRenderer()
 {
-	isCheckers = false;
-	checkers = 0;
 }
 
 MeshRenderer::MeshRenderer(Meshe meshData)
@@ -59,13 +57,12 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
 
-	checkers = TextureImporter::checkersID;
-	texture.id = checkers;
-
 	//Cleaning
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	CreateNormals();
 }
 
 
@@ -78,9 +75,11 @@ MeshRenderer::~MeshRenderer()
 	VAO = 0;
 	VBO = 0;
 	EBO = 0;
+
+	CleanNormals();
 }
 
-void MeshRenderer::Draw(Shader* shader)
+void MeshRenderer::Draw(Shader* shader, Texture text, float4x4 model)
 {
 	if (this->shader == nullptr) this->shader = shader;
 
@@ -91,22 +90,28 @@ void MeshRenderer::Draw(Shader* shader)
 		if (RenderProperties::Instance()->texture2D)
 		{
 			glActiveTexture(GL_TEXTURE0);
-
-			if (isCheckers) glBindTexture(GL_TEXTURE_2D, checkers);
-			else glBindTexture(GL_TEXTURE_2D, texture.id);
-
+			glBindTexture(GL_TEXTURE_2D, text.id);
 			shader->SetInt("texture_albedo", 0);
 		}
 	
 		//glActiveTexture(GL_TEXTURE0);
 
-		float4x4 identity;
-		identity = identity.identity; 
+		float3 p;
+		float4x4 r = float4x4::identity;
+		float3 s;
 
+		float4x4 identity; //= float4x4::identity;
+		//identity.Decompose(p, r, s);
+
+		p = float3(1.0f, 0.0f, 0.0f);
+
+		s = float3(1.0f, 1.0f, 1.0f);
+
+		identity = float4x4::FromTRS(p, r, s);
 
 		this->shader->SetMat4("projection", CameraProperties::Instance()->editorCamera.GetProjectionMatrix());
 		this->shader->SetMat4("view", CameraProperties::Instance()->editorCamera.GetViewMatrix());
-		this->shader->SetMat4("model", &identity.v[0][0]);
+		this->shader->SetMat4("model", &model.v[0][0]);
 
 		//Light
 		if (RenderProperties::Instance()->lighting)
@@ -114,12 +119,125 @@ void MeshRenderer::Draw(Shader* shader)
 			RenderProperties::Instance()->worldLight->SetShaderData(this->shader);
 		}
 		
-
 		//Draw Mesh
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
 		glBindVertexArray(0);
 	}
+}
+
+void MeshRenderer::DrawNormals(Shader* shader, float4x4 model, bool faceNormals)
+{
+	if (this->debugShader == nullptr) this->debugShader = shader;
+	debugShader->Use();
+
+	debugShader->SetMat4("projection", CameraProperties::Instance()->editorCamera.GetProjectionMatrix());
+	debugShader->SetMat4("view", CameraProperties::Instance()->editorCamera.GetViewMatrix());
+	debugShader->SetMat4("model", &model.v[0][0]);
+
+	if (!faceNormals)
+	{
+		glBindVertexArray(VNVAO);
+		glDrawArrays(GL_LINES, 0, vNormals.size());
+	}
+	else
+	{
+		glBindVertexArray(FNVAO);
+		glDrawArrays(GL_LINES, 0, fNormals.size());
+	}
+
+	glBindVertexArray(0);
+}
+
+void MeshRenderer::CreateNormals(float magnitude)
+{
+	//VERETX NORMALS
+	vNormals.reserve(mesh.vertices.size() * 2);
+
+	VNVAO = 0;
+	VNVBO = 0;
+
+	for (int i = 0; i < mesh.vertices.size(); ++i)
+	{
+		vNormals.emplace_back(mesh.vertices[i].position);
+		vNormals.emplace_back(mesh.vertices[i].position + mesh.vertices[i].normal * magnitude);
+	}
+
+	//Buffer generation
+	glGenVertexArrays(1, &VNVAO);
+	glGenBuffers(1, &VNVBO);
+
+	glBindVertexArray(VNVAO);
+
+	//Vertex
+	glBindBuffer(GL_ARRAY_BUFFER, VNVBO);
+	glBufferData(GL_ARRAY_BUFFER, vNormals.size() * sizeof(float3), &vNormals[0], GL_STATIC_DRAW);
+
+	//Vertex Postition
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+	glBindVertexArray(0);
+
+
+
+	///FACE NORMALS
+	fNormals.reserve((mesh.indices.size() / 3) * 2);
+
+	FNVAO = 0;
+	FNVBO = 0;
+
+	for (int i = 0; i < (mesh.indices.size() / 3); i += 3)
+	{
+		int aux[3] =
+		{
+			mesh.indices[i],
+			mesh.indices[i+1],
+			mesh.indices[i+2]
+		};
+
+		float3 face = (mesh.vertices[aux[0]].position + mesh.vertices[aux[1]].position + mesh.vertices[aux[2]].position) / 3;
+		float3 dir = (mesh.vertices[aux[0]].normal + mesh.vertices[aux[1]].normal + mesh.vertices[aux[2]].normal) / 3;
+		dir.Normalize();
+
+		fNormals.emplace_back(face);
+		fNormals.emplace_back(face + dir * magnitude);
+	}
+
+	//Buffer generation
+	glGenVertexArrays(1, &FNVAO);
+	glGenBuffers(1, &FNVBO);
+	
+	glBindVertexArray(FNVAO);
+
+	//Vertex
+	glBindBuffer(GL_ARRAY_BUFFER, FNVBO);
+	glBufferData(GL_ARRAY_BUFFER, fNormals.size() * sizeof(float3), &fNormals[0], GL_STATIC_DRAW);
+
+	//Vertex Postition
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+	glBindVertexArray(0);
+}
+
+void MeshRenderer::CleanNormals()
+{
+	vNormals.clear();
+	
+	glDeleteVertexArrays(1, &VNVAO);
+	glDeleteBuffers(1, &VNVBO);
+
+	VNVAO = 0;
+	VNVBO = 0;
+
+	fNormals.clear();
+
+	glDeleteVertexArrays(1, &FNVAO);
+	glDeleteBuffers(1, &FNVBO);
+
+	FNVAO = 0;
+	FNVBO = 0;
 }
 
 #pragma region Getters and Setters
@@ -128,44 +246,8 @@ void MeshRenderer::SetShader(Shader* shader)
 	this->shader = shader;
 }
 
-void MeshRenderer::SetTexture(Texture texture)
+void MeshRenderer::SetDebugShader(Shader* shader)
 {
-	this->texture = texture;
-}
-
-float3 MeshRenderer::GetPosition()
-{
-	float3 toReturn = { 0 , 0 ,0 };
-
-	return toReturn;
-}
-
-float3 MeshRenderer::GetRotation()
-{
-	float3 toReturn = { 0 , 0 ,0 };
-
-	return toReturn;
-}
-
-float3 MeshRenderer::GetSize()
-{
-	float3 toReturn = { 0 , 0 ,0 };
-
-	return toReturn;
-}
-
-void MeshRenderer::SetPosition(float3 newPos)
-{
-
-}
-
-void MeshRenderer::SetRotation(float3 newRot)
-{
-
-}
-
-void MeshRenderer::SetSize(float3 newSize)
-{
-
+	this->debugShader = shader;
 }
 #pragma endregion Getters and Setters

@@ -12,6 +12,7 @@ Renderer::Renderer(float2 size)
 	frameBuffer = new FrameBuffer();
 	Resize(size);
 
+	debugShader = new Shader(DEBUG_VERTEX_SHADER, DEBUG_FRAGMENT_SHADER);
 	baseShader = new Shader(BASE_VERTEX_SHADER, BASE_FRAGMENT_SHADER);
 }
 
@@ -20,6 +21,8 @@ Renderer::~Renderer()
 	if (frameBuffer != nullptr) RELEASE(frameBuffer);
 
 	if (baseShader != nullptr) RELEASE(baseShader);
+
+	if (debugShader != nullptr) RELEASE(debugShader);
 }
 
 void Renderer::Init()
@@ -67,7 +70,7 @@ void Renderer::Update()
 {
 	while (meshes.size())
 	{
-		meshes.front()->Render(baseShader);
+		meshes.front()->Render(baseShader, debugShader);
 		meshes.pop();
 	}
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TextureImporter.h"
+
 //#include "Mesh.h"
 #include "Glew/include/glew.h"
 
@@ -26,16 +28,12 @@ struct Vertex {
 	float2 texCoords;
 };
 
-struct Texture {
-	unsigned int id;
-	std::string path;
-};
-
 struct Meshe
 {
 	std::vector<Vertex>       vertices;
 	std::vector<unsigned int> indices;
 	std::vector<Texture>      textures;
+	uint numFaces;
 };
 
 struct TextureData;
@@ -47,13 +45,15 @@ public:
 	MeshRenderer(Meshe meshData);
 	~MeshRenderer();
 
-	void Draw(Shader* shader);
+	void Draw(Shader* shader, Texture text, float4x4 model = float4x4::identity);
 
-	float3 GetPosition();
-	float3 GetRotation();
-	float3 GetSize();
+	void DrawNormals(Shader* shader, float4x4 model, bool faceNormals = false);
+
+	void CreateNormals(float magnitude = 0.25f);
+	void CleanNormals();
 
 	void SetShader(Shader* shader);
+	void SetDebugShader(Shader* shader);
 
 	void SetTexture(Texture texture);
 
@@ -62,22 +62,22 @@ public:
 	void SetSize(float3 newSize);
 
 public:
-	Texture texture;
-
-	bool isCheckers;
+	Meshe mesh;
 
 private:
-	float4x4 matrix;
-
-	uint checkers;
-
 	uint VAO;
 	uint VBO;
 	uint EBO;
 
-	//uint indexBuffer;
-	Meshe mesh;
+	uint VNVAO;
+	uint VNVBO;
+	std::vector<float3> vNormals;
+
+	uint FNVAO;
+	uint FNVBO;
+	std::vector<float3> fNormals;
 
 	Shader* shader = nullptr;
+	Shader* debugShader = nullptr;
 };
 

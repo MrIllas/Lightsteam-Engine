@@ -17,11 +17,14 @@ public:
 	GameObject(std::string name = "Spatial Node", bool spatial = true);
 	~GameObject();
 
+	void Init();
 	void Update();
-
 
 	Component* CreateComponent(CO_TYPE type);
 	void DeleteComponent(CO_TYPE type);
+
+	std::vector<GameObject*> GetChildrens();
+
 	Component* GetComponent(CO_TYPE type);
 	Component* GetComponentInChildren(CO_TYPE type);
 
@@ -39,7 +42,6 @@ public:
 
 		return toReturn;
 	}
-
 
 	template <class T>
 	T* GetComponent(CO_TYPE type)
@@ -64,6 +66,9 @@ public:
 	GameObject* parent = nullptr;
 
 private:
+
+	bool CheckParentsOfParent(GameObject* go, GameObject* checkGO);
+
 	//Operator
 	bool operator==(GameObject& other) const
 	{

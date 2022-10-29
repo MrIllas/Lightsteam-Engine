@@ -2,6 +2,7 @@
 
 #include "CompTransform.h"
 #include "CompMeshRenderer.h"
+#include "CompTexture.h"
 
 GameObject::GameObject(std::string name, bool spatial)
 {
@@ -32,6 +33,19 @@ GameObject::~GameObject()
 		}
 	}
 	components.clear();
+}
+
+void GameObject::Init()
+{
+	if (components.empty()) return;
+
+	for (auto const& comp : components)
+	{
+		if (comp.second->active)
+		{
+			comp.second->Init();
+		}
+	}
 }
 
 void GameObject::Update()
@@ -66,7 +80,7 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 			toReturn = new CompMeshRenderer(this);
 			break;
 		case MATERIAL:
-
+			toReturn = new CompTexture(this);
 			break;
 	}
 
@@ -123,6 +137,11 @@ Component* GameObject::GetComponentInChildren(CO_TYPE type)
 //	}
 //}
 
+std::vector<GameObject*> GameObject::GetChildrens()
+{
+	return children;
+}
+
 void GameObject::AddChildren(GameObject* go)
 {
 	children.emplace_back(go);
@@ -146,10 +165,21 @@ void GameObject::SetParent(GameObject* go)
 {
 	if (parent != nullptr)
 	{
-		if (go->parent == this) return;
+		//if (go->parent == this) return;
+		if (CheckParentsOfParent(go, this)) return;
 
 		parent->RemoveChildren(this);
 	}
 	parent = go;
 	parent->children.emplace_back(this);
+}
+
+bool GameObject::CheckParentsOfParent(GameObject* go, GameObject* checkGO)
+{
+	if (go->parent == nullptr) return false;
+	else
+	{
+		if (go->parent == checkGO) return true;
+		else return CheckParentsOfParent(go->parent, checkGO);
+	}
 }

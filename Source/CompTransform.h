@@ -16,13 +16,16 @@ public:
 
 	void UpdateGUI() override;
 
+	float4x4 GetWorldMatrix();
+
 public:
 
 	float4x4 localTransform;
 	float4x4 globalTransform;
 
 	float3 position;
-	Quat rotation;
+	//Quat rotation;
+	float3 rotation;
 	float3 localScale;
 };
 
