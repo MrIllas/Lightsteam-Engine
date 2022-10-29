@@ -57,7 +57,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG(LOG_TYPE::ENGINE, "Creating 3D Renderer context");
+	LOG(LOG_TYPE::ENGINE, "INIT: 3D Renderer context");
 	bool ret = true;
 	
 	//Set context attributes
@@ -88,11 +88,7 @@ bool ModuleRenderer3D::Init()
 	}
 	else
 	{
-		LOG(LOG_TYPE::ENGINE, "Using Glew %s", glewGetString(GLEW_VERSION));
-		LOG(LOG_TYPE::ENGINE, "	Vendor: %s", glGetString(GL_VENDOR));
-		LOG(LOG_TYPE::ENGINE, "	Renderer: %s", glGetString(GL_RENDERER));
-		LOG(LOG_TYPE::ENGINE, "	OpenGL version supported %s", glGetString(GL_VERSION));
-		LOG(LOG_TYPE::ENGINE, "	GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		LOG(LOG_TYPE::ENGINE, "INIT: Glew %s, using OpenGL %s", glewGetString(GLEW_VERSION), glGetString(GL_VERSION));
 	}
 	
 	if(ret == true)

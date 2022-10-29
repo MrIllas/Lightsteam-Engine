@@ -84,7 +84,6 @@ ModuleWindow::~ModuleWindow()
 // Called before render is available
 bool ModuleWindow::Init()
 {
-	LOG(LOG_TYPE::ENGINE, "Init SDL window & surface");
 	bool ret = true;
 
 	wProps = WindowProperties::Instance();
@@ -96,6 +95,7 @@ bool ModuleWindow::Init()
 	}
 	else
 	{
+		LOG(LOG_TYPE::ENGINE, "INIT: SDL window & surface.");
 		//Window Creation
 		wProps->window = SDL_CreateWindow(wProps->title.c_str(), wProps->x, wProps->y, wProps->w, wProps->h, wProps->flags);
 

@@ -1,7 +1,10 @@
 #include <iostream>
 #include "Application.h"
 #include "ModuleCamera3D.h"
+#include "ModuleScene.h"
 #include "ModuleInput.h"
+#include "GameObject.h"
+#include "CompTransform.h"
 
 #include "MathGeoLib/include/Math/Quat.h"
 
@@ -49,6 +52,8 @@ bool ModuleCamera3D::Start()
 {
 	bool ret = true;
 
+	sProps = SceneProperties::Instance();
+
 	return ret;
 }
 
@@ -73,6 +78,10 @@ UpdateStatus ModuleCamera3D::Update()
 void ModuleCamera3D::SceneCameraInput()
 {
 	if (!cProps->isMouseOnScene) return;
+	GameObject* selectedGO = sProps->GetSelectedGO();
+	CompTransform* selected = nullptr;
+	if (selectedGO != nullptr) selected = selectedGO->GetComponent<CompTransform>(TRANSFORM);
+
 	float3 empty = { 0,0,0 };
 	float3 newPos(.0f, .0f, .0f);
 	Quat lookingDir = Quat::identity;
@@ -140,9 +149,9 @@ void ModuleCamera3D::SceneCameraInput()
 	}
 
 	//Orbit
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && (App->input->GetKey(SDL_SCANCODE_LALT) || App->input->GetKey(SDL_SCANCODE_RALT)))
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && (App->input->GetKey(SDL_SCANCODE_LALT) || App->input->GetKey(SDL_SCANCODE_RALT)) && selected != nullptr)
 	{
-		float3 center = float3(.0f, .0f, .0f);
+		float3 center = selected->position;
 
 		float distance = cProps->editorCamera.frustum.pos.Distance(center);
 
@@ -174,9 +183,9 @@ void ModuleCamera3D::SceneCameraInput()
 	}
 
 	//Focus
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && selected != nullptr)
 	{
-		float3 pos(.0f, 0.f, 0.f);
+		float3 pos = selected->position;
 		float3 dir(.0f, 0.f, 0.f);
 		pos += float3(5.0f, .0f, .0f);
 		cProps->editorCamera.Move(pos);

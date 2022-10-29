@@ -1,6 +1,8 @@
 #pragma once
 #include "Segment.h"
 
+#include "Globals.h"
+
 #include <iostream>
 #include <queue>
 
@@ -38,5 +40,15 @@ private:
 	/*std::string strCaps;*/
 	std::vector<float> framerateQueue;
 	std::vector<float> milisecondsQueue;
+
+	std::string strCaps;
+
+	uint64 ram;
+	uint64 cpuCount;
+	uint64 cache;
+	uint64 VRamBudget;
+	uint64 VRamCurrentUsage;
+	uint64 VRamAvailable;
+	uint64 VRamReserve;
 };
 

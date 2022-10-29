@@ -65,6 +65,7 @@ bool ModuleEditor::Init()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	LOG(LOG_TYPE::ENGINE, "INIT: ImGui.")
 	
 	//Flags
 	ImGuiIO& io = ImGui::GetIO(); (void)io;

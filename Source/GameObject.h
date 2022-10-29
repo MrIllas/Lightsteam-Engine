@@ -47,7 +47,7 @@ public:
 	T* GetComponent(CO_TYPE type)
 	{ 
 		if (components.count(type)) return (T*)components[type];
-		else nullptr;
+		else return nullptr;
 	}
 
 	void AddChildren(GameObject* go);

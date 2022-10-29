@@ -162,6 +162,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CompTexture.cpp" />
     <ClCompile Include="CompTransform.cpp" />
+    <ClCompile Include="External\GPUDetect\DeviceId.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -248,6 +249,8 @@
     <ClInclude Include="External\DevIL\include\ilut_config.h" />
     <ClInclude Include="External\DevIL\include\ilu_region.h" />
     <ClInclude Include="External\DevIL\include\il_wrap.h" />
+    <ClInclude Include="External\GPUDetect\DeviceId.h" />
+    <ClInclude Include="External\GPUDetect\dxgi1_4.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Color.h" />

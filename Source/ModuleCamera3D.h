@@ -23,6 +23,8 @@ private:
 
 };
 
+struct SceneProperties;
+
 class ModuleCamera3D : public Module
 {
 public:
@@ -34,11 +36,6 @@ public:
 	UpdateStatus Update();
 	bool CleanUp();
 
-	/*void Look(const float3 &Position, const float3&Reference, bool RotateAroundReference = false);
-	void LookAt(const float3&Spot);
-	void Move(const float3&Movement);*/
-	//float* GetViewMatrix();
-
 	void SaveSettingsData(pugi::xml_node& save) override;
 
 	void LoadSettingsData(pugi::xml_node& load) override;
@@ -47,23 +44,10 @@ public:
 private:
 
 	void SceneCameraInput();
-	//void CalculateViewMatrix();
-
-public:
-	
-	//float3 X, Y, Z, Position, Reference;
 
 private:
-
-	
-
 	CameraProperties* cProps = nullptr;
-
-	//mat4x4 ViewMatrix;//View camera
-	//float4x4 ViewMatrixInverse;
-
-	//Vehicle* target = nullptr;
-	//float3 offset;
+	SceneProperties* sProps = nullptr;
 };
 
 #endif // !__MODULECAMERA3D_H__

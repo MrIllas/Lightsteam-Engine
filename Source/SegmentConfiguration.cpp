@@ -12,6 +12,8 @@
 #include <gl/GLU.h>
 #include "SDL/include/SDL.h"
 
+#include "GPUDetect/DeviceId.h"
+
 SegmentConfiguration::SegmentConfiguration(bool enabled) : Segment(enabled)
 {
 	name = "Configuration";
@@ -34,6 +36,21 @@ SegmentConfiguration::SegmentConfiguration(bool enabled) : Segment(enabled)
 	{
 		milisecondsQueue.emplace_back(0);
 	}
+
+	GetCaps();
+
+	VRamBudget = 0;
+	VRamCurrentUsage = 0;
+	VRamAvailable = 0;
+	VRamReserve = 0;
+
+	ram = SDL_GetSystemRAM();
+
+	cpuCount = SDL_GetCPUCount();
+
+	cache = SDL_GetCPUCacheLineSize();
+
+	getGraphicsDeviceInfo(0, 0, 0, &VRamBudget, &VRamCurrentUsage, &VRamAvailable, &VRamReserve);
 }
 
 SegmentConfiguration::~SegmentConfiguration()
@@ -73,11 +90,6 @@ void SegmentConfiguration::ApplicationHeader()
 	//Cap Fps
 	ImGui::SliderInt("Cap FPS", &time->frameCap, 1, 180);
 	if (ImGui::IsItemDeactivatedAfterEdit()) LOG(LOG_TYPE::ENGINE, "Fps capped to '%i'", time->frameCap);
-
-	//if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
-	//{
-	//	LOG("Hey");
-	//}
 }
 
 void SegmentConfiguration::WindowHeader()
@@ -182,27 +194,28 @@ void SegmentConfiguration::RenderingHeader()
 	}
 
 	ImGui::Separator();
-	ImGui::Text("CPU cores: %i ", SDL_GetCPUCount());
-	ImGui::Text("System RAM: %.1f Gb", (SDL_GetSystemRAM() / 1000.0f));
+	ImGui::Text("CPU cores: %i ", cpuCount);
+	ImGui::Text("System RAM: %.1f Gb", (ram / 1000.0f));
+	ImGui::Text("Cache: %i Bytes", (int)cache);
+	ImGui::Text("%s", strCaps.c_str());
+
 	/*ImGui::Text("Caps: %s", strCaps);*/
 	ImGui::Separator();
 
 	ImGui::Text("GPU Vendor: %s", glGetString(GL_VENDOR));
 	ImGui::Text("GPU: %s", glGetString(GL_RENDERER));
 
-	ImGui::Text("VRAM Budget: ");
-	ImGui::Text("VRAM Usage: ");
-	ImGui::Text("VRAM Available: ");
-	ImGui::Text("VRAM Reserved: ");
+	//The Vram usage needs to be updated, since more meshes loaded == more Ram usage
+	getGraphicsDeviceInfo(0, 0, 0, &VRamBudget, &VRamCurrentUsage, &VRamAvailable, &VRamReserve);
+
+	ImGui::Text("VRam Budget: %i Mb", (int) (VRamBudget / (1024.f * 1024.f)));
+	ImGui::Text("VRam Usage: %i Mb", (int)(VRamCurrentUsage / (1024.f * 1024.f)));
+	ImGui::Text("VRam Available: %i Mb", (int) (VRamAvailable / (1024.f * 1024.f)));
+	ImGui::Text("VRAM Reserved: %i Mb", (int) (VRamReserve / (1024.f * 1024.f)));
 }
 
 void SegmentConfiguration::EditorHeader()
 {
-	/*if (ImGui::Checkbox("Light mode ", &eProps->lightMode))
-	{
-		eProps->ToggleLightMode();
-		LOG("Light mode '%s'", eProps->lightMode ? "ON" : "OFF");
-	}*/
 	int aux = (int)&eProps->colorMode;
 	if (ImGui::RadioButton("Light mode", (eProps->colorMode == COLORMODE::LightMode ? true : false)))
 	{
@@ -227,5 +240,16 @@ void SegmentConfiguration::EditorHeader()
 
 void SegmentConfiguration::GetCaps()
 {
-
+	strCaps = "Caps: ";
+	strCaps += SDL_HasRDTSC() ? "RDTSC " : "";
+	strCaps += SDL_HasMMX() ? "MMX " : "";
+	strCaps += SDL_HasSSE() ? "SSE " : "";
+	strCaps += SDL_HasSSE2() ? "SSE2 " : "";
+	strCaps += SDL_HasSSE3() ? "SSE3 " : "";
+	strCaps += SDL_HasSSE41() ? "SSE41 " : "";
+	strCaps += SDL_HasSSE42() ? "SSE42 " : "";
+	strCaps += SDL_HasAVX() ? "AVX " : "";
+	strCaps += SDL_HasAVX2() ? "AVX2 " : "";
+	strCaps += SDL_Has3DNow() ? "3DNow " : "";
+	strCaps += SDL_HasAltiVec() ? "AltiVec " : "";
 }

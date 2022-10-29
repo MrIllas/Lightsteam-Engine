@@ -229,6 +229,9 @@
     <ClCompile Include="CompTexture.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
+    <ClCompile Include="External\GPUDetect\DeviceId.cpp">
+      <Filter>External\GPUDetect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -585,6 +588,12 @@
     <ClInclude Include="CompTexture.h">
       <Filter>Header\Components</Filter>
     </ClInclude>
+    <ClInclude Include="External\GPUDetect\dxgi1_4.h">
+      <Filter>External\GPUDetect</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUDetect\DeviceId.h">
+      <Filter>External\GPUDetect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -664,6 +673,9 @@
     </Filter>
     <Filter Include="External\DevIL">
       <UniqueIdentifier>{e7d5dc44-4c80-4814-91d0-8988f8177134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\GPUDetect">
+      <UniqueIdentifier>{4d9f5588-83bb-4f86-9eec-c8b311941b7f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

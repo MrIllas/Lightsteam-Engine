@@ -105,7 +105,8 @@ void GameObject::DeleteComponent(CO_TYPE type)
 Component* GameObject::GetComponent(CO_TYPE type)
 {
 	if (components.empty()) return nullptr;
-	return components[type];
+	if (components.count(type)) return components[type];
+	else return nullptr;
 }
 
 /*RETURNS ONLY THE FIRST COMPONENT OF THE FIRST CHILDREN THAT HAS IT*/

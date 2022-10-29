@@ -26,7 +26,6 @@ ModuleInput::~ModuleInput()
 // Called before render is available
 bool ModuleInput::Init()
 {
-	LOG(LOG_TYPE::ENGINE, "Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
@@ -34,6 +33,9 @@ bool ModuleInput::Init()
 	{
 		LOG(LOG_TYPE::ERRO, "SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
+	}
+	{
+		LOG(LOG_TYPE::ENGINE, "INIT: SDL input event system.");
 	}
 
 	return ret;
