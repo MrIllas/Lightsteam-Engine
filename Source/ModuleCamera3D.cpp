@@ -195,7 +195,6 @@ void ModuleCamera3D::SceneCameraInput()
 	cProps->editorCamera.Position += newPos;
 	cProps->editorCamera.Reference += newPos;
 	cProps->editorCamera.frustum.pos += newPos;
-	
 }
 
 

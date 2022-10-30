@@ -47,6 +47,6 @@ float4x4 CompTransform::GetWorldMatrix()
 {
 	math::Quat q = Quat::FromEulerXYZ(math::DegToRad(rotation.x), math::DegToRad(rotation.y), math::DegToRad(rotation.z));
 	float4x4 toReturn = float4x4::FromTRS(position, q.ToFloat4x4(), localScale);
-
+	toReturn.Transpose();
 	return toReturn;
 }

@@ -89,6 +89,7 @@ void ModuleFileSystem::DragAndDrop(std::string path)
 		case str2int("fbx"):
 			MeshImporter::ImportMesh(path, nullptr, true);
 			break;
+		case str2int("dds"):
 		case str2int("png"):
 		{
 			GameObject* aux = sProps->GetSelectedGO();
@@ -113,6 +114,9 @@ void ModuleFileSystem::DragAndDrop(std::string path)
 				LOG(LOG_TYPE::ERRO, "ERROR: There is no 'GameObject' selected!");
 			}
 		}
+			break;
+		case str2int("jpg"):
+			LOG(LOG_TYPE::ERRO, "ERROR: JPG format not supported!");
 			break;
 	}	
 }
