@@ -169,7 +169,7 @@ void SegmentConfiguration::RenderingHeader()
 		LOG(LOG_TYPE::ENGINE, "Cull Face '%s'", rProps->cullFace ? "ON" : "OFF");
 	}
 
-	if (ImGui::Checkbox("Lighting", &rProps->lighting))
+	/*if (ImGui::Checkbox("Lighting", &rProps->lighting))
 	{
 		rProps->ToggleLighting();
 		LOG(LOG_TYPE::ENGINE, "Lighting '%s'", rProps->lighting ? "ON" : "OFF");
@@ -191,7 +191,7 @@ void SegmentConfiguration::RenderingHeader()
 	{
 		rProps->ToggleTexture2D();
 		LOG(LOG_TYPE::ENGINE, "Texture 2D '%s'", rProps->texture2D ? "ON" : "OFF");
-	}
+	}*/
 
 	ImGui::Separator();
 	ImGui::Text("CPU cores: %i ", cpuCount);

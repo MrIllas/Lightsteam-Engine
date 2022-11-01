@@ -96,7 +96,7 @@ void Shader::CompileShader()
 	}
 	else
 	{
-		LOG(LOG_TYPE::SUCCESS, "SUCCESS: Shader '%s' comiled!", name.c_str());
+		LOG(LOG_TYPE::SUCCESS, "SUCCESS: Shader '%s' is compiled!", name.c_str());
 	}
 
 	//Delete the shaders as they're linked into our program now and no longer necessary

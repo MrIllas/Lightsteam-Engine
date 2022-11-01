@@ -72,14 +72,14 @@ bool ModuleScene::Init()
 bool ModuleScene::Start()
 {
 	//Import Example mesh & texture
-	GameObject* aux = MeshImporter::ImportMesh("../Output/Assets/BakerHouse.fbx");
+	GameObject* aux = MeshImporter::ImportMesh("Assets/BakerHouse.fbx");
 
 	std::vector<GameObject*> vGO = aux->GetChildrens();
 
 	for (int i = 0; i < vGO.size(); ++i)
 	{
 		vGO[i]->GetComponent<CompTexture>(MATERIAL)->SetTexture
-		(TextureImporter::ImportTexture("../Output/Assets/Baker_house.png"));
+		(TextureImporter::ImportTexture("Assets/Baker_house.png"));
 	}
 
 	///

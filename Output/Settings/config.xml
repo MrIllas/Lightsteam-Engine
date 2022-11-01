@@ -22,11 +22,11 @@
 	</Renderer3D>
 	<Editor>
 		<Configuration value="true" />
-		<About value="true" />
+		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />
 		<Hierarchy value="true" />
-		<Inspector value="true" />
+		<Inspector value="false" />
 		<ColorMode value="2" />
 	</Editor>
 </config>
