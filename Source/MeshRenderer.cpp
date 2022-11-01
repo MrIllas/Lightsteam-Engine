@@ -164,7 +164,7 @@ void MeshRenderer::CreateNormals(float magnitude)
 	FNVAO = 0;
 	FNVBO = 0;
 
-	for (int i = 0; i < (mesh.indices.size() / 3); i += 3)
+	for (int i = 0; i < mesh.indices.size(); i += 3)
 	{
 		int aux[3] =
 		{

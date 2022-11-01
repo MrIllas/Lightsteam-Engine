@@ -71,7 +71,7 @@ bool ModuleScene::Init()
 
 bool ModuleScene::Start()
 {
-	//Import Example mesh & texture
+	////Import Example mesh & texture
 	GameObject* aux = MeshImporter::ImportMesh("Assets/BakerHouse.fbx");
 
 	std::vector<GameObject*> vGO = aux->GetChildrens();
@@ -83,6 +83,10 @@ bool ModuleScene::Start()
 	}
 
 	///
+
+	MeshImporter::ImportMesh("Assets/Brutalist_Bench.fbx");
+	MeshImporter::ImportMesh("Assets/Fence.fbx");
+
 	return true;
 }
 

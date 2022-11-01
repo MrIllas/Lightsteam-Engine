@@ -76,10 +76,8 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 
 	if (scene->HasMeshes())
 	{
-		/*NOMES L'ULTIMA MESH S'ESTA VISUALITZANT*/
-
 		//Meshes
-		for (uint i = 0; i < scene->mNumMeshes; ++i)
+		for (uint i = 0; i < node->mNumChildren; ++i)
 		{
 			//New Spatial GameObject with MeshRenderer component
 			GameObject* go = new GameObject(node->mChildren[i]->mName.C_Str());
@@ -91,9 +89,12 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
 
 			//Recursivnes
-			for (uint i2 = 0; i2 < node->mChildren[i]->mNumChildren; ++i2)
+			if (node->mChildren[i]->mNumChildren > 1)
 			{
-				go = GenerateGameObjects(node->mChildren[i]->mChildren[i2], scene, go);
+				for (uint i2 = 0; i2 < node->mChildren[i]->mNumChildren; ++i2)
+				{
+					go = GenerateGameObjects(node->mChildren[i]->mChildren[i2], scene, go);
+				}
 			}
 
 			//Add GameObject to it's parent
