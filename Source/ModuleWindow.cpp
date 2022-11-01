@@ -5,7 +5,11 @@
 #pragma region WindowProperties
 WindowProperties::WindowProperties()
 {
-	title = "Lightsteam Engine";
+	title = "Lightsteam Engine v.";
+	title += std::to_string(ENGINE_VERSION_MAJOR);
+	title += ".";
+	title += std::to_string(ENGINE_VERSION_MINOR);
+
 	x = SDL_WINDOWPOS_CENTERED;
 	y = SDL_WINDOWPOS_CENTERED;
 	w = 1600;

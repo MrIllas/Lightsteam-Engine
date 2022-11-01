@@ -10,9 +10,16 @@
 #include "PhysFS/include/physfs.h"
 #include "PugiXml/src/pugixml.hpp"
 
+#include "Globals.h"
+
 SegmentAbout::SegmentAbout(bool enabled) : Segment(enabled)
 {
 	name = "About";
+
+	vEngine = "v.";
+	vEngine += std::to_string(ENGINE_VERSION_MAJOR);
+	vEngine += ".";
+	vEngine += std::to_string(ENGINE_VERSION_MINOR);
 
 	//Versions
 	SDL_version version;
@@ -55,6 +62,9 @@ void SegmentAbout::Update()
 	if (ImGui::Begin("About"))
 	{
 		ImGui::Text("Lightsteam Engine \n");
+		ImGui::SameLine();
+		ImGui::Text(vEngine.c_str());
+
 		ImGui::Spacing();
 		ImGui::Text("A light 3D engine.");
 		ImGui::Spacing();

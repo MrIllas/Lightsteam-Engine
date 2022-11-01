@@ -47,8 +47,6 @@ void SegmentConsole::Update()
 					ImGui::Text(loggs->GetTime(i, collapse));
 					ImGui::SameLine();
 				}
-				
-				
 
 				//LOG COLOUR
 				ImVec4 colour;
@@ -128,7 +126,7 @@ void SegmentConsole::OptionsGUI()
 	if (ImGui::BeginPopup("Options"))
 	{
 		ImGui::Checkbox("Collapse", &collapse);
-		ImGui::Checkbox("Show time", &showTime);
+		ImGui::Checkbox("Time", &showTime);
 
 		ImGui::EndPopup();
 	}

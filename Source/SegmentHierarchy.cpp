@@ -150,7 +150,8 @@ void SegmentHierarchy::RightClickMenuContent(GameObject* go)
 
 	if (ImGui::MenuItem("DELETE", 0, false, go == nullptr ? false : true))
 	{
-		LOG(LOG_TYPE::ATTENTION, "DELETE GAMEOBJECT %s", go->name.c_str());
+		//auxGO->DeleteGameObject();
+		LOG(LOG_TYPE::ATTENTION, "DELETE GAMEOBJECT NOT YET IMPLEMENTED", go->name.c_str());
 	}
 }
 void SegmentHierarchy::GetSelectedNode(GameObject* go)

@@ -46,13 +46,6 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) offsetof(Vertex, texCoords));
 
-	//VERTEX TANGENTS
-	/*glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(8 * sizeof(GLfloat)));*/
-
-	/*glEnableVertexAttribArray(7);
-	glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);*/
-
 	//Index
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
@@ -93,21 +86,6 @@ void MeshRenderer::Draw(Shader* shader, Texture text, float4x4 model)
 			glBindTexture(GL_TEXTURE_2D, text.id);
 			shader->SetInt("texture_albedo", 0);
 		}
-	
-		//glActiveTexture(GL_TEXTURE0);
-
-		float3 p;
-		float4x4 r = float4x4::identity;
-		float3 s;
-
-		float4x4 identity; //= float4x4::identity;
-		//identity.Decompose(p, r, s);
-
-		p = float3(1.0f, 0.0f, 0.0f);
-
-		s = float3(1.0f, 1.0f, 1.0f);
-
-		identity = float4x4::FromTRS(p, r, s);
 
 		this->shader->SetMat4("projection", CameraProperties::Instance()->editorCamera.GetProjectionMatrix());
 		this->shader->SetMat4("view", CameraProperties::Instance()->editorCamera.GetViewMatrix());
@@ -178,7 +156,6 @@ void MeshRenderer::CreateNormals(float magnitude)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
 
 	glBindVertexArray(0);
-
 
 
 	///FACE NORMALS

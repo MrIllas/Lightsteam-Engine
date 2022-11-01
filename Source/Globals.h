@@ -15,6 +15,9 @@ enum class LOG_TYPE
 	ENGINE
 };
 
+#define ENGINE_VERSION_MAJOR 0
+#define ENGINE_VERSION_MINOR 1
+
 #define LOG(type, format, ...) log(__FILE__, __LINE__, type, format, __VA_ARGS__);
 
 void log(const char file[], int line, LOG_TYPE type, const char* format, ...);

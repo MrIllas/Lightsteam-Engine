@@ -47,7 +47,7 @@ void CompMeshRenderer::UpdateGUI()
 
 		if (displayNormals)
 		{
-			ImGui::Checkbox("Face Normals? ", &faceNormals);
+			ImGui::Checkbox("Face Normals ", &faceNormals);
 			if (ImGui::SliderFloat("Line Magnitude", &normalsMagnitude, 0.1f, 1.0f, "%.2f"))
 			{
 				mesh->CleanNormals();

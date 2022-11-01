@@ -40,7 +40,7 @@ void log(const char file[], int line, LOG_TYPE type, const char* format, ...)
 	CString cstrMessage;
 	SYSTEMTIME st;
 
-	GetSystemTime(&st);
+	GetLocalTime(&st);
 
 	cstrMessage.Format("[%02d:%02d:%02d]",
 		st.wHour,

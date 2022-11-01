@@ -8,11 +8,16 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
+Shader::Shader(const char* vertexPath, const char* fragmentPath, std::string name)
 {
-	//1. Retrive Vertex/Fragment source code from filePath
-	std::string vertexCode;
-	std::string fragmentCode;
+	this->name = name;
+
+	RetriveShader(vertexPath, fragmentPath);
+	CompileShader();
+}
+
+void Shader::RetriveShader(const char* vertexPath, const char* fragmentPath)
+{
 	std::ifstream vShaderFile; //Vertex
 	std::ifstream fShaderFile; //Fragment
 
@@ -42,11 +47,13 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	{
 		LOG(LOG_TYPE::ERRO, "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
 	}
+}
 
+void Shader::CompileShader()
+{
 	const char* vShaderCode = vertexCode.c_str();
 	const char* fShaderCode = fragmentCode.c_str();
 
-	//2. Compile Shaders
 	uint vertex, fragment;
 	int success;
 	char infoLog[512];
@@ -75,7 +82,6 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 		LOG(LOG_TYPE::ERRO, "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n %s", infoLog);
 	}
 
-
 	//Shader Program
 	ID = glCreateProgram();
 	glAttachShader(ID, vertex);
@@ -87,6 +93,10 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	{
 		glGetProgramInfoLog(ID, 512, NULL, infoLog);
 		LOG(LOG_TYPE::ERRO, "ERROR::SHADER::PROGRAM::LINKING_FAILED\N %s", infoLog);
+	}
+	else
+	{
+		LOG(LOG_TYPE::SUCCESS, "SUCCESS: Shader '%s' comiled!", name.c_str());
 	}
 
 	//Delete the shaders as they're linked into our program now and no longer necessary

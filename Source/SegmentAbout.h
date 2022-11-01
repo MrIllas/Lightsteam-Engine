@@ -15,7 +15,9 @@ public:
 	void MyLicense();
 
 private:
-	
+	//Engine version
+	std::string vEngine;
+
 	//Lib versions
 	std::string vSdl;
 	std::string vImGui;

@@ -73,7 +73,7 @@ bool ModuleEditor::Init()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -111,20 +111,18 @@ bool ModuleEditor::Start()
 
 bool ModuleEditor::CleanUp()
 {
-ImGui_ImplOpenGL3_Shutdown();
-ImGui_ImplSDL2_Shutdown();
-ImGui::DestroyContext();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 
-//Clean Segments
-for (int i = 0; i < segments.size(); ++i)
-{
-	RELEASE(segments[i]);
-}
+	//Clean Segments
+	for (int i = 0; i < segments.size(); ++i)
+	{
+		RELEASE(segments[i]);
+	}
 
-//Delete Editor Properties
-eProps->Delete();
-//RELEASE(segAbout);
-//RELEASE(segConfiguration);
+	//Delete Editor Properties
+	eProps->Delete();
 
 return true;
 }
@@ -145,7 +143,7 @@ void ModuleEditor::DrawEditorGui()
 	UpdateSegments();
 
 	//Demo
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	EndRender();
 }

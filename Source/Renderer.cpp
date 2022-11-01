@@ -12,8 +12,8 @@ Renderer::Renderer(float2 size)
 	frameBuffer = new FrameBuffer();
 	Resize(size);
 
-	debugShader = new Shader(DEBUG_VERTEX_SHADER, DEBUG_FRAGMENT_SHADER);
-	baseShader = new Shader(BASE_VERTEX_SHADER, BASE_FRAGMENT_SHADER);
+	debugShader = new Shader(DEBUG_VERTEX_SHADER, DEBUG_FRAGMENT_SHADER, "DEBUG SHADER");
+	baseShader = new Shader(BASE_VERTEX_SHADER, BASE_FRAGMENT_SHADER, "BASE SHADER");
 }
 
 Renderer::~Renderer()

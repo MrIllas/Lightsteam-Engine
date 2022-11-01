@@ -124,20 +124,6 @@ Component* GameObject::GetComponentInChildren(CO_TYPE type)
 	return nullptr; 
 }
 
-//template <class T>
-//std::vector<T*> GameObject::GetComponentsInChildrens(CO_TYPE type)
-//{
-//	//if (children.empty()) return nullptr;
-//	std::vector<T*> toReturn;
-//
-//	for (int i = 0; i < children.size(); ++i)
-//	{
-//		T* aux = children[i]->GetComponent<T>(type);
-//
-//		if(aux != nullptr) toReturn.emplace_back(aux);
-//	}
-//}
-
 std::vector<GameObject*> GameObject::GetChildrens()
 {
 	return children;
@@ -183,4 +169,20 @@ bool GameObject::CheckParentsOfParent(GameObject* go, GameObject* checkGO)
 		if (go->parent == checkGO) return true;
 		else return CheckParentsOfParent(go->parent, checkGO);
 	}
+}
+
+void GameObject::DeleteGameObject()
+{
+	parent->RemoveChildren(this);
+	for (int i = 0; i < children.size(); ++i)
+	{
+		if (children[i] != nullptr)
+		{
+			children[i]->DeleteGameObject();
+			RELEASE(children[i]);
+		}
+	}
+
+	this->~GameObject();
+	children.clear();
 }

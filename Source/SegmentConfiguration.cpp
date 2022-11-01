@@ -205,9 +205,6 @@ void SegmentConfiguration::RenderingHeader()
 	ImGui::Text("GPU Vendor: %s", glGetString(GL_VENDOR));
 	ImGui::Text("GPU: %s", glGetString(GL_RENDERER));
 
-	//The Vram usage needs to be updated, since more meshes loaded == more Ram usage
-	getGraphicsDeviceInfo(0, 0, 0, &VRamBudget, &VRamCurrentUsage, &VRamAvailable, &VRamReserve);
-
 	ImGui::Text("VRam Budget: %i Mb", (int) (VRamBudget / (1024.f * 1024.f)));
 	ImGui::Text("VRam Usage: %i Mb", (int)(VRamCurrentUsage / (1024.f * 1024.f)));
 	ImGui::Text("VRam Available: %i Mb", (int) (VRamAvailable / (1024.f * 1024.f)));

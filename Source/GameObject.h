@@ -56,6 +56,8 @@ public:
 
 	bool HasChildren() { return (children.size() != 0) ? true : false; }
 
+	void DeleteGameObject();
+
 public:
 	std::string name;
 	bool selected;

@@ -3,15 +3,12 @@
 
 typedef unsigned int uint;
 
-
 #include <string>
 
 class Shader
 {
 public:
-	uint ID;
-
-	Shader(const char* vertexPath, const char* fragmentPath);
+	Shader(const char* vertexPath, const char* fragmentPath, std::string name = "Shader");
 
 	void Use();
 
@@ -20,6 +17,17 @@ public:
 	void SetFloat(const std::string &name, float value) const;
 	void SetMat4(const std::string& name, const float* value) const;
 	void SetVec3(const std::string& name, const float* value) const;
+
+private:
+	void RetriveShader(const char* vertexPath, const char* fragmentPath);
+	void CompileShader();
+
+public:
+	uint ID;
+	std::string name;
+private:
+	std::string vertexCode;
+	std::string fragmentCode;
 };
 
 #endif
