@@ -1,6 +1,6 @@
 # Lightsteam Engine
 
-This engine is being developed in C++ for the 3rd year class on *Engine development* at *UPC CITM* bachelor's degree in *Video game Design and development*.
+Lightsteam engine is a 3D engine being developed in C++ for the 3rd year class on *Engine development* at *UPC CITM* bachelor's degree in *Video game Design and development*.
 
 Project's Github: https://github.com/MrIllas/Lightsteam-Engine
 
@@ -11,13 +11,13 @@ Robert Recordà i Illas [(MrIllas)](https://github.com/MrIllas)
 ## Features
 
 The current version of the engine has the the following features:
-	- Load of fbx by drag & drop.
-	- Load of image/textures by drag & drop.
-	- Custom shader with simple light.
-	- Translation, rotation and scaling of objects (without parent-to-child).
-	- Scene free camera movement.
-	- Transformation, Mesh Renderer and Texture components.
-	- Enable/Disable of components
+ - Load of fbx by drag & drop.
+ - Load of image/textures by drag & drop.
+ - Custom shader with simple light.
+ - Translation, rotation and scaling of objects (without parent-to-child).
+ - Scene free camera movement.
+ - Transformation, Mesh Renderer and Texture components.
+ - Enable/Disable of components
 
 ## Controls and features
 
