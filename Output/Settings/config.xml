@@ -21,12 +21,12 @@
 		<Texture2D value="true" />
 	</Renderer3D>
 	<Editor>
-		<Configuration value="true" />
+		<Configuration value="false" />
 		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />
 		<Hierarchy value="true" />
-		<Inspector value="false" />
+		<Inspector value="true" />
 		<ColorMode value="2" />
 	</Editor>
 </config>
