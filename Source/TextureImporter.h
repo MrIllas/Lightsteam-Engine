@@ -30,6 +30,7 @@ public:
 	~TextureImporter();
 
 	static Texture ImportTexture(std::string filePath);
+
 private:
 	static int CheckTexturesLoaded(std::string filePath, Texture& texture);
 

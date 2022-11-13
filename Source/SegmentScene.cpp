@@ -9,6 +9,7 @@
 SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 {
 	name = "Scene";
+	segmentSize = { 0, 0 };
 
 	camInstance = CameraProperties::Instance();
 }
@@ -22,7 +23,8 @@ SegmentScene::~SegmentScene()
 void SegmentScene::Start()
 {
 	//renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
-	camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
+	//camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
+	camInstance->editorCamera.SetRenderer({ segmentSize.x, segmentSize.y });
 }
 
 void SegmentScene::Update()
@@ -48,7 +50,8 @@ void SegmentScene::Update()
 
 			if (camInstance->editorCamera.renderer == nullptr)
 			{
-				camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
+				camInstance->editorCamera.SetRenderer({ segmentSize.x, segmentSize.y });
+				//camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
 			}
 			else camInstance->editorCamera.renderer->Resize({ segmentSize.x, segmentSize.y });
 
@@ -65,5 +68,6 @@ void SegmentScene::RenderSpace()
 
 
 	ImGui::SetCursorPosY(aux);
-	ImGui::Image((ImTextureID)camInstance->editorCamera.renderer->GetFrameBufffer()->GetTextureBuffer(), segmentSize, ImVec2(0, 1), ImVec2(1, 0));
+	ImTextureID texID = (ImTextureID)camInstance->editorCamera.renderer->GetFrameBufffer()->GetTextureBuffer();
+	ImGui::Image(texID, segmentSize, ImVec2(0, 1), ImVec2(1, 0));
 }

@@ -3,6 +3,8 @@
 #include "ModuleScene.h"
 #include "GameObject.h"
 
+#include "ImGui/misc/cpp/imgui_stdlib.h"
+
 SegmentInspector::SegmentInspector(bool enabled) : Segment(enabled)
 {
 	name = "Inspector";
@@ -22,16 +24,44 @@ void SegmentInspector::Update()
 {
 	if (ImGui::Begin(name.c_str()))
 	{
-
 		//Each Component manages its own ImGui
 		GameObject* go = IterateGameObject(sceneInstance->root);
 
 		if (go != nullptr)
 		{
+			float segWidth = ImGui::GetWindowWidth(); //Segment Inspector width.
+			
+			if (ImGui::InputText("##Name", &go->name))
+			{
+				if (go->name.size() == 0) go->name = "NoName";
+			}
+
 			for (auto const& comp : go->components)
 			{
-				comp.second->UpdateGUI();
+				std::string aux = CompTypeToString(comp.second->type);
+
+				if (ImGui::CollapsingHeader(aux.c_str(), ImGuiTreeNodeFlags_Leaf))
+				{
+					//Active checkbox
+					aux.insert(0, "Active##");
+					ImGui::Checkbox(aux.c_str(), &comp.second->active);
+
+					//Delete component button
+					aux.erase(0, 8);
+					aux.insert(0, "DELETE##");
+					ImGui::SameLine(segWidth - 60);
+					if (ImGui::Button(aux.c_str(), ImVec2(0, 0)))
+					{
+						go->DeleteComponent(comp.second->type);
+						break;
+					}
+					ImGui::Separator();
+
+
+					comp.second->UpdateGUI();
+				}
 			}
+			go->UpdateCompMenuGUI();
 		}
 		
 	}

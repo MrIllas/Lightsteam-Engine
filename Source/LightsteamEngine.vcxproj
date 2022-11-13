@@ -163,6 +163,7 @@
     <ClCompile Include="CompTexture.cpp" />
     <ClCompile Include="CompTransform.cpp" />
     <ClCompile Include="External\GPUDetect\DeviceId.cpp" />
+    <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="SegmentAbout.cpp" />
     <ClCompile Include="SegmentConfiguration.cpp" />
     <ClCompile Include="SegmentConsole.cpp" />
+    <ClCompile Include="SegmentGame.cpp" />
     <ClCompile Include="SegmentHierarchy.cpp" />
     <ClCompile Include="SegmentInspector.cpp" />
     <ClCompile Include="SegmentScene.cpp" />
@@ -251,6 +253,7 @@
     <ClInclude Include="External\DevIL\include\il_wrap.h" />
     <ClInclude Include="External\GPUDetect\DeviceId.h" />
     <ClInclude Include="External\GPUDetect\dxgi1_4.h" />
+    <ClInclude Include="External\ImGui\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Color.h" />
@@ -348,6 +351,7 @@
     <ClInclude Include="SegmentConfiguration.h" />
     <ClInclude Include="SegmentConsole.h" />
     <ClInclude Include="Loggs.h" />
+    <ClInclude Include="SegmentGame.h" />
     <ClInclude Include="SegmentHierarchy.h" />
     <ClInclude Include="SegmentInspector.h" />
     <ClInclude Include="SegmentScene.h" />

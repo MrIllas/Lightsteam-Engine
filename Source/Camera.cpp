@@ -25,6 +25,8 @@ Camera::Camera()
 	frustum.up = Y;
 
 	frustum.pos = Position;
+
+	//if(renderer == nullptr) renderer = new Renderer({ 720, 360 });
 }
 
 Camera::~Camera()
@@ -72,3 +74,14 @@ float* Camera::GetProjectionMatrix()
 	aux = aux.Transposed();
 	return &aux.v[0][0];
 }
+
+void Camera::SetRenderer(float2 size)
+{
+	renderer = new Renderer(size, this);
+}
+
+//Quat Camera::GetRotationQuat()
+//{
+//	Quat toReturn = Quat::identity;
+//	toReturn.toQuat
+//}

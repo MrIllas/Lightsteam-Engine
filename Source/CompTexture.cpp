@@ -31,42 +31,38 @@ void CompTexture::Update()
 
 void CompTexture::UpdateGUI()
 {
-	if (ImGui::CollapsingHeader("Textures", ImGuiTreeNodeFlags_Leaf))
+	ImGui::NewLine();
+	ImGui::Checkbox("Checkers Texture", &isCheckers);
+
+	//Texture Path
+	ImGui::NewLine();
+	std::string txt = "Texture Path: ";
+	if (this->texture.w == 0 && this->texture.h == 0 && !isCheckers) txt += "No texture loaded, using debug texture";
+	else if (!isCheckers) txt += texture.path;
+	else txt += checkersTexture.path;
+	ImGui::Text(txt.c_str());
+
+	//Texture Width and Height
+	txt = "Size: ";
+	if (isCheckers || (this->texture.w == 0 && this->texture.h))
 	{
-		ImGui::Checkbox("Active##Material", &this->active);
-		ImGui::SameLine();
-		ImGui::Checkbox("Checkers Texture", &isCheckers);
-
-		//Texture Path
-		ImGui::NewLine();
-		std::string txt = "Texture Path: ";
-		if (this->texture.w == 0 && this->texture.h == 0 && !isCheckers) txt += "No texture loaded, using debug texture";
-		else if (!isCheckers) txt += texture.path;
-		else txt += checkersTexture.path;
-		ImGui::Text(txt.c_str());
-
-		//Texture Width and Height
-		txt = "Size: ";
-		if (isCheckers || (this->texture.w == 0 && this->texture.h))
-		{
-			txt += std::to_string(checkersTexture.w);
-			txt += " x ";
-			txt += std::to_string(checkersTexture.h);
-		}
-		else
-		{
-			txt += std::to_string(texture.w);
-			txt += " x ";
-			txt += std::to_string(texture.h);
-		}
-		ImGui::Text(txt.c_str());
-
-		//Texture ID
-		txt = "Texture ID: ";
-		if (isCheckers || (this->texture.w == 0 && this->texture.h)) txt += std::to_string(checkersTexture.id);
-		else txt += std::to_string(texture.id);
-		ImGui::Text(txt.c_str());
+		txt += std::to_string(checkersTexture.w);
+		txt += " x ";
+		txt += std::to_string(checkersTexture.h);
 	}
+	else
+	{
+		txt += std::to_string(texture.w);
+		txt += " x ";
+		txt += std::to_string(texture.h);
+	}
+	ImGui::Text(txt.c_str());
+
+	//Texture ID
+	txt = "Texture ID: ";
+	if (isCheckers || (this->texture.w == 0 && this->texture.h)) txt += std::to_string(checkersTexture.id);
+	else txt += std::to_string(texture.id);
+	ImGui::Text(txt.c_str());
 }
 
 void CompTexture::SetTexture(Texture texture)

@@ -2,9 +2,10 @@
 #include "Module.h"
 
 //#include "GameObject.h"
+#include <vector>
 
 class GameObject;
-
+class CompCamera;
 
 struct SceneProperties
 {

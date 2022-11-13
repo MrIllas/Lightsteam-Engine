@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/include/Math/float2.h"
 
 class Renderer;
 
@@ -14,8 +15,12 @@ public:
 	void LookAt(const float3& Spot);
 	void Move(const float3& Movement);
 
+	//Quat GetRotationQuat();
+
 	float* GetViewMatrix(); 
 	float* GetProjectionMatrix();
+
+	void SetRenderer(float2 size);
 
 public:
 	float3 X, Y, Z;

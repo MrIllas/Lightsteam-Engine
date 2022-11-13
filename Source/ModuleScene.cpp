@@ -117,8 +117,6 @@ UpdateStatus ModuleScene::Update()
 
 UpdateStatus ModuleScene::PostUpdate()
 {
-
-
 	return UPDATE_CONTINUE;
 }
 

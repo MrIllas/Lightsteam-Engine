@@ -46,6 +46,7 @@ private:
 
 class WindowProperties;
 struct CameraProperties;
+struct SceneProperties;
 
 class ModuleRenderer3D : public Module
 {
@@ -80,6 +81,7 @@ private:
 	RenderProperties* rProps = nullptr;
 	WindowProperties* wProps = nullptr;
 	CameraProperties* cProps = nullptr;
+	SceneProperties* sProps = nullptr;
 };
 
 #endif // !__MODULERENDERER3D_H__

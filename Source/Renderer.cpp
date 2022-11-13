@@ -1,14 +1,15 @@
 #include "Renderer.h"
 
-#include "FrameBuffer.h"
 #include "CompMeshRenderer.h"
 #include "Shader.h"
 
+#include "FrameBuffer.h"
 #include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
 
-Renderer::Renderer(float2 size)
+Renderer::Renderer(float2 size, Camera* camera)
 {
+	owner = camera;
 	frameBuffer = new FrameBuffer();
 	Resize(size);
 
@@ -70,7 +71,10 @@ void Renderer::Update()
 {
 	while (meshes.size())
 	{
-		meshes.front()->Render(baseShader, debugShader);
+		if (meshes.front() != nullptr)
+		{
+			meshes.front()->Render(baseShader, debugShader, owner);
+		}
 		meshes.pop();
 	}
 }

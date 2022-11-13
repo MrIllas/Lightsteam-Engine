@@ -232,6 +232,12 @@
     <ClCompile Include="External\GPUDetect\DeviceId.cpp">
       <Filter>External\GPUDetect</Filter>
     </ClCompile>
+    <ClCompile Include="SegmentGame.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp">
+      <Filter>External\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -593,6 +599,12 @@
     </ClInclude>
     <ClInclude Include="External\GPUDetect\DeviceId.h">
       <Filter>External\GPUDetect</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentGame.h">
+      <Filter>Header\Core\Segments</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\misc\cpp\imgui_stdlib.h">
+      <Filter>External\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

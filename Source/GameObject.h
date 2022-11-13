@@ -20,6 +20,8 @@ public:
 	void Init();
 	void Update();
 
+	void UpdateCompMenuGUI();
+
 	Component* CreateComponent(CO_TYPE type);
 	void DeleteComponent(CO_TYPE type);
 

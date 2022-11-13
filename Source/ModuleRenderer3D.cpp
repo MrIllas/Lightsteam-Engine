@@ -8,6 +8,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "CompCamera.h"
 #include "Renderer.h"
 
 #pragma region RenderProperties
@@ -197,6 +198,10 @@ UpdateStatus ModuleRenderer3D::PostUpdate()
 {
 	//Meshes
 	cProps->editorCamera.renderer->Render();
+	
+	if (cProps->gameCameras.size() != 0)
+		if (cProps->gameCameras.at(cProps->mainCameraId)->camera.renderer != nullptr)
+			cProps->gameCameras.at(cProps->mainCameraId)->camera.renderer->Render();
 
 
 	//Swap Buffer

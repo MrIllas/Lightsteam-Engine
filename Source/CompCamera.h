@@ -3,6 +3,8 @@
 
 #include "Camera.h"
 
+class CameraProperties;
+
 class CompCamera : public Component
 {
 public:
@@ -11,8 +13,15 @@ public:
 
 	void Init() override;
 	void Update() override;
+	
+	void UpdateGUI() override;
+
+public:
+	Camera camera;
+
+	bool isMainCamera;
 
 private:
-	Camera camera;
+	CameraProperties* camInstance = nullptr;
 };
 

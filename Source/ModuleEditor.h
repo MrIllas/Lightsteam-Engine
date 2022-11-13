@@ -45,6 +45,7 @@ public:
 	bool Start();
 	bool CleanUp();
 
+	UpdateStatus Update();
 	UpdateStatus PostUpdate();
 
 	void DrawEditorGui();

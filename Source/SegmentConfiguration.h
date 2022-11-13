@@ -10,6 +10,7 @@ class Time;
 class RenderProperties;
 class WindowProperties;
 class EditorProperties;
+class CameraProperties;
 
 class SegmentConfiguration : public Segment
 {
@@ -25,6 +26,7 @@ private:
 	void InputHeader();
 	void RenderingHeader();
 	void EditorHeader();
+	void GameHeader();
 
 	void GetCaps();
 
@@ -33,6 +35,8 @@ private:
 	RenderProperties* rProps = nullptr;
 	WindowProperties* wProps = nullptr;
 	EditorProperties* eProps = nullptr;
+	CameraProperties* cProps = nullptr;
+
 	Time* time = nullptr;
 
 	bool vsync = false;

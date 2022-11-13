@@ -3,6 +3,11 @@
 #include "CompTransform.h"
 #include "CompMeshRenderer.h"
 #include "CompTexture.h"
+#include "CompCamera.h"
+
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
 
 GameObject::GameObject(std::string name, bool spatial)
 {
@@ -61,6 +66,33 @@ void GameObject::Update()
 	}
 }
 
+void GameObject::UpdateCompMenuGUI()
+{
+	ImGui::NewLine();
+	ImGui::Separator();
+	ImGui::NewLine();
+
+	
+	if (ImGui::BeginCombo(" ", "Add Component", ImGuiComboFlags_PopupAlignLeft))
+	{
+		for (int compType = TRANSFORM; compType != LAST; compType++)
+		{
+			CO_TYPE coType = static_cast<CO_TYPE>(compType);
+			
+			if (GetComponent(coType) == nullptr) //Checks if the components is already added
+			{
+				if (ImGui::Selectable(CompTypeToString(coType)))
+				{
+					CreateComponent(coType);
+				}
+			}
+			
+		}
+
+		ImGui::EndCombo();
+	}
+}
+
 Component* GameObject::CreateComponent(CO_TYPE type)
 {
 	if (GetComponent(type) != nullptr)
@@ -81,6 +113,9 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 			break;
 		case MATERIAL:
 			toReturn = new CompTexture(this);
+			break;
+		case CAMERA:
+			toReturn = new CompCamera(this);
 			break;
 	}
 

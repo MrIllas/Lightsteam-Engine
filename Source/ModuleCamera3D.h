@@ -4,13 +4,17 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "Camera.h"
+#include "CompCamera.h"
+#include <vector>
 
 struct CameraProperties
 {
 public:
 	Camera editorCamera;
 	bool isMouseOnScene = false;
+
+	std::vector<CompCamera*> gameCameras;
+	int mainCameraId;
 
 	CameraProperties();
 

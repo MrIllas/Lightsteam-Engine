@@ -10,6 +10,7 @@
 #include "SegmentConfiguration.h"
 #include "SegmentConsole.h"
 #include "SegmentScene.h"
+#include "SegmentGame.h"
 #include "SegmentHierarchy.h"
 #include "SegmentInspector.h"
 
@@ -92,6 +93,7 @@ bool ModuleEditor::Start()
 	segments.emplace_back(new SegmentConfiguration());
 	segments.emplace_back(new SegmentConsole());
 	segments.emplace_back(new SegmentScene());
+	segments.emplace_back(new SegmentGame());
 	segments.emplace_back(new SegmentHierarchy());
 	segments.emplace_back(new SegmentInspector());
 		//Always last
@@ -127,9 +129,16 @@ bool ModuleEditor::CleanUp()
 return true;
 }
 
-UpdateStatus ModuleEditor::PostUpdate()
+UpdateStatus ModuleEditor::Update()
 {
 	DrawEditorGui();
+
+	return UPDATE_CONTINUE;
+}
+
+UpdateStatus ModuleEditor::PostUpdate()
+{
+	//DrawEditorGui();
 
 	return UPDATE_CONTINUE;
 }
