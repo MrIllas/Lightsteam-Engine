@@ -4,6 +4,9 @@
 #include "GameObject.h"
 
 #include "MeshImporter.h"
+#include "CompCamera.h"
+#include "CompMeshRenderer.h"
+#include "CompTexture.h"
 
 SegmentHierarchy::SegmentHierarchy(bool enabled) : Segment(enabled)
 {
@@ -130,9 +133,24 @@ void SegmentHierarchy::RightClickMenuContent(GameObject* go)
 
 	if (ImGui::BeginMenu("Nodes"))
 	{
+		GameObject* newGO = nullptr;
+
 		if (ImGui::MenuItem("Empty Node"))  auxGO->AddChildren(new GameObject("Empty Node", false));
 		if (ImGui::MenuItem("Spatial Node")) auxGO->AddChildren(new GameObject("Spatial Node"));
-		if (ImGui::MenuItem("Mesh Node")) auxGO->AddChildren(new GameObject());
+		if (ImGui::MenuItem("Mesh Node"))
+		{
+			newGO = new GameObject("Mesh Node");
+			newGO->CreateComponent(MESH_RENDERER);
+			newGO->CreateComponent(MATERIAL);
+			auxGO->AddChildren(newGO);
+		}
+			
+		if (ImGui::MenuItem("Camera Node"))
+		{
+			newGO = new GameObject("Camera Node");
+			newGO->CreateComponent(CAMERA);
+			auxGO->AddChildren(newGO);
+		}
 
 		if (ImGui::BeginMenu("Primitive Node"))
 		{

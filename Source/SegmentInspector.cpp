@@ -27,7 +27,7 @@ void SegmentInspector::Update()
 		//Each Component manages its own ImGui
 		GameObject* go = IterateGameObject(sceneInstance->root);
 
-		if (go != nullptr)
+		if (go != nullptr && go != sceneInstance->root)
 		{
 			float segWidth = ImGui::GetWindowWidth(); //Segment Inspector width.
 			

@@ -15,6 +15,7 @@ public:
 	void Update() override;
 
 private:
+	void Resize();
 	void RenderSpace();
 
 	void LookForCamera();
@@ -25,5 +26,6 @@ private:
 	CameraProperties* camInstance = nullptr;
 	
 	CompCamera* mainCamera = nullptr;
+	int cameraID;
 };
 

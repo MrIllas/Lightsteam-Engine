@@ -37,17 +37,20 @@ void CompCamera::Init()
 
 void CompCamera::Update()
 {
-	/*CompTransform* transform = owner->GetComponent<CompTransform>(TRANSFORM);
+	CompTransform* transform = owner->GetComponent<CompTransform>(TRANSFORM);
 
-	Quat lookingDir = Quat::identity;
+	if (transform != nullptr)
+	{
+
+		float4x4 aux = camera.frustum.WorldMatrix();
+		aux.SetRotatePart(transform->GetRotationAsQuat());
+		camera.frustum.SetWorldMatrix(aux.Float3x4Part());
+
+		camera.Position = transform->position;
+		camera.Reference = transform->position;
+		camera.frustum.pos = transform->position;
+	}
 	
-	float4x4 aux = camera.frustum.WorldMatrix();
-	aux.SetRotatePart(lookingDir);
-	camera.frustum.SetWorldMatrix(aux.Float3x4Part());
-
-	camera.Position += transform->position;
-	camera.Reference += transform->position;
-	camera.frustum.pos += transform->position;*/
 }
 
 void CompCamera::UpdateGUI()

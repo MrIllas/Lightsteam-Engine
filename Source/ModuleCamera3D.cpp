@@ -192,9 +192,19 @@ void ModuleCamera3D::SceneCameraInput()
 		cProps->editorCamera.LookAt(dir);
 	}
 
-	cProps->editorCamera.Position += newPos;
+	cProps->editorCamera.Position = newPos;
 	cProps->editorCamera.Reference += newPos;
 	cProps->editorCamera.frustum.pos += newPos;
+
+	//Set GO float4x4 as scene camera
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && selected != nullptr)
+	{
+		selected->position = cProps->editorCamera.frustum.pos;
+		float3 rot = cProps->editorCamera.frustum.WorldMatrix().ToEulerXYZ();
+		selected->rotation = float3(math::RadToDeg(rot.x), math::RadToDeg(rot.y), math::RadToDeg(rot.z));
+	}
+	float3 roto = cProps->editorCamera.frustum.ProjectionMatrix().ToEulerXYZ();
+	LOG(LOG_TYPE::NONE, "%i, %i, %i", math::RadToDeg(roto.x), math::RadToDeg(roto.y), math::RadToDeg(roto.z));
 }
 
 

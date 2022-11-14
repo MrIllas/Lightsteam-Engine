@@ -11,6 +11,7 @@ SegmentGame::SegmentGame(bool enabled) : Segment(enabled)
 
 	segmentSize = { 0, 0 };
 
+	cameraID = -1;
 
 }
 
@@ -26,7 +27,8 @@ void SegmentGame::Start()
 
 void SegmentGame::Update()
 {
-	if (mainCamera == nullptr) LookForCamera();
+	if (cameraID != camInstance->mainCameraId) LookForCamera();
+	//if (mainCamera == nullptr) LookForCamera();
 
 
 	if (ImGui::Begin(name.c_str(), 0, ImGuiWindowFlags_NoScrollbar))
@@ -47,13 +49,7 @@ void SegmentGame::Update()
 				segmentSize.x = aux.x;
 				segmentSize.y = aux.y;
 
-				if (mainCamera->camera.renderer == nullptr)
-				{
-					mainCamera->camera.SetRenderer({ segmentSize.x, segmentSize.y });
-					//mainCamera->camera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
-				}
-				else mainCamera->camera.renderer->Resize({ segmentSize.x, segmentSize.y });
-
+				Resize();
 			}
 
 			
@@ -63,11 +59,27 @@ void SegmentGame::Update()
 	ImGui::End();
 }
 
+void SegmentGame::Resize()
+{
+	if (mainCamera->camera.renderer == nullptr)
+	{
+		mainCamera->camera.SetRenderer({ segmentSize.x, segmentSize.y });
+		//mainCamera->camera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
+	}
+	else mainCamera->camera.renderer->Resize({ segmentSize.x, segmentSize.y });
+
+}
+
 void SegmentGame::LookForCamera()
 {
 	if (camInstance->gameCameras.size() != 0)
-		mainCamera = camInstance->gameCameras.at(camInstance->mainCameraId);
+	{
+		cameraID = camInstance->mainCameraId;
+		mainCamera = camInstance->gameCameras.at(cameraID);
+		Resize();
+	}
 }
+		
 
 void SegmentGame::RenderSpace()
 {
@@ -75,7 +87,7 @@ void SegmentGame::RenderSpace()
 	{
 		float aux = (ImGui::GetWindowHeight() + 20 - segmentSize.y) * 0.5f;
 		ImGui::SetCursorPosY(aux);
-		ImTextureID texID = (ImTextureID) camInstance->gameCameras.at(camInstance->mainCameraId)->camera.renderer->GetFrameBufffer()->GetTextureBuffer();
+		ImTextureID texID = (ImTextureID) mainCamera->camera.renderer->GetFrameBufffer()->GetTextureBuffer();
 		ImGui::Image(texID, segmentSize, ImVec2(0, 1), ImVec2(1, 0));
 	}	
 	else
