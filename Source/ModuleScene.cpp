@@ -6,6 +6,7 @@
 #include "CompTexture.h"
 #include "CompMeshRenderer.h"
 
+
 #pragma region SceneProperties
 SceneProperties::SceneProperties()
 {
@@ -86,6 +87,8 @@ bool ModuleScene::Start()
 
 	MeshImporter::ImportMesh("Assets/Brutalist_Bench.fbx");
 	MeshImporter::ImportMesh("Assets/Fence.fbx");
+
+	//MeshImporter::LoadMesh("Library/Meshes/Fence.mh");
 
 	return true;
 }

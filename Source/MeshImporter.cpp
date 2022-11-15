@@ -1,7 +1,5 @@
 #include "MeshImporter.h"
 
-#include "GLOBALS.h"
-
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -9,11 +7,14 @@
 #pragma comment (lib, "assimp.lib")
 
 #include "GameObject.h"
+
 #include "CompMeshRenderer.h"
 
-#include"ModuleScene.h"
+#include "ModuleScene.h"
+#include "LibraryManager.h"
 
 #include <vector>
+
 
 MeshImporter::MeshImporter()
 {
@@ -25,7 +26,7 @@ MeshImporter::~MeshImporter()
 
 }
 
-void MeshImporter::Start()
+void MeshImporter::Init()
 {
 	//Stream log messages to Debug window
 	struct aiLogStream stream;
@@ -85,7 +86,24 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 			go->CreateComponent(MATERIAL);
 
 			//Add Mesh to the gameObject
-			MeshRenderer* meshRenderer = new MeshRenderer(GenerateMesh(scene->mMeshes[i]));
+			Meshe mesh;
+
+			std::string aux = "Library/Meshes/";
+			aux += std::string(node->mChildren[i]->mName.C_Str());
+			aux += ".mh";
+
+			//Checks if the mesh already exists in the engine's CFF
+			if (LibraryManager::Exists(aux))
+			{
+				mesh = LoadMesh(aux);
+			}
+			else
+			{
+				mesh = GenerateMesh(scene->mMeshes[i]);
+				SaveMesh(mesh, std::string(node->mChildren[i]->mName.C_Str()));
+			}
+
+			MeshRenderer* meshRenderer = new MeshRenderer(mesh);
 			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
 
 			//Recursivnes
@@ -127,7 +145,6 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 
 		newMesh.vertices.emplace_back(position, normal, textCoords);
 	}
-	LOG(LOG_TYPE::SUCCESS, "New mesh with %d vertices", mesh->mNumVertices);
 
 	//Index
 	if (mesh->HasFaces())
@@ -145,5 +162,93 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 			}
 		}
 	}
+
 	return newMesh;
+}
+
+void MeshImporter::SaveMesh(Meshe mesh, std::string name)
+{
+	name += ".mh";
+
+	uint ranges[3] =
+	{
+		mesh.indices.size(),
+		mesh.vertices.size(),
+		mesh.numFaces
+	};
+
+	uint size = sizeof(ranges) + sizeof(uint) * ranges[0] + sizeof(Vertex) * ranges[1] + sizeof(uint) * ranges[2];
+
+	
+	char* fileBuffer = new char[size];//Allocate
+	char* cursor = fileBuffer;
+
+	uint bytes = 0;
+
+	//Store ranges
+	bytes = sizeof(ranges);
+	memcpy(cursor, ranges, bytes);
+	cursor += bytes;
+
+	//Store indices
+	bytes = sizeof(uint) * ranges[0];
+	memcpy(cursor, &mesh.indices[0], bytes);
+	
+	cursor += bytes;
+
+	//Store vertex position
+	bytes = sizeof(Vertex) * ranges[1];
+	memcpy(cursor, &mesh.vertices[0], bytes);
+	cursor += bytes;
+
+	//Store number of faces
+	bytes = sizeof(uint);
+	memcpy(cursor, &mesh.numFaces, bytes);
+	cursor += bytes;
+
+	std::string path = "Library/Meshes/";
+	path += name;
+
+	LibraryManager::Save(path, fileBuffer, size);
+
+	RELEASE_ARRAY(fileBuffer);
+}
+
+Meshe MeshImporter::LoadMesh(std::string filePath)
+{
+	Meshe mesh;
+	char* fileBuffer = nullptr;
+	LibraryManager::Load(filePath, &fileBuffer);
+
+	char* cursor = fileBuffer;
+
+	uint ranges[3];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+	cursor += bytes;
+
+	mesh.indices.resize(ranges[0]);
+	mesh.vertices.resize(ranges[1]);
+	mesh.numFaces = 0;
+
+	//Load indices
+	bytes = sizeof(uint) * ranges[0];
+
+	memcpy(&mesh.indices[0], cursor, bytes);
+	cursor += bytes;
+
+	//Load vertices
+	bytes = sizeof(Vertex) * ranges[1];
+
+	memcpy(&mesh.vertices[0], cursor, bytes);
+	cursor += bytes;
+
+	//Store number of faces
+	bytes = sizeof(uint);
+	memcpy(&mesh.numFaces, cursor, bytes);
+	cursor += bytes;
+
+	RELEASE_ARRAY(fileBuffer);
+
+	return mesh;
 }

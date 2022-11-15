@@ -122,10 +122,6 @@ bool ModuleWindow::Init()
 
 UpdateStatus ModuleWindow::PreUpdate()
 {
-	//WProps pointer
-	SDL_GetWindowSize(wProps->window, &wProps->w, &wProps->h);
-	SDL_SetWindowBrightness(wProps->window, wProps->brightness);
-
 	return UPDATE_CONTINUE;
 }
 

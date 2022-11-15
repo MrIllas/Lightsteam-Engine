@@ -12,7 +12,7 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
-CompMeshRenderer::CompMeshRenderer(GameObject* owner) : Component(owner)
+CompMeshRenderer::CompMeshRenderer(GameObject* owner, std::string uuid) : Component(owner, uuid)
 {
 	this->type = CO_TYPE::MESH_RENDERER;
 

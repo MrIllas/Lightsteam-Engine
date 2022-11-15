@@ -8,7 +8,7 @@ class CameraProperties;
 class CompCamera : public Component
 {
 public:
-	CompCamera(GameObject* owner);
+	CompCamera(GameObject* owner, std::string uuid);
 	~CompCamera() override;
 
 	void Init() override;

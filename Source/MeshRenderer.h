@@ -17,6 +17,12 @@ class Shader;
 class Camera;
 
 struct Vertex {
+	Vertex()
+	{
+		this->position = float3(0, 0, 0);
+		this->normal = float3(0, 0, 0);
+		this->texCoords = float2(0, 0);
+	}
 	Vertex(float3 position, float3 normal, float2 texCoord)
 	{
 		this->position = position;

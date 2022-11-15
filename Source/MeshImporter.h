@@ -16,16 +16,18 @@ public:
 	MeshImporter();
 	~MeshImporter();
 
-	void Start();
+	void Init();
 	void CleanUp();
 
 public:
 	static GameObject* ImportMesh(std::string filePath, GameObject* parent = nullptr, bool dragAndDrop = false);
-	static void LoadMeshFile(std::string filePath);
+	
 
 private:
 	static Meshe GenerateMesh(aiMesh* mesh);
 	static GameObject* GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent = nullptr);
+	static void SaveMesh(Meshe mesh, std::string name);
+	static Meshe LoadMesh(std::string filePath);
 };
 
 

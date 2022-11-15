@@ -48,9 +48,9 @@ GameObject* SegmentHierarchy::DisplayGameObject(GameObject* go)
 	
 	if (go->selected) nodeFlags += ImGuiTreeNodeFlags_Selected;
 	if (!go->HasChildren()) nodeFlags |= ImGuiTreeNodeFlags_Leaf;
-	
+
 	//Recursive Display
-	const bool nodeOpen = ImGui::TreeNodeEx(go->name.c_str(), nodeFlags, go->name.c_str());
+	const bool nodeOpen = ImGui::TreeNodeEx(go->GetUUName().c_str() , nodeFlags, go->name.c_str());
 	if (nodeOpen)
 	{
 		if (ImGui::IsItemClicked()) { GetSelectedNode(go); }

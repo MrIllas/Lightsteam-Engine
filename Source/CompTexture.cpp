@@ -6,7 +6,7 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
-CompTexture::CompTexture(GameObject* owner) : Component(owner)
+CompTexture::CompTexture(GameObject* owner, std::string uuid) : Component(owner, uuid)
 {
 	this->type = MATERIAL;
 

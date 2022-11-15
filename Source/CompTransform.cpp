@@ -6,7 +6,7 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
-CompTransform::CompTransform(GameObject* owner) : Component (owner)
+CompTransform::CompTransform(GameObject* owner, std::string uuid) : Component (owner, uuid)
 {
 	this->type = CO_TYPE::TRANSFORM;
 

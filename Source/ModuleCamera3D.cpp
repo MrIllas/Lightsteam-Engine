@@ -203,8 +203,6 @@ void ModuleCamera3D::SceneCameraInput()
 		float3 rot = cProps->editorCamera.frustum.WorldMatrix().ToEulerXYZ();
 		selected->rotation = float3(math::RadToDeg(rot.x), math::RadToDeg(rot.y), math::RadToDeg(rot.z));
 	}
-	float3 roto = cProps->editorCamera.frustum.ProjectionMatrix().ToEulerXYZ();
-	LOG(LOG_TYPE::NONE, "%i, %i, %i", math::RadToDeg(roto.x), math::RadToDeg(roto.y), math::RadToDeg(roto.z));
 }
 
 

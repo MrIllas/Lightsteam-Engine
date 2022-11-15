@@ -29,7 +29,9 @@ void SegmentScene::Start()
 
 void SegmentScene::Update()
 {
-	if (ImGui::Begin(name.c_str(), 0, ImGuiWindowFlags_NoScrollbar))
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar;
+	flags |= ImGuiWindowFlags_NoScrollWithMouse;
+	if (ImGui::Begin(name.c_str(), 0, flags))
 	{
 		ImVec2 pos = ImGui::GetWindowPos();
 		ImVec2 size = ImGui::GetWindowSize();

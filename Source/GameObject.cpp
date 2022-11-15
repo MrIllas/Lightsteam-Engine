@@ -9,9 +9,12 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include "LSUUID.h"
+
 GameObject::GameObject(std::string name, bool spatial)
 {
 	this->name = name;
+	this->uuid = LS_UUID::Generate();
 	selected = false;
 
 	if(spatial) CreateComponent(CO_TYPE::TRANSFORM);
@@ -106,16 +109,16 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 	switch (type)
 	{
 		case TRANSFORM:
-			toReturn = new CompTransform(this);
+			toReturn = new CompTransform(this, LS_UUID::Generate());
 			break;
 		case MESH_RENDERER:
-			toReturn = new CompMeshRenderer(this);
+			toReturn = new CompMeshRenderer(this, LS_UUID::Generate());
 			break;
 		case MATERIAL:
-			toReturn = new CompTexture(this);
+			toReturn = new CompTexture(this, LS_UUID::Generate());
 			break;
 		case CAMERA:
-			toReturn = new CompCamera(this);
+			toReturn = new CompCamera(this, LS_UUID::Generate());
 			break;
 	}
 
@@ -220,4 +223,13 @@ void GameObject::DeleteGameObject()
 
 	this->~GameObject();
 	children.clear();
+}
+
+std::string GameObject::GetUUName()
+{
+	std::string toReturn = name;
+	toReturn += "##";
+	toReturn += uuid;
+
+	return toReturn.c_str();
 }

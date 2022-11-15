@@ -2,9 +2,11 @@
 
 #include "GameObject.h"
 
-Component::Component(GameObject* owner)
+
+Component::Component(GameObject* owner, std::string uuid)
 {
 	this->owner = owner;
+	this->uuid = uuid;
 	active = true;
 	type = CO_TYPE::NONE;
 	deleteQueue = false;

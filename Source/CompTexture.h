@@ -6,7 +6,7 @@
 class CompTexture : public Component
 {
 public:
-	CompTexture(GameObject* owner);
+	CompTexture(GameObject* owner, std::string uuid);
 	~CompTexture() override;
 
 	void Init() override;

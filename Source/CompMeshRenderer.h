@@ -12,7 +12,7 @@ class Camera;
 class CompMeshRenderer : public Component
 {
 public:
-	CompMeshRenderer(GameObject* owner);
+	CompMeshRenderer(GameObject* owner, std::string uuid);
 	~CompMeshRenderer() override;
 
 	void Update() override;

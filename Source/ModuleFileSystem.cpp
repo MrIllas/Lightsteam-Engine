@@ -3,6 +3,7 @@
 
 #include "PhysFS/include/physfs.h"
 
+#include "LibraryManager.h"
 #include "MeshImporter.h"
 #include "TextureImporter.h"
 
@@ -18,12 +19,14 @@ ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Modul
 
 ModuleFileSystem::~ModuleFileSystem()
 {
-
+	
 }
 
 bool ModuleFileSystem::Init()
 {
 	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+
+	LibraryManager::Init();
 
 	meshImp = new MeshImporter();
 	textImp = new TextureImporter();
@@ -37,7 +40,7 @@ bool ModuleFileSystem::Start()
 {
 	bool ret = true;
 
-	meshImp->Start();
+	meshImp->Init();
 
 	return ret;
 }
@@ -45,6 +48,8 @@ bool ModuleFileSystem::Start()
 bool ModuleFileSystem::CleanUp()
 {
 	bool ret = true;
+
+	LibraryManager::CleanUp();
 
 	meshImp->CleanUp();
 	RELEASE(meshImp);

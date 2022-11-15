@@ -8,7 +8,7 @@
 class CompTransform : public Component 
 {
 public:
-	CompTransform(GameObject* owner);
+	CompTransform(GameObject* owner, std::string uuid);
 	~CompTransform() override;
 
 	void Init() override;

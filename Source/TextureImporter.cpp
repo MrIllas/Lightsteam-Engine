@@ -1,5 +1,6 @@
 #include "TextureImporter.h"
 
+#include "LibraryManager.h"
 
 #include "Glew/include/glew.h"
 
@@ -99,12 +100,16 @@ Texture TextureImporter::ImportTexture(std::string filePath)
 		txtData->data = ilGetData();
 		glTexImage2D(GL_TEXTURE_2D, 0, IL_RGBA, w, h, 0, IL_RGBA, GL_UNSIGNED_BYTE, txtData->data);
 
+		//Save to Library
+		SaveTexture(filePath);
+
 		ilDeleteImages(1, &imgID);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		txtData->texture.w = w;
 		txtData->texture.h = h;
 		txtData->texture.path = filePath;
+
 		texturesLoaded.emplace_back(txtData);
 
 		if (checkers.id == 0) CheckerImage();
@@ -131,4 +136,33 @@ int TextureImporter::CheckTexturesLoaded(std::string filePath, Texture& texture)
 	}
 
 	return -1;
+}
+
+void TextureImporter::SaveTexture(std::string filePath)
+{
+	ILuint size = 0;
+	ILubyte* data = nullptr;
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+	size = ilSaveL(IL_DDS, nullptr, 0);
+
+	if (size > 0) {
+		data = new ILubyte[size]; 
+		if (ilSaveL(IL_DDS, data, size) > 0)
+		{
+			std::string path = "Library/Textures/";
+
+			//Gives new path
+			size_t pos = filePath.find_last_of("/");
+			path += filePath.substr(pos + 1);
+
+			//Changes .png to .dds
+			pos = path.find_last_of(".");
+			path = path.erase(pos + 1);
+			path += "dds";
+
+
+			LibraryManager::Save(path, (char*)data, size);
+		}
+		RELEASE_ARRAY(data);
+	}
 }

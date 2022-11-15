@@ -31,7 +31,9 @@ void SegmentGame::Update()
 	//if (mainCamera == nullptr) LookForCamera();
 
 
-	if (ImGui::Begin(name.c_str(), 0, ImGuiWindowFlags_NoScrollbar))
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar;
+	flags |= ImGuiWindowFlags_NoScrollWithMouse;
+	if (ImGui::Begin(name.c_str(), 0, flags))
 	{
 		if (mainCamera != nullptr)
 		{

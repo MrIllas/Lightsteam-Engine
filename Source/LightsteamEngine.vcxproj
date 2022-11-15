@@ -165,6 +165,7 @@
     <ClCompile Include="External\GPUDetect\DeviceId.cpp" />
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="LibraryManager.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="External\ImGui\imgui.cpp" />
@@ -255,6 +256,8 @@
     <ClInclude Include="External\GPUDetect\dxgi1_4.h" />
     <ClInclude Include="External\ImGui\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="LibraryManager.h" />
+    <ClInclude Include="LSUUID.h" />
     <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="External\ImGui\imconfig.h" />
