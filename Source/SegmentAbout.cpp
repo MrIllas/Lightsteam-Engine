@@ -3,7 +3,7 @@
 #include "SDL/include/SDL.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "Glew/include/glew.h"
-#include "Simdjson/simdjson.h"
+#include "Nlohmann/json.hpp"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Assimp/include/version.h"
@@ -35,8 +35,8 @@ SegmentAbout::SegmentAbout(bool enabled) : Segment(enabled)
 	vGlew += (const char*)glewGetString(GLEW_VERSION);
 	vOpenGl = "OpenGl ";
 	vOpenGl += (const char*)glGetString(GL_VERSION);
-	vSimdjson = "Simdjson ";
-	vSimdjson += std::to_string(simdjson::SIMDJSON_VERSION_MAJOR) + "." + std::to_string(simdjson::SIMDJSON_VERSION_MINOR) + "." + std::to_string(simdjson::SIMDJSON_VERSION_REVISION);
+	vNlohmann = "Nlohmann ";
+	vNlohmann += "NOT YET";
 	vAssimp = "Assimp " + std::to_string(aiGetVersionMajor()) + "." + std::to_string(aiGetVersionMinor()) + "." + std::to_string(aiGetVersionRevision());
 	vPhysfs = "PhysFS " + std::to_string(versionPhys.major) + "." + std::to_string(versionPhys.minor) + "." + std::to_string(versionPhys.patch);
 	
@@ -96,7 +96,7 @@ void SegmentAbout::ThirdPartyLibs()
 	ImGui::TextURL(vOpenGl.c_str(), "https://www.opengl.org", 1, 0);
 
 	ImGui::BulletText("");
-	ImGui::TextURL(vSimdjson.c_str(), "https://github.com/Tencent/rapidjson", 1, 0);
+	ImGui::TextURL(vNlohmann.c_str(), "https://github.com/nlohmann/json", 1, 0);
 
 	ImGui::BulletText("");
 	ImGui::TextURL(vMathGeoLib.c_str(), "https://github.com/juj/MathGeoLib", 1, 0);

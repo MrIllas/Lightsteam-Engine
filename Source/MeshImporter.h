@@ -26,7 +26,7 @@ public:
 private:
 	static Meshe GenerateMesh(aiMesh* mesh);
 	static GameObject* GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent = nullptr);
-	static void SaveMesh(Meshe mesh, std::string name);
+	static void SaveMesh(Meshe mesh, std::string filePath);
 	static Meshe LoadMesh(std::string filePath);
 };
 

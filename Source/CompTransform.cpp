@@ -52,3 +52,20 @@ Quat CompTransform::GetRotationAsQuat()
 {
 	return Quat::FromEulerXYZ(math::DegToRad(rotation.x), math::DegToRad(rotation.y), math::DegToRad(rotation.z));
 }
+
+#pragma region Save/Load
+nlohmann::ordered_json CompTransform::SaveUnique(nlohmann::JsonData data)
+{
+	data.SetFloat3("Position", position);
+	data.SetFloat3("Rotation", rotation);
+	data.SetFloat3("Scale", localScale);
+
+	return data.data;
+}
+
+void CompTransform::Load(nlohmann::json data)
+{
+
+}
+
+#pragma endregion Save & Load

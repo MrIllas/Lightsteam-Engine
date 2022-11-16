@@ -16,6 +16,9 @@ public:
 
 	void UpdateGUI() override;
 
+	nlohmann::ordered_json SaveUnique(nlohmann::JsonData data) override;
+	void Load(nlohmann::json data) override;
+
 	float4x4 GetWorldMatrix();
 
 	Quat GetRotationAsQuat();

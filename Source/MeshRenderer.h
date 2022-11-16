@@ -37,10 +37,11 @@ struct Vertex {
 
 struct Meshe
 {
-	std::vector<Vertex>       vertices;
+	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
-	std::vector<Texture>      textures;
+	std::vector<Texture> textures;
 	uint numFaces;
+	std::string path;
 };
 
 struct TextureData;

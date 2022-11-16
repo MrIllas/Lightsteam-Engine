@@ -28,6 +28,7 @@ void LibraryManager::GenerateLibrary()
 	CreateDir("Library/Materials");
 	CreateDir("Library/Animation");
 	CreateDir("Library/Textures");
+	CreateDir("Library/Scenes");
 }
 
 bool LibraryManager::Exists(std::string file)
@@ -203,4 +204,15 @@ uint LibraryManager::Copy(std::string filePath, std::string dir, std::string& ou
 	//if (filePath.empty() || dir.empty()) return toReturn;
 
 	return toReturn;
+}
+
+void LibraryManager::SaveJSON(std::string filePath, std::string jsonDump)
+{
+	PHYSFS_file* handler = nullptr;
+	handler = PHYSFS_openWrite(filePath.c_str());
+
+	uint size = strlen(jsonDump.c_str());
+	PHYSFS_writeBytes(handler, jsonDump.c_str(), size);
+
+	PHYSFS_close(handler);
 }

@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
+#include "ModuleScene.h"
 
 #include "Segment.h"
 #include "SegmentAbout.h"
@@ -192,6 +193,11 @@ void ModuleEditor::MainMenuBar()
 		//FILE
 		if (ImGui::BeginMenu("File"))
 		{
+			if (ImGui::MenuItem("Save Scene"))
+			{
+				App->scene->SaveScene();
+			}
+
 			if (ImGui::MenuItem("Exit", "ALT+F4"))
 			{
 				App->StopEngine();

@@ -100,8 +100,9 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 			else
 			{
 				mesh = GenerateMesh(scene->mMeshes[i]);
-				SaveMesh(mesh, std::string(node->mChildren[i]->mName.C_Str()));
+				SaveMesh(mesh, aux);
 			}
+			mesh.path = aux;
 
 			MeshRenderer* meshRenderer = new MeshRenderer(mesh);
 			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
@@ -166,10 +167,8 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 	return newMesh;
 }
 
-void MeshImporter::SaveMesh(Meshe mesh, std::string name)
+void MeshImporter::SaveMesh(Meshe mesh, std::string filePath)
 {
-	name += ".mh";
-
 	uint ranges[3] =
 	{
 		mesh.indices.size(),
@@ -206,10 +205,7 @@ void MeshImporter::SaveMesh(Meshe mesh, std::string name)
 	memcpy(cursor, &mesh.numFaces, bytes);
 	cursor += bytes;
 
-	std::string path = "Library/Meshes/";
-	path += name;
-
-	LibraryManager::Save(path, fileBuffer, size);
+	LibraryManager::Save(filePath, fileBuffer, size);
 
 	RELEASE_ARRAY(fileBuffer);
 }

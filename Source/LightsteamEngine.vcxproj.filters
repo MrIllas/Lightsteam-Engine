@@ -160,9 +160,6 @@
     <ClCompile Include="SegmentConfiguration.cpp">
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>
-    <ClCompile Include="External\Simdjson\simdjson.cpp">
-      <Filter>External\Simdjson</Filter>
-    </ClCompile>
     <ClCompile Include="External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
@@ -501,9 +498,6 @@
     <ClInclude Include="SegmentConfiguration.h">
       <Filter>Header\Core\Segments</Filter>
     </ClInclude>
-    <ClInclude Include="External\Simdjson\simdjson.h">
-      <Filter>External\Simdjson</Filter>
-    </ClInclude>
     <ClInclude Include="External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
     </ClInclude>
@@ -612,8 +606,143 @@
     <ClInclude Include="LibraryManager.h">
       <Filter>Header\Data</Filter>
     </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\abi_macros.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\adl_serializer.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\call_std\begin.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\input\binary_reader.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\output\binary_writer.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\byte_container_with_subtype.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\cpp_future.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\detected.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\call_std\end.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\exceptions.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\conversions\from_json.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\hash.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\thirdparty\hedley\hedley.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\thirdparty\hedley\hedley_undef.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\identity_tag.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\input\input_adapters.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\iterators\internal_iterator.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\is_sax.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\iterators\iter_impl.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\iterators\iteration_proxy.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\iterators\iterator_traits.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\json.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\json_fwd.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\json_pointer.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\json_ref.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\iterators\json_reverse_iterator.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\input\json_sax.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\input\lexer.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\macro_scope.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\macro_unscope.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\ordered_map.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\output\output_adapters.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\input\parser.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\input\position_t.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\iterators\primitive_iterator.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\output\serializer.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\std_fs.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\string_concat.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\string_escape.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\conversions\to_chars.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\conversions\to_json.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\type_traits.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\value_t.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Nlohmann\detail\meta\void_t.hpp">
+      <Filter>External\Nlohmann</Filter>
+    </ClInclude>
     <ClInclude Include="LSUUID.h">
-      <Filter>Header\Globals</Filter>
+      <Filter>Header\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonUtils.h">
+      <Filter>Header\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -662,9 +791,6 @@
     <Filter Include="Source\Core\Segments">
       <UniqueIdentifier>{f0d3c58e-3caa-44d0-b3a3-20cd718c03c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External\Simdjson">
-      <UniqueIdentifier>{5cbbfbc6-9093-4f8b-8345-8077482145a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External\PugiXml">
       <UniqueIdentifier>{f8881b98-e933-410c-a28a-aa1bb21e9281}</UniqueIdentifier>
     </Filter>
@@ -697,6 +823,9 @@
     </Filter>
     <Filter Include="External\GPUDetect">
       <UniqueIdentifier>{4d9f5588-83bb-4f86-9eec-c8b311941b7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\Nlohmann">
+      <UniqueIdentifier>{e4f3c438-cbe5-4ea7-8b3c-d50c57e817f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

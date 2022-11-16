@@ -42,12 +42,17 @@ public:
 	void SaveSettingsData(pugi::xml_node& save) override;
 	void LoadSettingsData(pugi::xml_node& load) override;
 
-
-private:
-	SceneProperties* sProps = nullptr;
+	void SaveScene();
 
 private:
 	void InitGameObjects(GameObject* go);
 	void UpdateGameObjects(GameObject* go);
+
+	//void SaveGameObjects(GameObject* go, nlohmann::JsonData data);
+
+private:
+	SceneProperties* sProps = nullptr;
+
+
 };
 

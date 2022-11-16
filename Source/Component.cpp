@@ -42,3 +42,28 @@ void Component::Disable()
 	active = true;
 }
 
+#pragma region Save/Load
+
+
+nlohmann::ordered_json Component::Save()
+{
+	nlohmann::JsonData data;
+
+	data.SetString("Type", CompTypeToString(type));
+	data.SetString("UUID", uuid);
+	data.SetBool("Active", active);
+
+	return SaveUnique(data);
+}
+
+nlohmann::ordered_json Component::SaveUnique(nlohmann::JsonData data)
+{
+	return data.data;
+}
+
+void Component::Load(nlohmann::json data)
+{
+
+}
+
+#pragma endregion Save & Load

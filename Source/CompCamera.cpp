@@ -57,3 +57,18 @@ void CompCamera::UpdateGUI()
 {
 	if (isMainCamera) ImGui::Text("Im the main camera!");
 }
+
+#pragma region Save/Load
+nlohmann::ordered_json CompCamera::SaveUnique(nlohmann::JsonData data)
+{
+	data.SetBool("Main_camera", isMainCamera);
+
+	return data.data;
+}
+
+void CompCamera::Load(nlohmann::json data)
+{
+
+}
+
+#pragma endregion Save & Load
