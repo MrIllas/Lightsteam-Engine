@@ -10,6 +10,7 @@ class Application;
 
 class Segment;
 
+
 enum COLORMODE
 {
 	LightMode = 0,
@@ -57,6 +58,7 @@ private:
 	void UpdateSegments();
 
 	void MainMenuBar();
+	void FileDialogMenu();
 
 	void SaveSettingsData(pugi::xml_node& save) override;
 

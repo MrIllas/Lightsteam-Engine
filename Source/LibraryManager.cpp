@@ -208,11 +208,42 @@ uint LibraryManager::Copy(std::string filePath, std::string dir, std::string& ou
 
 void LibraryManager::SaveJSON(std::string filePath, std::string jsonDump)
 {
-	PHYSFS_file* handler = nullptr;
-	handler = PHYSFS_openWrite(filePath.c_str());
+	PHYSFS_file* handler = PHYSFS_openWrite(filePath.c_str());
 
 	uint size = strlen(jsonDump.c_str());
-	PHYSFS_writeBytes(handler, jsonDump.c_str(), size);
+	//PHYSFS_W
+	PHYSFS_write(handler, jsonDump.c_str(), size, 1);
 
-	PHYSFS_close(handler);
+	if (PHYSFS_close(handler) == 0)
+	{
+		LOG(LOG_TYPE::ERRO, "File System error while closing from file '%s': %s", filePath.c_str(), PHYSFS_getLastError());
+	}
+}
+
+std::string LibraryManager::LoadJSON(std::string filePath)
+{
+	std::string toReturn = "";
+	char* buffer = nullptr;
+	PHYSFS_file* fsFile = PHYSFS_openRead(filePath.c_str());
+
+	if (fsFile == nullptr)
+	{
+		LOG(LOG_TYPE::ERRO, "File System error while opening file %s: %s\n", filePath.c_str(), PHYSFS_getLastError());
+		return toReturn;
+	}
+	
+	PHYSFS_sint64 size = PHYSFS_fileLength(fsFile);
+	buffer = new char[size + 1];
+
+	uint what = PHYSFS_readBytes(fsFile, buffer, size);
+	(buffer)[size] = '\0';
+	toReturn = buffer;
+
+	LOG(LOG_TYPE::ATTENTION, "Bytes-> %i this-> %s", what, toReturn.c_str());
+	if (PHYSFS_close(fsFile) == 0)
+	{
+		LOG(LOG_TYPE::ERRO, "File System error while closing from file '%s': %s", filePath.c_str(), PHYSFS_getLastError());
+	}
+
+	return toReturn;
 }

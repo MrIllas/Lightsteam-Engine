@@ -100,6 +100,17 @@ void GameObject::UpdateCompMenuGUI()
 	{
 		Save();
 	}
+	if (ImGui::Button("Load GO"))
+	{
+		nlohmann::JsonData data;
+		char* buffer = nullptr;
+
+		uint size = LibraryManager::Load("Library/JsonTest.go", &buffer);
+		data.data = nlohmann::ordered_json::parse(buffer, buffer + size);
+		RELEASE(buffer);
+
+		Load(data);
+	}
 }
 
 Component* GameObject::CreateComponent(CO_TYPE type)
@@ -247,7 +258,7 @@ nlohmann::ordered_json GameObject::Save()
 
 	data.SetString("Name", this->name);
 	data.SetString("UUID", this->uuid);
-	if(this->parent != nullptr) data.SetString("Parent UUID", this->parent->uuid);
+	if(this->parent != nullptr) data.SetString("Parent_UUID", this->parent->uuid);
 
 	std::vector<nlohmann::ordered_json> aux;
 	for (auto const& comp : components)
@@ -260,9 +271,33 @@ nlohmann::ordered_json GameObject::Save()
 	return data.data;
 }
 
-void GameObject::Load(nlohmann::json data)
+void GameObject::Load(nlohmann::JsonData data)
 {
+	this->name = data.GetString("Name");
+	this->uuid = data.GetString("UUID");
+	//if (this->parent != nullptr) this->parent->uuid = data.GetString("Parent_UUID");
 
+	if (data.data.contains("Components"))
+	{
+		std::vector<nlohmann::ordered_json> aux;
+
+		aux = data.data["Components"].get<nlohmann::ordered_json>();
+
+		if (aux.size() > 0)
+		{
+			for (int i = 0; i < aux.size(); ++i)
+			{
+				nlohmann::JsonData compData;
+				compData.data = aux.at(i);
+
+				if (compData.data.contains("Type"))
+				{
+					Component* theComp = CreateComponent((CO_TYPE)compData.GetInt("Type"));
+					theComp->Load(compData);
+				}
+			}
+		}
+	}
 }
 
 #pragma endregion Save & Load

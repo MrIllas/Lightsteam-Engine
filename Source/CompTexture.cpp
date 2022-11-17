@@ -86,7 +86,6 @@ Texture CompTexture::GetTexture()
 #pragma region Save/Load
 nlohmann::ordered_json CompTexture::SaveUnique(nlohmann::JsonData data)
 {
-
 	data.SetString("Path", texture.path);
 	data.SetBool("Checkers", isCheckers);
 
@@ -94,9 +93,12 @@ nlohmann::ordered_json CompTexture::SaveUnique(nlohmann::JsonData data)
 	return data.data;
 }
 
-void CompTexture::Load(nlohmann::json data)
+void CompTexture::LoadUnique(nlohmann::JsonData data)
 {
+	std::string texToLoad(data.GetString("Path"));
+	texture = TextureImporter::ImportTexture(texToLoad);
 
+	isCheckers = data.GetBool("Checkers");
 }
 
 #pragma endregion Save & Load

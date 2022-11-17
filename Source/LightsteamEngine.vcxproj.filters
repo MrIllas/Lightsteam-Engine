@@ -238,6 +238,9 @@
     <ClCompile Include="LibraryManager.cpp">
       <Filter>Source\Data</Filter>
     </ClCompile>
+    <ClCompile Include="External\ImGuiFileDialog\ImGuiFileDialog.cpp">
+      <Filter>External\ImGuiFileDialog</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -744,6 +747,21 @@
     <ClInclude Include="JsonUtils.h">
       <Filter>Header\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="External\ImGuiFileDialog\stb\stb_image_resize.h">
+      <Filter>External\ImGuiFileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuiFileDialog\dirent\dirent.h">
+      <Filter>External\ImGuiFileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuiFileDialog\ImGuiFileDialog.h">
+      <Filter>External\ImGuiFileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuiFileDialog\ImGuiFileDialogConfig.h">
+      <Filter>External\ImGuiFileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuiFileDialog\stb\stb_image.h">
+      <Filter>External\ImGuiFileDialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -826,6 +844,9 @@
     </Filter>
     <Filter Include="External\Nlohmann">
       <UniqueIdentifier>{e4f3c438-cbe5-4ea7-8b3c-d50c57e817f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\ImGuiFileDialog">
+      <UniqueIdentifier>{2561d034-244e-4015-bad0-dc70598d01ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

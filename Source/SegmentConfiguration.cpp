@@ -252,7 +252,7 @@ void SegmentConfiguration::GameHeader()
 	}
 	else
 	{
-		std::string aux = cProps->gameCameras.at(cProps->mainCameraId)->owner->name;
+		std::string aux = cProps->gameCameras.at(cProps->mainCameraId)->owner->GetUUName();
 		aux += "##";
 		aux += cProps->mainCameraId;
 

@@ -27,7 +27,7 @@ void SegmentInspector::Update()
 		//Each Component manages its own ImGui
 		GameObject* go = IterateGameObject(sceneInstance->root);
 
-		if (go != nullptr && go != sceneInstance->root)
+		if (go != nullptr)
 		{
 			float segWidth = ImGui::GetWindowWidth(); //Segment Inspector width.
 			
@@ -39,33 +39,35 @@ void SegmentInspector::Update()
 			ImGui::SameLine();
 			ImGui::Text(go->uuid.c_str());
 
-
-			for (auto const& comp : go->components)
+			if (go != sceneInstance->root)
 			{
-				std::string aux = CompTypeToString(comp.second->type);
-
-				if (ImGui::CollapsingHeader(aux.c_str(), ImGuiTreeNodeFlags_Leaf))
+				for (auto const& comp : go->components)
 				{
-					//Active checkbox
-					aux.insert(0, "Active##");
-					ImGui::Checkbox(aux.c_str(), &comp.second->active);
+					std::string aux = CompTypeToString(comp.second->type);
 
-					//Delete component button
-					aux.erase(0, 8);
-					aux.insert(0, "DELETE##");
-					ImGui::SameLine(segWidth - 60);
-					if (ImGui::Button(aux.c_str(), ImVec2(0, 0)))
+					if (ImGui::CollapsingHeader(aux.c_str(), ImGuiTreeNodeFlags_Leaf))
 					{
-						go->DeleteComponent(comp.second->type);
-						break;
+						//Active checkbox
+						aux.insert(0, "Active##");
+						ImGui::Checkbox(aux.c_str(), &comp.second->active);
+
+						//Delete component button
+						aux.erase(0, 8);
+						aux.insert(0, "DELETE##");
+						ImGui::SameLine(segWidth - 60);
+						if (ImGui::Button(aux.c_str(), ImVec2(0, 0)))
+						{
+							go->DeleteComponent(comp.second->type);
+							break;
+						}
+						ImGui::Separator();
+
+
+						comp.second->UpdateGUI();
 					}
-					ImGui::Separator();
-
-
-					comp.second->UpdateGUI();
 				}
-			}
-			go->UpdateCompMenuGUI();
+				go->UpdateCompMenuGUI();
+			}		
 		}
 		
 	}

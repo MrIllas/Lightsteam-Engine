@@ -40,10 +40,11 @@ public:
 	void Disable();
 
 	nlohmann::ordered_json Save();
-	virtual void Load(nlohmann::json data);
+	void Load(nlohmann::JsonData data);
 
 protected:
 	virtual nlohmann::ordered_json SaveUnique(nlohmann::JsonData data);
+	virtual void LoadUnique(nlohmann::JsonData data);
 
 public:
 	std::string uuid;

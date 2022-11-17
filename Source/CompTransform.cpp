@@ -63,9 +63,11 @@ nlohmann::ordered_json CompTransform::SaveUnique(nlohmann::JsonData data)
 	return data.data;
 }
 
-void CompTransform::Load(nlohmann::json data)
+void CompTransform::LoadUnique(nlohmann::JsonData data)
 {
-
+	this->position = data.GetFloat3("Position");
+	this->rotation = data.GetFloat3("Rotation");
+	this->localScale = data.GetFloat3("Scale");
 }
 
 #pragma endregion Save & Load

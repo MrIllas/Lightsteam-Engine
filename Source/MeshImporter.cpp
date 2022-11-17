@@ -101,8 +101,9 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 			{
 				mesh = GenerateMesh(scene->mMeshes[i]);
 				SaveMesh(mesh, aux);
+				mesh.path = aux;
 			}
-			mesh.path = aux;
+			
 
 			MeshRenderer* meshRenderer = new MeshRenderer(mesh);
 			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
@@ -215,6 +216,7 @@ Meshe MeshImporter::LoadMesh(std::string filePath)
 	Meshe mesh;
 	char* fileBuffer = nullptr;
 	LibraryManager::Load(filePath, &fileBuffer);
+	mesh.path = filePath;
 
 	char* cursor = fileBuffer;
 

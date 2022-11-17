@@ -192,10 +192,10 @@ void ModuleCamera3D::SceneCameraInput()
 		cProps->editorCamera.LookAt(dir);
 	}
 
-	cProps->editorCamera.Position = newPos;
 	cProps->editorCamera.Reference += newPos;
 	cProps->editorCamera.frustum.pos += newPos;
 
+	
 	//Set GO float4x4 as scene camera
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && selected != nullptr)
 	{

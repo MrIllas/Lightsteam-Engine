@@ -63,7 +63,7 @@ public:
 	std::string GetUUName();
 
 	nlohmann::ordered_json Save();
-	void Load(nlohmann::json data);
+	void Load(nlohmann::JsonData data);
 
 public:
 	std::string name;

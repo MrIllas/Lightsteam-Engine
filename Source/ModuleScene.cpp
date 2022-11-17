@@ -2,12 +2,15 @@
 
 #include "LibraryManager.h"
 
+#include "ModuleCamera3D.h"
+
 #include "GameObject.h"
 #include "MeshImporter.h"
 #include "TextureImporter.h"
 #include "CompTexture.h"
 #include "CompMeshRenderer.h"
 
+#include <fstream>
 
 #pragma region SceneProperties
 SceneProperties::SceneProperties()
@@ -68,6 +71,7 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Init()
 {
 	sProps = sProps->Instance();
+	cProps = cProps->Instance();
 
 	return true;
 }
@@ -92,6 +96,9 @@ bool ModuleScene::Start()
 
 	//MeshImporter::LoadMesh("Library/Meshes/Fence.mh");
 
+	if (sProps->root == nullptr) return UPDATE_CONTINUE;
+	InitGameObjects(sProps->root);
+
 	return true;
 }
 
@@ -105,13 +112,14 @@ bool ModuleScene::CleanUp()
 
 UpdateStatus ModuleScene::PreUpdate()
 {
-	InitGameObjects(sProps->root);
+	
 
 	return UPDATE_CONTINUE;
 }
 
 UpdateStatus ModuleScene::Update()
 {
+	if (sProps->root == nullptr) return UPDATE_CONTINUE;
 
 	//Update Game Objects
 	UpdateGameObjects(sProps->root);
@@ -123,6 +131,13 @@ UpdateStatus ModuleScene::Update()
 UpdateStatus ModuleScene::PostUpdate()
 {
 	return UPDATE_CONTINUE;
+}
+
+void ModuleScene::NewScene()
+{
+	RELEASE(sProps->root);
+
+	sProps->root = new GameObject("Root", false);
 }
 
 void ModuleScene::InitGameObjects(GameObject* go)
@@ -165,15 +180,78 @@ void SaveGameObjects(GameObject* go, std::vector<nlohmann::ordered_json>& goPool
 	}
 }
 
+void LoadGameObjects()
+{
+
+}
+
 void ModuleScene::SaveScene()
 {
 	nlohmann::JsonData data;
+
+	//GO
 	std::vector<nlohmann::ordered_json> goPool;
 	SaveGameObjects(sProps->root, goPool);
 
 	data.data.emplace("GameObjects", goPool);
 
+	//Save to JSON
 	LibraryManager::SaveJSON("Library/Scenes/Test.sc", data.data.dump(4));
+}
+
+void ModuleScene::LoadScene(std::string filePath)
+{
+	NewScene();//Cleans scene
+
+	nlohmann::JsonData data;
+
+	try
+	{
+		char* buffer= nullptr;
+
+		uint size = LibraryManager::Load(filePath, &buffer);
+		data.data = nlohmann::ordered_json::parse(buffer, buffer + size);
+		RELEASE(buffer);
+	}
+	catch (nlohmann::json::parse_error & ex)
+	{
+		LOG(LOG_TYPE::ERRO, "Error: Scene parse at byte %i: %s", ex.byte, ex.what());
+	}
+
+	std::vector<nlohmann::ordered_json> aux;
+	aux = data.GetJsonVector("GameObjects");
+
+	if (aux.size() > 0)
+	{
+		std::map<std::string, GameObject*> sceneMap;
+
+		//Load scene root
+		nlohmann::JsonData rootData;
+		rootData.data = aux.at(0);
+		sProps->root->Load(rootData);
+
+		//Load all other GO
+		for (int i = 1; i < aux.size(); ++i)
+		{
+			nlohmann::JsonData goData;
+			goData.data = aux.at(i);
+
+			std::string parentUUID(goData.GetString("Parent_UUID"));
+
+			GameObject* go = new GameObject("", false);
+			go->Load(goData);
+
+			if (sceneMap.count(parentUUID) == 1)
+			{
+				sceneMap[parentUUID]->AddChildren(go);
+			}
+			else sProps->root->AddChildren(go);
+			
+
+			sceneMap.insert({ go->uuid, go });
+		}
+	}
+
 }
 
 void ModuleScene::LoadSettingsData(pugi::xml_node& load)

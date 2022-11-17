@@ -16,7 +16,7 @@ namespace LibraryManager
 	bool CreateDir(std::string dir);
 	std::string GetFilename(std::string file, bool extension = false);
 
-	bool AddPath(std::string path);
+	bool AddPath(std::string path); 
 	std::string NormalizePath(std::string path);
 	std::string UnNormalizePath(std::string path);
 
@@ -26,4 +26,5 @@ namespace LibraryManager
 	unsigned int Copy(std::string filePath, std::string dir, std::string& output);
 
 	void SaveJSON(std::string filePath, std::string jsonDump);
+	std::string LoadJSON(std::string filePath);
 };

@@ -28,10 +28,12 @@ void SegmentHierarchy::Update()
 {
 	if (ImGui::Begin(name.c_str()))
 	{
-		
-		DisplayGameObject(sceneInstance->root);
+		if (sceneInstance->root != nullptr)
+		{
+			DisplayGameObject(sceneInstance->root);
 
-		RightClickMenuContextWindow();
+			RightClickMenuContextWindow();
+		}
 		
 		
 	}

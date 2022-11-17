@@ -163,6 +163,7 @@
     <ClCompile Include="CompTexture.cpp" />
     <ClCompile Include="CompTransform.cpp" />
     <ClCompile Include="External\GPUDetect\DeviceId.cpp" />
+    <ClCompile Include="External\ImGuiFileDialog\ImGuiFileDialog.cpp" />
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LibraryManager.cpp" />
@@ -253,6 +254,11 @@
     <ClInclude Include="External\DevIL\include\il_wrap.h" />
     <ClInclude Include="External\GPUDetect\DeviceId.h" />
     <ClInclude Include="External\GPUDetect\dxgi1_4.h" />
+    <ClInclude Include="External\ImGuiFileDialog\dirent\dirent.h" />
+    <ClInclude Include="External\ImGuiFileDialog\ImGuiFileDialog.h" />
+    <ClInclude Include="External\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="External\ImGuiFileDialog\stb\stb_image.h" />
+    <ClInclude Include="External\ImGuiFileDialog\stb\stb_image_resize.h" />
     <ClInclude Include="External\ImGui\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="External\Nlohmann\adl_serializer.hpp" />
     <ClInclude Include="External\Nlohmann\byte_container_with_subtype.hpp" />
