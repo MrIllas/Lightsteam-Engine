@@ -22,8 +22,13 @@ public:
 
 	GameObject* GetSelectedGO(GameObject* go = nullptr);
 
+	int GetGuizmoOperation() { return guizmoOperation;  }
+	void SetGuizmoOperation(int value) { guizmoOperation = value; }
+
 private:
 	static SceneProperties* instance;
+
+	int guizmoOperation = 7;//Translate
 };
 
 class ModuleScene : public Module
@@ -54,6 +59,8 @@ private:
 	void UpdateGameObjects(GameObject* go);
 
 	//void SaveGameObjects(GameObject* go, nlohmann::JsonData data);
+
+	void SceneControls();
 
 private:
 	SceneProperties* sProps = nullptr;

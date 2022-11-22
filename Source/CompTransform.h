@@ -20,7 +20,7 @@ public:
 	void LoadUnique(nlohmann::JsonData data) override;
 
 	float4x4 GetWorldMatrix();
-
+	void SetWorldMatrix(float4x4 matrix);
 	Quat GetRotationAsQuat();
 
 public:

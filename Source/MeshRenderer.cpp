@@ -198,6 +198,11 @@ void MeshRenderer::CreateNormals(float magnitude)
 	glBindVertexArray(0);
 }
 
+void MeshRenderer::CreateBoundingBox()
+{
+
+}
+
 void MeshRenderer::CleanNormals()
 {
 	vNormals.clear();

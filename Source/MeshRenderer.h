@@ -8,6 +8,7 @@
 #include "MathGeoLib/include/Math/float2.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/float4x4.h"
+#include "MathGeoLib/include/Geometry/AABB.h"
 
 #include <vector>
 
@@ -41,6 +42,7 @@ struct Meshe
 	std::vector<unsigned int> indices;
 	std::vector<Texture> textures;
 	uint numFaces;
+	AABB bBox;
 	std::string path;
 };
 
@@ -58,6 +60,7 @@ public:
 	void DrawNormals(Shader* shader, Camera* camera, float4x4 model, bool faceNormals = false);
 
 	void CreateNormals(float magnitude = 0.25f);
+	void CreateBoundingBox();
 	void CleanNormals();
 
 	void SetShader(Shader* shader);
@@ -77,13 +80,20 @@ private:
 	uint VBO;
 	uint EBO;
 
+	//Vertex normals
 	uint VNVAO;
 	uint VNVBO;
 	std::vector<float3> vNormals;
 
+	//Face normals
 	uint FNVAO;
 	uint FNVBO;
 	std::vector<float3> fNormals;
+
+	//Bounding box
+	uint BBVAO;
+	uint BBVBO;
+	std::vector<float3> bBox;
 
 	Shader* shader = nullptr;
 	Shader* debugShader = nullptr;

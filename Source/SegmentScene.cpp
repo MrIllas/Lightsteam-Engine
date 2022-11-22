@@ -92,20 +92,23 @@ void SegmentScene::Guizmo(Camera& cam, GameObject* go)
 	//ImGuizmo::Enable(true);
 
 
-	//ImGuizmo::SetDrawlist();
+	ImGuizmo::SetDrawlist();
 
 	float x = ImGui::GetWindowPos().x;
-	float y = (ImGui::GetWindowHeight() + 20 - segmentSize.y) * 0.5f;
+	float y = ImGui::GetWindowPos().y;
 	float w = segmentSize.x;
 	float h = segmentSize.y;
 	//Guizmo
 
 	float4x4 aux = transform->GetWorldMatrix();
-	float4x4 i = float4x4::identity;
 
 
 	ImGuizmo::SetRect(x, y, w, h);
-	ImGuizmo::Manipulate(cam.GetViewMatrix(), cam.GetProjectionMatrix(), ImGuizmo::TRANSLATE, ImGuizmo::LOCAL, &aux.v[0][0], &i.v[0][0], NULL);
+	if (ImGuizmo::Manipulate(cam.GetViewMatrix(), cam.GetProjectionMatrix(), (ImGuizmo::OPERATION) sceneInstance->GetGuizmoOperation(), ImGuizmo::WORLD, &aux.v[0][0]))
+	{
+		aux.Transpose();
+		transform->SetWorldMatrix(aux);
+	}
 	
 
 	if (ImGuizmo::IsOver())

@@ -3,7 +3,6 @@
 
 #include "MeshRenderer.h"
 
-
 struct CameraProperties;
 
 class Shader;
@@ -26,7 +25,7 @@ public:
 
 	MeshRenderer* GetMesh();
 	void SetMesh(MeshRenderer* mesh);
-	
+
 private:
 	MeshRenderer* mesh = nullptr;
 

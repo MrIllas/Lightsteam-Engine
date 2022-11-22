@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MathGeoLib/include/Math/float2.h"
+#include "MathGeoLib/include/Geometry/AABB.h"
 
 #include <queue>
 

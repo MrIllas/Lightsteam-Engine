@@ -53,6 +53,11 @@ void CompCamera::Update()
 	
 }
 
+void CompCamera::Render()
+{
+	//camera.renderer->Render(camera.frustu);
+}
+
 void CompCamera::UpdateGUI()
 {
 	if (isMainCamera) ImGui::Text("Im the main camera!");

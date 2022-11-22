@@ -19,6 +19,8 @@ public:
 	nlohmann::ordered_json SaveUnique(nlohmann::JsonData data) override;
 	void LoadUnique(nlohmann::JsonData data) override;
 
+	void Render();
+
 public:
 	Camera camera;
 

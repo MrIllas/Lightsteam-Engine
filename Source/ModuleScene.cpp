@@ -1,5 +1,8 @@
 #include "ModuleScene.h"
 
+#include "Application.h"
+#include "ModuleInput.h"
+
 #include "LibraryManager.h"
 
 #include "ModuleCamera3D.h"
@@ -11,6 +14,8 @@
 #include "CompMeshRenderer.h"
 
 #include <fstream>
+#include "ImGui/imgui_internal.h"
+#include "ImGuizmo/ImGuizmo.h"
 
 #pragma region SceneProperties
 SceneProperties::SceneProperties()
@@ -112,7 +117,7 @@ bool ModuleScene::CleanUp()
 
 UpdateStatus ModuleScene::PreUpdate()
 {
-	
+	SceneControls();
 
 	return UPDATE_CONTINUE;
 }
@@ -163,6 +168,26 @@ void ModuleScene::UpdateGameObjects(GameObject* go)
 		{
 			UpdateGameObjects(go->children[i]);
 		}
+	}
+}
+
+void ModuleScene::SceneControls()
+{
+	if (!cProps->isMouseOnScene) return;
+	//Translate
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && App->input->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT)
+	{
+		sProps->SetGuizmoOperation(ImGuizmo::OPERATION::TRANSLATE);
+	}
+	//Rotate
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && App->input->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT)
+	{
+		sProps->SetGuizmoOperation(ImGuizmo::OPERATION::ROTATE);
+	}
+	//Scale
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && App->input->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT)
+	{
+		sProps->SetGuizmoOperation(ImGuizmo::OPERATION::SCALE);
 	}
 }
 

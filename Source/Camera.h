@@ -2,6 +2,7 @@
 
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/Math/float2.h"
+#include "MathGeoLib/include/Geometry/AABB.h"
 
 class Renderer;
 
@@ -22,7 +23,12 @@ public:
 
 	void SetRenderer(float2 size);
 
+	bool ContainsBBox(AABB& bBox);
+
 public:
+	float4x4 ProjectionMatrix;
+	float4x4 ViewMatrix;
+
 	float3 X, Y, Z;
 	float3 Position;
 	float3 Reference;

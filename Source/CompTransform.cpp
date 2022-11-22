@@ -48,6 +48,17 @@ float4x4 CompTransform::GetWorldMatrix()
 	return toReturn;
 }
 
+void CompTransform::SetWorldMatrix(float4x4 matrix)
+{
+	math::Quat q;
+	matrix.Decompose(position, q, localScale);
+
+	rotation = q.ToEulerXYX();
+	rotation.x = math::RadToDeg(rotation.x);
+	rotation.y = math::RadToDeg(rotation.y);
+	rotation.z = math::RadToDeg(rotation.z);
+}
+
 
 Quat CompTransform::GetRotationAsQuat()
 {
