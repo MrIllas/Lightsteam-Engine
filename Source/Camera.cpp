@@ -8,7 +8,7 @@
 
 Camera::Camera()
 {
-	X = float3(1.0f, 0.0f, 0.0f);
+	X = float3(-1.0f, 0.0f, 0.0f);
 	Y = float3(0.0f, 1.0f, 0.0f);
 	Z = float3(0.0f, 0.0f, 1.0f);
 
@@ -25,8 +25,6 @@ Camera::Camera()
 	frustum.up = Y;
 
 	frustum.pos = Position;
-
-	//if(renderer == nullptr) renderer = new Renderer({ 720, 360 });
 }
 
 Camera::~Camera()

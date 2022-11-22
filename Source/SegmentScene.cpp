@@ -1,10 +1,17 @@
 #include "SegmentScene.h"
 
 #include "ModuleCamera3D.h"
+#include "ModuleScene.h"
 #include "FrameBuffer.h"
+
+#include "Camera.h"
+#include "GameObject.h"
+#include "CompTransform.h"
 
 #include "MathGeoLib/include/Math/float2.h"
 #include "ImGui/imgui_internal.h"
+
+#include "ImGuizmo/ImGuizmo.h"
 
 SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 {
@@ -12,6 +19,7 @@ SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 	segmentSize = { 0, 0 };
 
 	camInstance = CameraProperties::Instance();
+	sceneInstance = SceneProperties::Instance();
 }
 
 SegmentScene::~SegmentScene()
@@ -60,6 +68,7 @@ void SegmentScene::Update()
 		}
 
 		RenderSpace();
+		Guizmo(camInstance->editorCamera, sceneInstance->GetSelectedGO());
 	}
 	ImGui::End();
 }
@@ -68,8 +77,40 @@ void SegmentScene::RenderSpace()
 {
 	float aux = (ImGui::GetWindowHeight()+20 - segmentSize.y) * 0.5f;
 
-
+	//Render Framebuffer
 	ImGui::SetCursorPosY(aux);
 	ImTextureID texID = (ImTextureID)camInstance->editorCamera.renderer->GetFrameBufffer()->GetTextureBuffer();
 	ImGui::Image(texID, segmentSize, ImVec2(0, 1), ImVec2(1, 0));
+}
+
+void SegmentScene::Guizmo(Camera& cam, GameObject* go)
+{
+	if (go == nullptr) return;
+	CompTransform* transform = go->GetComponent<CompTransform>(TRANSFORM);
+	if (transform == nullptr) return;
+
+	//ImGuizmo::Enable(true);
+
+
+	//ImGuizmo::SetDrawlist();
+
+	float x = ImGui::GetWindowPos().x;
+	float y = (ImGui::GetWindowHeight() + 20 - segmentSize.y) * 0.5f;
+	float w = segmentSize.x;
+	float h = segmentSize.y;
+	//Guizmo
+
+	float4x4 aux = transform->GetWorldMatrix();
+	float4x4 i = float4x4::identity;
+
+
+	ImGuizmo::SetRect(x, y, w, h);
+	ImGuizmo::Manipulate(cam.GetViewMatrix(), cam.GetProjectionMatrix(), ImGuizmo::TRANSLATE, ImGuizmo::LOCAL, &aux.v[0][0], &i.v[0][0], NULL);
+	
+
+	if (ImGuizmo::IsOver())
+	{
+		
+	}
+	
 }

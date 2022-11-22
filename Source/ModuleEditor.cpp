@@ -20,6 +20,7 @@
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
+#include "ImGuizmo/ImGuizmo.h"
 
 
 
@@ -89,6 +90,8 @@ bool ModuleEditor::Init()
 		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 	}
 
+
+
 	return true;
 }
 
@@ -139,8 +142,8 @@ UpdateStatus ModuleEditor::Update()
 	DrawEditorGui();
 
 	return UPDATE_CONTINUE;
-}
 
+}
 UpdateStatus ModuleEditor::PostUpdate()
 {
 	//DrawEditorGui();
@@ -169,6 +172,7 @@ void ModuleEditor::BeginRender()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();// App->window->GetSDLWindow());
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 }

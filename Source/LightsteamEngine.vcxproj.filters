@@ -203,7 +203,7 @@
       <Filter>Source\Core\Modules</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source\GameObject</Filter>
+      <Filter>Source\Core\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="SegmentHierarchy.cpp">
       <Filter>Source\Core\Segments</Filter>
@@ -218,7 +218,7 @@
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source\GameObject</Filter>
+      <Filter>Source\Core\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="CompCamera.cpp">
       <Filter>Source\Components</Filter>
@@ -240,6 +240,21 @@
     </ClCompile>
     <ClCompile Include="External\ImGuiFileDialog\ImGuiFileDialog.cpp">
       <Filter>External\ImGuiFileDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGuizmo\GraphEditor.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGuizmo\ImCurveEdit.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGuizmo\ImGradient.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGuizmo\ImGuizmo.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGuizmo\ImSequencer.cpp">
+      <Filter>External\ImGuizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -762,6 +777,24 @@
     <ClInclude Include="External\ImGuiFileDialog\stb\stb_image.h">
       <Filter>External\ImGuiFileDialog</Filter>
     </ClInclude>
+    <ClInclude Include="External\ImGuizmo\GraphEditor.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuizmo\ImCurveEdit.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuizmo\ImGradient.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuizmo\ImGuizmo.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuizmo\ImSequencer.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuizmo\ImZoomSlider.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -830,9 +863,6 @@
     <Filter Include="Header\GameObjects">
       <UniqueIdentifier>{dce66f4e-3fb1-47b2-a91b-2187e72f21d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\GameObject">
-      <UniqueIdentifier>{e510e1f8-6a62-44cc-92f6-d5e6ef696735}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Data">
       <UniqueIdentifier>{d52aab9c-2a65-421e-8df4-738ab49e465a}</UniqueIdentifier>
     </Filter>
@@ -847,6 +877,12 @@
     </Filter>
     <Filter Include="External\ImGuiFileDialog">
       <UniqueIdentifier>{2561d034-244e-4015-bad0-dc70598d01ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\ImGuizmo">
+      <UniqueIdentifier>{bc77e2e5-9cc4-4631-9348-9827441c9f9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\GameObject">
+      <UniqueIdentifier>{e510e1f8-6a62-44cc-92f6-d5e6ef696735}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

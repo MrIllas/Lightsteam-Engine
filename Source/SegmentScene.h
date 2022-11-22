@@ -3,6 +3,10 @@
 #include "Renderer.h"
 
 struct CameraProperties;
+struct SceneProperties;
+
+class Camera;
+class GameObject;
 
 class SegmentScene : public Segment
 {
@@ -16,10 +20,12 @@ public:
 
 private:
 	void RenderSpace();
+	void Guizmo(Camera& cam, GameObject* go);
 
 private:
 	ImVec2 segmentSize;
 
 	CameraProperties* camInstance = nullptr;
+	SceneProperties* sceneInstance = nullptr;
 };
 
