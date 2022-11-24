@@ -17,6 +17,14 @@ typedef unsigned int uint;
 class Shader;
 class Camera;
 
+enum Debug_Normals
+{
+	OFF = 0,
+	VERTEX,
+	FACE,
+	BOTH
+};
+
 struct Vertex {
 	Vertex()
 	{
@@ -52,12 +60,17 @@ class MeshRenderer
 {
 public:
 	MeshRenderer();
-	MeshRenderer(Meshe meshData);
+	MeshRenderer(Meshe meshData, bool debug = true);
 	~MeshRenderer();
 
-	void Draw(Shader* shader, Camera* camera, Texture text, float4x4 model = float4x4::identity);
+	void LiteDraw(Shader* shader, Camera* camera, Texture text, float4x4 model = float4x4::identity);
+	void FullDraw(Shader* shader, Shader* debugShader, Camera* camera, Texture text, float4x4 model = float4x4::identity, Debug_Normals normals = Debug_Normals::OFF);
 
-	void DrawNormals(Shader* shader, Camera* camera, float4x4 model, bool faceNormals = false);
+	void DrawMesh(Shader* shader, Camera* camera, Texture text, float4x4 model = float4x4::identity);
+
+	void DrawNormals(Shader* shader, Camera* camera, float4x4 model, Debug_Normals normals);
+	void DrawBBox(Shader* shader, Camera* camera, float4x4 model);
+	void DrawFrustumBox(Shader* shader, Camera* camera, float4x4 model);
 
 	void CreateNormals(float magnitude = 0.25f);
 	void CreateBoundingBox();

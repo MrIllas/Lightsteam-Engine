@@ -11,7 +11,7 @@
 		<Resizable value="true" />
 	</Window>
 	<Renderer3D>
-		<Vsync value="true" />
+		<Vsync value="false" />
 		<Wireframe value="false" />
 		<DepthTest value="true" />
 		<CullFace value="true" />

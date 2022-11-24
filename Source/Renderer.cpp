@@ -42,10 +42,10 @@ void Renderer::CleanUp()
 	
 }
 
-void Renderer::Render()
+void Renderer::Render(bool game)
 {
 	PreUpdate();
-	Update();
+	Update(game);
 	PostUpdate();
 }
 
@@ -68,16 +68,29 @@ void Renderer::PreUpdate()
 
 }
 
-void Renderer::Update()
+void Renderer::Update(bool game)
 {
 	while (meshes.size())
 	{
 		if (meshes.front() != nullptr)
 		{
-			meshes.front()->Render(baseShader, debugShader, owner);
+			meshes.front()->Render(baseShader, debugShader, owner, game);
 		}
 		meshes.pop();
 	}
+	numOfMeshes = 0;
+
+
+	//Debug Meshes
+	while (debugMeshes.size())
+	{
+		if (debugMeshes.front() != nullptr)
+		{
+			debugMeshes.front()->mesh->DrawFrustumBox(debugShader, owner, debugMeshes.front()->model);
+		}
+		debugMeshes.pop();
+	}
+
 }
 
 void Renderer::PostUpdate()
@@ -90,6 +103,14 @@ void Renderer::PostUpdate()
 void Renderer::QueueMesh(CompMeshRenderer* mesh)
 {
 	if (owner->ContainsBBox(mesh->GetMesh()->mesh.bBox)) //Checks if mesh is inside the render's camera frustum
+	{
 		meshes.emplace(mesh);
-	else LOG(LOG_TYPE::ATTENTION, "The mesh of the GO '%s' is outside frustum!", mesh->owner->name.c_str());
+		numOfMeshes++;
+	}
+	//else LOG(LOG_TYPE::ATTENTION, "The mesh of the GO '%s' is outside frustum!", mesh->owner->name.c_str());
+}
+
+void Renderer::QueueDebug(DebugMesh* mesh)
+{
+	debugMeshes.emplace(mesh);
 }

@@ -13,7 +13,7 @@ MeshRenderer::MeshRenderer()
 {
 }
 
-MeshRenderer::MeshRenderer(Meshe meshData)
+MeshRenderer::MeshRenderer(Meshe meshData, bool debug)
 {
 	this->mesh = meshData;
 
@@ -55,7 +55,12 @@ MeshRenderer::MeshRenderer(Meshe meshData)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	CreateNormals();
+	if (debug)
+	{
+		CreateNormals();
+		CreateBoundingBox();
+	}
+	
 }
 
 
@@ -70,12 +75,43 @@ MeshRenderer::~MeshRenderer()
 	EBO = 0;
 
 	CleanNormals();
+
+	//BoundingBox
+	glDeleteVertexArrays(1, &BBVAO);
+	glDeleteBuffers(1, &BBVBO);
+
+	BBVAO = 0;
+	BBVBO = 0;
 }
 
-void MeshRenderer::Draw(Shader* shader, Camera* camera, Texture text, float4x4 model)
+#pragma region Drawing
+void MeshRenderer::LiteDraw(Shader* shader, Camera* camera, Texture text, float4x4 model)
 {
 	if (this->shader == nullptr) this->shader = shader;
 
+	DrawMesh(shader, camera, text, model);
+}
+
+void MeshRenderer::FullDraw(Shader* shader, Shader* debugShader, Camera* camera, Texture text, float4x4 model, Debug_Normals normals)
+{
+	if (this->shader == nullptr) this->shader = shader;
+	if (this->debugShader == nullptr) this->debugShader = shader;
+
+	DrawMesh(shader, camera, text, model);
+
+	//Debug
+	debugShader->Use();
+	debugShader->SetMat4("projection", camera->GetProjectionMatrix());
+	debugShader->SetMat4("view", camera->GetViewMatrix());
+	debugShader->SetMat4("model", &model.v[0][0]);
+
+	if (normals != Debug_Normals::OFF) DrawNormals(debugShader, camera, model, normals);
+
+	DrawBBox(debugShader, camera, model);
+}
+
+void MeshRenderer::DrawMesh(Shader* shader, Camera* camera, Texture text, float4x4 model)
+{
 	if (EBO != 0)
 	{
 		this->shader->Use();
@@ -104,21 +140,15 @@ void MeshRenderer::Draw(Shader* shader, Camera* camera, Texture text, float4x4 m
 	}
 }
 
-void MeshRenderer::DrawNormals(Shader* shader, Camera* camera, float4x4 model, bool faceNormals)
+void MeshRenderer::DrawNormals(Shader* shader, Camera* camera, float4x4 model, Debug_Normals normals)
 {
-	if (this->debugShader == nullptr) this->debugShader = shader;
-	debugShader->Use();
-
-	debugShader->SetMat4("projection", camera->GetProjectionMatrix());
-	debugShader->SetMat4("view", camera->GetViewMatrix());
-	debugShader->SetMat4("model", &model.v[0][0]);
-
-	if (!faceNormals)
+	if (normals == Debug_Normals::VERTEX || normals == Debug_Normals::BOTH)
 	{
 		glBindVertexArray(VNVAO);
 		glDrawArrays(GL_LINES, 0, vNormals.size());
 	}
-	else
+	glBindVertexArray(0);
+	if (normals == Debug_Normals::FACE || normals == Debug_Normals::BOTH)
 	{
 		glBindVertexArray(FNVAO);
 		glDrawArrays(GL_LINES, 0, fNormals.size());
@@ -126,6 +156,30 @@ void MeshRenderer::DrawNormals(Shader* shader, Camera* camera, float4x4 model, b
 
 	glBindVertexArray(0);
 }
+
+void MeshRenderer::DrawBBox(Shader* shader, Camera* camera, float4x4 model)
+{
+	glBindVertexArray(BBVAO);
+	glDrawArrays(GL_LINES, 0, bBox.size());
+
+	glBindVertexArray(0);
+}
+
+void MeshRenderer::DrawFrustumBox(Shader* shader, Camera* camera, float4x4 model)
+{
+	if (this->debugShader == nullptr) this->debugShader = shader;
+
+	debugShader->Use();
+	debugShader->SetMat4("projection", camera->GetProjectionMatrix());
+	debugShader->SetMat4("view", camera->GetViewMatrix());
+	debugShader->SetMat4("model", &model.v[0][0]);
+
+	glBindVertexArray(VAO);
+	glDrawElements(GL_LINES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
+	glBindVertexArray(0);
+}
+
+#pragma endregion Drawing methods
 
 void MeshRenderer::CreateNormals(float magnitude)
 {
@@ -200,7 +254,42 @@ void MeshRenderer::CreateNormals(float magnitude)
 
 void MeshRenderer::CreateBoundingBox()
 {
+	int i[24] = {
+		0, 1, 2, 3,
+		4, 5, 6, 7,
+		0, 4, 1, 5,
+		2, 6, 3, 7,
+		3, 1, 0, 2,
+		6, 4, 7, 5
+	};
 
+	float3 auxArr[8];
+	mesh.bBox.GetCornerPoints(auxArr);
+	bBox.reserve(8);
+
+	BBVAO = 0;
+	BBVBO = 0;
+
+	for (int ii : i)
+	{
+		bBox.emplace_back(auxArr[ii]);
+	}
+
+	//Buffer
+	glGenVertexArrays(1, &BBVAO);
+	glGenBuffers(1, &BBVBO);
+
+	glBindVertexArray(BBVAO);
+
+	//Vertex
+	glBindBuffer(GL_ARRAY_BUFFER, BBVBO);
+	glBufferData(GL_ARRAY_BUFFER, bBox.size() * sizeof(float3), &bBox[0], GL_STATIC_DRAW);
+
+	//Vertex Position
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+	glBindVertexArray(0);
 }
 
 void MeshRenderer::CleanNormals()

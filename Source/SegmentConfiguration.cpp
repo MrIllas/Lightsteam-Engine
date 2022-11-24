@@ -130,7 +130,6 @@ void SegmentConfiguration::WindowHeader()
 		wProps->ToggleResizable();
 		LOG(LOG_TYPE::ENGINE, "Resizable '%s'", wProps->resizable ? "ON" : "OFF");
 	}
-	//ImGui::togg
 }
 
 void SegmentConfiguration::InputHeader()

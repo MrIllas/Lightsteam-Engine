@@ -4,7 +4,7 @@
 #include "Camera.h"
 
 class CameraProperties;
-
+class DebugMesh;
 class CompCamera : public Component
 {
 public:
@@ -19,7 +19,8 @@ public:
 	nlohmann::ordered_json SaveUnique(nlohmann::JsonData data) override;
 	void LoadUnique(nlohmann::JsonData data) override;
 
-	void Render();
+private:
+	void SetFustrumBox();
 
 public:
 	Camera camera;
@@ -28,5 +29,9 @@ public:
 
 private:
 	CameraProperties* camInstance = nullptr;
+	int numOfMeshes;
+
+	DebugMesh* frustumMesh;
+	
 };
 

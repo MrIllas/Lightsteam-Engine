@@ -2,6 +2,7 @@
 
 #include "ModuleCamera3D.h"
 #include "ModuleScene.h"
+#include "ModuleEditor.h"
 #include "FrameBuffer.h"
 
 #include "Camera.h"
@@ -20,6 +21,7 @@ SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 
 	camInstance = CameraProperties::Instance();
 	sceneInstance = SceneProperties::Instance();
+	editorInstance = EditorProperties::Instance();
 }
 
 SegmentScene::~SegmentScene()
@@ -63,8 +65,10 @@ void SegmentScene::Update()
 				camInstance->editorCamera.SetRenderer({ segmentSize.x, segmentSize.y });
 				//camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
 			}
-			else camInstance->editorCamera.renderer->Resize({ segmentSize.x, segmentSize.y });
-
+			else
+			{
+				camInstance->editorCamera.renderer->Resize({ segmentSize.x, segmentSize.y });
+			}
 		}
 
 		RenderSpace();
@@ -79,6 +83,9 @@ void SegmentScene::RenderSpace()
 
 	//Render Framebuffer
 	ImGui::SetCursorPosY(aux);
+
+	camInstance->editorCamera.renderer->GetFrameBufffer()->SetViewport();
+
 	ImTextureID texID = (ImTextureID)camInstance->editorCamera.renderer->GetFrameBufffer()->GetTextureBuffer();
 	ImGui::Image(texID, segmentSize, ImVec2(0, 1), ImVec2(1, 0));
 }
@@ -102,18 +109,11 @@ void SegmentScene::Guizmo(Camera& cam, GameObject* go)
 
 	float4x4 aux = transform->GetWorldMatrix();
 
-
 	ImGuizmo::SetRect(x, y, w, h);
 	if (ImGuizmo::Manipulate(cam.GetViewMatrix(), cam.GetProjectionMatrix(), (ImGuizmo::OPERATION) sceneInstance->GetGuizmoOperation(), ImGuizmo::WORLD, &aux.v[0][0]))
 	{
 		aux.Transpose();
 		transform->SetWorldMatrix(aux);
 	}
-	
-
-	if (ImGuizmo::IsOver())
-	{
 		
-	}
-	
 }

@@ -9,11 +9,11 @@
 
 Camera::Camera()
 {
-	X = float3(-1.0f, 0.0f, 0.0f);
+	X = float3(1.0f, 0.0f, 0.0f);
 	Y = float3(0.0f, 1.0f, 0.0f);
 	Z = float3(0.0f, 0.0f, 1.0f);
 
-	Position = float3(0.0f, 0.0f, -10.0f);
+	Position = float3(0.0f, 0.0f, 0.0f);
 	Reference = float3(0.0f, 0.0f, 0.0f);
 	
 	frustum.type = FrustumType::PerspectiveFrustum;
@@ -26,6 +26,7 @@ Camera::Camera()
 	frustum.up = Y;
 
 	frustum.pos = Position;
+	
 }
 
 Camera::~Camera()

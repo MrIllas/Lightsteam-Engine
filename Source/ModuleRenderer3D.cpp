@@ -168,8 +168,11 @@ bool ModuleRenderer3D::Init()
 		glFogf(GL_FOG_END, 30.0f);
 		float fogC[] = { 0.5, 0.5, 0.5, 1.0 };
 		glFogfv(GL_FOG_COLOR, fogC);
+
+		glEnable(GL_SCISSOR_TEST);
 	}
 	// Projection matrix for
+
 		OnResize(wProps->w, wProps->h);
 
 	return ret;
@@ -197,11 +200,11 @@ UpdateStatus ModuleRenderer3D::PreUpdate()
 UpdateStatus ModuleRenderer3D::PostUpdate()
 {
 	//Meshes
-	cProps->editorCamera.renderer->Render();
+	cProps->editorCamera.renderer->Render(false);
 	
 	if (cProps->gameCameras.size() != 0)
 		if (cProps->gameCameras.at(cProps->mainCameraId)->camera.renderer != nullptr)
-			cProps->gameCameras.at(cProps->mainCameraId)->Render();
+			cProps->gameCameras.at(cProps->mainCameraId)->camera.renderer->Render();
 
 
 	//Swap Buffer

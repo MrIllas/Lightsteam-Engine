@@ -21,18 +21,20 @@ public:
 	nlohmann::ordered_json SaveUnique(nlohmann::JsonData data) override;
 	void LoadUnique(nlohmann::JsonData data) override;
 
-	void Render(Shader* shader, Shader* debugShader, Camera* camera);
+	void Render(Shader* shader, Shader* debugShader, Camera* camera, bool game);
 
 	MeshRenderer* GetMesh();
 	void SetMesh(MeshRenderer* mesh);
 
 private:
+	void SetNormalsString();
+private:
 	MeshRenderer* mesh = nullptr;
 
 	CameraProperties* camInstance = nullptr;
 
-	bool displayNormals;
-	bool faceNormals;
+	Debug_Normals normals;
+	std::string normalsString;
 
 	float normalsMagnitude;
 };
