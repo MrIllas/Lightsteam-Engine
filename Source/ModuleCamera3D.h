@@ -12,6 +12,7 @@ struct CameraProperties
 public:
 	Camera editorCamera;
 	bool isMouseOnScene = false;
+	float2 mouseScreenPos = float2(0, 0);
 
 	std::vector<CompCamera*> gameCameras;
 	int mainCameraId;

@@ -32,6 +32,5 @@ private:
 	int numOfMeshes;
 
 	DebugMesh* frustumMesh;
-	
 };
 

@@ -203,6 +203,16 @@ void ModuleCamera3D::SceneCameraInput()
 		float3 rot = cProps->editorCamera.frustum.WorldMatrix().ToEulerXYZ();
 		selected->rotation = float3(math::RadToDeg(rot.x), math::RadToDeg(rot.y), math::RadToDeg(rot.z));
 	}
+
+	//Go selector
+	if (App->input->App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		LineSegment ray = cProps->editorCamera.ScreenPointToRay(cProps->mouseScreenPos);
+
+		if (!sProps->Intersect(sProps->root, ray)) sProps->UnselectGO();
+		//sProps->Intersect(sProps->root, ray);
+		LOG(LOG_TYPE::ATTENTION, "Ray world pos A (%f, %f, %f)", ray.a.x, ray.a.y, ray.a.z);
+	}
 }
 
 

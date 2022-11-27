@@ -83,11 +83,26 @@ void Camera::SetRenderer(float2 size)
 	renderer = new Renderer(size, this);
 }
 
+LineSegment Camera::ScreenPointToRay(float2 screenPos)
+{
+	float2 translatedPos;
+
+	translatedPos.x = screenPos.x;
+	translatedPos.y = screenPos.y;
+	LOG(LOG_TYPE::ATTENTION, "Mouse position on editor segment (%f, %f)", translatedPos.x, translatedPos.y);
+
+	return frustum.UnProjectLineSegment(translatedPos.x, translatedPos.y);
+}
+
+void Camera::SetAspectRatio(float aspectRatio)
+{
+	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov * 0.5f) * aspectRatio);
+}
+
 bool Camera::ContainsBBox(AABB& bBox)
 {
 	float3 vCorner[8];
 	int iTotalIn = 0;
-
 	math::Plane frustumPlanes[6];
 	frustum.GetPlanes(frustumPlanes);
 
@@ -114,9 +129,3 @@ bool Camera::ContainsBBox(AABB& bBox)
 	// so if iTotalIn is 6, then all are inside the view
 	return true;
 }
-
-//Quat Camera::GetRotationQuat()
-//{
-//	Quat toReturn = Quat::identity;
-//	toReturn.toQuat
-//}

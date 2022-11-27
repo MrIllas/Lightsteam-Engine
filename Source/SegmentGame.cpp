@@ -50,7 +50,6 @@ void SegmentGame::Update()
 			{
 				segmentSize.x = aux.x;
 				segmentSize.y = aux.y;
-
 				Resize();
 			}
 

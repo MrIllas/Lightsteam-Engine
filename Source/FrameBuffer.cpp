@@ -20,7 +20,7 @@ void FrameBuffer::CreateBuffer(int width, int height)
 	CleanBuffer();
 	
 	viewportSize.x = width;
-	viewportSize.y = (width / 16) * 9;
+	viewportSize.y = height;
 	SetViewport();
 	
 

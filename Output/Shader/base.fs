@@ -17,6 +17,13 @@ uniform float specularStrength;
 //uniform sampler2D Textures[32];
 uniform sampler2D texture_albedo;
 
+float near = 1.0f;
+float far = 100.0f;
+float linearizeDepth(float depth)
+{
+	return (2.0 * near * far) / (far + near - (depth * 2.0 - 1.0) * (far - near));
+}
+
 void main()
 {
 	//vec3 lightPos = vec3(5.0f, 5.0f, 0.0f);
@@ -47,7 +54,11 @@ void main()
 	vec3 phong = (ambient + diffuse) * objectColour;
    // FragColor = ambient * texture(texture_albedo, TextureCoords); //vec4(0.0f, 1.0f, 0.0f, 1.0f);
 	FragColor = vec4(phong, 1.0f);
+	//FragColor = vec4(vec3(linearizeDepth(gl_FragCoord.z) / far), 1.0f);
 } 
+
+
+
 
 //vec3 objectColor = texture(uTexture, mobileTextureCoordinate).xyz;
 //vec3 phong = (ambient + diffuse) * objectColor + specular;

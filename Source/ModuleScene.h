@@ -3,10 +3,11 @@
 
 //#include "GameObject.h"
 #include <vector>
+#include "MathGeoLib/include/Geometry/LineSegment.h"
 
 class GameObject;
 class CompCamera;
-
+class MeshRenderer;
 struct CameraProperties;
 
 struct SceneProperties
@@ -21,6 +22,9 @@ public:
 	static void Delete();
 
 	GameObject* GetSelectedGO(GameObject* go = nullptr);
+	void UnselectGO();
+
+	bool Intersect(GameObject* go, LineSegment ray);
 
 	int GetGuizmoOperation() { return guizmoOperation;  }
 	void SetGuizmoOperation(int value) { guizmoOperation = value; }

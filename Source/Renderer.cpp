@@ -12,10 +12,12 @@ Renderer::Renderer(float2 size, Camera* camera)
 {
 	owner = camera;
 	frameBuffer = new FrameBuffer();
+	defaultFrameBuffer = new FrameBuffer();
 	Resize(size);
 
 	debugShader = new Shader(DEBUG_VERTEX_SHADER, DEBUG_FRAGMENT_SHADER, "DEBUG SHADER");
 	baseShader = new Shader(BASE_VERTEX_SHADER, BASE_FRAGMENT_SHADER, "BASE SHADER");
+	screenShader = new Shader("Shader/Post-processing/pp_Normal.vs", "Shader/Post-processing/pp_Normal.fs", "DEPHT SHADER");
 }
 
 Renderer::~Renderer()
@@ -53,15 +55,19 @@ void Renderer::Resize(float2 size)
 {
 	this->size = size;
 	frameBuffer->CreateBuffer(this->size.x, this->size.y);
+	defaultFrameBuffer->CreateBuffer(this->size.x, this->size.y);
 }
 
 #pragma region Renderer Update Phases
 void Renderer::PreUpdate()
 {
+	//First Pass for Post-processing
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetFrameBuffer());
+	//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, defaultFrameBuffer->GetFrameBuffer());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-	glLineWidth(2.0f);
+	//glEnable(GL_DEPTH_TEST);
+	glLineWidth(1.0f);
 	
 	//glEnableClientState(GL_VERTEX_ARRAY); //Type of data
 	//glVertexPointer(3, GL_FLOAT, 0, NULL); //Use bind buffer as vertices
@@ -95,14 +101,22 @@ void Renderer::Update(bool game)
 
 void Renderer::PostUpdate()
 {
+	//Second Pass for Post-processing
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	//glDisableClientState(GL_VERTEX_ARRAY);
 }
+
+
+void Renderer::PostProcessing()
+{
+	screenShader->Use();
+	screenShader->SetInt("screenTexture", frameBuffer->GetTextureBuffer());
+}
+
 #pragma endregion Renderer Update Phases
 
 void Renderer::QueueMesh(CompMeshRenderer* mesh)
 {
-	if (owner->ContainsBBox(mesh->GetMesh()->mesh.bBox)) //Checks if mesh is inside the render's camera frustum
+	if (owner->ContainsBBox(mesh->GetAABB())) //Checks if mesh is inside the render's camera frustum
 	{
 		meshes.emplace(mesh);
 		numOfMeshes++;

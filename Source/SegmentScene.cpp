@@ -32,8 +32,6 @@ SegmentScene::~SegmentScene()
 
 void SegmentScene::Start()
 {
-	//renInstance->render = new Renderer({ segmentSize.x, segmentSize.y });
-	//camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
 	camInstance->editorCamera.SetRenderer({ segmentSize.x, segmentSize.y });
 }
 
@@ -43,34 +41,44 @@ void SegmentScene::Update()
 	flags |= ImGuiWindowFlags_NoScrollWithMouse;
 	if (ImGui::Begin(name.c_str(), 0, flags))
 	{
-		ImVec2 pos = ImGui::GetWindowPos();
-		ImVec2 size = ImGui::GetWindowSize();
-		size.x += pos.x;
-		size.y += pos.y;
+		ImVec2 winPos = ImGui::GetWindowPos();
+		ImVec2 winSize = ImGui::GetWindowSize();
+		winSize.x += winPos.x;
+		winSize.y += winPos.y;
 
-		if (ImGui::IsMouseHoveringRect(pos, size)) camInstance->isMouseOnScene = true;
+		if (ImGui::IsMouseHoveringRect(winPos, winSize))
+		{
+			ImVec2 mouseGlobalPos = ImGui::GetMousePos();
+			float2 normMousePos = float2(mouseGlobalPos.x - winPos.x, mouseGlobalPos.y - winPos.y);
+
+			camInstance->isMouseOnScene = true;
+			//camInstance->mouseScreenPos.x = ((normMousePos.x - winSize.x / 2) / (winSize.x / 2)) * 1.0f;
+			//camInstance->mouseScreenPos.y = ((normMousePos.y - winSize.y / 2) / (winSize.y / 2)) * 1.0f;
+			//camInstance->mouseScreenPos.x = (normMousePos.x / (winSize.x / 2)) * 0.1f;
+			//camInstance->mouseScreenPos.y = (normMousePos.y / (winSize.y / 2)) * 0.1f;
+			camInstance->mouseScreenPos.x = -((normMousePos.x / segmentSize.x) - 0.5) * 2.0f;
+			camInstance->mouseScreenPos.y = ( (1.0f -(normMousePos.y / segmentSize.y)) - 0.5) * 2.0f;
+
+		}
 		else camInstance->isMouseOnScene = false;
 
 		ImVec2 aux = ImGui::GetContentRegionAvail();
-		aux.y = (aux.x / 16) * 9;
-
 
 		if (aux.x != segmentSize.x || aux.y != segmentSize.y)
 		{
 			segmentSize.x = aux.x;
 			segmentSize.y = aux.y;
+			camInstance->editorCamera.SetAspectRatio(segmentSize.x / segmentSize.y);
 
 			if (camInstance->editorCamera.renderer == nullptr)
 			{
 				camInstance->editorCamera.SetRenderer({ segmentSize.x, segmentSize.y });
-				//camInstance->editorCamera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
 			}
 			else
 			{
 				camInstance->editorCamera.renderer->Resize({ segmentSize.x, segmentSize.y });
 			}
 		}
-
 		RenderSpace();
 		Guizmo(camInstance->editorCamera, sceneInstance->GetSelectedGO());
 	}

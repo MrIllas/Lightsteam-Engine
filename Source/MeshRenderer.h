@@ -50,7 +50,7 @@ struct Meshe
 	std::vector<unsigned int> indices;
 	std::vector<Texture> textures;
 	uint numFaces;
-	AABB bBox;
+	AABB localAABB;
 	std::string path;
 };
 
@@ -74,6 +74,7 @@ public:
 
 	void CreateNormals(float magnitude = 0.25f);
 	void CreateBoundingBox();
+	void CreateRay(float3 a, float3 b);
 	void CleanNormals();
 
 	void SetShader(Shader* shader);

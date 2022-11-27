@@ -50,6 +50,40 @@ GameObject* SceneProperties::GetSelectedGO(GameObject* go)
 	return nullptr;
 }
 
+void SceneProperties::UnselectGO()
+{
+	GameObject* currentSelected = GetSelectedGO(root);
+	if (currentSelected != nullptr) currentSelected->selected = false;
+}
+
+bool SceneProperties::Intersect(GameObject* go, LineSegment ray)
+{
+	CompMeshRenderer* meshRenderer = go->GetComponent<CompMeshRenderer>(MESH_RENDERER);
+	if (meshRenderer != nullptr)
+	{
+		if (meshRenderer->GetAABB().Intersects(ray))
+		{
+			UnselectGO(); //Unselects current selected GO;
+			go->selected = true;
+			return true;
+		}
+	}
+	
+
+	//Iteration and check of childrens
+	if (go->HasChildren())
+	{
+		for (int i = 0; i < go->children.size(); ++i)
+		{
+			if (Intersect(go->children[i], ray))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void SceneProperties::Delete()
 {
 	if (instance != nullptr)
@@ -80,12 +114,11 @@ bool ModuleScene::Init()
 
 	return true;
 }
-
+ 
 bool ModuleScene::Start()
 {
 	////Import Example mesh & texture
 	GameObject* aux = MeshImporter::ImportMesh("Assets/BakerHouse.fbx");
-
 	std::vector<GameObject*> vGO = aux->GetChildrens();
 
 	for (int i = 0; i < vGO.size(); ++i)
@@ -96,10 +129,8 @@ bool ModuleScene::Start()
 
 	///
 
-	MeshImporter::ImportMesh("Assets/Brutalist_Bench.fbx");
-	MeshImporter::ImportMesh("Assets/Fence.fbx");
+	//MeshImporter::ImportMesh("Assets/Fence.fbx");
 
-	//MeshImporter::LoadMesh("Library/Meshes/Fence.mh");
 
 	if (sProps->root == nullptr) return UPDATE_CONTINUE;
 	InitGameObjects(sProps->root);

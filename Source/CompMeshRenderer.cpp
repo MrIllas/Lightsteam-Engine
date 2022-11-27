@@ -37,6 +37,16 @@ void CompMeshRenderer::Update()
 {
 	if (mesh == nullptr) return;
 
+	//Update AABB
+	float4x4 aux = owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix();
+	//Generate global OBB
+	obb = this->mesh->mesh.localAABB;
+	obb.Transform(aux.Transposed());
+
+	//Generate global AABB
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(obb);
+
 	camInstance->editorCamera.renderer->QueueMesh(this);
 
 	if (camInstance->gameCameras.size() != 0)
@@ -44,7 +54,8 @@ void CompMeshRenderer::Update()
 		if (camInstance->gameCameras.at(camInstance->mainCameraId)->camera.renderer != nullptr)
 			camInstance->gameCameras.at(camInstance->mainCameraId)->camera.renderer->QueueMesh(this);
 	}
-		
+	
+	
 }
 
 void CompMeshRenderer::UpdateGUI()

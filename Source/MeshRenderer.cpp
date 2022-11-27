@@ -264,7 +264,7 @@ void MeshRenderer::CreateBoundingBox()
 	};
 
 	float3 auxArr[8];
-	mesh.bBox.GetCornerPoints(auxArr);
+	mesh.localAABB.GetCornerPoints(auxArr);
 	bBox.reserve(8);
 
 	BBVAO = 0;
@@ -284,6 +284,29 @@ void MeshRenderer::CreateBoundingBox()
 	//Vertex
 	glBindBuffer(GL_ARRAY_BUFFER, BBVBO);
 	glBufferData(GL_ARRAY_BUFFER, bBox.size() * sizeof(float3), &bBox[0], GL_STATIC_DRAW);
+
+	//Vertex Position
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+	glBindVertexArray(0);
+}
+
+void MeshRenderer::CreateRay(float3 a, float3 b)
+{
+	int i[2] = { 0, 1 };
+
+	float3 auxArr[2] = { a , b };
+
+	//Buffer
+	glGenVertexArrays(1, &BBVAO);
+	glGenBuffers(1, &BBVBO);
+
+	glBindVertexArray(BBVAO);
+
+	//Vertex
+	glBindBuffer(GL_ARRAY_BUFFER, BBVBO);
+	glBufferData(GL_ARRAY_BUFFER, bBox.size() * sizeof(float3), &auxArr[0], GL_STATIC_DRAW);
 
 	//Vertex Position
 	glEnableVertexAttribArray(0);

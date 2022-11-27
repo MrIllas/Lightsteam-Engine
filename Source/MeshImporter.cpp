@@ -166,9 +166,9 @@ Meshe MeshImporter::GenerateMesh(aiMesh* mesh)
 		}
 	}
 
-	//Bounding box
-	newMesh.bBox.SetNegativeInfinity();
-	newMesh.bBox.Enclose((float3 *)mesh->mVertices, newMesh.vertices.size());
+	//Generate AABB
+	newMesh.localAABB.SetNegativeInfinity();
+	newMesh.localAABB.Enclose((float3 *)mesh->mVertices, newMesh.vertices.size());
 
 	return newMesh;
 }
@@ -213,12 +213,12 @@ void MeshImporter::SaveMesh(Meshe mesh, std::string filePath)
 	//Bounding Box
 	//Store BoundingBox MinPoint
 	bytes = sizeof(float3);
-	memcpy(cursor, &mesh.bBox.minPoint[0], bytes);
+	memcpy(cursor, &mesh.localAABB.minPoint[0], bytes);
 	cursor += bytes;
 
 	//Store BoundingBox MaxPoint
 	bytes = sizeof(float3);
-	memcpy(cursor, &mesh.bBox.maxPoint[0], bytes);
+	memcpy(cursor, &mesh.localAABB.maxPoint[0], bytes);
 	cursor += bytes;
 
 	LibraryManager::Save(filePath, fileBuffer, size);
@@ -262,15 +262,15 @@ Meshe MeshImporter::LoadMesh(std::string filePath)
 	cursor += bytes;
 
 	//Bounding Box
-	mesh.bBox.SetNegativeInfinity();
+	mesh.localAABB.SetNegativeInfinity();
 	//Load BoundingBox MinPoint
 	bytes = sizeof(float3);
-	memcpy(&mesh.bBox.minPoint[0], cursor, bytes);
+	memcpy(&mesh.localAABB.minPoint[0], cursor, bytes);
 	cursor += bytes;
 
 	//Load BoundingBox MaxPoint
 	bytes = sizeof(float3);
-	memcpy(&mesh.bBox.maxPoint[0], cursor, bytes);
+	memcpy(&mesh.localAABB.maxPoint[0], cursor, bytes);
 	cursor += bytes;
 
 	RELEASE_ARRAY(fileBuffer);

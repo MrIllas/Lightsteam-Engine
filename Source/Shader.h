@@ -17,6 +17,7 @@ public:
 	void SetFloat(const std::string &name, float value) const;
 	void SetMat4(const std::string& name, const float* value) const;
 	void SetVec3(const std::string& name, const float* value) const;
+	void SetVec2(const std::string& name, const float* value) const;
 
 private:
 	void RetriveShader(const char* vertexPath, const char* fragmentPath);
