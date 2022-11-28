@@ -28,6 +28,7 @@
 		<Game value="false" />
 		<Hierarchy value="true" />
 		<Inspector value="true" />
+		<Library value="true" />
 		<ColorMode value="2" />
 	</Editor>
 </config>

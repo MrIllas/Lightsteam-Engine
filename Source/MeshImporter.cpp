@@ -14,8 +14,6 @@
 #include "ModuleScene.h"
 #include "LibraryManager.h"
 
-#include <vector>
-
 
 MeshImporter::MeshImporter()
 {

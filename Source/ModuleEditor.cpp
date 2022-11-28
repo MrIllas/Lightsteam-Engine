@@ -14,8 +14,7 @@
 #include "SegmentGame.h"
 #include "SegmentHierarchy.h"
 #include "SegmentInspector.h"
-
-#include "LibraryManager.h"
+#include "SegmentLibrary.h"
 
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -104,6 +103,7 @@ bool ModuleEditor::Start()
 	segments.emplace_back(new SegmentGame());
 	segments.emplace_back(new SegmentHierarchy());
 	segments.emplace_back(new SegmentInspector());
+	segments.emplace_back(new SegmentLibrary());
 		//Always last
 	segments.emplace_back(new SegmentAbout());
 

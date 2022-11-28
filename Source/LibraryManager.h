@@ -1,12 +1,13 @@
 #pragma once
-
 #include "Globals.h"
 
 #include <string>
 
+class LibraryFolder;
+
 namespace LibraryManager
 {
-	void Init();
+	void Init(LibraryFolder& root);
 	void CleanUp();
 
 	void GenerateLibrary();
@@ -27,4 +28,6 @@ namespace LibraryManager
 
 	void SaveJSON(std::string filePath, std::string jsonDump);
 	std::string LoadJSON(std::string filePath);
+
+	void FolderUpdate(LibraryFolder* folder, bool recursive = false);
 };

@@ -256,6 +256,9 @@
     <ClCompile Include="External\ImGuizmo\ImSequencer.cpp">
       <Filter>External\ImGuizmo</Filter>
     </ClCompile>
+    <ClCompile Include="SegmentLibrary.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -794,6 +797,12 @@
     </ClInclude>
     <ClInclude Include="External\ImGuizmo\ImZoomSlider.h">
       <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentLibrary.h">
+      <Filter>Header\Core\Segments</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryFolder.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

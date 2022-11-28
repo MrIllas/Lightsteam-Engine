@@ -236,6 +236,7 @@
     <ClCompile Include="SegmentGame.cpp" />
     <ClCompile Include="SegmentHierarchy.cpp" />
     <ClCompile Include="SegmentInspector.cpp" />
+    <ClCompile Include="SegmentLibrary.cpp" />
     <ClCompile Include="SegmentScene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Singleton.cpp" />
@@ -317,6 +318,7 @@
     <ClInclude Include="External\Nlohmann\thirdparty\hedley\hedley_undef.hpp" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="JsonUtils.h" />
+    <ClInclude Include="LibraryFolder.h" />
     <ClInclude Include="LibraryManager.h" />
     <ClInclude Include="LSUUID.h" />
     <ClInclude Include="MeshImporter.h" />
@@ -417,6 +419,7 @@
     <ClInclude Include="SegmentGame.h" />
     <ClInclude Include="SegmentHierarchy.h" />
     <ClInclude Include="SegmentInspector.h" />
+    <ClInclude Include="SegmentLibrary.h" />
     <ClInclude Include="SegmentScene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TextureImporter.h" />
