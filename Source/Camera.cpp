@@ -89,7 +89,6 @@ LineSegment Camera::ScreenPointToRay(float2 screenPos)
 
 	translatedPos.x = screenPos.x;
 	translatedPos.y = screenPos.y;
-	LOG(LOG_TYPE::ATTENTION, "Mouse position on editor segment (%f, %f)", translatedPos.x, translatedPos.y);
 
 	return frustum.UnProjectLineSegment(translatedPos.x, translatedPos.y);
 }

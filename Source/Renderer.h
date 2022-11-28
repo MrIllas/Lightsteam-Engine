@@ -49,8 +49,6 @@ public:
 	void QueueMesh(CompMeshRenderer* mesh);
 	void QueueDebug(DebugMesh* mesh);
 
-	void PostProcessing();
-
 public:
 	float2 size = {0, 0};
 	int numOfMeshes = 0;
@@ -65,10 +63,8 @@ private:
 
 private:
 	Camera* owner;
-	FrameBuffer* defaultFrameBuffer = nullptr;
 	FrameBuffer* frameBuffer = nullptr;
 
-	Shader* screenShader = nullptr;
 	Shader* baseShader = nullptr;
 	Shader* debugShader = nullptr;
 };

@@ -8,6 +8,7 @@
 
 #include "GameObject.h"
 
+#include "CompTransform.h"
 #include "CompMeshRenderer.h"
 
 #include "ModuleScene.h"
@@ -45,7 +46,7 @@ GameObject* MeshImporter::ImportMesh(std::string filePath, GameObject* parent, b
 	GameObject* toReturn = nullptr;
 	//ASK - UTF8 Characters not accepted by ASSIMP on the current lib version(2016) but added in 2017 https://github.com/assimp/assimp/issues/1612
 
-	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcess_Triangulate);
 	aiNode* node = nullptr;
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -78,13 +79,21 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 	if (scene->HasMeshes())
 	{
 		//Meshes
-		for (uint i = 0; i < node->mNumChildren; ++i)
+		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
 			//New Spatial GameObject with MeshRenderer component
 			GameObject* go = new GameObject(node->mChildren[i]->mName.C_Str());
 			go->CreateComponent(MESH_RENDERER);
 			go->CreateComponent(MATERIAL);
 
+			aiMatrix4x4 aiTransform = node->mChildren[i]->mTransformation;
+			float4x4 fTransform = float4x4(aiTransform[0][0], aiTransform[0][1], aiTransform[0][2], aiTransform[0][3],
+				aiTransform[1][0], aiTransform[1][1], aiTransform[1][2], aiTransform[1][3],
+				aiTransform[2][0], aiTransform[2][1], aiTransform[2][2], aiTransform[2][3],
+				aiTransform[3][0], aiTransform[3][1], aiTransform[3][2], aiTransform[3][3]
+			);
+			go->GetComponent<CompTransform>(TRANSFORM)->SetWorldMatrix(fTransform);
+			
 			//Add Mesh to the gameObject
 			Meshe mesh;
 
@@ -94,7 +103,7 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 
 			//Checks if the mesh already exists in the engine's CFF
 			if (LibraryManager::Exists(aux))
-			{
+			{ //Custom File Load
 				mesh = LoadMesh(aux);
 			}
 			else

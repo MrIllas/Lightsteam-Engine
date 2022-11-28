@@ -8,6 +8,9 @@
 
 #include "MathGeoLib/include/Math/Quat.h"
 
+#include "ImGui/imgui_internal.h"
+#include "ImGuizmo/ImGuizmo.h"
+
 #pragma region CameraProperties
 CameraProperties::CameraProperties()
 {
@@ -205,13 +208,12 @@ void ModuleCamera3D::SceneCameraInput()
 	}
 
 	//Go selector
-	if (App->input->App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (App->input->App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && !ImGuizmo::IsOver())
 	{
 		LineSegment ray = cProps->editorCamera.ScreenPointToRay(cProps->mouseScreenPos);
 
-		if (!sProps->Intersect(sProps->root, ray)) sProps->UnselectGO();
-		//sProps->Intersect(sProps->root, ray);
-		LOG(LOG_TYPE::ATTENTION, "Ray world pos A (%f, %f, %f)", ray.a.x, ray.a.y, ray.a.z);
+		//if (!sProps->Intersect(sProps->root, ray)) sProps->UnselectGO();
+		sProps->Intersect(sProps->root, ray);
 	}
 }
 
