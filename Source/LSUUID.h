@@ -2,7 +2,7 @@
 #include <random>
 namespace LS_UUID
 {
-	std::string Generate()
+	inline std::string Generate()
 	{
 		std::string toReturn;
 		static std::random_device device;

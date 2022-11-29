@@ -259,6 +259,18 @@
     <ClCompile Include="SegmentLibrary.cpp">
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Source\Data\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceTexture.cpp">
+      <Filter>Source\Data\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Source\Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Source\Data\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -802,7 +814,19 @@
       <Filter>Header\Core\Segments</Filter>
     </ClInclude>
     <ClInclude Include="LibraryFolder.h">
-      <Filter>Source</Filter>
+      <Filter>Header\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header\Data\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTexture.h">
+      <Filter>Header\Data\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Header\Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Header\Data\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -892,6 +916,12 @@
     </Filter>
     <Filter Include="Source\Core\GameObject">
       <UniqueIdentifier>{e510e1f8-6a62-44cc-92f6-d5e6ef696735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Data\Resources">
+      <UniqueIdentifier>{902771c8-6447-4043-9f23-0e358ed54226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Data\Resources">
+      <UniqueIdentifier>{75e913ae-d18c-4a8a-b92d-04a003b58739}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

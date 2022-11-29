@@ -11,6 +11,7 @@ class Module;
 class ModuleWindow;
 class ModuleInput;
 class ModuleFileSystem;
+class ModuleResources;
 class ModuleCamera3D;
 class ModuleEditor;
 class ModuleScene;
@@ -39,6 +40,7 @@ public:
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
 	ModuleFileSystem* fileSystem = nullptr;
+	ModuleResources* resources = nullptr;
 	ModuleCamera3D* camera = nullptr;
 	ModuleScene* scene = nullptr;
 	ModuleEditor* editor = nullptr;

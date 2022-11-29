@@ -61,7 +61,7 @@ bool ModuleFileSystem::Init()
 	fsProps = FileSystemProperties::Instance();
 	sProps = SceneProperties::Instance();
 
-	fsProps->rootFolder = new LibraryFolder("Library", "Library", nullptr);
+	fsProps->rootFolder = new LibraryFolder("Assets", "Assets", nullptr);
 	LibraryManager::Init(*fsProps->rootFolder);
 
 	return true;
@@ -132,7 +132,8 @@ void ModuleFileSystem::DragAndDrop(std::string path)
 		case str2int("dds"):
 		case str2int("png"):
 		{
-			GameObject* aux = sProps->GetSelectedGO();
+			TextureImporter::ImportTexture(path);
+			/*GameObject* aux = sProps->GetSelectedGO();
 
 			if (aux != nullptr)
 			{
@@ -152,7 +153,7 @@ void ModuleFileSystem::DragAndDrop(std::string path)
 			else
 			{
 				LOG(LOG_TYPE::ERRO, "ERROR: There is no 'GameObject' selected!");
-			}
+			}*/
 		}
 			break;
 		case str2int("jpg"):

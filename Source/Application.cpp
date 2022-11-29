@@ -6,6 +6,7 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleFileSystem.h"
+#include "ModuleResources.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "ModuleRenderer3D.h"
@@ -39,6 +40,7 @@ Application::Application()
 	window = new ModuleWindow(this, true);
 	input = new ModuleInput(this, true);
 	fileSystem = new ModuleFileSystem(this, true);
+	resources = new ModuleResources(this, true);
 	camera = new ModuleCamera3D(this, true);
 	scene = new ModuleScene(this, true);
 	editor = new ModuleEditor(this, true);
@@ -52,6 +54,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(input);
 	AddModule(fileSystem);
+	AddModule(resources);
 	AddModule(camera);
 	AddModule(editor);
 	AddModule(scene);

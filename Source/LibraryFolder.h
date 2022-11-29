@@ -5,14 +5,20 @@
 
 struct LibraryItem
 {
-	LibraryItem(std::string path, std::string name)
+	LibraryItem(std::string path, std::string name, std::string extension)
 	{
 		this->path = path;
 		this->name = name;
-		//extension = GetExten
+		this->extension = extension;
+		
+		//Get crude path (Path without name)
+		size_t pos = path.find_last_of("/");
+		if (pos != std::string::npos)
+			crudePath = path.erase(pos + 1);
 	}
 	bool hasMeta = false;
 	std::string path;
+	std::string crudePath;
 	std::string name;
 	std::string extension;
 };
@@ -28,15 +34,7 @@ public:
 	}
 	~LibraryFolder()
 	{
-		for (int i = 0; i < children.size(); ++i)
-		{
-			RELEASE(children[i]);
-		}
-
-		for (int i = 0; i < libItem.size(); ++i)
-		{
-			RELEASE(libItem[i]);
-		}
+		CleanUp();
 	}
 
 	std::string path;
@@ -46,4 +44,20 @@ public:
 	std::vector<LibraryFolder*> children;
 
 	std::vector<LibraryItem*> libItem; //Contains all files
+
+public:
+	void CleanUp()
+	{
+		for (int i = 0; i < children.size(); ++i)
+		{
+			RELEASE(children[i]);
+		}
+		children.clear();
+
+		for (int i = 0; i < libItem.size(); ++i)
+		{
+			RELEASE(libItem[i]);
+		}
+		libItem.clear();
+	}
 };

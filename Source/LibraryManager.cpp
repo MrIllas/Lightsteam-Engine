@@ -19,7 +19,7 @@ void LibraryManager::Init(LibraryFolder& root)
 	AddPath("Assets");
 
 	GenerateLibrary();
-	FolderUpdate(&root, true);
+	FolderSystemUpdate(&root, true);
 }
 
 void LibraryManager::CleanUp()
@@ -29,31 +29,50 @@ void LibraryManager::CleanUp()
 
 void LibraryManager::GenerateLibrary()
 {
-	CreateDir("Library");
-	CreateDir("Library/Meshes");
-	CreateDir("Library/Materials");
-	CreateDir("Library/Animation");
-	CreateDir("Library/Textures");
-	CreateDir("Library/Scenes");
+	std::string aux = LIB_ROOT;
+	CreateDir(aux);
+	aux = LIB_MESHES;
+	CreateDir(aux);
+	aux = LIB_MATERIALS;
+	CreateDir(aux);
+	aux = LIB_TEXTURES;
+	CreateDir(aux);
+	aux = LIB_SCENES;
+	CreateDir(aux);
 }
 
-void LibraryManager::FolderUpdate(LibraryFolder* folder, bool recursive)
+void LibraryManager::FolderSystemUpdate(LibraryFolder* folder, bool recursive)
 {
+	if (folder->children.size() != 0 || folder->libItem.size() != 0) folder->CleanUp();
+	//else return; //Nothing to update - Return
+
 	char** aux = PHYSFS_enumerateFiles(folder->path.c_str());
+
+	std::string extension;
 
 	for (char* c = *aux; c; c = *++aux) {
 		std::string path = folder->path;
 		path += "/";
 		path += c;
-
+		
 		if (IsDirectory(path))
 		{
 			LibraryFolder* dir = new LibraryFolder(path, c, folder);
 			folder->children.emplace_back(dir);
-			if (recursive) FolderUpdate(dir);
+			if (recursive) FolderSystemUpdate(dir);
 		}
 		else
-			folder->libItem.emplace_back(new LibraryItem(path, c));
+		{
+			//Get Extension
+			size_t pos = path.find_last_of(".");
+			if (pos != std::string::npos)
+				extension = path.substr(pos + 1);
+
+			if (extension != "meta") //Ignore if extension is meta
+			{
+				folder->libItem.emplace_back(new LibraryItem(path, c, extension));
+			}
+		}
 	}
 }
 

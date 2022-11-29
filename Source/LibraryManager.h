@@ -3,6 +3,13 @@
 
 #include <string>
 
+#define LIB_ROOT "Library";
+#define LIB_MESHES "Library/Meshes";
+#define LIB_MATERIALS "Library/Materials";
+#define LIB_TEXTURES "Library/Textures";
+#define LIB_SCENES "Library/Scenes";
+
+
 class LibraryFolder;
 
 namespace LibraryManager
@@ -29,5 +36,5 @@ namespace LibraryManager
 	void SaveJSON(std::string filePath, std::string jsonDump);
 	std::string LoadJSON(std::string filePath);
 
-	void FolderUpdate(LibraryFolder* folder, bool recursive = false);
+	void FolderSystemUpdate(LibraryFolder* folder, bool recursive = false);
 };
