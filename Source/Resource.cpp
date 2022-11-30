@@ -39,9 +39,17 @@ nlohmann::JsonData Resource::SaveUnique(nlohmann::JsonData data)
 	return data;
 }
 
-void Resource::Save(std::string savePath)
+bool Resource::ImportToLibrary()
+{
+
+	return false;
+}
+
+void Resource::Save()
 {
 	nlohmann::JsonData data;
+	std::string savePath = assetsFile;
+	savePath += ".meta";
 
 	data.SetString("Asset Filepath", this->assetsFile);
 	data.SetString("Library Filepath", this->libraryFile);
@@ -51,7 +59,32 @@ void Resource::Save(std::string savePath)
 	LibraryManager::SaveJSON(savePath, SaveUnique(data).data.dump(4));
 }
 
-void Resource::Load(const std::string& path)
+/// <summary>
+/// Returns false if the file doesn't exists.
+/// </summary>
+/// <param name="path"></param>
+/// <returns></returns>
+bool Resource::Load()
 {
+	std::string metaPath = assetsFile;
+	metaPath += ".meta";
 
+	nlohmann::JsonData data;
+
+	char* buffer = nullptr;
+	uint size = LibraryManager::Load(metaPath, &buffer);
+
+	if (buffer == nullptr) return false;
+
+	data.data = nlohmann::ordered_json::parse(buffer, buffer + size);
+
+	//Load vars
+	assetsFile = data.GetString("Asset Filepath");
+	libraryFile = data.GetString("Library Filepath");
+	uuid = data.GetString("UUID");
+	type = (RESOURCE_TYPE) data.GetInt("Type");
+
+	RELEASE(buffer);
+
+	return true;
 }

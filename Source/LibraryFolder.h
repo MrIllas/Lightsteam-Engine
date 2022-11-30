@@ -5,11 +5,12 @@
 
 struct LibraryItem
 {
-	LibraryItem(std::string path, std::string name, std::string extension)
+	LibraryItem(std::string path, std::string name, std::string extension, bool hasMeta)
 	{
 		this->path = path;
 		this->name = name;
 		this->extension = extension;
+		this->hasMeta = hasMeta;
 		
 		//Get crude path (Path without name)
 		size_t pos = path.find_last_of("/");
@@ -17,6 +18,7 @@ struct LibraryItem
 			crudePath = path.erase(pos + 1);
 	}
 	bool hasMeta = false;
+	bool hasResourceBeenLoaded = false;
 	std::string path;
 	std::string crudePath;
 	std::string name;
@@ -45,6 +47,7 @@ public:
 
 	std::vector<LibraryItem*> libItem; //Contains all files
 
+
 public:
 	void CleanUp()
 	{
@@ -59,5 +62,20 @@ public:
 			RELEASE(libItem[i]);
 		}
 		libItem.clear();
+	}
+
+	bool ContainsPath(std::string path)
+	{
+		for (int i = 0; i < libItem.size(); ++i)
+		{
+			if (libItem[i]->path == path) return true;
+		}
+
+		for (int i = 0; i < children.size(); ++i)
+		{
+			if (children[i]->path == path) return true;
+		}
+
+		return false;
 	}
 };

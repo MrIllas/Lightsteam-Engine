@@ -29,11 +29,12 @@ public:
 	bool IsLoadedToMemory() const;
 	bool LoadToMemory();
 
-	
+	virtual bool ImportToLibrary();
+
 	//virtual void LoadUnique(nlohmann::JsonData data);
 
-	void Save(std::string savePath);
-	void Load(const std::string& path);
+	void Save();
+	bool Load();
 
 protected:
 	virtual nlohmann::JsonData SaveUnique(nlohmann::JsonData data);

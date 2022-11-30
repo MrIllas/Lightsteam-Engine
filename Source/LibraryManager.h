@@ -31,7 +31,7 @@ namespace LibraryManager
 	unsigned int Load(std::string filePath, char** buffer);
 
 	unsigned int Save(std::string filePath, char* data, uint size = 0, bool append = false);
-	unsigned int Copy(std::string filePath, std::string dir, std::string& output);
+	unsigned int Copy(std::string filePath, std::string dir);
 
 	void SaveJSON(std::string filePath, std::string jsonDump);
 	std::string LoadJSON(std::string filePath);

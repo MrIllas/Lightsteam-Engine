@@ -10,6 +10,8 @@
 
 #include "MeshRenderer.h"
 
+#include "ResourceTexture.h"
+
 std::vector<TextureData*> TextureImporter::texturesLoaded;
 
 Texture TextureImporter::checkers;
@@ -101,26 +103,27 @@ Texture TextureImporter::ImportTexture(std::string filePath)
 		txtData->data = ilGetData();
 		glTexImage2D(GL_TEXTURE_2D, 0, IL_RGBA, w, h, 0, IL_RGBA, GL_UNSIGNED_BYTE, txtData->data);
 
-		//Save to Library
-		std::string path = "Library/Textures/";
+		////Save to Library
+		//std::string path = "Library/Textures/";
 
-		//Gives new path
-		size_t pos = filePath.find_last_of("/");
-		path += filePath.substr(pos + 1);
+		////Gives new path
+		//size_t pos = filePath.find_last_of("/");
+		//path += filePath.substr(pos + 1);
 
-		//Changes .png to .dds
-		pos = path.find_last_of(".");
-		path = path.erase(pos + 1);
-		path += "dds";
+		////Changes .png to .dds
+		//pos = path.find_last_of(".");
+		//path = path.erase(pos + 1);
+		//path += "dds";
 
-		SaveTexture(path);
+		////Saves texture to library
+		//SaveTexture(path);
 
 		ilDeleteImages(1, &imgID);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		txtData->texture.w = w;
 		txtData->texture.h = h;
-		txtData->texture.path = path;
+		txtData->texture.path = filePath;
 
 		texturesLoaded.emplace_back(txtData);
 
@@ -150,19 +153,71 @@ int TextureImporter::CheckTexturesLoaded(std::string filePath, Texture& texture)
 	return -1;
 }
 
-void TextureImporter::SaveTexture(std::string filePath)
+//Loads assets image to memory, converts it to dds and saves it to Library
+void TextureImporter::ImportToLibrary(ResourceTexture* res)
 {
-	ILuint size = 0;
-	ILubyte* data = nullptr;
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
-	size = ilSaveL(IL_DDS, nullptr, 0);
+	std::string path = LIB_TEXTURE;
 
-	if (size > 0) {
-		data = new ILubyte[size]; 
-		if (ilSaveL(IL_DDS, data, size) > 0)
-		{
-			LibraryManager::Save(filePath, (char*)data, size);
+	//Transform to Library path
+	////Gives new path
+	path += res->GetUUID();
+	path += ".dds";
+
+	res->SetLibraryFile(path);
+
+	ILuint imgID = 0;
+
+	ilGenImages(1, &imgID);
+	ilBindImage(imgID);
+
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+
+	ILboolean success = ilLoadImage(res->GetAssetsFile().c_str());
+
+	if (success == IL_TRUE)
+	{
+		uint w = ilGetInteger(IL_IMAGE_WIDTH);
+		uint h = ilGetInteger(IL_IMAGE_HEIGHT);
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+
+		BYTE* data = nullptr;
+
+		glGenTextures(1, &imgID);
+		glBindTexture(GL_TEXTURE_2D, imgID);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		data = ilGetData();
+		glTexImage2D(GL_TEXTURE_2D, 0, IL_RGBA, w, h, 0, IL_RGBA, GL_UNSIGNED_BYTE, data);
+
+		//Load to dds
+		ILuint size = 0;
+		ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+		size = ilSaveL(IL_DDS, nullptr, 0);
+
+		if (size > 0) {
+			data = new ILubyte[size]; 
+			if (ilSaveL(IL_DDS, data, size) > 0)
+			{
+				LibraryManager::Save(res->GetLibraryFile(), (char*)data, size);
+			}
 		}
+		else
+		{
+			LOG(LOG_TYPE::ERRO, "ERROR: Could not save image to library '%s'", ilutGetString(ilGetError()));
+		}
+
 		RELEASE_ARRAY(data);
+		ilDeleteImages(1, &imgID);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	else
+	{
+		LOG(LOG_TYPE::ERRO, "ERROR: Could not save image to library '%s'", ilutGetString(ilGetError()));
 	}
 }

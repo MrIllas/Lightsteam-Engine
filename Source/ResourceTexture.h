@@ -20,6 +20,8 @@ public:
 
 	nlohmann::JsonData SaveUnique(nlohmann::JsonData data) override;
 
+	bool ImportToLibrary() override;
+
 	/*void Save(std::string& path) const override;
 	void Load(const std::string& load) override;*/
 

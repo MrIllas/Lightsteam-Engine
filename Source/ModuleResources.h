@@ -43,18 +43,21 @@ public:
 	UpdateStatus PostUpdate();
 
 	std::string Find(std::string assetsFile);
-	std::string ImportFile(std::string assetsFile);
+	void ImportFile(Resource* resource);
 	
 	Resource* RequestResource(std::string uuid);
 	void ReleaseResource(std::string uuid);
 
+
 	void FolderFileCheck(LibraryFolder* folder);
+	void ImportToLibrary(LibraryFolder* folder);
 
 private:
 	RESOURCE_TYPE GetResourceType(std::string extension);
 
 private:
 	Resource* CreateNewResource(std::string assetsPath, RESOURCE_TYPE type);
+	void UnloadResource(Resource* resource);
 
 private:
 	ResourceProperties* resProps = nullptr;

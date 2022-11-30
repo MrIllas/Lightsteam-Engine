@@ -25,6 +25,8 @@ struct TextureData
 
 };
 
+class ResourceTexture;
+
 class TextureImporter
 {
 public:
@@ -33,12 +35,12 @@ public:
 
 	static Texture ImportTexture(std::string filePath);
 
+	static void ImportToLibrary(ResourceTexture* uuid);
+
 private:
 	static int CheckTexturesLoaded(std::string filePath, Texture& texture);
 
 	static void CheckerImage();
-
-	static void SaveTexture(std::string filePath);
 
 public:
 	static Texture checkers;

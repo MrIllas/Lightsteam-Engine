@@ -2,8 +2,8 @@
 
 ResourceTexture::ResourceTexture(std::string uuid) : Resource(uuid, RESOURCE_TYPE::TEXTURE)
 {
-	std::string aux = LIB_TEXTURES;
-	libraryFile = aux;
+	/*std::string aux = LIB_TEXTURES;
+	libraryFile = aux;*/
 
 	width = 0;
 	height = 0;
@@ -19,6 +19,12 @@ ResourceTexture::~ResourceTexture()
 {
 }
 
+bool ResourceTexture::ImportToLibrary()
+{
+
+	return false;
+}
+
 nlohmann::JsonData ResourceTexture::SaveUnique(nlohmann::JsonData data)
 {
 	
@@ -26,12 +32,4 @@ nlohmann::JsonData ResourceTexture::SaveUnique(nlohmann::JsonData data)
 	return data;
 }
 
-//void ResourceTexture::Save(std::string& path) const
-//{
-//
-//}
-//
-//void ResourceTexture::Load(const std::string& load)
-//{
-//
-//}
+

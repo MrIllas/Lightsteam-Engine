@@ -13,7 +13,7 @@
 
 #include "ModuleScene.h"
 #include "LibraryManager.h"
-
+#include "ResourceMesh.h"
 
 MeshImporter::MeshImporter()
 {
@@ -67,6 +67,11 @@ GameObject* MeshImporter::ImportMesh(std::string filePath, GameObject* parent, b
 	if(scene == nullptr && dragAndDrop) LOG(LOG_TYPE::ERRO, "ERROR: Importing file: '%s'", filePath.c_str());
 
 	return toReturn;
+}
+
+void MeshImporter::ImportToLibrary(ResourceMesh* resource)
+{
+
 }
 
 GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent)

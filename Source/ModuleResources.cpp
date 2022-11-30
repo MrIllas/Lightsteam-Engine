@@ -9,6 +9,9 @@
 #include "LibraryManager.h"
 #include "LibraryFolder.h"
 
+#include "TextureImporter.h"
+#include "MeshImporter.h"
+
 #pragma region ResourceProperties
 ResourceProperties::ResourceProperties()
 {
@@ -76,12 +79,13 @@ bool ModuleResources::CleanUp()
 
 UpdateStatus ModuleResources::PreUpdate()
 {
+
+	//Checks if all the files on the current folder have a meta and creates/loads Resources.
 	if (resProps->requestFolderFileCheck)
 	{
 		FolderFileCheck(fsProps->currentFolder);
 		resProps->requestFolderFileCheck = false;
 	}
-
 
 	return UPDATE_CONTINUE;
 }
@@ -106,15 +110,20 @@ std::string ModuleResources::Find(std::string assetsFile)
 	return toReturn;
 }
 
-std::string ModuleResources::ImportFile(std::string assetsFile)
+void ModuleResources::ImportFile(Resource* resource)
 {
-	std::string toReturn = "";
+	//std::string toReturn = "";
 
-	Resource* resource = CreateNewResource(assetsFile, RESOURCE_TYPE::UNKNOWN);
+	//toReturn = resource->GetUUID();
+	//char* buffer = 
+	switch (resource->GetType())
+	{
+		case RESOURCE_TYPE::TEXTURE: TextureImporter::ImportToLibrary((ResourceTexture*)resource); break;
+		case RESOURCE_TYPE::MESH: MeshImporter::ImportToLibrary((ResourceMesh*)resource); break;
+	}
 
+	resource->Save();
 
-
-	return toReturn;
 }
 
 Resource* ModuleResources::RequestResource(std::string uuid)
@@ -143,36 +152,56 @@ Resource* ModuleResources::CreateNewResource(std::string assetsPath, RESOURCE_TY
 
 	if (toReturn != nullptr)
 	{
-		resProps->resources[uuid] = toReturn;
 		toReturn->SetAssetsFile(assetsPath);
-		//Lib path set on asset's constructor
-		//toReturn->SetLibraryFile("");
 	}
 
 	return toReturn;
 }
 
+void ModuleResources::UnloadResource(Resource* resource)
+{
+	std::string uuid = resource->GetUUID();
+
+	RELEASE(resource);
+	resProps->resources.erase(uuid);
+}
+
 void ModuleResources::FolderFileCheck(LibraryFolder* folder)
 {
-
 	for (int i = 0; i < folder->libItem.size(); ++i)
 	{
-		//Check for meta, if it doesn't has meta file, create it.
-		if (!folder->libItem[i]->hasMeta)
+		if (!folder->libItem[i]->hasResourceBeenLoaded)
 		{
-			Resource* r = CreateNewResource(folder->libItem[i]->path, GetResourceType(folder->libItem[i]->extension));
-			if (r == nullptr) continue;
-			folder->libItem[i]->hasMeta = true;
-
-			if (r->GetType() == RESOURCE_TYPE::TEXTURE || r->GetType() == RESOURCE_TYPE::MESH)
+			Resource* res = CreateNewResource(folder->libItem[i]->path, GetResourceType(folder->libItem[i]->extension));
+			//Check for meta, if it doesn't has meta file, create it.
+			if (!folder->libItem[i]->hasMeta)
 			{
-				std::string savePath = folder->libItem[i]->path;
-				savePath += ".meta";
-				r->Save(savePath);
+				//Creates meta and the file inside library
+				folder->libItem[i]->hasMeta = true;
+
+				//ImportFile(folder->libItem[i]->path, GetResourceType(folder->libItem[i]->extension));
+				//folder->libItem[i]->hasMeta = true;
 			}
-			
+			else
+			{
+				//Load meta file
+				//res = CreateNewResource(folder->libItem[i]->path, GetResourceType(folder->libItem[i]->extension));
+				res->Load();
+
+			}
+			ImportFile(res); //Imports to lib
+			resProps->resources[res->GetUUID()] = res;
+
+			folder->libItem[i]->hasResourceBeenLoaded = true;
 		}
-			
+	}
+}
+
+void ModuleResources::ImportToLibrary(LibraryFolder* folder)
+{
+	for (int i = 0; i < folder->libItem.size(); ++i)
+	{
+
 	}
 }
 
@@ -181,12 +210,17 @@ RESOURCE_TYPE ModuleResources::GetResourceType(std::string extension)
 	switch (str2int(extension.c_str()))
 	{
 		case str2int("dds"):
+		case str2int("DDS"):
 		case str2int("png"):
+		case str2int("PNG"):
 		case str2int("tga"):
+		case str2int("TGA"):
 			return RESOURCE_TYPE::TEXTURE;
 		case str2int("fbx"):
+		case str2int("FBX"):
 			return RESOURCE_TYPE::MESH;
 		case str2int("sc"):
+		case str2int("SC"):
 			return RESOURCE_TYPE::SCENE;
 		default:
 			return RESOURCE_TYPE::UNKNOWN;

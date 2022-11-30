@@ -7,6 +7,7 @@ class aiNode;
 class aiScene;
 class Mesh;
 class GameObject;
+class ResourceMesh;
 
 struct Meshe;
 
@@ -20,6 +21,8 @@ public:
 	void CleanUp();
 
 public:
+	static void ImportToLibrary(ResourceMesh* resource);
+
 	static GameObject* ImportMesh(std::string filePath, GameObject* parent = nullptr, bool dragAndDrop = false);
 	
 	static Meshe LoadMesh(std::string filePath);
