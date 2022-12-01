@@ -5,6 +5,7 @@
 
 #define LIB_ROOT "Library";
 #define LIB_MESHES "Library/Meshes";
+#define LIB_MODELS "Library/Models";
 #define LIB_MATERIALS "Library/Materials";
 #define LIB_TEXTURES "Library/Textures";
 #define LIB_SCENES "Library/Scenes";

@@ -6,6 +6,8 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include "GameObject.h"
+
 CompTransform::CompTransform(GameObject* owner, std::string uuid) : Component (owner, uuid)
 {
 	this->type = CO_TYPE::TRANSFORM;
@@ -42,6 +44,25 @@ void CompTransform::UpdateGUI()
 
 float4x4 CompTransform::GetWorldMatrix()
 {
+	float4x4 parentFloat = float4x4::identity;
+	if (owner->parent != nullptr)
+	{
+		CompTransform* parentTransform = owner->parent->GetComponent<CompTransform>(TRANSFORM);
+		if (parentTransform != nullptr)
+		{
+			parentFloat = parentTransform->GetWorldMatrix();
+		}
+	}
+
+	math::Quat q = Quat::FromEulerXYZ(math::DegToRad(rotation.x), math::DegToRad(rotation.y), math::DegToRad(rotation.z));
+	float4x4 toReturn = float4x4::FromTRS(position, q.ToFloat4x4(), localScale);
+	toReturn.Transpose();
+	toReturn = toReturn * parentFloat;
+	return toReturn;
+}
+
+float4x4 CompTransform::GetLocalMatrix()
+{
 	math::Quat q = Quat::FromEulerXYZ(math::DegToRad(rotation.x), math::DegToRad(rotation.y), math::DegToRad(rotation.z));
 	float4x4 toReturn = float4x4::FromTRS(position, q.ToFloat4x4(), localScale);
 	toReturn.Transpose();
@@ -50,6 +71,9 @@ float4x4 CompTransform::GetWorldMatrix()
 
 void CompTransform::SetWorldMatrix(float4x4 matrix)
 {
+	//if (owner->parent != nullptr)
+		
+
 	math::Quat q;
 	matrix.Decompose(position, q, localScale);
 

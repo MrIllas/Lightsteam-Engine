@@ -14,6 +14,7 @@
 #include "ModuleScene.h"
 #include "LibraryManager.h"
 #include "ResourceMesh.h"
+#include "LSUUID.h"
 
 MeshImporter::MeshImporter()
 {
@@ -42,9 +43,8 @@ void MeshImporter::CleanUp()
 GameObject* MeshImporter::ImportMesh(std::string filePath, GameObject* parent, bool dragAndDrop)
 {
 	GameObject* toReturn = nullptr;
-	//ASK - UTF8 Characters not accepted by ASSIMP on the current lib version(2016) but added in 2017 https://github.com/assimp/assimp/issues/1612
 
-	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcess_Triangulate);
+	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_Fast);
 	aiNode* node = nullptr;
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -66,73 +66,131 @@ GameObject* MeshImporter::ImportMesh(std::string filePath, GameObject* parent, b
 
 	if(scene == nullptr && dragAndDrop) LOG(LOG_TYPE::ERRO, "ERROR: Importing file: '%s'", filePath.c_str());
 
+	//Save model
+	/*if (toReturn != nullptr)
+	{
+		std::vector<nlohmann::ordered_json> goPool;
+		SaveGameObjects(toReturn go);
+	}*/
+
 	return toReturn;
 }
 
 void MeshImporter::ImportToLibrary(ResourceMesh* resource)
 {
+	GameObject* parent = nullptr;
 
+	const aiScene* scene = aiImportFile(resource->GetAssetsFile().c_str(), aiProcess_Triangulate | aiProcess_OptimizeMeshes | aiProcess_ValidateDataStructure | aiProcess_FindInstances);
+	aiNode* node = nullptr;
+
+	//Load model from assets
+	if (scene != nullptr && scene->HasMeshes())
+	{
+		LOG(LOG_TYPE::SUCCESS, "IMPORTING MODEL TO LIB: %s", resource->GetAssetsFile().c_str());
+
+		node = scene->mRootNode;
+
+		parent = GenerateGameObjects(node, scene);
+	}
+	
+
+	if (parent != nullptr)
+	{
+		//Save model to Library/Model
+		nlohmann::JsonData data;
+		std::vector<nlohmann::ordered_json> goPool;
+
+		SaveGameObjects(parent, goPool);
+		data.data.emplace("Model", goPool);
+
+		std::string savePath = LIB_MODELS;
+		savePath += "/";
+		savePath += LS_UUID::Generate();
+
+		LibraryManager::SaveJSON(savePath, data.data.dump(4));
+		resource->SetLibraryFile(savePath);	
+	}
+
+	RELEASE(parent);
 }
 
-GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent)
+GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent, std::string* path)
 {
+	bool parentNoMesh = false;
+	//if(parent == nullptr && scene->mNumMeshes > 1) parent = new GameObject(scene->mRootNode->mName.C_Str());
+	
+	GameObject* go = new GameObject(node->mName.C_Str());
 
-	if(parent == nullptr && scene->mNumMeshes > 1) parent = new GameObject(scene->mRootNode->mName.C_Str());
+	//GET SET transform
+	aiMatrix4x4 aiTransform = node->mTransformation;
+	float4x4 fTransform = float4x4(aiTransform[0][0], aiTransform[0][1], aiTransform[0][2], aiTransform[0][3],
+		aiTransform[1][0], aiTransform[1][1], aiTransform[1][2], aiTransform[1][3],
+		aiTransform[2][0], aiTransform[2][1], aiTransform[2][2], aiTransform[2][3],
+		aiTransform[3][0], aiTransform[3][1], aiTransform[3][2], aiTransform[3][3]
+	);
+	go->GetComponent<CompTransform>(TRANSFORM)->SetWorldMatrix(fTransform);
 
-	if (scene->HasMeshes())
+	if (node->mNumMeshes >= 1)
 	{
-		//Meshes
-		for (uint i = 0; i < scene->mNumMeshes; ++i)
+		for (uint i = 0; i < node->mNumMeshes; ++i)
 		{
 			//New Spatial GameObject with MeshRenderer component
-			GameObject* go = new GameObject(node->mChildren[i]->mName.C_Str());
-			go->CreateComponent(MESH_RENDERER);
-			go->CreateComponent(MATERIAL);
+			aiMesh* aimesh = scene->mMeshes[node->mMeshes[i]];
 
-			aiMatrix4x4 aiTransform = node->mChildren[i]->mTransformation;
-			float4x4 fTransform = float4x4(aiTransform[0][0], aiTransform[0][1], aiTransform[0][2], aiTransform[0][3],
-				aiTransform[1][0], aiTransform[1][1], aiTransform[1][2], aiTransform[1][3],
-				aiTransform[2][0], aiTransform[2][1], aiTransform[2][2], aiTransform[2][3],
-				aiTransform[3][0], aiTransform[3][1], aiTransform[3][2], aiTransform[3][3]
-			);
-			go->GetComponent<CompTransform>(TRANSFORM)->SetWorldMatrix(fTransform);
+			GameObject* meshGo = nullptr;
+
+			if (node->mNumMeshes == 1) meshGo = go;
+			else meshGo = new GameObject(aimesh->mName.C_Str());
+
+			meshGo->CreateComponent(MESH_RENDERER);
+			meshGo->CreateComponent(MATERIAL);
+
 			
-			//Add Mesh to the gameObject
+
+
 			Meshe mesh;
 
-			std::string aux = "Library/Meshes/";
-			aux += std::string(node->mChildren[i]->mName.C_Str());
-			aux += ".mh";
-
 			//Checks if the mesh already exists in the engine's CFF
-			if (LibraryManager::Exists(aux))
+			if (path != nullptr && LibraryManager::Exists(*path))
 			{ //Custom File Load
-				mesh = LoadMesh(aux);
+				mesh = LoadMesh(*path);
 			}
 			else
 			{
-				mesh = GenerateMesh(scene->mMeshes[i]);
+				std::string aux = LIB_MESHES;
+				aux += "/";
+				aux += LS_UUID::Generate();
+				aux += ".mh";
+
+				mesh = GenerateMesh(aimesh);
 				SaveMesh(mesh, aux);
 				mesh.path = aux;
 			}
-			
-
 			MeshRenderer* meshRenderer = new MeshRenderer(mesh);
-			go->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
+			meshGo->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
 
-			//Recursivnes
-			if (node->mChildren[i]->mNumChildren > 1)
-			{
-				for (uint i2 = 0; i2 < node->mChildren[i]->mNumChildren; ++i2)
-				{
-					go = GenerateGameObjects(node->mChildren[i]->mChildren[i2], scene, go);
-				}
-			}
-
-			//Add GameObject to it's parent
-			if (parent == nullptr) parent = go;
-			else parent->AddChildren(go);
+			if (node->mNumMeshes != 1) go->AddChildren(meshGo);
 		}
+	}
+
+	//Recursivnes
+	if (node->mNumChildren >= 1)
+	{
+		for (uint k = 0; k < node->mNumChildren; ++k)
+		{
+			GenerateGameObjects(node->mChildren[k], scene, go);
+		}
+	}
+
+	//Add GameObject to it's parent
+	if (parent == nullptr) parent = go;
+	//else if (parent->GetComponent<MeshRenderer>(MESH_RENDERER) == nullptr)
+	//{
+	//	//parent = go;
+	//}
+	else
+	{
+		parent->AddChildren(go);
 	}
 
 	return parent;
@@ -288,4 +346,17 @@ Meshe MeshImporter::LoadMesh(std::string filePath)
 	RELEASE_ARRAY(fileBuffer);
 
 	return mesh;
+}
+
+void MeshImporter::SaveGameObjects(GameObject* go, std::vector<nlohmann::ordered_json>& goPool)
+{
+	goPool.push_back(go->Save());
+
+	if (go->HasChildren())
+	{
+		for (int i = 0; i < go->children.size(); ++i)
+		{
+			SaveGameObjects(go->children[i], goPool);
+		}
+	}
 }

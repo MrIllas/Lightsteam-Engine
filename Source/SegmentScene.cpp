@@ -116,7 +116,7 @@ void SegmentScene::Guizmo(Camera& cam, GameObject* go)
 	float h = segmentSize.y;
 	//Guizmo
 
-	float4x4 aux = transform->GetWorldMatrix();
+	float4x4 aux = transform->GetLocalMatrix();
 
 	ImGuizmo::SetRect(x, y, w, h);
 	if (ImGuizmo::Manipulate(cam.GetViewMatrix(), cam.GetProjectionMatrix(), (ImGuizmo::OPERATION) sceneInstance->GetGuizmoOperation(), ImGuizmo::WORLD, &aux.v[0][0]))

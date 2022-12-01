@@ -266,7 +266,12 @@ nlohmann::ordered_json GameObject::Save()
 		aux.push_back(comp.second->Save());
 	}
 	data.data.emplace("Components", aux);
-	LibraryManager::SaveJSON("Library/JsonTest.go", data.data.dump(4)); 
+
+	/*std::string savePath = LIB_MODELS;
+	savePath += "/";
+	savePath += this->uuid;
+
+	LibraryManager::SaveJSON(savePath, data.data.dump(4)); */
 
 	return data.data;
 }

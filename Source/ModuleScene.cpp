@@ -118,11 +118,11 @@ bool ModuleScene::Init()
 bool ModuleScene::Start()
 {
 	////Import Example mesh & texture
-	//GameObject* aux = MeshImporter::ImportMesh("Assets/BakerHouse.fbx");
-	//GameObject* aux = MeshImporter::ImportMesh("Assets/street/street2.fbx");
-	/*std::vector<GameObject*> vGO = aux->GetChildrens();
+	GameObject* aux = MeshImporter::ImportMesh("Assets/BakerHouse.fbx");
+	//GameObject* aux = MeshImporter::ImportMesh("Assets/street/Street environment_V01.FBX");
+	//std::vector<GameObject*> vGO = aux->GetChildrens();
 
-	for (int i = 0; i < vGO.size(); ++i)
+	/*for (int i = 0; i < vGO.size(); ++i)
 	{
 		vGO[i]->GetComponent<CompTexture>(MATERIAL)->SetTexture
 		(TextureImporter::ImportTexture("Assets/street/Building_V01_C.png"));
@@ -233,19 +233,6 @@ void ModuleScene::SceneControls()
 }
 
 #pragma region Save/Load Settings
-void SaveGameObjects(GameObject* go, std::vector<nlohmann::ordered_json>& goPool)
-{
-	goPool.push_back(go->Save());
-
-	if (go->HasChildren())
-	{
-		for (int i = 0; i < go->children.size(); ++i)
-		{
-			SaveGameObjects(go->children[i], goPool);
-		}
-	}
-}
-
 void LoadGameObjects()
 {
 
@@ -257,7 +244,7 @@ void ModuleScene::SaveScene()
 
 	//GO
 	std::vector<nlohmann::ordered_json> goPool;
-	SaveGameObjects(sProps->root, goPool);
+	MeshImporter::SaveGameObjects(sProps->root, goPool);
 
 	data.data.emplace("GameObjects", goPool);
 

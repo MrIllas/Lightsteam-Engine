@@ -33,12 +33,19 @@ void LibraryManager::GenerateLibrary()
 {
 	std::string aux = LIB_ROOT;
 	CreateDir(aux);
+
 	aux = LIB_MESHES;
 	CreateDir(aux);
+
 	aux = LIB_MATERIALS;
 	CreateDir(aux);
+
+	aux = LIB_MODELS;
+	CreateDir(aux);
+
 	aux = LIB_TEXTURES;
 	CreateDir(aux);
+
 	aux = LIB_SCENES;
 	CreateDir(aux);
 }
