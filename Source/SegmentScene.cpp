@@ -3,6 +3,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
+#include "ModuleResources.h"
 #include "FrameBuffer.h"
 
 #include "Camera.h"
@@ -14,6 +15,10 @@
 
 #include "ImGuizmo/ImGuizmo.h"
 
+#include "LibraryFolder.h"
+#include "ResourceMesh.h"
+#include "MeshImporter.h"
+
 SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 {
 	name = "Scene";
@@ -22,6 +27,7 @@ SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
 	camInstance = CameraProperties::Instance();
 	sceneInstance = SceneProperties::Instance();
 	editorInstance = EditorProperties::Instance();
+	resourceInstance = ResourceProperties::Instance();
 }
 
 SegmentScene::~SegmentScene()
@@ -97,6 +103,7 @@ void SegmentScene::RenderSpace()
 
 	ImTextureID texID = (ImTextureID)camInstance->editorCamera.renderer->GetFrameBufffer()->GetTextureBuffer();
 	ImGui::Image(texID, segmentSize, ImVec2(0, 1), ImVec2(1, 0));
+	DropTarget();
 }
 
 void SegmentScene::Guizmo(Camera& cam, GameObject* go)
@@ -125,4 +132,25 @@ void SegmentScene::Guizmo(Camera& cam, GameObject* go)
 		transform->SetWorldMatrix(aux);
 	}
 		
+}
+
+void SegmentScene::DropTarget()
+{
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentBrowserItem"))
+		{
+			IM_ASSERT(payload->DataSize == sizeof(LibraryItem));
+			const LibraryItem item = *static_cast<const LibraryItem*>(payload->Data);
+
+			if (item.extension.compare("fbx"))
+			{
+				ResourceMesh* res = (ResourceMesh*) resourceInstance->resources[item.resUuid];
+			}
+
+			
+		}
+
+		ImGui::EndDragDropTarget();
+	}
 }

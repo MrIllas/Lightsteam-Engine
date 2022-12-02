@@ -170,7 +170,7 @@ void ModuleResources::FolderFileCheck(LibraryFolder* folder)
 {
 	for (int i = 0; i < folder->libItem.size(); ++i)
 	{
-		if (!folder->libItem[i]->hasResourceBeenLoaded)
+		if (folder->libItem[i]->resUuid.empty())
 		{
 			Resource* res = CreateNewResource(folder->libItem[i]->path, GetResourceType(folder->libItem[i]->extension));
 			//Check for meta, if it doesn't has meta file, create it.
@@ -194,7 +194,7 @@ void ModuleResources::FolderFileCheck(LibraryFolder* folder)
 			if (res->GetLibraryFile().empty() || !LibraryManager::Exists(res->GetLibraryFile())) ImportFile(res); //Imports to lib
 			resProps->resources[res->GetUUID()] = res;
 
-			folder->libItem[i]->hasResourceBeenLoaded = true;
+			folder->libItem[i]->resUuid = res->GetUUID();
 		}
 	}
 }

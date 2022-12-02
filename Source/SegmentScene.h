@@ -5,6 +5,7 @@
 struct CameraProperties;
 struct SceneProperties;
 struct EditorProperties;
+struct ResourceProperties;
 
 class Camera;
 class GameObject;
@@ -23,11 +24,14 @@ private:
 	void RenderSpace();
 	void Guizmo(Camera& cam, GameObject* go);
 
+	void DropTarget();
+
 private:
 	ImVec2 segmentSize;
 
 	CameraProperties* camInstance = nullptr;
 	SceneProperties* sceneInstance = nullptr;
 	EditorProperties* editorInstance = nullptr;
+	ResourceProperties* resourceInstance = nullptr;
 };
 

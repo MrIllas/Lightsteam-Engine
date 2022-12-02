@@ -5,6 +5,7 @@
 
 struct LibraryItem
 {
+public:
 	LibraryItem(std::string path, std::string name, std::string extension, bool hasMeta)
 	{
 		this->path = path;
@@ -18,11 +19,18 @@ struct LibraryItem
 			crudePath = path.erase(pos + 1);
 	}
 	bool hasMeta = false;
-	bool hasResourceBeenLoaded = false;
+	std::string resUuid = "";
 	std::string path;
 	std::string crudePath;
 	std::string name;
 	std::string extension;
+
+
+	std::string GetMeta() const 
+	{
+		std::string toReturn = path;
+		return toReturn += ".meta";
+	}
 };
 
 class LibraryFolder
