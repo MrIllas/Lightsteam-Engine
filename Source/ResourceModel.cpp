@@ -4,8 +4,8 @@
 
 ResourceModel::ResourceModel(std::string uuid) : Resource(uuid, RESOURCE_TYPE::MODEL)
 {
-	meshRendererMap = new std::map<std::string, MeshRenderer*>();
-	meshCCF = new std::map<std::string, std::string>();
+	meshRendererMap = new std::map<std::string, SubMeshResource*>();
+	//meshCCF = new std::map<std::string, std::string>();
 }
 
 ResourceModel::~ResourceModel()
@@ -15,10 +15,23 @@ ResourceModel::~ResourceModel()
 
 void ResourceModel::CleanInstance()
 {
-	if (meshCCF != nullptr) meshCCF->clear();
-	RELEASE(meshCCF);
+	//if (meshCCF != nullptr) meshCCF->clear();
+	//RELEASE(meshCCF);
 
-	CleanMeshRendererMap();
+	if (meshRendererMap != nullptr)
+	{
+		for (auto const& mesh : *meshRendererMap)
+		{
+			if (mesh.second != nullptr)
+			{
+				RELEASE(meshRendererMap->at(mesh.first)->meshRenderer);
+				RELEASE(meshRendererMap->at(mesh.first));
+			}
+		}
+	}
+	
+	meshRendererMap->clear(); //Not releasin SubMeshResource* only Mesh Renderer!!!
+	RELEASE(meshRendererMap)
 }
 
 void ResourceModel::CleanMeshRendererMap()
@@ -31,26 +44,23 @@ void ResourceModel::CleanMeshRendererMap()
 		{
 			if (mesh.second != nullptr)
 			{
-				RELEASE(meshRendererMap->at(mesh.first));
+				RELEASE(meshRendererMap->at(mesh.first)->meshRenderer);
+				meshRendererMap->at(mesh.first)->referenceCount = 0;
 			}
 		}
-
-		meshRendererMap->clear();
 	}
-	
-	RELEASE(meshRendererMap);
 }
 
 nlohmann::JsonData ResourceModel::SaveUnique(nlohmann::JsonData data)
 {
 	std::vector<nlohmann::ordered_json> aux;
 	
-	for (auto const& mesh : *meshCCF)
+	for (auto const& mesh : *meshRendererMap)
 	{
 		nlohmann::JsonData meshData;
 
 		meshData.SetString("Uuid", mesh.first);
-		meshData.SetString("Library Path", mesh.second);
+		meshData.SetString("Library Path", mesh.second->libPath);
 
 		aux.emplace_back(meshData.data);
 	}
@@ -66,6 +76,8 @@ void ResourceModel::LoadUnique(nlohmann::JsonData data)
 
 	aux = data.data["Model Meshes"].get<nlohmann::ordered_json>();
 
+	if (meshRendererMap == nullptr) meshRendererMap = new std::map<std::string, SubMeshResource*>();
+
 	if (aux.size() > 0)
 	{
 		for (int i = 0; i < aux.size(); ++i)
@@ -73,7 +85,11 @@ void ResourceModel::LoadUnique(nlohmann::JsonData data)
 			nlohmann::JsonData meshData;
 			meshData.data = aux.at(i);
 
-			meshCCF->emplace(meshData.GetString("Uuid"), meshData.GetString("Library Path"));
+			SubMeshResource* subRes = new SubMeshResource();
+			subRes->libPath = meshData.GetString("Library Path");
+
+
+			meshRendererMap->emplace(meshData.GetString("Uuid"), subRes);
 		}
 	}
 }

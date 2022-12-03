@@ -14,6 +14,9 @@
 
 #include "MeshImporter.h"
 
+#include "ModuleResources.h"
+#include "ResourceModel.h"
+
 CompMeshRenderer::CompMeshRenderer(GameObject* owner, std::string uuid) : Component(owner, uuid)
 {
 	this->type = CO_TYPE::MESH_RENDERER;
@@ -134,7 +137,8 @@ nlohmann::ordered_json CompMeshRenderer::SaveUnique(nlohmann::JsonData data)
 {
 	if (mesh != nullptr)
 	{
-		data.SetString("Path", mesh->mesh.path);
+		data.SetString("Mesh Uuid", mesh->uuid);
+		data.SetString("Model Uuid", mesh->modelUuid);
 	}
 	
 	data.SetInt("Normals", (int) normals);
@@ -145,8 +149,11 @@ nlohmann::ordered_json CompMeshRenderer::SaveUnique(nlohmann::JsonData data)
 
 void CompMeshRenderer::LoadUnique(nlohmann::JsonData data)
 {
-	std::string meshToLoad(data.GetString("Path"));
-	mesh = new MeshRenderer(MeshImporter::LoadMesh(meshToLoad));
+	std::string meshToLoad(data.GetString("Mesh Uuid"));
+	std::string modelToLoad(data.GetString("Model Uuid"));
+
+	ResourceModel* model = (ResourceModel*)ResourceProperties::Instance()->resources[modelToLoad];
+	mesh = MeshImporter::ImportMeshFromLibrary(model, meshToLoad);
 
 	normals = (Debug_Normals) data.GetInt("Normals");
 	SetNormalsString();

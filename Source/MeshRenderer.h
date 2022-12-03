@@ -89,6 +89,9 @@ public:
 public:
 	Meshe mesh;
 
+	std::string modelUuid;
+	std::string uuid;
+
 private:
 	uint VAO;
 	uint VBO;

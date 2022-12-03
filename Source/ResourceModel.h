@@ -4,6 +4,14 @@
 
 class MeshRenderer;
 
+
+struct SubMeshResource
+{
+	MeshRenderer* meshRenderer = nullptr;
+	uint referenceCount = 0;
+	std::string libPath;
+};
+
 class ResourceModel : public Resource
 {
 public:
@@ -21,7 +29,7 @@ protected:
 	void LoadUnique(nlohmann::JsonData data) override;
 public:
 	//For some reason this two maps require to be pointers or otherwise they leave memory leaks.
-	std::map<std::string, MeshRenderer*>* meshRendererMap;
-	std::map<std::string, std::string> *meshCCF = nullptr; //UUID, CFF 
+	std::map<std::string, SubMeshResource*>* meshRendererMap;
+	//std::map<std::string, std::string> *meshCCF = nullptr; //UUID, CFF 
 };
 

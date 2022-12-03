@@ -16,6 +16,7 @@
 #include "ResourceModel.h"
 #include "LSUUID.h"
 
+
 MeshImporter::MeshImporter()
 {
 
@@ -73,6 +74,30 @@ GameObject* MeshImporter::ImportMesh(std::string filePath, GameObject* parent, b
 		std::vector<nlohmann::ordered_json> goPool;
 		SaveGameObjects(toReturn go);
 	}*/
+
+	return toReturn;
+}
+
+MeshRenderer* MeshImporter::ImportMeshFromLibrary(ResourceModel* model, std::string meshUuid)
+{
+	MeshRenderer* toReturn = nullptr;
+	SubMeshResource* subMesh = model->meshRendererMap->at(meshUuid);
+	if (subMesh != nullptr)
+	{
+		subMesh->referenceCount++;
+
+		//Id the MeshRenderer == nullptr means that the model is not loaded
+		if (subMesh->meshRenderer == nullptr)
+		{
+			subMesh->meshRenderer = new MeshRenderer(MeshImporter::LoadMesh(subMesh->libPath));
+			LOG(LOG_TYPE::ATTENTION, "Loading new mesh to memory.");
+		}
+		else LOG(LOG_TYPE::SUCCESS, "This mesh is already loaded. Current copies: %i", subMesh->referenceCount);
+			
+
+		toReturn = subMesh->meshRenderer;
+
+	}
 
 	return toReturn;
 }
@@ -220,10 +245,18 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 			MeshRenderer* meshRenderer = new MeshRenderer(mesh);
 			meshGo->GetComponent<CompMeshRenderer>(MESH_RENDERER)->SetMesh(meshRenderer);
 
+			meshRenderer->uuid = uuid;
+			meshRenderer->modelUuid = resource->GetUUID();
+
 			//Store mesh in ModelResource
 			if (resource != nullptr) {
-				resource->meshRendererMap->emplace(uuid, meshRenderer);
-				resource->meshCCF->emplace(uuid, aux);
+				SubMeshResource* subRes = new SubMeshResource();
+				subRes->libPath = aux;
+				subRes->referenceCount++;
+				subRes->meshRenderer = meshRenderer;
+				//resource->meshRendererMap->emplace(uuid, meshRenderer);
+				resource->meshRendererMap->emplace(uuid, subRes);
+				//resource->meshCCF->emplace(uuid, aux);
 			}
 			if (node->mNumMeshes != 1) go->AddChildren(meshGo);
 		}

@@ -10,6 +10,7 @@ class aiScene;
 class Mesh;
 class GameObject;
 class ResourceModel;
+class MeshRenderer;
 
 struct Meshe;
 
@@ -23,6 +24,7 @@ public:
 	void CleanUp();
 
 public:
+	static MeshRenderer* ImportMeshFromLibrary(ResourceModel* model, std::string meshUuid);
 	static void ImportToLibrary(ResourceModel* resource);
 	static GameObject* ImportFromLibrary(ResourceModel* resource);
 
