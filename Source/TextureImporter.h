@@ -11,6 +11,7 @@ typedef unsigned int uint;
 
 struct Texture {
 	unsigned int id;
+	std::string resUuid;
 	std::string path;
 	uint w, h;
 };
@@ -33,19 +34,17 @@ public:
 	TextureImporter();
 	~TextureImporter();
 
-	static Texture ImportTexture(std::string filePath);
+	static TextureData* ImportTexture(std::string filePath);
 
-	static void ImportToLibrary(ResourceTexture* uuid);
+	static Texture ImportFromLibrary(ResourceTexture* resource);
+	static void ImportToLibrary(ResourceTexture* resource);
 
 private:
-	static int CheckTexturesLoaded(std::string filePath, Texture& texture);
 
 	static void CheckerImage();
 
 public:
 	static Texture checkers;
-private:
-	static std::vector<TextureData*> texturesLoaded;
 
 	
 };

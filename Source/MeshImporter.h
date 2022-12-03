@@ -9,7 +9,7 @@ class aiNode;
 class aiScene;
 class Mesh;
 class GameObject;
-class ResourceMesh;
+class ResourceModel;
 
 struct Meshe;
 
@@ -23,7 +23,8 @@ public:
 	void CleanUp();
 
 public:
-	static void ImportToLibrary(ResourceMesh* resource);
+	static void ImportToLibrary(ResourceModel* resource);
+	static GameObject* ImportFromLibrary(ResourceModel* resource);
 
 	static GameObject* ImportMesh(std::string filePath, GameObject* parent = nullptr, bool dragAndDrop = false);
 	
@@ -33,7 +34,7 @@ public:
 
 private:
 	static Meshe GenerateMesh(aiMesh* mesh);
-	static GameObject* GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent = nullptr, std::string* path = nullptr);
+	static GameObject* GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent = nullptr, ResourceModel* resource = nullptr);
 	static void SaveMesh(Meshe mesh, std::string filePath);
 	
 };

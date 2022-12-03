@@ -27,10 +27,10 @@ CompMeshRenderer::CompMeshRenderer(GameObject* owner, std::string uuid) : Compon
 
 CompMeshRenderer::~CompMeshRenderer()
 {
-	if (mesh != nullptr)
+	/*if (mesh != nullptr)
 	{
 		RELEASE(mesh);
-	}
+	}*/
 }
 
 void CompMeshRenderer::Update()

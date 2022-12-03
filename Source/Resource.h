@@ -7,6 +7,7 @@ enum class RESOURCE_TYPE
 {
 	TEXTURE,
 	MESH,
+	MODEL,
 	SCENE,
 	UNKNOWN
 };
@@ -26,19 +27,26 @@ public:
 	std::string GetLibraryFile() const { return libraryFile; }
 	void SetLibraryFile(std::string path) { libraryFile = path; }
 
-	bool IsLoadedToMemory() const;
-	bool LoadToMemory();
+	virtual bool IsLoadedToMemory();
+	virtual bool LoadToMemory();
 
-	virtual bool ImportToLibrary();
-
-	//virtual void LoadUnique(nlohmann::JsonData data);
+	void IncreaseRC() { ++referenceCount; }
+	void DecreaseRC() 
+	{ 
+		--referenceCount; 
+		CleanInstance();
+	}
+	uint GetRC() { return referenceCount; }
 
 	void Save();
 	bool Load();
 
+	//Called by resources when the reference count is 0. Unloads
+	virtual void CleanInstance();
+
 protected:
 	virtual nlohmann::JsonData SaveUnique(nlohmann::JsonData data);
-
+	virtual void LoadUnique(nlohmann::JsonData data);
 protected:
 	std::string uuid;
 	std::string assetsFile;
@@ -46,7 +54,6 @@ protected:
 	
 	RESOURCE_TYPE type = RESOURCE_TYPE::UNKNOWN;
 	
-public:
 	uint referenceCount = 0;
 };
 

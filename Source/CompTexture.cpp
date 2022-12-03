@@ -6,6 +6,10 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include "ModuleResources.h"
+#include "ResourceTexture.h"
+#include "LibraryFolder.h"
+
 CompTexture::CompTexture(GameObject* owner, std::string uuid) : Component(owner, uuid)
 {
 	this->type = MATERIAL;
@@ -37,10 +41,12 @@ void CompTexture::UpdateGUI()
 	//Texture Path
 	ImGui::NewLine();
 	std::string txt = "Texture Path: ";
-	if (this->texture.w == 0 && this->texture.h == 0 && !isCheckers) txt += "No texture loaded, using debug texture";
-	else if (!isCheckers) txt += texture.path;
+	if (this->texture.id == 0 && !isCheckers) txt += "No texture loaded, using debug texture";
+	else if (!isCheckers) txt += this->texture.path;
 	else txt += checkersTexture.path;
 	ImGui::Text(txt.c_str());
+
+	TextureDrop();
 
 	//Texture Width and Height
 	txt = "Size: ";
@@ -63,6 +69,28 @@ void CompTexture::UpdateGUI()
 	if (isCheckers || (this->texture.w == 0 && this->texture.h)) txt += std::to_string(checkersTexture.id);
 	else txt += std::to_string(texture.id);
 	ImGui::Text(txt.c_str());
+}
+
+void CompTexture::TextureDrop()
+{
+	ImGui::ImageButton((ImTextureID)texture.id, { 100, 100 });
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentBrowserItem"))
+		{
+			IM_ASSERT(payload->DataSize == sizeof(LibraryItem));
+			const LibraryItem item = *static_cast<const LibraryItem*>(payload->Data);
+
+			ResourceTexture* res = (ResourceTexture*)ResourceProperties::Instance()->resources[item.resUuid];
+
+			if (!texture.resUuid.empty()) //Decrease current RC
+				ResourceProperties::Instance()->resources[texture.resUuid]->DecreaseRC(); 
+
+			this->texture = TextureImporter::ImportFromLibrary(res);
+
+		}
+	}
 }
 
 void CompTexture::SetTexture(Texture texture)
@@ -96,7 +124,7 @@ nlohmann::ordered_json CompTexture::SaveUnique(nlohmann::JsonData data)
 void CompTexture::LoadUnique(nlohmann::JsonData data)
 {
 	std::string texToLoad(data.GetString("Path"));
-	texture = TextureImporter::ImportTexture(texToLoad);
+	//texture = TextureImporter::ImportTexture(texToLoad);
 
 	isCheckers = data.GetBool("Checkers");
 }

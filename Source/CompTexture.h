@@ -23,6 +23,9 @@ public:
 	void SetTexture(unsigned int id, std::string path);
 
 private:
+	void TextureDrop();
+
+private:
 	Texture texture;
 	Texture checkersTexture;
 

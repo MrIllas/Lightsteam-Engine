@@ -5,7 +5,7 @@
 #include "LSUUID.h"
 
 #include "ResourceTexture.h"
-#include "ResourceMesh.h"
+#include "ResourceModel.h"
 #include "LibraryManager.h"
 #include "LibraryFolder.h"
 
@@ -69,6 +69,7 @@ bool ModuleResources::CleanUp()
 		if (res.second != nullptr)
 		{
 			res.second->Save(); //Save just in case
+			res.second->CleanInstance();
 			RELEASE(resProps->resources[res.first]);
 		}
 	}
@@ -120,22 +121,10 @@ void ModuleResources::ImportFile(Resource* resource)
 	switch (resource->GetType())
 	{
 		case RESOURCE_TYPE::TEXTURE: TextureImporter::ImportToLibrary((ResourceTexture*)resource); break;
-		case RESOURCE_TYPE::MESH: MeshImporter::ImportToLibrary((ResourceMesh*)resource); break;
+		case RESOURCE_TYPE::MODEL: MeshImporter::ImportToLibrary((ResourceModel*)resource); break;
 	}
 
 	resource->Save();
-}
-
-Resource* ModuleResources::RequestResource(std::string uuid)
-{
-	std::map<std::string, Resource*>::iterator it = resProps->resources.find(uuid);
-	if (it != resProps->resources.end())
-	{
-		it->second->referenceCount++;
-		return it->second;
-	}
-
-	return nullptr; //Should try to load from Library.
 }
 
 Resource* ModuleResources::CreateNewResource(std::string assetsPath, RESOURCE_TYPE type)
@@ -146,7 +135,7 @@ Resource* ModuleResources::CreateNewResource(std::string assetsPath, RESOURCE_TY
 	switch (type)
 	{
 		case RESOURCE_TYPE::TEXTURE: toReturn = new ResourceTexture(uuid); break;
-		case RESOURCE_TYPE::MESH: toReturn = new ResourceMesh(uuid); break;
+		case RESOURCE_TYPE::MODEL: toReturn = new ResourceModel(uuid); break;
 		default: toReturn = new Resource(uuid, RESOURCE_TYPE::UNKNOWN); break;
 	}
 
@@ -220,6 +209,10 @@ RESOURCE_TYPE ModuleResources::GetResourceType(std::string extension)
 			return RESOURCE_TYPE::TEXTURE;
 		case str2int("fbx"):
 		case str2int("FBX"):
+		case str2int("dae"):
+		case str2int("DAE"):
+			return RESOURCE_TYPE::MODEL;
+		case str2int("mh"):
 			return RESOURCE_TYPE::MESH;
 		case str2int("sc"):
 		case str2int("SC"):

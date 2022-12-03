@@ -1,28 +1,24 @@
 #include "ResourceTexture.h"
 
+#include "TextureImporter.h"
+
 ResourceTexture::ResourceTexture(std::string uuid) : Resource(uuid, RESOURCE_TYPE::TEXTURE)
 {
 	/*std::string aux = LIB_TEXTURES;
 	libraryFile = aux;*/
-
-	width = 0;
-	height = 0;
-	depth = 0;
-	mips = 0;
-	bytes = 0;
-	gpu_id = 0;
-
-	format = TEXTURE_FORMAT::UNKNOWN;
 }
 
 ResourceTexture::~ResourceTexture()
 {
+	
 }
 
-bool ResourceTexture::ImportToLibrary()
+void ResourceTexture::CleanInstance()
 {
-
-	return false;
+	if (texture != nullptr)
+	{
+		RELEASE(texture);
+	}
 }
 
 nlohmann::JsonData ResourceTexture::SaveUnique(nlohmann::JsonData data)

@@ -45,7 +45,6 @@ public:
 	std::string Find(std::string assetsFile);
 	void ImportFile(Resource* resource);
 	
-	Resource* RequestResource(std::string uuid);
 	void ReleaseResource(std::string uuid);
 
 

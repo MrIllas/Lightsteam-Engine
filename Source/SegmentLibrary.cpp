@@ -127,12 +127,20 @@ void SegmentLibrary::BoxView()
 						break;
 				}
 			}
-			
+			if (ImGui::IsItemHovered())
+			{ //Hover tooltip
+				ImGui::SetTooltip(currentFolder->libItem[k]->name.c_str());
+			}
+
+
 			//Drag
 			if (ImGui::BeginDragDropSource())
 			{
 				ImGui::SetDragDropPayload("ContentBrowserItem", currentFolder->libItem[k], sizeof(LibraryItem));
-				ImGui::Text(currentFolder->libItem[k]->name.c_str());
+				
+				std::string tooltip = "Dragging ";
+				tooltip += currentFolder->libItem[k]->name;
+				ImGui::Text(tooltip.c_str());
 
 				ImGui::EndDragDropSource();
 			}

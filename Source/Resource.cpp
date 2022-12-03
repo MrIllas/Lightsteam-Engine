@@ -8,7 +8,7 @@ Resource::Resource(std::string uuid, RESOURCE_TYPE type)
 
 Resource::~Resource()
 {
-
+	CleanInstance();
 }
 
 RESOURCE_TYPE Resource::GetType() const
@@ -21,7 +21,7 @@ std::string Resource::GetUUID() const
 	return this->uuid;
 }
 
-bool Resource::IsLoadedToMemory() const
+bool Resource::IsLoadedToMemory()
 {
 
 	return false;
@@ -33,16 +33,20 @@ bool Resource::LoadToMemory()
 	return false;
 }
 
+void Resource::CleanInstance()
+{
+
+}
+
 nlohmann::JsonData Resource::SaveUnique(nlohmann::JsonData data)
 {
 	
 	return data;
 }
 
-bool Resource::ImportToLibrary()
+void Resource::LoadUnique(nlohmann::JsonData data)
 {
 
-	return false;
 }
 
 void Resource::Save()
@@ -83,6 +87,8 @@ bool Resource::Load()
 	libraryFile = data.GetString("Library Filepath");
 	uuid = data.GetString("UUID");
 	type = (RESOURCE_TYPE) data.GetInt("Type");
+
+	LoadUnique(data);
 
 	RELEASE(buffer);
 

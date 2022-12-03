@@ -16,7 +16,7 @@
 #include "ImGuizmo/ImGuizmo.h"
 
 #include "LibraryFolder.h"
-#include "ResourceMesh.h"
+#include "ResourceModel.h"
 #include "MeshImporter.h"
 
 SegmentScene::SegmentScene(bool enabled) : Segment(enabled)
@@ -143,9 +143,21 @@ void SegmentScene::DropTarget()
 			IM_ASSERT(payload->DataSize == sizeof(LibraryItem));
 			const LibraryItem item = *static_cast<const LibraryItem*>(payload->Data);
 
-			if (item.extension.compare("fbx"))
+			switch (str2int(item.extension.c_str()))
 			{
-				ResourceMesh* res = (ResourceMesh*) resourceInstance->resources[item.resUuid];
+				case str2int("FBX"):
+				case str2int("fbx"):
+				case str2int("DAE"):
+				case str2int("dae"):
+
+					ResourceModel* res = (ResourceModel*)resourceInstance->resources[item.resUuid];
+
+					GameObject* go = MeshImporter::ImportFromLibrary(res);
+
+					//res.I
+
+					sceneInstance->root->AddChildren(go);
+					break;
 			}
 
 			

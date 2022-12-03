@@ -12,8 +12,6 @@
 
 #include "ResourceTexture.h"
 
-std::vector<TextureData*> TextureImporter::texturesLoaded;
-
 Texture TextureImporter::checkers;
 
 TextureImporter::TextureImporter()
@@ -23,11 +21,7 @@ TextureImporter::TextureImporter()
 
 TextureImporter::~TextureImporter()
 {
-	for (int i = 0; i < texturesLoaded.size(); ++i)
-	{
-		RELEASE(texturesLoaded[i]);
-	}
-	texturesLoaded.clear();
+	
 }
 
 void TextureImporter::CheckerImage()
@@ -62,15 +56,15 @@ void TextureImporter::CheckerImage()
 }
 
 
-Texture TextureImporter::ImportTexture(std::string filePath)
+TextureData* TextureImporter::ImportTexture(std::string filePath)
 {
 	Texture auxText;
-	int checkTxt = CheckTexturesLoaded(filePath, auxText);
+	/*int checkTxt = CheckTexturesLoaded(filePath, auxText);
 	if (checkTxt > -1)
 	{
 		LOG(LOG_TYPE::ATTENTION, "ATTENTION: The image '%s' was already imported, loading it from memory.", filePath.c_str());
 		return auxText;
-	}
+	}*/
 
 	ILuint imgID = 0;
 
@@ -103,21 +97,6 @@ Texture TextureImporter::ImportTexture(std::string filePath)
 		txtData->data = ilGetData();
 		glTexImage2D(GL_TEXTURE_2D, 0, IL_RGBA, w, h, 0, IL_RGBA, GL_UNSIGNED_BYTE, txtData->data);
 
-		////Save to Library
-		//std::string path = "Library/Textures/";
-
-		////Gives new path
-		//size_t pos = filePath.find_last_of("/");
-		//path += filePath.substr(pos + 1);
-
-		////Changes .png to .dds
-		//pos = path.find_last_of(".");
-		//path = path.erase(pos + 1);
-		//path += "dds";
-
-		////Saves texture to library
-		//SaveTexture(path);
-
 		ilDeleteImages(1, &imgID);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -125,45 +104,53 @@ Texture TextureImporter::ImportTexture(std::string filePath)
 		txtData->texture.h = h;
 		txtData->texture.path = filePath;
 
-		texturesLoaded.emplace_back(txtData);
-
 		if (checkers.id == 0) CheckerImage();
 
-		return txtData->texture;
+		return txtData;
 	}
 	else
 	{
 		LOG(LOG_TYPE::ERRO, "ERROR: Could not load Texture '%s'", ilutGetString(ilGetError()));
 	}
 	
-	return checkers;
+	//return checkers;
+	return nullptr;
 }
 
-int TextureImporter::CheckTexturesLoaded(std::string filePath, Texture& texture)
+Texture TextureImporter::ImportFromLibrary(ResourceTexture* resource)
 {
-	for (int i = 0; i < texturesLoaded.size(); ++i)
+	//Increase Reference Count
+	resource->IncreaseRC();
+
+	TextureData* toReturn;
+	//Check if it has been already loaded
+	if (resource->GetRC() > 1)
 	{
-		if (!texturesLoaded[i]->texture.path.compare(filePath))
-		{
-			texture = texturesLoaded[i]->texture;
-			return texturesLoaded[i]->texture.id;
-		}
+		LOG(LOG_TYPE::SUCCESS, "This texture is already loaded. Current copies: %i", resource->GetRC());
+		toReturn = resource->texture;
+	}
+	else
+	{
+		//LOG(LOG_TYPE::ATTENTION, "Loading new texture to memory.");
+		resource->texture = ImportTexture(resource->GetLibraryFile());
+		resource->texture->texture.resUuid = resource->GetUUID(); //Assign the res uuid to the texture.
+		toReturn = resource->texture;
 	}
 
-	return -1;
+	return toReturn->texture;
 }
 
 //Loads assets image to memory, converts it to dds and saves it to Library
-void TextureImporter::ImportToLibrary(ResourceTexture* res)
+void TextureImporter::ImportToLibrary(ResourceTexture* resource)
 {
 	std::string path = LIB_TEXTURE;
 
 	//Transform to Library path
 	////Gives new path
-	path += res->GetUUID();
+	path += resource->GetUUID();
 	path += ".dds";
 
-	res->SetLibraryFile(path);
+	resource->SetLibraryFile(path);
 
 	ILuint imgID = 0;
 
@@ -173,7 +160,7 @@ void TextureImporter::ImportToLibrary(ResourceTexture* res)
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
-	ILboolean success = ilLoadImage(res->GetAssetsFile().c_str());
+	ILboolean success = ilLoadImage(resource->GetAssetsFile().c_str());
 
 	if (success == IL_TRUE)
 	{
@@ -204,7 +191,7 @@ void TextureImporter::ImportToLibrary(ResourceTexture* res)
 			data = new ILubyte[size]; 
 			if (ilSaveL(IL_DDS, data, size) > 0)
 			{
-				LibraryManager::Save(res->GetLibraryFile(), (char*)data, size);
+				LibraryManager::Save(resource->GetLibraryFile(), (char*)data, size);
 			}
 		}
 		else

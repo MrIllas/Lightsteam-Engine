@@ -268,7 +268,7 @@
     <ClCompile Include="ModuleResources.cpp">
       <Filter>Source\Core\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceMesh.cpp">
+    <ClCompile Include="ResourceModel.cpp">
       <Filter>Source\Data\Resources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -825,7 +825,7 @@
     <ClInclude Include="ModuleResources.h">
       <Filter>Header\Core\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceMesh.h">
+    <ClInclude Include="ResourceModel.h">
       <Filter>Header\Data\Resources</Filter>
     </ClInclude>
   </ItemGroup>
