@@ -32,8 +32,8 @@ void SegmentLibrary::Start()
 
 	currentFolder = fsIntance->rootFolder;
 	fsIntance->currentFolder = currentFolder;
-	//Checks firsts when the app loads 
-	resInstance->requestFolderFileCheck = true;
+	////Checks firsts when the app loads 
+	//resInstance->requestFullFolderFileCheck = true; Moved to ModuleResources
 
 	leftWin = 0;
 	rightWin = 0;

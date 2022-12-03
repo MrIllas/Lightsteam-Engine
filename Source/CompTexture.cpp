@@ -19,7 +19,15 @@ CompTexture::CompTexture(GameObject* owner, std::string uuid) : Component(owner,
 
 CompTexture::~CompTexture()
 {
-
+	if (!texture.resUuid.empty())
+	{
+		ResourceTexture* resource = (ResourceTexture*) ResourceProperties::Instance()->resources[texture.resUuid];
+		
+		if (resource != nullptr)
+		{
+			resource->DecreaseRC();
+		}
+	}
 }
 
 void CompTexture::Init()
@@ -82,7 +90,7 @@ void CompTexture::TextureDrop()
 			IM_ASSERT(payload->DataSize == sizeof(LibraryItem));
 			const LibraryItem item = *static_cast<const LibraryItem*>(payload->Data);
 
-			ResourceTexture* res = (ResourceTexture*)ResourceProperties::Instance()->resources[item.resUuid];
+			ResourceTexture* res = (ResourceTexture*)ResourceProperties::Instance()->resources.at(item.resUuid);
 
 			if (!texture.resUuid.empty()) //Decrease current RC
 				ResourceProperties::Instance()->resources[texture.resUuid]->DecreaseRC(); 
@@ -115,6 +123,7 @@ Texture CompTexture::GetTexture()
 nlohmann::ordered_json CompTexture::SaveUnique(nlohmann::JsonData data)
 {
 	data.SetString("Path", texture.path);
+	data.SetString("Texture Uuid", texture.resUuid);
 	data.SetBool("Checkers", isCheckers);
 
 
@@ -124,7 +133,10 @@ nlohmann::ordered_json CompTexture::SaveUnique(nlohmann::JsonData data)
 void CompTexture::LoadUnique(nlohmann::JsonData data)
 {
 	std::string texToLoad(data.GetString("Path"));
-	//texture = TextureImporter::ImportTexture(texToLoad);
+
+
+	texture = TextureImporter::ImportFromLibrary((ResourceTexture*) 
+		ResourceProperties::Instance()->resources[data.GetString("Texture Uuid")]);
 
 	isCheckers = data.GetBool("Checkers");
 }

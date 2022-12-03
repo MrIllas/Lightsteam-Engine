@@ -24,6 +24,7 @@ public:
 	std::map<std::string, Resource*> resources;
 
 	bool requestFolderFileCheck = false;
+	bool requestFullFolderFileCheck = false;
 	
 };
 
@@ -48,7 +49,7 @@ public:
 	void ReleaseResource(std::string uuid);
 
 
-	void FolderFileCheck(LibraryFolder* folder);
+	void FolderFileCheck(LibraryFolder* folder, bool fullCheck = false);
 	void ImportToLibrary(LibraryFolder* folder);
 
 private:

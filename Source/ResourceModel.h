@@ -16,6 +16,7 @@ struct SubMeshResource
 		--referenceCount;
 		if (referenceCount <= 0)
 		{
+			LOG(LOG_TYPE::ATTENTION, "RC 0: Unloading mesh '%s' from memory!", libPath.c_str());
 			RELEASE(meshRenderer);
 			meshRenderer = nullptr;
 		}

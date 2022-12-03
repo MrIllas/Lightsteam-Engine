@@ -90,9 +90,9 @@ MeshRenderer* MeshImporter::ImportMeshFromLibrary(ResourceModel* model, std::str
 		if (subMesh->meshRenderer == nullptr)
 		{
 			subMesh->meshRenderer = new MeshRenderer(MeshImporter::LoadMesh(subMesh->libPath));
-			LOG(LOG_TYPE::ATTENTION, "Loading new mesh to memory.");
+			LOG(LOG_TYPE::ATTENTION, "RC > 0: Loading mesh '%s' to memory.", subMesh->libPath.c_str());
 		}
-		else LOG(LOG_TYPE::SUCCESS, "This mesh is already loaded. Current copies: %i", subMesh->referenceCount);
+		else LOG(LOG_TYPE::SUCCESS, "RC '%i': Mesh '%s' is already loaded.", subMesh->referenceCount, subMesh->libPath.c_str());
 			
 
 		toReturn = subMesh->meshRenderer;
@@ -195,10 +195,11 @@ void MeshImporter::ImportToLibrary(ResourceModel* resource)
 		resource->SetLibraryFile(savePath);	
 	}
 
+	
+	RELEASE(parent);
+
 	//Unloads anything that has been loaded for Library import reasons.
 	resource->CleanMeshRendererMap();
-
-	RELEASE(parent);
 }
 
 GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent, ResourceModel* resource)

@@ -30,10 +30,19 @@ CompMeshRenderer::CompMeshRenderer(GameObject* owner, std::string uuid) : Compon
 
 CompMeshRenderer::~CompMeshRenderer()
 {
-	/*if (mesh != nullptr)
+	if (mesh != nullptr)
 	{
-		RELEASE(mesh);
-	}*/
+		if (!mesh->uuid.empty() && !mesh->modelUuid.empty())
+		{
+			ResourceModel* resource = nullptr;
+
+			//Needs to check if contains the resource since Resources are created after imporing the Model to the library.
+			if(ResourceProperties::Instance()->resources.count(mesh->modelUuid))
+				resource = (ResourceModel*) ResourceProperties::Instance()->resources[mesh->modelUuid];
+		
+			if(resource != nullptr) resource->meshRendererMap->at(mesh->uuid)->DecreaseRC();
+		}
+	}
 }
 
 void CompMeshRenderer::Update()

@@ -17,6 +17,7 @@ void ResourceTexture::CleanInstance()
 {
 	if (texture != nullptr)
 	{
+		LOG(LOG_TYPE::ATTENTION, "RC 0: Unloading texture '%s' from memory!", libraryFile.c_str());
 		RELEASE(texture);
 	}
 }

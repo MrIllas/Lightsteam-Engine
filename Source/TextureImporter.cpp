@@ -119,14 +119,16 @@ TextureData* TextureImporter::ImportTexture(std::string filePath)
 
 Texture TextureImporter::ImportFromLibrary(ResourceTexture* resource)
 {
+	if (resource == nullptr) return Texture();
+
 	//Increase Reference Count
 	resource->IncreaseRC();
 
-	TextureData* toReturn;
+	TextureData* toReturn = nullptr;
 	//Check if it has been already loaded
 	if (resource->GetRC() > 1)
 	{
-		LOG(LOG_TYPE::SUCCESS, "This texture is already loaded. Current copies: %i", resource->GetRC());
+		LOG(LOG_TYPE::SUCCESS, "RC '%i': Texture '%s' is already loaded.", resource->GetRC(), resource->GetLibraryFile().c_str());
 		toReturn = resource->texture;
 	}
 	else
@@ -136,8 +138,9 @@ Texture TextureImporter::ImportFromLibrary(ResourceTexture* resource)
 		resource->texture->texture.resUuid = resource->GetUUID(); //Assign the res uuid to the texture.
 		toReturn = resource->texture;
 	}
-
-	return toReturn->texture;
+	
+	if (toReturn == nullptr) return Texture();
+	else return toReturn->texture;
 }
 
 //Loads assets image to memory, converts it to dds and saves it to Library

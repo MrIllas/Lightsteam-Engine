@@ -11,6 +11,7 @@ class RenderProperties;
 class WindowProperties;
 class EditorProperties;
 class CameraProperties;
+class ResourceProperties;
 
 class SegmentConfiguration : public Segment
 {
@@ -27,6 +28,8 @@ private:
 	void RenderingHeader();
 	void EditorHeader();
 	void GameHeader();
+	void ActiveResourceHeader();
+
 
 	void GetCaps();
 
@@ -36,6 +39,7 @@ private:
 	WindowProperties* wProps = nullptr;
 	EditorProperties* eProps = nullptr;
 	CameraProperties* cProps = nullptr;
+	ResourceProperties* resProps = nullptr;
 
 	Time* time = nullptr;
 

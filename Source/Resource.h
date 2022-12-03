@@ -33,8 +33,9 @@ public:
 	void IncreaseRC() { ++referenceCount; }
 	void DecreaseRC() 
 	{ 
-		--referenceCount; 
-		CleanInstance();
+		--referenceCount;
+
+		if (referenceCount < 1) CleanInstance();
 	}
 	uint GetRC() { return referenceCount; }
 
