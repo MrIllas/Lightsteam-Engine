@@ -24,6 +24,7 @@ public:
 	std::string crudePath;
 	std::string name;
 	std::string extension;
+	bool active = false;
 
 
 	std::string GetMeta() const 

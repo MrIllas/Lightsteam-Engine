@@ -99,6 +99,9 @@ MeshRenderer* MeshImporter::ImportMeshFromLibrary(ResourceModel* model, std::str
 
 	}
 
+	toReturn->uuid = meshUuid;
+	toReturn->modelUuid = model->GetUUID();
+
 	return toReturn;
 }
 

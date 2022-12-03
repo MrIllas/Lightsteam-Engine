@@ -78,6 +78,8 @@ void CompMeshRenderer::UpdateGUI()
 		
 	ImGui::NewLine();
 
+	MeshDrop();
+
 	if (mesh == nullptr)
 	{
 		ImGui::Text("No mesh loaded!");
@@ -100,6 +102,44 @@ void CompMeshRenderer::UpdateGUI()
 		ImGui::Text(txt.c_str());
 	}
 	
+}
+
+void CompMeshRenderer::MeshDrop()
+{
+	std::string buttonValue = "Drop mesh";
+	ImGui::Button(buttonValue.c_str(), {100, 100});
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MeshCFF"))
+		{
+			IM_ASSERT(payload->DataSize == sizeof(std::string));
+			std::string item = *static_cast<const std::string*>(payload->Data);
+
+			std::string item2;
+
+			size_t pos = item.find_last_of("/");
+			if (pos != std::string::npos)
+			{
+				item2 = item.substr(pos + 1);
+				item.erase(pos);
+			}
+				 
+			
+		
+
+			ResourceModel* model = (ResourceModel*)ResourceProperties::Instance()->resources[item];
+
+			if (mesh != nullptr)
+			{
+				ResourceModel* currentModel = (ResourceModel*)ResourceProperties::Instance()->resources[mesh->modelUuid];
+				currentModel->meshRendererMap->at(mesh->uuid)->DecreaseRC();
+			}
+				
+			mesh = MeshImporter::ImportMeshFromLibrary(model, item2);
+		}
+	}
+
 }
 
 void CompMeshRenderer::Render(Shader* shader, Shader* debugShader, Camera* camera, bool game)

@@ -32,6 +32,8 @@ public:
 
 private:
 	void SetNormalsString();
+	void MeshDrop();
+
 private:
 	MeshRenderer* mesh = nullptr;
 	OBB obb;

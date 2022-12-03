@@ -9,6 +9,11 @@
 #include "ImGui/imgui_internal.h"
 #include "ImGuiUtils.h"
 
+#include "ResourceModel.h"
+
+#include "MeshImporter.h"
+#include "MeshRenderer.h"
+
 SegmentLibrary::SegmentLibrary(bool enabled) : Segment(enabled)
 {
 	name = "Library";
@@ -16,7 +21,7 @@ SegmentLibrary::SegmentLibrary(bool enabled) : Segment(enabled)
 
 SegmentLibrary::~SegmentLibrary()
 {
-
+	RELEASE(package);
 }
 
 void SegmentLibrary::Start()
@@ -122,11 +127,19 @@ void SegmentLibrary::BoxView()
 					case str2int("png"):
 
 						break;
+					case str2int("fbx"):
+					case str2int("FBX"):
+					case str2int("dae"):
+					case str2int("DAE"):
+						currentFolder->libItem[k]->active = !currentFolder->libItem[k]->active;
+						break;
 					default:
 						
 						break;
 				}
 			}
+
+
 			if (ImGui::IsItemHovered())
 			{ //Hover tooltip
 				ImGui::SetTooltip(currentFolder->libItem[k]->name.c_str());
@@ -145,8 +158,10 @@ void SegmentLibrary::BoxView()
 				ImGui::EndDragDropSource();
 			}
 
-
 			ImGui::Text(currentFolder->libItem[k]->name.c_str());
+			if (currentFolder->libItem[k]->active) ExecuteItemActive(currentFolder->libItem[k], cellSize);
+
+		
 
 			ImGui::NextColumn();
 			ImGui::PopID();
@@ -160,4 +175,41 @@ void SegmentLibrary::BoxView()
 
 	}
 	ImGui::EndChild();
+}
+
+
+void SegmentLibrary::ExecuteItemActive(LibraryItem* item, float cellSize)
+{
+	ResourceModel* res = (ResourceModel*)ResourceProperties::Instance()->resources[item->resUuid];
+
+	for (auto const& mesh : *res->meshRendererMap)
+	{
+		if (mesh.second != nullptr)
+		{
+			ImGui::NextColumn();
+			if (ImGui::Button(mesh.first.c_str(), {cellSize, cellSize}))
+			{
+				
+			}
+
+			if (ImGui::BeginDragDropSource())
+			{
+				if (package != nullptr) RELEASE(package);
+
+				package = new std::string(res->GetUUID());
+				package->append("/");
+				package->append(mesh.first);
+
+				ImGui::SetDragDropPayload("MeshCFF", package, sizeof(std::string));
+
+				std::string tooltip = "Dragging ";
+				tooltip += mesh.second->libPath;
+				ImGui::Text(tooltip.c_str());
+
+				ImGui::EndDragDropSource();
+			}
+
+		}
+	}
+	
 }

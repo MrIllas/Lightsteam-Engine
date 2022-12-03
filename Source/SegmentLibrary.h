@@ -7,6 +7,7 @@ struct FileSystemProperties;
 struct SceneProperties;
 struct ResourceProperties;
 class LibraryFolder;
+struct LibraryItem;
 
 class SegmentLibrary : public Segment
 {
@@ -22,6 +23,8 @@ private:
 	void Hierarchy();
 	void BoxView();
 
+	void ExecuteItemActive(LibraryItem* item, float cellSize);
+
 private:
 	float leftWin;
 	float rightWin;
@@ -30,5 +33,7 @@ private:
 	ResourceProperties* resInstance = nullptr;
 	SceneProperties* sInstance = nullptr;
 	LibraryFolder* currentFolder = nullptr;
+
+	std::string* package = nullptr;
 };
 
