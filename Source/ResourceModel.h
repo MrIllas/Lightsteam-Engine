@@ -33,6 +33,7 @@ public:
 	//std::vector<std::string> meshesUuid;
 
 	void CleanInstance() override;
+	void PlanDelete() override;
 
 	void CleanMeshRendererMap();
 	

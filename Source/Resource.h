@@ -44,6 +44,7 @@ public:
 
 	//Called by resources when the reference count is 0. Unloads
 	virtual void CleanInstance();
+	virtual void PlanDelete() {}
 
 protected:
 	virtual nlohmann::JsonData SaveUnique(nlohmann::JsonData data);

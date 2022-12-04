@@ -92,6 +92,8 @@ public:
 	std::string modelUuid;
 	std::string uuid;
 
+	bool planDelete = false;
+
 private:
 	uint VAO;
 	uint VBO;
@@ -114,5 +116,6 @@ private:
 
 	Shader* shader = nullptr;
 	Shader* debugShader = nullptr;
+
 };
 

@@ -112,6 +112,18 @@ bool LibraryManager::CreateDir(std::string dir)
 	return false;
 }
 
+bool LibraryManager::RemoveFile(std::string filePath)
+{
+	if (!Exists(filePath))
+	{
+		LOG(LOG_TYPE::ERRO, "ERROR: Couldn't delete '%s', file not found.", filePath.c_str());
+		return false;
+	}
+
+	int num = PHYSFS_delete(filePath.c_str());
+	LOG(LOG_TYPE::SUCCESS, "SUCCESS: File '%s' deleted. %i", filePath.c_str(), num);
+}
+
 std::string LibraryManager::GetFilename(std::string file, bool extension)
 {
 	std::string toReturn = file;

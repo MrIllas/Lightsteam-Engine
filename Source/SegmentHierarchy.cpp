@@ -154,16 +154,16 @@ void SegmentHierarchy::RightClickMenuContent(GameObject* go)
 			auxGO->AddChildren(newGO);
 		}
 
-		if (ImGui::BeginMenu("Primitive Node"))
+		/*if (ImGui::BeginMenu("Primitive Node"))
 		{
-			if (ImGui::MenuItem("Cube")) MeshImporter::ImportMesh("Assets/Primitives/Cube.fbx", auxGO);
+			if (ImGui::MenuItem("Cube")) MeshImporter::ImportFromLibrary();
 			if (ImGui::MenuItem("Sphere")) MeshImporter::ImportMesh("Assets/Primitives/Sphere.fbx", auxGO);
 			if (ImGui::MenuItem("Plane")) MeshImporter::ImportMesh("Assets/Primitives/Plane.fbx", auxGO);
 			if (ImGui::MenuItem("Pyramid")) MeshImporter::ImportMesh("Assets/Primitives/Pyramid.fbx", auxGO);
 			if (ImGui::MenuItem("Cylinder")) MeshImporter::ImportMesh("Assets/Primitives/Cylinder.fbx", auxGO);
 			if (ImGui::MenuItem("Capsule")) MeshImporter::ImportMesh("Assets/Primitives/Capsule.fbx", auxGO);
 			ImGui::EndMenu();
-		}
+		}*/
 
 		ImGui::EndMenu();
 	}

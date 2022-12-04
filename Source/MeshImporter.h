@@ -11,6 +11,7 @@ class Mesh;
 class GameObject;
 class ResourceModel;
 class MeshRenderer;
+class LibraryFolder;
 
 struct Meshe;
 
@@ -35,10 +36,13 @@ public:
 	static void SaveGameObjects(GameObject* go, std::vector<nlohmann::ordered_json>& goPool);
 
 private:
+	static std::vector<std::string> GetMaterials(const aiScene* scene);
+
 	static Meshe GenerateMesh(aiMesh* mesh);
-	static GameObject* GenerateGameObjects(aiNode* node, const aiScene* scene, GameObject* parent = nullptr, ResourceModel* resource = nullptr);
+	static GameObject* GenerateGameObjects(aiNode* node, const aiScene* scene, std::vector<std::string> matUuid, GameObject* parent = nullptr, ResourceModel* resource = nullptr);
 	static void SaveMesh(Meshe mesh, std::string filePath);
 	
+	static void IterateForFolders(LibraryFolder* fol, std::vector<LibraryFolder*>& folders);
 };
 
 

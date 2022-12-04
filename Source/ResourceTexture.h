@@ -23,11 +23,6 @@ public:
 	nlohmann::JsonData SaveUnique(nlohmann::JsonData data) override;
 
 	void CleanInstance() override;
-	/*bool IsLoadedToMemory() override;
-	bool LoadToMemory();*/
-
-	/*void Save(std::string& path) const override;
-	void Load(const std::string& load) override;*/
 
 public:
 	TextureData* texture = nullptr;

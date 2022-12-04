@@ -6,7 +6,7 @@
 #include <map>
 
 
-class LibraryFodler;
+class LibraryFolder;
 struct FileSystemProperties;
 
 struct ResourceProperties
@@ -17,11 +17,14 @@ struct ResourceProperties
 
 	static void Delete();
 
+
+	Resource* CreateNewResource(std::string assetsPath, RESOURCE_TYPE type);
 private:
 	static ResourceProperties* instance;
 
 public:
 	std::map<std::string, Resource*> resources;
+	std::vector<Resource*> planDeleteLib;
 
 	bool requestFolderFileCheck = false;
 	bool requestFullFolderFileCheck = false;
@@ -56,7 +59,7 @@ private:
 	RESOURCE_TYPE GetResourceType(std::string extension);
 
 private:
-	Resource* CreateNewResource(std::string assetsPath, RESOURCE_TYPE type);
+	
 	void UnloadResource(Resource* resource);
 
 private:

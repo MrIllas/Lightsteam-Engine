@@ -23,6 +23,7 @@ namespace LibraryManager
 	bool Exists(std::string file);
 	bool IsDirectory(std::string dir);
 	bool CreateDir(std::string dir);
+	bool RemoveFile(std::string filePath);
 	std::string GetFilename(std::string file, bool extension = false);
 
 	bool AddPath(std::string path); 

@@ -47,8 +47,12 @@ CompMeshRenderer::~CompMeshRenderer()
 
 void CompMeshRenderer::Update()
 {
-	if (mesh == nullptr) return;
-
+	if (mesh == nullptr ) return;
+	if (mesh->planDelete)
+	{
+		mesh = nullptr;
+		return;
+	}
 	//Update AABB
 	float4x4 aux = owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix();
 	//Generate global OBB
@@ -66,8 +70,6 @@ void CompMeshRenderer::Update()
 		if (camInstance->gameCameras.at(camInstance->mainCameraId)->camera.renderer != nullptr)
 			camInstance->gameCameras.at(camInstance->mainCameraId)->camera.renderer->QueueMesh(this);
 	}
-	
-	
 }
 
 void CompMeshRenderer::UpdateGUI()
@@ -153,7 +155,7 @@ void CompMeshRenderer::MeshDrop()
 
 void CompMeshRenderer::Render(Shader* shader, Shader* debugShader, Camera* camera, bool game)
 {
-	if (!active) return;
+	if (!active || mesh == NULL) return;
 
 	if (owner->GetComponent<CompTexture>(MATERIAL) != nullptr && owner->GetComponent<CompTransform>(TRANSFORM) != nullptr)
 	{

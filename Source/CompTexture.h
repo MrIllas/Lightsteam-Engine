@@ -22,6 +22,8 @@ public:
 	void SetTexture(Texture texture);
 	void SetTexture(unsigned int id, std::string path);
 
+	void SetTextureUuid(std::string uuid);
+
 private:
 	void TextureDrop();
 

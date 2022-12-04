@@ -105,6 +105,8 @@ void SegmentLibrary::BoxView()
 		//Iterate folders
 		for (int i = 0; i < currentFolder->children.size(); ++i)
 		{
+			//if (currentFolder->children[i]->name == "Primitives") continue;
+
 			if (ImGui::Button(currentFolder->children[i]->name.c_str(), { cellSize, cellSize }))
 			{
 				LibraryManager::FolderSystemUpdate(currentFolder->children[i]);
@@ -144,6 +146,15 @@ void SegmentLibrary::BoxView()
 			{ //Hover tooltip
 				ImGui::SetTooltip(currentFolder->libItem[k]->name.c_str());
 			}
+
+			//POPUP MENU
+			if (ImGui::BeginPopupContextItem("LibraryItemMenu", ImGuiPopupFlags_NoOpenOverExistingPopup | ImGuiPopupFlags_MouseButtonDefault_))
+			{
+				k += RightClickMenuContent(currentFolder->libItem[k]);
+
+				ImGui::EndPopup();
+			}
+			
 
 
 			//Drag
@@ -212,4 +223,37 @@ void SegmentLibrary::ExecuteItemActive(LibraryItem* item, float cellSize)
 		}
 	}
 	
+}
+
+int SegmentLibrary::RightClickMenuContent(LibraryItem* item)
+{
+	if (ImGui::MenuItem("DELETE", 0, false))
+	{
+		LOG(LOG_TYPE::ATTENTION, "DELETE LIBITEM %s", item->name.c_str());
+
+		std::map<std::string, Resource*>::iterator iterator = resInstance->resources.find(item->resUuid);
+		Resource* resource = iterator->second; // Need a pointer var for RELEASE.
+
+		LibraryManager::RemoveFile(iterator->second->GetLibraryFile());
+		LibraryManager::RemoveFile(iterator->second->GetAssetsFile());
+		LibraryManager::RemoveFile(item->GetMeta());
+
+		//RELEASE(item);
+		currentFolder->libItem.erase(std::find(currentFolder->libItem.begin(), currentFolder->libItem.end(), item));
+		
+		//RELEASE(iterator->second);
+		resInstance->resources.erase(iterator);
+
+		RELEASE(item);
+		
+
+		//The delete of resources is handled by a vector on the next iterator iterator. 
+		//PlanDelete() method only tells the pointes on the components that they should nullptr themselves.
+		//Component's pointer = nullptr -> End of engine iteration -> Delete of pointers from memory
+		resource->PlanDelete();
+		resInstance->planDeleteLib.push_back(resource);
+
+		return -1;
+	}
+	return 0;
 }

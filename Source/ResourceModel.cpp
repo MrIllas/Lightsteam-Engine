@@ -34,6 +34,20 @@ void ResourceModel::CleanInstance()
 	RELEASE(meshRendererMap)
 }
 
+void ResourceModel::PlanDelete()
+{
+	if (meshRendererMap != nullptr)
+	{
+		for (auto const& mesh : *meshRendererMap)
+		{
+			if (mesh.second != nullptr)
+			{
+				meshRendererMap->at(mesh.first)->meshRenderer->planDelete = true;
+			}
+		}
+	}
+}
+
 void ResourceModel::CleanMeshRendererMap()
 {
 	if (meshRendererMap != nullptr)

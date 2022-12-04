@@ -134,10 +134,13 @@ bool ModuleScene::Start()
 
 	//MeshImporter::ImportMesh("Assets/Fence.fbx");
 
+	
 
 	if (sProps->root == nullptr) return UPDATE_CONTINUE;
 	InitGameObjects(sProps->root);
 
+	sProps->loadSceneRequest = true;
+	sProps->scenePath = "/Assets/Scenes/Street.sc";
 	return true;
 }
 
