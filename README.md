@@ -108,3 +108,5 @@ All components and inspector have an 'Active' checkbox that turn off and on the 
 
  - NEW -> The square with names are folder that can be opened with a left click.
  - NEW -> The the black square with no names insides are files. You can hold the file to read it's complete name in case it's cutted by the content browser columns.
+ - NEW -> Fbx files can be clicked to open and see the meshes inside.
+ 
