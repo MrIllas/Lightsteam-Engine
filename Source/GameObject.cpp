@@ -96,7 +96,7 @@ void GameObject::UpdateCompMenuGUI()
 		ImGui::EndCombo();
 	}
 
-	if (ImGui::Button("Save GO"))
+	/*if (ImGui::Button("Save GO"))
 	{
 		Save();
 	}
@@ -110,7 +110,7 @@ void GameObject::UpdateCompMenuGUI()
 		RELEASE(buffer);
 
 		Load(data);
-	}
+	}*/
 }
 
 Component* GameObject::CreateComponent(CO_TYPE type)
