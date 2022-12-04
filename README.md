@@ -1,6 +1,6 @@
 # Lightsteam Engine
 
-Lightsteam engine is a 3D engine being developed in C++ for the 3rd year class on *Engine development* at *UPC CITM* bachelor's degree in *Video game Design and development*.
+This engine is being developed in C++ for the 3rd year class on *Engine development* at *UPC CITM* bachelor's degree in *Video game Design and development*.
 
 Project's Github: https://github.com/MrIllas/Lightsteam-Engine
 
@@ -10,16 +10,38 @@ Robert Recordà i Illas [(MrIllas)](https://github.com/MrIllas)
 
 ## Features
 
-The current version of the engine has the the following features:
- - Load of fbx by drag & drop.
- - Load of image/textures by drag & drop.
- - Custom shader with simple light.
- - Translation, rotation and scaling of objects (without parent-to-child).
- - Scene free camera movement.
- - Transformation, Mesh Renderer and Texture components.
- - Enable/Disable of components
+The current version (0.2) of the engine has the the following features:
+	- Complete serialization.
+	- Save/Load scenes.
+	- Load images and meshes by dragging the file into the inspector.
+	- Automatic generation of custom files from imported files.
+	- Tons of bug fixing.
+	- Frustum Culling for meshes.
+	- Scene mouse picking.
+	- Viewing of active resources from configuration segment.
+	- Double camera.
+	- Change active camera from configuration segment.
+	- Move meshes with gizmo.
+
+
+Version 0.1 - Previous version:
+	- Load of fbx by drag & drop.
+	- Load of image/textures by drag & drop.
+	- Custom shader with simple light.
+	- Translation, rotation and scaling of objects (without parent-to-child).
+	- Scene free camera movement.
+	- Transformation, Mesh Renderer and Texture components.
+	- Enable/Disable of components
 
 ## Controls and features
+
+### Game
+
+ - NEW -> Visualize active camera component.
+
+### Scene
+
+ - NEW -> You can click fbx with the mouse on the scene viewport.
 
 ### Scene Camera Controls
 
@@ -68,25 +90,21 @@ All components and inspector have an 'Active' checkbox that turn off and on the 
 	- Checkbox "Face normals" draws the face normals instead of the vertex normals.
 	- The Dragbar "Line Magnitude" modifies the length of the lines.
 	- The mesh render component also shows the number of vertices, indices and face of the mesh.
+	- NEW -> can drag a fbx file to the button the inspector to switch the texture.
 
 -  Textures:
 
     - The checkbox "Checkers textures" display a debug texture.
     - The texture component also displays the path from where the texture has been loaded, the size in pixels and the id of the texture.
-
-**Note:** When the selected node doesn't have any loaded texture, the checkers texture is used instead.
-**Note:** The "Texture ID" can be the same in more than one node, the engine reuses the texture instead of loading it again if it detects that the path of the texture is the same.
+	- NEW -> You can drag a texture file to the button image on the inspector to switch the texture.
 
 
 ### Drag and Drop functionality
 
-- Supported formats:
-	- For 3d object: .fbx.
-	- For image/texture: .png, .dds.
-
- - When draging an external file into the engine, the engine detects if the file extension is supported, in case of trying to load a non-supported extension, it will be notified on the console.
-	- If the extension is one of the supported extensions for 3d objects
-	- If the extensios is one of the supported extensions for image/textures, the texture is going to load on the selected node (only if the node has a Texture component).	
- - Loading an fbx automatically creates a hierarchy of game objects with a Transform, Mesh Renderer and Texture component.
- - To load a texture into a mesh renderer, select the desired node from the hierarchy.
+ - NEW ->When draging an external file into the engine, the engine adds a copy of the file to the currently open content browser folder and performs a file check to import everything to the library.
  
+ 
+### Content browser
+
+ - NEW -> The square with names are folder that can be opened with a left click.
+ - NEW -> The the black square with no names insides are files. You can hold the file to read it's complete name in case it's cutted by the content browser columns.

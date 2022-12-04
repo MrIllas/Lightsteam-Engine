@@ -93,6 +93,9 @@ void SegmentLibrary::BoxView()
 	{
 		float panelWidth = ImGui::GetContentRegionAvail().x;
 		int columnCount = (int)(panelWidth / (cellSize + padding*2));
+
+		if (columnCount <= 0) columnCount = 1;
+
 		ImGui::Columns(columnCount, 0, false);
 
 		//Go to previous folder topping the root Library folder

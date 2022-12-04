@@ -25,7 +25,7 @@
 		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />
-		<Game value="false" />
+		<Game value="true" />
 		<Hierarchy value="true" />
 		<Inspector value="true" />
 		<Library value="true" />
