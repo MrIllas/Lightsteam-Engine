@@ -48,6 +48,9 @@ void LibraryManager::GenerateLibrary()
 
 	aux = LIB_SCENES;
 	CreateDir(aux);
+
+	aux = LIB_SHADERS;
+	CreateDir(aux);
 }
 
 void LibraryManager::FolderSystemUpdate(LibraryFolder* folder, bool recursive)

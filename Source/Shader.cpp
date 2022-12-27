@@ -8,40 +8,71 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath, std::string name)
+#include <vector>
+
+/// <summary>
+/// Constructor used fro shaders that are being compiled from a code std::string variable.
+/// </summary>
+/// <param name="fragmentCode"></param>
+/// <param name="vertexCode"></param>
+/// <param name="name"></param>
+Shader::Shader(std::string fragmentCode, std::string vertexCode, std::string name)
 {
 	this->name = name;
 
-	RetriveShader(vertexPath, fragmentPath);
+	this->fragmentCode = fragmentCode;
+	this->vertexCode = vertexCode;
+
 	CompileShader();
 }
 
-void Shader::RetriveShader(const char* vertexPath, const char* fragmentPath)
+/// <summary>
+/// Constructor used for shaders that are being loaded and compiled from an external file.
+/// </summary>
+/// <param name="vertexPath"></param>
+/// <param name="fragmentPath"></param>
+/// <param name="name"></param>
+Shader::Shader(const char* shaderPath, std::string name)
 {
-	std::ifstream vShaderFile; //Vertex
-	std::ifstream fShaderFile; //Fragment
+	this->name = name;
+
+	RetriveShader(shaderPath);
+	CompileShader();
+}
+
+void Shader::RetriveShader(const char* shaderPath)
+{
+	const char* vDefine = "#define VERTEX_PROGRAM\n";
+	const char* fDefine = "#define FRAGMENT_PROGRAM\n";
+
+	std::ifstream shaderFile;
 
 	//Ensure ifstream objects can throw exceptions:
-	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
 	try
 	{
 		//Open File
-		vShaderFile.open(vertexPath);
-		fShaderFile.open(fragmentPath);
-		std::stringstream vShaderStream, fShaderStream;
+		shaderFile.open(shaderPath);
+		std::stringstream shaderStream;
 
 		//Read file's buffer contents into streams
-		vShaderStream << vShaderFile.rdbuf();
-		fShaderStream << fShaderFile.rdbuf();
+		shaderStream << shaderFile.rdbuf();
 
 		//Close file handlers
-		vShaderFile.close();
-		fShaderFile.close();
+		shaderFile.close();
 
 		//Convert stream into string
-		vertexCode = vShaderStream.str();
-		fragmentCode = fShaderStream.str();
+		std::string fullFile = shaderStream.str();
+
+		//Gets version line
+		std::string version = fullFile.substr(0, fullFile.find("\n")+1);
+		std::size_t i = fullFile.find(version);
+		fullFile.erase(i, version.length());
+
+		//Code
+		vertexCode = version + vDefine + fullFile;
+		fragmentCode = version + fDefine + fullFile;
 	}
 	catch (std::ifstream::failure e)
 	{

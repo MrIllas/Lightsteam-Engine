@@ -8,9 +8,11 @@ typedef unsigned int uint;
 class Shader
 {
 public:
-	Shader(const char* vertexPath, const char* fragmentPath, std::string name = "Shader");
+	Shader(std::string fragmentCode, std::string vertexCode, std::string name = "Shader");
+	Shader(const char* shaderPath, std::string name = "Shader");
 
 	void Use();
+	std::string GetBinary();
 
 	void SetBool(const std::string &name, bool value) const;
 	void SetInt(const std::string &name, int value) const;
@@ -20,11 +22,12 @@ public:
 	void SetVec2(const std::string& name, const float* value) const;
 
 private:
-	void RetriveShader(const char* vertexPath, const char* fragmentPath);
+	void RetriveShader(const char* shaderPath);
 	void CompileShader();
 
 public:
 	uint ID;
+	std::string uuid;
 	std::string name;
 private:
 	std::string vertexCode;

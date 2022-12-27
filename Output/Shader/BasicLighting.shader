@@ -1,20 +1,17 @@
-#version 330 core
+#version 410 core
+
+#ifdef FRAGMENT_PROGRAM
 
 out vec4 FragColor;
   
 in vec2 TextureCoords;
 in vec3 FragPos; 
 in vec3 Normal;
-//in vec3 lightPos;
-//in vec3 lightColour;
-//in float specularStrength
 
 uniform vec3 lightPos;
 uniform vec3 lightColour;
 uniform float specularStrength;
-//in float TextureID;
 
-//uniform sampler2D Textures[32];
 uniform sampler2D texture_albedo;
 
 float near = 1.0f;
@@ -26,10 +23,7 @@ float linearizeDepth(float depth)
 
 void main()
 {
-	//vec3 lightPos = vec3(5.0f, 5.0f, 0.0f);
-	//vec3 lightColour = vec3(0.0f, 1.0f, 0.0f);
 	vec3 viewPos = vec3(-5.0f, -5.0f, 0.0f);
-	//float specularStrength = 0.5;
 	
 	//Ambient light 
 	float ambientStrength = 0.1;
@@ -52,14 +46,35 @@ void main()
 	vec3 objectColour = texture(texture_albedo, TextureCoords).xyz;
 	
 	vec3 phong = (ambient + diffuse) * objectColour;
-   // FragColor = ambient * texture(texture_albedo, TextureCoords); //vec4(0.0f, 1.0f, 0.0f, 1.0f);
+
 	FragColor = vec4(phong, 1.0f);
-	//FragColor = vec4(vec3(linearizeDepth(gl_FragCoord.z) / far), 1.0f);
+	
 } 
 
+#endif
+
+#ifdef VERTEX_PROGRAM
+
+layout (location = 0) in vec3 aPos; 
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec2 texCoord;
+
+uniform mat4 projection;
+uniform mat4 view;
+uniform mat4 model; 
 
 
+out vec2 TextureCoords;
+out vec3 FragPos;
+out vec3 Normal;
 
-//vec3 objectColor = texture(uTexture, mobileTextureCoordinate).xyz;
-//vec3 phong = (ambient + diffuse) * objectColor + specular;
-//pyramidColor = vec4(phong, 1.0f);
+void main()
+{
+	gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+	FragPos = vec3(model * vec4(aPos.x, aPos.y, aPos.z, 1.0f));
+	Normal = mat3(transpose(inverse(model))) * normal;
+	
+    TextureCoords = texCoord; 
+}
+
+#endif

@@ -46,14 +46,12 @@ public:
 	UpdateStatus Update();
 	UpdateStatus PostUpdate();
 
-	std::string Find(std::string assetsFile);
 	void ImportFile(Resource* resource);
 	
 	void ReleaseResource(std::string uuid);
 
 
 	void FolderFileCheck(LibraryFolder* folder, bool fullCheck = false);
-	void ImportToLibrary(LibraryFolder* folder);
 
 private:
 	RESOURCE_TYPE GetResourceType(std::string extension);

@@ -59,12 +59,6 @@ void TextureImporter::CheckerImage()
 TextureData* TextureImporter::ImportTexture(std::string filePath)
 {
 	Texture auxText;
-	/*int checkTxt = CheckTexturesLoaded(filePath, auxText);
-	if (checkTxt > -1)
-	{
-		LOG(LOG_TYPE::ATTENTION, "ATTENTION: The image '%s' was already imported, loading it from memory.", filePath.c_str());
-		return auxText;
-	}*/
 
 	ILuint imgID = 0;
 

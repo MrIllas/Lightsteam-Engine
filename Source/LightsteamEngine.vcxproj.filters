@@ -211,9 +211,6 @@
     <ClCompile Include="TextureImporter.cpp">
       <Filter>Source\Data</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source\Core\Render</Filter>
-    </ClCompile>
     <ClCompile Include="SegmentInspector.cpp">
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>
@@ -269,6 +266,15 @@
       <Filter>Source\Core\Modules</Filter>
     </ClCompile>
     <ClCompile Include="ResourceModel.cpp">
+      <Filter>Source\Data\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Source\Core\Render\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source\Core\Render\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceShader.cpp">
       <Filter>Source\Data\Resources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -609,9 +615,6 @@
     <ClInclude Include="TextureImporter.h">
       <Filter>Header\Data</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header\Core\Render</Filter>
-    </ClInclude>
     <ClInclude Include="SegmentInspector.h">
       <Filter>Header\Core\Segments</Filter>
     </ClInclude>
@@ -828,6 +831,18 @@
     <ClInclude Include="ResourceModel.h">
       <Filter>Header\Data\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Header\Core\Render\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header\Core\Render\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseShaders.h">
+      <Filter>Header\Core\Render\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceShader.h">
+      <Filter>Header\Data\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -922,6 +937,12 @@
     </Filter>
     <Filter Include="Source\Data\Resources">
       <UniqueIdentifier>{75e913ae-d18c-4a8a-b92d-04a003b58739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Core\Render\Shaders">
+      <UniqueIdentifier>{eea95605-2781-4669-ab72-bd99a4516fac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Render\Shaders">
+      <UniqueIdentifier>{66b89705-7992-4470-8da2-eed16fefb345}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

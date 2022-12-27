@@ -9,6 +9,7 @@ enum class RESOURCE_TYPE
 	MESH,
 	MODEL,
 	SCENE,
+	SHADER,
 	UNKNOWN
 };
 

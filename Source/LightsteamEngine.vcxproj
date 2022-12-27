@@ -233,6 +233,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
+    <ClCompile Include="ResourceShader.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="SegmentAbout.cpp" />
     <ClCompile Include="SegmentConfiguration.cpp" />
@@ -243,11 +244,13 @@
     <ClCompile Include="SegmentLibrary.cpp" />
     <ClCompile Include="SegmentScene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="TextureImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BaseShaders.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CompCamera.h" />
     <ClInclude Include="CompMeshRenderer.h" />
@@ -418,6 +421,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceModel.h" />
+    <ClInclude Include="ResourceShader.h" />
     <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="Segment.h" />
     <ClInclude Include="SegmentAbout.h" />
@@ -430,6 +434,7 @@
     <ClInclude Include="SegmentLibrary.h" />
     <ClInclude Include="SegmentScene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>

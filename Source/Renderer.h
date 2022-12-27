@@ -6,12 +6,6 @@
 
 #include <queue>
 
-#define DEBUG_VERTEX_SHADER "Shader/debug.vs"
-#define DEBUG_FRAGMENT_SHADER "Shader/debug.fs"
-
-#define BASE_VERTEX_SHADER "Shader/base.vs"
-#define BASE_FRAGMENT_SHADER "Shader/base.fs"
-
 class FrameBuffer;
 class CompMeshRenderer;
 class MeshRenderer;
@@ -64,8 +58,5 @@ private:
 private:
 	Camera* owner;
 	FrameBuffer* frameBuffer = nullptr;
-
-	Shader* baseShader = nullptr;
-	Shader* debugShader = nullptr;
 };
 

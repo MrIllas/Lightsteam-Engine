@@ -21,11 +21,11 @@
 		<Texture2D value="true" />
 	</Renderer3D>
 	<Editor>
-		<Configuration value="true" />
+		<Configuration value="false" />
 		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />
-		<Game value="true" />
+		<Game value="false" />
 		<Hierarchy value="true" />
 		<Inspector value="true" />
 		<Library value="true" />

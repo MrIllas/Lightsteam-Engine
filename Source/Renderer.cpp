@@ -2,29 +2,24 @@
 
 #include "GameObject.h"
 #include "CompMeshRenderer.h"
-#include "Shader.h"
+#include "ShaderManager.h"
 
 #include "FrameBuffer.h"
 #include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
+
+using namespace ShaderManager;
 
 Renderer::Renderer(float2 size, Camera* camera)
 {
 	owner = camera;
 	frameBuffer = new FrameBuffer();
 	Resize(size);
-
-	debugShader = new Shader(DEBUG_VERTEX_SHADER, DEBUG_FRAGMENT_SHADER, "DEBUG SHADER");
-	baseShader = new Shader(BASE_VERTEX_SHADER, BASE_FRAGMENT_SHADER, "BASE SHADER");
 }
 
 Renderer::~Renderer()
 {
 	if (frameBuffer != nullptr) RELEASE(frameBuffer);
-
-	if (baseShader != nullptr) RELEASE(baseShader);
-
-	if (debugShader != nullptr) RELEASE(debugShader);
 }
 
 void Renderer::Init()
@@ -77,7 +72,7 @@ void Renderer::Update(bool game)
 	{
 		if (meshes.front() != nullptr)
 		{
-			meshes.front()->Render(baseShader, debugShader, owner, game);
+			meshes.front()->Render(BaseShader(), DebugShader(), owner, game);
 		}
 		meshes.pop();
 	}
@@ -89,7 +84,7 @@ void Renderer::Update(bool game)
 	{
 		if (debugMeshes.front() != nullptr)
 		{
-			debugMeshes.front()->mesh->DrawFrustumBox(debugShader, owner, debugMeshes.front()->model);
+			debugMeshes.front()->mesh->DrawFrustumBox(DebugShader(), owner, debugMeshes.front()->model);
 		}
 		debugMeshes.pop();
 	}

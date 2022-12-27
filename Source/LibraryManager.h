@@ -9,6 +9,7 @@
 #define LIB_MATERIALS "Library/Materials";
 #define LIB_TEXTURES "Library/Textures";
 #define LIB_SCENES "Library/Scenes";
+#define LIB_SHADERS "Library/Shaders"
 
 
 class LibraryFolder;
