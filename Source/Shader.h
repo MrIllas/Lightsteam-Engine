@@ -8,8 +8,11 @@ typedef unsigned int uint;
 class Shader
 {
 public:
+	Shader(char* buffer, uint size, uint format, std::string name = "Shader");
 	Shader(std::string fragmentCode, std::string vertexCode, std::string name = "Shader");
 	Shader(const char* shaderPath, std::string name = "Shader");
+	~Shader();
+
 
 	void Use();
 	std::string GetBinary();
@@ -24,6 +27,7 @@ public:
 private:
 	void RetriveShader(const char* shaderPath);
 	void CompileShader();
+	void LoadBinary(char* buffer, uint size, uint format);
 
 public:
 	uint ID;

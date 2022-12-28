@@ -21,7 +21,7 @@
 		<Texture2D value="true" />
 	</Renderer3D>
 	<Editor>
-		<Configuration value="false" />
+		<Configuration value="true" />
 		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />

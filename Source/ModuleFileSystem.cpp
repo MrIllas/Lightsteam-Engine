@@ -54,7 +54,6 @@ bool ModuleFileSystem::Init()
 {
 	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 
-	
 
 	meshImp = new MeshImporter();
 	textImp = new TextureImporter();
@@ -129,35 +128,12 @@ void ModuleFileSystem::DragAndDrop(std::string path)
 	switch (str2int(extension.c_str()))
 	{
 		case str2int("fbx"):
-			//MeshImporter::ImportMesh(path, nullptr, true);
-			//break;
 		case str2int("dds"):
 		case str2int("png"):
+		case str2int("shader"):
+		case str2int("lss"):
 		{
 			LibraryManager::Copy(path, fsProps->currentFolder->path);
-
-			//TextureImporter::ImportTexture(path);
-			/*GameObject* aux = sProps->GetSelectedGO();
-
-			if (aux != nullptr)
-			{
-				CompTexture* auxText = nullptr;
-				auxText = aux->GetComponent<CompTexture>(MATERIAL);
-
-				if (auxText != nullptr)
-				{
-					auxText->SetTexture(TextureImporter::ImportTexture(path));
-				}
-				else
-				{
-					LOG(LOG_TYPE::ERRO, "ERROR: The selected 'GameObject' doesn't have a 'CompTexture'");
-				}
-				
-			}
-			else
-			{
-				LOG(LOG_TYPE::ERRO, "ERROR: There is no 'GameObject' selected!");
-			}*/
 		}
 			break;
 		case str2int("jpg"):

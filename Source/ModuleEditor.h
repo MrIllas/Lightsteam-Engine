@@ -9,6 +9,7 @@
 class Application;
 
 class Segment;
+class SegmentShaderText;
 
 
 enum COLORMODE
@@ -31,8 +32,30 @@ public:
 
 	void SwitchColorMode();
 
+	void RequestShaderTextSwitch(std::string shaderResourceUuid);
+	bool GetShaderTextRequest() 
+	{ 
+		if (requestShaderTextSwitch)
+		{
+			requestShaderTextSwitch = false;
+			return true;
+		}
+		return false; 
+	}
+
+	std::string GetShaderTextRequestUuid()
+	{
+		std::string aux = requestShaderTextUuid;
+		requestShaderTextUuid = "NULL";
+		return aux;
+	}
+
 private:
 	static EditorProperties* instance;
+
+	bool requestShaderTextSwitch = false;
+	std::string requestShaderTextUuid;
+
 };
 
 class ModuleEditor : public Module
@@ -55,6 +78,7 @@ private:
 	void BeginRender();
 	void EndRender();
 
+	void RequestSwitchHandler();
 	void UpdateSegments();
 
 	void MainMenuBar();
@@ -66,6 +90,8 @@ private:
 
 private:
 	std::vector<Segment*> segments;
+	SegmentShaderText* segmentShaderText = nullptr;
+	int segmentViewPoolOff;
 
 	EditorProperties* eProps = nullptr;
 };

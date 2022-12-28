@@ -32,26 +32,58 @@ void ShaderManager::Shutdown()
 	if (debugShader != nullptr) RELEASE(debugShader);
 }
 
-void ShaderManager::GenerateBinary(uint programID, std::string uuid)
+void ShaderManager::ImportToLibrary(ResourceShader* resource)
 {
+	if (resource->shader == nullptr)
+	{
+		resource->shader = new Shader(resource->GetAssetsFile().c_str(), "TestingShader");
+	}
+
+	//GLint formats = 0;
+	//glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);
+	//if (formats < 1) {
+	//	LOG(LOG_TYPE::ERRO, "Driver does not support any binary formats.");
+	//}
+
+
+	//Generate and save binary
 	GLint size = 0;
 	GLenum format = 0;
-	std::vector<GLubyte> buffer(size);
-	
-	//Get Binary code
-	glGetProgramiv(programID, GL_PROGRAM_BINARY_LENGTH, &size);
-	glGetProgramBinary(programID, size, NULL, &format, buffer.data());
 
-	//Write to a file
+	//Binary code
+	glGetProgramiv(resource->shader->ID, GL_PROGRAM_BINARY_LENGTH, &size);
+	std::vector<GLubyte> buffer(size);
+	glGetProgramBinary(resource->shader->ID, size, NULL, &format, buffer.data());
+
+	//Write to a library file
 	std::string filePath = LIB_SHADERS;
-	filePath += uuid;
+	filePath += "/";
+	filePath += resource->GetUUID();
 	filePath += ".lssbin";
 
 	LibraryManager::Save(filePath, reinterpret_cast<char*>(buffer.data()), size);
 
+	resource->SetLibraryFile(filePath);
+	resource->binaryFormat = format;
+	resource->SetName(resource->shader->name);
+	RELEASE(resource->shader);
 }
 
-void ShaderManager::ImportToLibrary(ResourceShader* resource)
+Shader* ShaderManager::ImportFromLibrary(ResourceShader* resource)
 {
+	//Checks if the binary exists, imports it first if it doesn't
+	if (!LibraryManager::Exists(resource->GetLibraryFile())) ImportToLibrary(resource);
 
+	char* buffer = nullptr;
+	GLint size = 0;
+
+	size = LibraryManager::Load(resource->GetLibraryFile(), &buffer);
+
+	if (resource->shader != nullptr) RELEASE(resource->shader); //Clean current shader(if there is one)
+	resource->shader = new Shader(buffer, size, resource->binaryFormat, resource->GetName());
+	resource->shader->uuid = resource->GetUUID();
+
+	RELEASE(buffer);
+
+	return resource->shader;
 }

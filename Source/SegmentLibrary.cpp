@@ -1,5 +1,6 @@
 #include "SegmentLibrary.h"
 
+#include "ModuleEditor.h"
 #include "ModuleScene.h"
 #include "ModuleFileSystem.h"
 #include "ModuleResources.h"
@@ -120,6 +121,7 @@ void SegmentLibrary::BoxView()
 			ImGui::NextColumn();
 		}
 
+		static bool doubleClick = false;
 		//Iterate files
 		for (int k = 0; k < currentFolder->libItem.size(); ++k)
 		{
@@ -130,7 +132,13 @@ void SegmentLibrary::BoxView()
 				{
 					case str2int("dds"):
 					case str2int("png"):
-
+						break;
+					case str2int("shader"):
+					case str2int("lss"):
+						if (doubleClick)
+						{
+							EditorProperties::Instance()->RequestShaderTextSwitch(currentFolder->libItem[k]->resUuid);
+						}
 						break;
 					case str2int("fbx"):
 					case str2int("FBX"):
@@ -142,12 +150,18 @@ void SegmentLibrary::BoxView()
 						
 						break;
 				}
+				if (doubleClick) doubleClick = false;
 			}
 
 
 			if (ImGui::IsItemHovered())
 			{ //Hover tooltip
 				ImGui::SetTooltip(currentFolder->libItem[k]->name.c_str());
+
+				if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+				{
+					doubleClick = true;
+				}
 			}
 
 			//POPUP MENU

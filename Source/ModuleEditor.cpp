@@ -15,6 +15,7 @@
 #include "SegmentHierarchy.h"
 #include "SegmentInspector.h"
 #include "SegmentLibrary.h"
+#include "SegmentShaderText.h"
 
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -26,7 +27,7 @@
 #pragma region EditorProperties
 EditorProperties::EditorProperties()
 {
-
+	requestShaderTextUuid = "NULL";
 }
 
 EditorProperties* EditorProperties::Instance()
@@ -51,6 +52,12 @@ void EditorProperties::SwitchColorMode() {
 		case COLORMODE::DarkMode: ImGui::StyleColorsDark(); break;
 		case COLORMODE::ClassicMode: ImGui::StyleColorsClassic(); break;
 	}
+}
+
+void EditorProperties::RequestShaderTextSwitch(std::string shaderResourceUuid)
+{
+	requestShaderTextSwitch = true;
+	requestShaderTextUuid = shaderResourceUuid;
 }
 
 EditorProperties* EditorProperties::instance = nullptr;
@@ -96,6 +103,8 @@ bool ModuleEditor::Init()
 
 bool ModuleEditor::Start()
 {
+	segmentViewPoolOff = 1;
+
 	//Create Segments
 	segments.emplace_back(new SegmentConfiguration());
 	segments.emplace_back(new SegmentConsole());
@@ -104,14 +113,19 @@ bool ModuleEditor::Start()
 	segments.emplace_back(new SegmentHierarchy());
 	segments.emplace_back(new SegmentInspector());
 	segments.emplace_back(new SegmentLibrary());
-		//Always last
+		//Always last on this order
 	segments.emplace_back(new SegmentAbout());
 
-	//START
+	//START Standard segments
 	for (int i = 0; i < segments.size(); ++i)
 	{
 		segments[i]->Start();
 	}
+
+	//Start Special segments
+	segmentShaderText = new SegmentShaderText();
+	segmentShaderText->Start();
+
 	//
 	ImGui_ImplSDL2_InitForOpenGL(WindowProperties::Instance()->window, App->renderer3D->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
@@ -130,6 +144,8 @@ bool ModuleEditor::CleanUp()
 	{
 		RELEASE(segments[i]);
 	}
+
+	RELEASE(segmentShaderText);
 
 	//Delete Editor Properties
 	eProps->Delete();
@@ -157,6 +173,7 @@ void ModuleEditor::DrawEditorGui()
 
 	//Menus
 	MainMenuBar();
+	RequestSwitchHandler();
 	UpdateSegments();
 	FileDialogMenu();
 
@@ -232,7 +249,7 @@ void ModuleEditor::MainMenuBar()
 		if (ImGui::BeginMenu("View"))
 		{
 
-			for (int i = 0; i < (segments.size() - 1); ++i)
+			for (int i = 0; i < (segments.size() - segmentViewPoolOff); ++i)
 			{
 				if (ImGui::MenuItem(segments[i]->name.c_str(), NULL, &segments[i]->enabled))
 				{
@@ -284,14 +301,31 @@ void ModuleEditor::FileDialogMenu()
 
 }
 
+void ModuleEditor::RequestSwitchHandler()
+{
+	if (eProps->GetShaderTextRequest())
+	{
+		segmentShaderText->enabled = !segmentShaderText->enabled;
+
+		segmentShaderText->SetResource(eProps->GetShaderTextRequestUuid());
+	}
+}
+
 void ModuleEditor::UpdateSegments()
 {
+	//Main acces Segments
 	for (int i = 0; i < segments.size(); ++i)
 	{
 		if (segments[i]->enabled)
 		{
 			segments[i]->Update();
 		}
+	}
+
+	//Special Segments
+	if (segmentShaderText->enabled)
+	{
+		segmentShaderText->Update();
 	}
 }
 #pragma endregion Gui Elements of the editor

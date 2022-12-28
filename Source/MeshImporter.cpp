@@ -223,7 +223,7 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 	aiVector3D position;
 	aiQuaternion rotation;
 	aiVector3D localScale;
-	node->mTransformation.Decompose(position, rotation, localScale);
+	node->mTransformation.Decompose(localScale, rotation, position);
 
 	Quat q = Quat(rotation.x, rotation.y, rotation.z, rotation.w);
 	float3 toDeg = q.ToEulerXYZ();

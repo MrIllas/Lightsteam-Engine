@@ -11,7 +11,20 @@
 #include <vector>
 
 /// <summary>
-/// Constructor used fro shaders that are being compiled from a code std::string variable.
+/// Constructor used for shaders binary.
+/// </summary>
+/// <param name="buffer"></param>
+/// <param name="size"></param>
+/// <param name="name"></param>
+Shader::Shader(char* buffer, uint size, uint format, std::string name)
+{
+	this->name = name;
+
+	LoadBinary(buffer, size, format);
+}
+
+/// <summary>
+/// Constructor used for shaders that are being compiled from a code std::string variable.
 /// </summary>
 /// <param name="fragmentCode"></param>
 /// <param name="vertexCode"></param>
@@ -38,6 +51,11 @@ Shader::Shader(const char* shaderPath, std::string name)
 
 	RetriveShader(shaderPath);
 	CompileShader();
+}
+
+Shader::~Shader()
+{
+	glDeleteShader(ID);
 }
 
 void Shader::RetriveShader(const char* shaderPath)
@@ -117,6 +135,7 @@ void Shader::CompileShader()
 	ID = glCreateProgram();
 	glAttachShader(ID, vertex);
 	glAttachShader(ID, fragment);
+	//glProgramParameteri(ID, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_TRUE); //Allows getting the compiled binary
 	glLinkProgram(ID);
 	//Print Linking errors if any
 	glGetProgramiv(ID, GL_LINK_STATUS, &success);
@@ -133,6 +152,26 @@ void Shader::CompileShader()
 	//Delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+}
+
+void Shader::LoadBinary(char* buffer, uint size, uint format)
+{
+	ID = glCreateProgram();
+
+	glProgramBinary(ID, format, buffer, size);
+
+	GLint status;
+	char infoLog[512];
+	glGetProgramiv(ID, GL_LINK_STATUS, &status);
+	if (GL_FALSE == status)
+	{
+		glGetProgramInfoLog(ID, 512, NULL, infoLog);
+		LOG(LOG_TYPE::ERRO, "ERROR::SHADER::PROGRAM::BINARY_FAILED\N %s", infoLog);
+	}
+	else
+	{
+		LOG(LOG_TYPE::SUCCESS, "SUCCESS: Shader '%s' has been loaded from binaries!", name.c_str());
+	}
 }
 
 void Shader::Use()

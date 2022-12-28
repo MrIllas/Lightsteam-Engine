@@ -277,6 +277,12 @@
     <ClCompile Include="ResourceShader.cpp">
       <Filter>Source\Data\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="CompMaterial.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentShaderText.cpp">
+      <Filter>Source\Core\Segments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -842,6 +848,12 @@
     </ClInclude>
     <ClInclude Include="ResourceShader.h">
       <Filter>Header\Data\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="CompMaterial.h">
+      <Filter>Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentShaderText.h">
+      <Filter>Header\Core\Segments</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

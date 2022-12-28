@@ -158,6 +158,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CompCamera.cpp" />
+    <ClCompile Include="CompMaterial.cpp" />
     <ClCompile Include="CompMeshRenderer.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CompTexture.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="SegmentInspector.cpp" />
     <ClCompile Include="SegmentLibrary.cpp" />
     <ClCompile Include="SegmentScene.cpp" />
+    <ClCompile Include="SegmentShaderText.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Singleton.cpp" />
@@ -253,6 +255,7 @@
     <ClInclude Include="BaseShaders.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CompCamera.h" />
+    <ClInclude Include="CompMaterial.h" />
     <ClInclude Include="CompMeshRenderer.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CompTexture.h" />
@@ -433,6 +436,7 @@
     <ClInclude Include="SegmentInspector.h" />
     <ClInclude Include="SegmentLibrary.h" />
     <ClInclude Include="SegmentScene.h" />
+    <ClInclude Include="SegmentShaderText.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="TextureImporter.h" />

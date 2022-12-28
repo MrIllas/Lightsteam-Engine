@@ -40,6 +40,9 @@ public:
 	}
 	uint GetRC() { return referenceCount; }
 
+	std::string GetName() { return name; }
+	void SetName(std::string value) { this->name = value; }
+
 	void Save();
 	bool Load();
 
@@ -52,6 +55,7 @@ protected:
 	virtual void LoadUnique(nlohmann::JsonData data);
 protected:
 	std::string uuid;
+	std::string name;
 	std::string assetsFile;
 	std::string libraryFile;
 	

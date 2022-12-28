@@ -4,6 +4,7 @@
 #include "CompMeshRenderer.h"
 #include "CompTexture.h"
 #include "CompCamera.h"
+#include "CompMaterial.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -95,22 +96,6 @@ void GameObject::UpdateCompMenuGUI()
 
 		ImGui::EndCombo();
 	}
-
-	/*if (ImGui::Button("Save GO"))
-	{
-		Save();
-	}
-	if (ImGui::Button("Load GO"))
-	{
-		nlohmann::JsonData data;
-		char* buffer = nullptr;
-
-		uint size = LibraryManager::Load("Library/JsonTest.go", &buffer);
-		data.data = nlohmann::ordered_json::parse(buffer, buffer + size);
-		RELEASE(buffer);
-
-		Load(data);
-	}*/
 }
 
 Component* GameObject::CreateComponent(CO_TYPE type)
@@ -136,6 +121,9 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 			break;
 		case CAMERA:
 			toReturn = new CompCamera(this, LS_UUID::Generate());
+			break;
+		case TESTING:
+			toReturn = new CompMaterial(this, LS_UUID::Generate());
 			break;
 	}
 

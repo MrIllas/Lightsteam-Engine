@@ -9,6 +9,7 @@ enum CO_TYPE
 	MESH_RENDERER,
 	MATERIAL,
 	CAMERA,
+	TESTING,
 	LAST
 };
 
@@ -20,6 +21,7 @@ inline const char* CompTypeToString(CO_TYPE type)
 		case MESH_RENDERER:   return "Mesh Renderer";
 		case MATERIAL: return "Material";
 		case CAMERA: return "Camera";
+		case TESTING: return "Testing";
 	}
 }
 

@@ -42,10 +42,10 @@ Resource* ResourceProperties::CreateNewResource(std::string assetsPath, RESOURCE
 
 	switch (type)
 	{
-	case RESOURCE_TYPE::TEXTURE: toReturn = new ResourceTexture(uuid); break;
-	case RESOURCE_TYPE::MODEL: toReturn = new ResourceModel(uuid); break;
-	case RESOURCE_TYPE::SHADER: toReturn = new ResourceShader(uuid); break;
-	default: toReturn = new Resource(uuid, RESOURCE_TYPE::UNKNOWN); break;
+		case RESOURCE_TYPE::TEXTURE: toReturn = new ResourceTexture(uuid); break;
+		case RESOURCE_TYPE::MODEL: toReturn = new ResourceModel(uuid); break;
+		case RESOURCE_TYPE::SHADER: toReturn = new ResourceShader(uuid); break;
+		default: toReturn = new Resource(uuid, RESOURCE_TYPE::UNKNOWN); break;
 	}
 
 	if (toReturn != nullptr)

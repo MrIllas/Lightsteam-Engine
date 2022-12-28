@@ -64,6 +64,7 @@ void SegmentInspector::Update()
 
 
 						comp.second->UpdateGUI();
+						ImGui::NewLine();
 					}
 				}
 				go->UpdateCompMenuGUI();
