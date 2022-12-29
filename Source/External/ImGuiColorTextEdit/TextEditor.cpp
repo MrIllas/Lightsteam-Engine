@@ -48,6 +48,7 @@ TextEditor::TextEditor()
 	, mIgnoreImGuiChild(false)
 	, mShowWhitespaces(true)
 	, mStartTime(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
+	, mRequestSave(false) //Personal
 {
 	SetPalette(GetDarkPalette());
 	SetLanguageDefinition(LanguageDefinition::HLSL());
@@ -761,6 +762,8 @@ void TextEditor::HandleKeyboardInputs()
 			EnterCharacter('\n', false);
 		else if (!IsReadOnly() && !ctrl && !alt && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Tab)))
 			EnterCharacter('\t', shift);
+		else if (!IsReadOnly() && ctrl && !shift && !alt && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) //Personal
+			RequestSave();
 
 		if (!IsReadOnly() && !io.InputQueueCharacters.empty())
 		{
@@ -2001,6 +2004,21 @@ void TextEditor::Redo(int aSteps)
 {
 	while (CanRedo() && aSteps-- > 0)
 		mUndoBuffer[mUndoIndex++].Redo(this);
+}
+
+void TextEditor::RequestSave()
+{
+	mRequestSave = true;
+}
+
+bool TextEditor::GetSaveRequest()
+{
+	if (mRequestSave)
+	{
+		mRequestSave = false;
+		return true;
+	}
+	return false;
 }
 
 const TextEditor::Palette & TextEditor::GetDarkPalette()

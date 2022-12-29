@@ -30,6 +30,8 @@ public:
 private:
 	void MenuBar();
 
+	void SaveAction();
+
 private:
 	TextEditor editor;
 	TextEditor::LanguageDefinition lang;
@@ -38,6 +40,5 @@ private:
 	ResourceShader* currentResource = nullptr;
 
 	ResourceProperties* resInstance = nullptr;
-
 };
 

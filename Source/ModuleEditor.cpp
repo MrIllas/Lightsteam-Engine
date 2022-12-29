@@ -183,7 +183,7 @@ void ModuleEditor::DrawEditorGui()
 	FileDialogMenu();
 
 	//Demo
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	EndRender();
 }

@@ -262,6 +262,9 @@ public:
 	void Undo(int aSteps = 1);
 	void Redo(int aSteps = 1);
 
+	void RequestSave(); //Personal
+	bool GetSaveRequest(); // Personal
+
 	static const Palette& GetDarkPalette();
 	static const Palette& GetLightPalette();
 	static const Palette& GetRetroBluePalette();
@@ -353,6 +356,8 @@ private:
 	EditorState mState;
 	UndoBuffer mUndoBuffer;
 	int mUndoIndex;
+
+	bool mRequestSave; // Personal
 
 	int mTabSize;
 	bool mOverwrite;

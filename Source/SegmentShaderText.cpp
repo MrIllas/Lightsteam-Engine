@@ -6,7 +6,7 @@
 
 SegmentShaderText::SegmentShaderText(bool enabled) : Segment(enabled)
 {
-	name = "Shader Text Editor";
+	name = "GLSL Editor";
 }
 
 SegmentShaderText::~SegmentShaderText()
@@ -21,15 +21,15 @@ void SegmentShaderText::Start()
 	lang = TextEditor::LanguageDefinition::GLSL();
 
 	editor.SetLanguageDefinition(lang);
-
-	editor.SetText("fweofweufhwe");
 }
 
 void SegmentShaderText::Update()
 {
-	ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar;
 
-	
+	//Key handling
+	if (editor.GetSaveRequest()) SaveAction();
+
 	if (editor.IsTextChanged())
 	{
 		editorData.edited = true;
@@ -42,7 +42,6 @@ void SegmentShaderText::Update()
 	if (ImGui::Begin(name.c_str(), &enabled, flags))
 	{
 		MenuBar();
-
 
 		//Editor Render
 		auto cpos = editor.GetCursorPosition();
@@ -58,8 +57,6 @@ void SegmentShaderText::Update()
 		}
 
 		editor.Render("TextEditor");
-
-		//LOG(LOG_TYPE::NONE, "%s", editor.GetText().c_str());
 	}
 	ImGui::End();
 }
@@ -72,14 +69,7 @@ void SegmentShaderText::MenuBar()
 		{
 			if (ImGui::MenuItem("Save", "Ctrl-S"))
 			{
-				editorData.edited = false;
-
-				//Delete previous binary
-				if (LibraryManager::Exists(currentResource->GetLibraryFile()))
-					LibraryManager::RemoveFile(currentResource->GetLibraryFile());
-
-				LibraryManager::SaveJSON(currentResource->GetAssetsFile(), editor.GetText());//Save .shader
-				editorData.compilationError = ShaderManager::ImportToLibrary(currentResource);//Compile
+				SaveAction();
 			}
 
 			ImGui::EndMenu();
@@ -89,7 +79,7 @@ void SegmentShaderText::MenuBar()
 		{
 			bool ro = editor.IsReadOnly();
 
-			if (ImGui::MenuItem("Undo", "ALT-Backspace", nullptr, !ro && editor.CanUndo()))
+			if (ImGui::MenuItem("Undo", "Ctrl-Z", nullptr, !ro && editor.CanUndo()))
 				editor.Undo();
 			if (ImGui::MenuItem("Redo", "Ctrl-Y", nullptr, !ro && editor.CanRedo()))
 				editor.Redo();
@@ -126,6 +116,18 @@ void SegmentShaderText::MenuBar()
 
 		ImGui::EndMenuBar();
 	}
+}
+
+void SegmentShaderText::SaveAction()
+{
+	editorData.edited = false;
+
+	//Delete previous binary
+	if (LibraryManager::Exists(currentResource->GetLibraryFile()))
+		LibraryManager::RemoveFile(currentResource->GetLibraryFile());
+
+	LibraryManager::SaveJSON(currentResource->GetAssetsFile(), editor.GetText());//Save .shader
+	editorData.compilationError = ShaderManager::ImportToLibrary(currentResource);//Compile
 }
 
 void SegmentShaderText::SetResource(std::string resourceUuid)
