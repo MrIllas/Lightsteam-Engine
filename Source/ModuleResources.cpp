@@ -151,7 +151,7 @@ void ModuleResources::ImportFile(Resource* resource)
 	{
 		case RESOURCE_TYPE::TEXTURE: TextureImporter::ImportToLibrary((ResourceTexture*)resource); break;
 		case RESOURCE_TYPE::MODEL: MeshImporter::ImportToLibrary((ResourceModel*)resource); break;
-		case RESOURCE_TYPE::SHADER: ShaderManager::ImportToLibrary((ResourceShader*)resource); break;
+		case RESOURCE_TYPE::SHADER: bool ok = ShaderManager::ImportToLibrary((ResourceShader*)resource); break;
 	}
 
 	resource->Save();

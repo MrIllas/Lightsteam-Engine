@@ -32,19 +32,17 @@ void ShaderManager::Shutdown()
 	if (debugShader != nullptr) RELEASE(debugShader);
 }
 
-void ShaderManager::ImportToLibrary(ResourceShader* resource)
+bool ShaderManager::ImportToLibrary(ResourceShader* resource)
 {
+	bool isError = false;
 	if (resource->shader == nullptr)
 	{
-		resource->shader = new Shader(resource->GetAssetsFile().c_str(), "TestingShader");
+		//Get name
+		resource->SetName(LibraryManager::GetFilename(resource->GetAssetsFile()));
+
+		//Compile Shader
+		resource->shader = new Shader(resource->GetAssetsFile().c_str(), resource->GetName());
 	}
-
-	//GLint formats = 0;
-	//glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);
-	//if (formats < 1) {
-	//	LOG(LOG_TYPE::ERRO, "Driver does not support any binary formats.");
-	//}
-
 
 	//Generate and save binary
 	GLint size = 0;
@@ -61,12 +59,18 @@ void ShaderManager::ImportToLibrary(ResourceShader* resource)
 	filePath += resource->GetUUID();
 	filePath += ".lssbin";
 
-	LibraryManager::Save(filePath, reinterpret_cast<char*>(buffer.data()), size);
+	if(buffer.size() != 0) 
+		LibraryManager::Save(filePath, reinterpret_cast<char*>(buffer.data()), size);
+	else 
+		isError = true;
 
 	resource->SetLibraryFile(filePath);
 	resource->binaryFormat = format;
 	resource->SetName(resource->shader->name);
+
 	RELEASE(resource->shader);
+
+	return isError;
 }
 
 Shader* ShaderManager::ImportFromLibrary(ResourceShader* resource)

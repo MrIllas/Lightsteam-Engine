@@ -60,6 +60,11 @@ void EditorProperties::RequestShaderTextSwitch(std::string shaderResourceUuid)
 	requestShaderTextUuid = shaderResourceUuid;
 }
 
+void EditorProperties::ForceClose()
+{
+	requestShaderTextSwitch = true;
+}
+
 EditorProperties* EditorProperties::instance = nullptr;
 
 #pragma endregion Editor Properties Singleton Struct
@@ -178,7 +183,7 @@ void ModuleEditor::DrawEditorGui()
 	FileDialogMenu();
 
 	//Demo
-	//ImGui::ShowDemoWindow();
+	ImGui::ShowDemoWindow();
 
 	EndRender();
 }
@@ -307,7 +312,7 @@ void ModuleEditor::RequestSwitchHandler()
 	{
 		segmentShaderText->enabled = !segmentShaderText->enabled;
 
-		segmentShaderText->SetResource(eProps->GetShaderTextRequestUuid());
+		if (segmentShaderText->enabled) segmentShaderText->SetResource(eProps->GetShaderTextRequestUuid());
 	}
 }
 

@@ -283,6 +283,9 @@
     <ClCompile Include="SegmentShaderText.cpp">
       <Filter>Source\Core\Segments</Filter>
     </ClCompile>
+    <ClCompile Include="External\ImGuiColorTextEdit\TextEditor.cpp">
+      <Filter>External\ImGuiColorTextEdit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -855,6 +858,9 @@
     <ClInclude Include="SegmentShaderText.h">
       <Filter>Header\Core\Segments</Filter>
     </ClInclude>
+    <ClInclude Include="External\ImGuiColorTextEdit\TextEditor.h">
+      <Filter>External\ImGuiColorTextEdit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -955,6 +961,9 @@
     </Filter>
     <Filter Include="Source\Core\Render\Shaders">
       <UniqueIdentifier>{66b89705-7992-4470-8da2-eed16fefb345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\ImGuiColorTextEdit">
+      <UniqueIdentifier>{af43323e-302e-4e20-89f6-77457a93c04b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

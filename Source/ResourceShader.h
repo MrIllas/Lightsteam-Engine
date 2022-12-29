@@ -14,9 +14,13 @@ public:
 
 	void CleanInstance() override; 
 
+	void PlanDelete() override;
+
 public:
 	Shader* shader = nullptr;
 	
 	uint binaryFormat = 0;
+
+	bool isOpenOnEditor = false;
 };
 

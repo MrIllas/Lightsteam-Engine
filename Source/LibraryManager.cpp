@@ -55,9 +55,6 @@ void LibraryManager::GenerateLibrary()
 
 void LibraryManager::FolderSystemUpdate(LibraryFolder* folder, bool recursive)
 {
-	//if (folder->children.size() != 0 || folder->libItem.size() != 0) folder->CleanUp();
-	//else return; //Nothing to update - Return
-
 	char** aux = PHYSFS_enumerateFiles(folder->path.c_str());
 
 	std::string extension;
