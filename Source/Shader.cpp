@@ -147,11 +147,41 @@ void Shader::CompileShader()
 	else
 	{
 		LOG(LOG_TYPE::SUCCESS, "SUCCESS: Shader '%s' is compiled!", name.c_str());
+
+		//Get ActiveUniforms
+		VariableParser();
 	}
 
 	//Delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+}
+
+void Shader::VariableParser()
+{
+	GLint maxNameLen, count;
+
+	glGetProgramiv(ID, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxNameLen);
+	glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &count);
+	LOG(LOG_TYPE::ATTENTION, "Number of uniforms %i", count);
+
+	ShaderUniform uni;
+	std::vector<GLchar>uniName(maxNameLen, 0);
+
+	for (GLint i = 0; i < count; ++i)
+	{
+		uni.index = i;
+		glGetActiveUniform(ID, i, maxNameLen, &uni.read, &uni.size, &uni.type, uniName.data());
+
+		uni.name = uniName.data();
+		uni.strType = VariableEnumToString(uni.type);
+
+		//uni.value = 0;
+
+		LOG(LOG_TYPE::ATTENTION, "%i | %i | %i | %s | %s", uni.read, uni.size, uni.type, uni.strType.c_str(), uni.name.c_str());
+		uniforms.emplace_back(uni);
+	}
+	LOG(LOG_TYPE::ATTENTION, "__");
 }
 
 void Shader::LoadBinary(char* buffer, uint size, uint format)
@@ -171,6 +201,7 @@ void Shader::LoadBinary(char* buffer, uint size, uint format)
 	else
 	{
 		LOG(LOG_TYPE::SUCCESS, "SUCCESS: Shader '%s' has been loaded from binaries!", name.c_str());
+		VariableParser();
 	}
 }
 
@@ -206,4 +237,22 @@ void Shader::SetVec3(const std::string& name, const float* value) const
 void Shader::SetVec2(const std::string& name, const float* value) const
 {
 	glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, value);
+}
+
+std::string Shader::VariableEnumToString(uint type)
+{
+	std::string toReturn = "NULL";
+
+	switch (type)
+	{
+	case GL_BOOL: toReturn = "bool"; break;
+	case GL_INT: toReturn = "int"; break;
+	case GL_UNSIGNED_INT: toReturn = "uint"; break;
+	case GL_FLOAT: toReturn = "float"; break;
+	case GL_DOUBLE: toReturn = "double"; break;
+	case GL_SAMPLER_2D: toReturn = "sampler2D"; break;
+	case GL_FLOAT_MAT4: toReturn = "mat4"; break;
+	}
+
+	return toReturn;
 }

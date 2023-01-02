@@ -7,6 +7,7 @@
 #include "ResourceTexture.h"
 #include "ResourceModel.h"
 #include "ResourceShader.h"
+#include "ResourceMaterial.h"
 #include "LibraryManager.h"
 #include "LibraryFolder.h"
 
@@ -45,6 +46,7 @@ Resource* ResourceProperties::CreateNewResource(std::string assetsPath, RESOURCE
 		case RESOURCE_TYPE::TEXTURE: toReturn = new ResourceTexture(uuid); break;
 		case RESOURCE_TYPE::MODEL: toReturn = new ResourceModel(uuid); break;
 		case RESOURCE_TYPE::SHADER: toReturn = new ResourceShader(uuid); break;
+		case RESOURCE_TYPE::MATERIAL: toReturn = new ResourceMaterial(uuid); break;
 		default: toReturn = new Resource(uuid, RESOURCE_TYPE::UNKNOWN); break;
 	}
 
@@ -151,7 +153,11 @@ void ModuleResources::ImportFile(Resource* resource)
 	{
 		case RESOURCE_TYPE::TEXTURE: TextureImporter::ImportToLibrary((ResourceTexture*)resource); break;
 		case RESOURCE_TYPE::MODEL: MeshImporter::ImportToLibrary((ResourceModel*)resource); break;
-		case RESOURCE_TYPE::SHADER: bool ok = ShaderManager::ImportToLibrary((ResourceShader*)resource); break;
+		case RESOURCE_TYPE::SHADER: ShaderManager::ImportToLibrary((ResourceShader*)resource); break;
+		case RESOURCE_TYPE::MATERIAL: 
+			ResourceMaterial* aux = (ResourceMaterial*)resource;
+			aux->ImportToLibrary();
+				break;
 	}
 
 	resource->Save();
@@ -232,6 +238,11 @@ RESOURCE_TYPE ModuleResources::GetResourceType(std::string extension)
 		case str2int("shader"):
 		case str2int("SHADER"):
 			return RESOURCE_TYPE::SHADER;
+		case str2int("material"):
+		case str2int("MATERIAL"):
+		case str2int("mat"):
+		case str2int("MAT"):
+			return RESOURCE_TYPE::MATERIAL;
 		default:
 			return RESOURCE_TYPE::UNKNOWN;
 	}

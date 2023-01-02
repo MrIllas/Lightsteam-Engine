@@ -5,7 +5,6 @@
 ResourceModel::ResourceModel(std::string uuid) : Resource(uuid, RESOURCE_TYPE::MODEL)
 {
 	meshRendererMap = new std::map<std::string, SubMeshResource*>();
-	//meshCCF = new std::map<std::string, std::string>();
 }
 
 ResourceModel::~ResourceModel()
@@ -15,9 +14,6 @@ ResourceModel::~ResourceModel()
 
 void ResourceModel::CleanInstance()
 {
-	//if (meshCCF != nullptr) meshCCF->clear();
-	//RELEASE(meshCCF);
-
 	if (meshRendererMap != nullptr)
 	{
 		for (auto const& mesh : *meshRendererMap)
@@ -52,8 +48,6 @@ void ResourceModel::CleanMeshRendererMap()
 {
 	if (meshRendererMap != nullptr)
 	{
-		//if (meshRendererMap->empty())return;
-
 		for (auto const& mesh : *meshRendererMap)
 		{
 			if (mesh.second != nullptr)

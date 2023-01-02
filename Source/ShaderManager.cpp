@@ -5,6 +5,7 @@
 #include "BaseShaders.h"
 
 #include "Glew/include/glew.h"
+#include "ImGui/imgui.h"
 
 static Shader* baseShader;
 Shader* ShaderManager::BaseShader() { return baseShader; }
@@ -90,4 +91,48 @@ Shader* ShaderManager::ImportFromLibrary(ResourceShader* resource)
 	RELEASE(buffer);
 
 	return resource->shader;
+}
+
+void ShaderManager::HandleShaderGUI(ShaderUniform &uni)
+{
+	if (uni.name == "projection" || uni.name == "view" || uni.name == "model") return;
+
+	ImGui::Text("Type: %s", uni.strType.c_str());
+	std::string name = uni.name + "##" + std::to_string(uni.index);
+	std::string aux;
+	switch (uni.type)
+	{
+		case GL_BOOL:
+			ImGui::Checkbox(name.c_str(), nullptr);
+			break;
+		case GL_INT:
+			ImGui::InputInt(name.c_str(), nullptr);
+			break;
+		case GL_UNSIGNED_INT:
+			ImGui::InputInt(name.c_str(), nullptr, 0, 4294967295);
+			break;
+		case GL_FLOAT:
+			ImGui::InputFloat(name.c_str(), nullptr);
+			break;
+		case GL_DOUBLE:
+			//ImGui::InputDouble(name.c_str(), (double*) uni.value);
+			break;
+		case GL_SAMPLER_2D:
+			ImGui::Text("%s", name.c_str());
+			ImGui::SameLine();
+			ImGui::ImageButton(0, { 75, 75 });
+			break;
+		case GL_FLOAT_MAT4:
+			ImGui::Text(name.c_str());
+			ImGui::SameLine();
+			aux = "1: " + name;
+			ImGui::InputFloat4(aux.c_str(), nullptr);
+			aux = "2: " + name;
+			ImGui::InputFloat4(aux.c_str(), nullptr);
+			aux = "3: " + name;
+			ImGui::InputFloat4(aux.c_str(), nullptr);
+			aux = "4: " + name;
+			ImGui::InputFloat4(aux.c_str(), nullptr);
+			break;
+	}
 }

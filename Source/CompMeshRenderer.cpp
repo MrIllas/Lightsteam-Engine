@@ -136,8 +136,6 @@ void CompMeshRenderer::MeshDrop()
 				item.erase(pos);
 			}
 				 
-			
-		
 
 			ResourceModel* model = (ResourceModel*)ResourceProperties::Instance()->resources[item];
 

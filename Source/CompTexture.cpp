@@ -39,7 +39,6 @@ CompTexture::~CompTexture()
 void CompTexture::Init()
 {
 	checkersTexture = TextureImporter::checkers;
-	//checkersTexture.path = "DEBUG TEXTURE(CHECKERS)";
 }
 
 void CompTexture::Update()

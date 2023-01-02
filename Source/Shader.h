@@ -4,6 +4,17 @@
 typedef unsigned int uint;
 
 #include <string>
+#include <vector>
+
+struct ShaderUniform
+{
+	int read, size;
+	uint type;
+	std::string strType;
+	std::string name;
+	int index;
+	void* value;
+};
 
 class Shader
 {
@@ -29,10 +40,17 @@ private:
 	void CompileShader();
 	void LoadBinary(char* buffer, uint size, uint format);
 
+	/*Gets all the uniform variables*/
+	void VariableParser();
+
+	std::string VariableEnumToString(uint type);
 public:
 	uint ID;
 	std::string uuid;
 	std::string name;
+
+	std::vector<ShaderUniform> uniforms;
+
 private:
 	std::string vertexCode;
 	std::string fragmentCode;

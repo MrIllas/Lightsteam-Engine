@@ -286,6 +286,12 @@
     <ClCompile Include="External\ImGuiColorTextEdit\TextEditor.cpp">
       <Filter>External\ImGuiColorTextEdit</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source\Core\Render\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMaterial.cpp">
+      <Filter>Source\Data\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -861,6 +867,12 @@
     <ClInclude Include="External\ImGuiColorTextEdit\TextEditor.h">
       <Filter>External\ImGuiColorTextEdit</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header\Core\Render\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMaterial.h">
+      <Filter>Header\Data\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -964,6 +976,12 @@
     </Filter>
     <Filter Include="External\ImGuiColorTextEdit">
       <UniqueIdentifier>{af43323e-302e-4e20-89f6-77457a93c04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Core\Render\Materials">
+      <UniqueIdentifier>{10154ec3-81c5-450b-91c0-558bfee381df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Render\Materials">
+      <UniqueIdentifier>{13a05ca2-b3f7-4c42-ac61-4d9baa5aadd6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

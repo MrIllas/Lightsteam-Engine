@@ -69,18 +69,6 @@ void main()
 #pragma endregion Debug Shader
 
 	static const std::string newShaderTextFile = R"(#version 410 core
-#ifdef FRAGMENT_PROGRAM
-
-out vec4 FragColor;
-in vec2 TextureCoords;
-uniform sampler2D texture_albedo;
-
-void main()
-{
-	FragColor = texture(texture_albedo, TextureCoords);
-} 
-
-#endif
 #ifdef VERTEX_PROGRAM
 
 layout (location = 0) in vec3 aPos; 
@@ -98,6 +86,20 @@ void main()
 	gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
 	TextureCoords = texCoord; 
 }
+
+#endif
+#ifdef FRAGMENT_PROGRAM
+
+uniform sampler2D texture_albedo;
+
+in vec2 TextureCoords;
+
+out vec4 FragColor;
+
+void main()
+{
+	FragColor = texture(texture_albedo, TextureCoords);
+} 
 
 #endif)";
 }

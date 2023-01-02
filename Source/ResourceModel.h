@@ -30,8 +30,6 @@ public:
 	ResourceModel(std::string uuid);
 	~ResourceModel();
 
-	//std::vector<std::string> meshesUuid;
-
 	void CleanInstance() override;
 	void PlanDelete() override;
 
@@ -43,6 +41,5 @@ protected:
 public:
 	//For some reason this two maps require to be pointers or otherwise they leave memory leaks.
 	std::map<std::string, SubMeshResource*>* meshRendererMap;
-	//std::map<std::string, std::string> *meshCCF = nullptr; //UUID, CFF 
 };
 

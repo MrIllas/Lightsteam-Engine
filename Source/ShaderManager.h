@@ -13,5 +13,7 @@ namespace ShaderManager
 
 	Shader* BaseShader();
 	Shader* DebugShader();
+
+	void HandleShaderGUI(ShaderUniform &uni);
 };
 

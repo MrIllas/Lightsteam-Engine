@@ -113,6 +113,9 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)Source\External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,6 +177,7 @@
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LibraryManager.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="External\ImGui\imgui.cpp" />
@@ -234,6 +238,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMaterial.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ResourceShader.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />
@@ -333,6 +338,7 @@
     <ClInclude Include="LibraryFolder.h" />
     <ClInclude Include="LibraryManager.h" />
     <ClInclude Include="LSUUID.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="External\ImGui\imconfig.h" />
@@ -425,6 +431,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMaterial.h" />
     <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="ResourceShader.h" />
     <ClInclude Include="ResourceTexture.h" />
