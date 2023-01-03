@@ -7,8 +7,10 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
 #include <vector>
+
+#include "ShaderUniform.h"
+
 
 /// <summary>
 /// Constructor used for shaders binary.
@@ -55,6 +57,10 @@ Shader::Shader(const char* shaderPath, std::string name)
 
 Shader::~Shader()
 {
+	for (int i = 0; i < uniforms.size(); ++i)
+	{
+		RELEASE(uniforms[i]);
+	}
 	glDeleteShader(ID);
 }
 
@@ -165,20 +171,19 @@ void Shader::VariableParser()
 	glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &count);
 	LOG(LOG_TYPE::ATTENTION, "Number of uniforms %i", count);
 
-	ShaderUniform uni;
+	ShaderUniform* uni = nullptr;
 	std::vector<GLchar>uniName(maxNameLen, 0);
 
 	for (GLint i = 0; i < count; ++i)
 	{
-		uni.index = i;
-		glGetActiveUniform(ID, i, maxNameLen, &uni.read, &uni.size, &uni.type, uniName.data());
+		uni = new ShaderUniform();
+		uni->index = i;
+		glGetActiveUniform(ID, i, maxNameLen, &uni->read, &uni->size, &uni->type, uniName.data());
 
-		uni.name = uniName.data();
-		uni.strType = VariableEnumToString(uni.type);
+		uni->name = uniName.data();
+		uni->VariableSetting();
 
-		//uni.value = 0;
-
-		LOG(LOG_TYPE::ATTENTION, "%i | %i | %i | %s | %s", uni.read, uni.size, uni.type, uni.strType.c_str(), uni.name.c_str());
+		LOG(LOG_TYPE::ATTENTION, "%i | %i | %i | %s | %s", uni->read, uni->size, uni->type, uni->strType.c_str(), uni->name.c_str());
 		uniforms.emplace_back(uni);
 	}
 	LOG(LOG_TYPE::ATTENTION, "__");
@@ -237,22 +242,4 @@ void Shader::SetVec3(const std::string& name, const float* value) const
 void Shader::SetVec2(const std::string& name, const float* value) const
 {
 	glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, value);
-}
-
-std::string Shader::VariableEnumToString(uint type)
-{
-	std::string toReturn = "NULL";
-
-	switch (type)
-	{
-	case GL_BOOL: toReturn = "bool"; break;
-	case GL_INT: toReturn = "int"; break;
-	case GL_UNSIGNED_INT: toReturn = "uint"; break;
-	case GL_FLOAT: toReturn = "float"; break;
-	case GL_DOUBLE: toReturn = "double"; break;
-	case GL_SAMPLER_2D: toReturn = "sampler2D"; break;
-	case GL_FLOAT_MAT4: toReturn = "mat4"; break;
-	}
-
-	return toReturn;
 }

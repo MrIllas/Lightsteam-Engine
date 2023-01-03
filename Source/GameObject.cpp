@@ -255,12 +255,6 @@ nlohmann::ordered_json GameObject::Save()
 	}
 	data.data.emplace("Components", aux);
 
-	/*std::string savePath = LIB_MODELS;
-	savePath += "/";
-	savePath += this->uuid;
-
-	LibraryManager::SaveJSON(savePath, data.data.dump(4)); */
-
 	return data.data;
 }
 
@@ -268,7 +262,6 @@ void GameObject::Load(nlohmann::JsonData data)
 {
 	this->name = data.GetString("Name");
 	this->uuid = data.GetString("UUID");
-	//if (this->parent != nullptr) this->parent->uuid = data.GetString("Parent_UUID");
 
 	if (data.data.contains("Components"))
 	{

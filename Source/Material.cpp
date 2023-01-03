@@ -8,6 +8,7 @@
 #include "LibraryManager.h"
 
 #include "Shader.h"
+#include "ShaderUniform.h"
 Material::Material(std::string name)
 {
 	this->name = name;
@@ -28,7 +29,18 @@ void Material::Save(std::string filepath)
 	data.SetString("UUID", this->uuid);
 
 	if (shader != nullptr)
+	{
 		data.SetString("Shader Uuid", shader->uuid);
+
+
+		std::vector<nlohmann::ordered_json> aux;
+		//Save uniforms variables
+		for (int i = 0; i < shader->uniforms.size(); ++i)
+		{
+			aux.push_back(shader->uniforms[i]->GetJSON());
+		}
+		data.data.emplace("Uniforms", aux);
+	}
 
 	LibraryManager::SaveJSON(filepath, data.data.dump(4));
 }

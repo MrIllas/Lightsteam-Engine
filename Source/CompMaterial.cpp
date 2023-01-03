@@ -9,6 +9,7 @@
 
 #include "ShaderManager.h"
 #include "Shader.h"
+#include "ShaderUniform.h"
 
 #include "ModuleResources.h"
 #include "ResourceMaterial.h"
@@ -119,7 +120,8 @@ void CompMaterial::ShaderCustomGUI()
 	//Custom Shader properties
 	for (int i = 0; i < shader->uniforms.size(); ++i)
 	{
-		ShaderManager::HandleShaderGUI(shader->uniforms[i]);
+		if (shader->name == "projection" || shader->name == "view" || shader->name == "model") continue;
+		shader->uniforms[i]->HandleShaderGUI();
 	}
 }
 #pragma endregion

@@ -113,7 +113,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)Source\External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <EnableModules>false</EnableModules>
     </ClCompile>
@@ -253,6 +253,7 @@
     <ClCompile Include="SegmentShaderText.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="ShaderUniform.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="TextureImporter.cpp" />
   </ItemGroup>
@@ -448,6 +449,7 @@
     <ClInclude Include="SegmentShaderText.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="ShaderUniform.h" />
     <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>

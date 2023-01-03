@@ -9,32 +9,22 @@ uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model; 
 
-//uniform int testInt;
-//uniform uint testUInt;
-//uniform float testFloat;
-uniform mat4 testDouble;
-uniform bool testBool;
-
-
 out vec2 TextureCoords;
 
 void main()
 {
-	if (testBool)
-	{
-		gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, testDouble[0][0]);
-		TextureCoords = texCoord; 
-	}
-	
+	gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+	TextureCoords = texCoord; 
 }
 
 #endif
-
 #ifdef FRAGMENT_PROGRAM
 
-out vec4 FragColor;
-in vec2 TextureCoords;
 uniform sampler2D texture_albedo;
+
+in vec2 TextureCoords;
+
+out vec4 FragColor;
 
 void main()
 {
@@ -42,27 +32,3 @@ void main()
 } 
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

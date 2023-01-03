@@ -292,6 +292,9 @@
     <ClCompile Include="ResourceMaterial.cpp">
       <Filter>Source\Data\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderUniform.cpp">
+      <Filter>Source\Core\Render\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -872,6 +875,9 @@
     </ClInclude>
     <ClInclude Include="ResourceMaterial.h">
       <Filter>Header\Data\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderUniform.h">
+      <Filter>Header\Core\Render\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

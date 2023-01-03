@@ -6,15 +6,16 @@ typedef unsigned int uint;
 #include <string>
 #include <vector>
 
-struct ShaderUniform
-{
-	int read, size;
-	uint type;
-	std::string strType;
-	std::string name;
-	int index;
-	void* value;
-};
+//struct ShaderUniform
+//{
+//	int read, size;
+//	uint type;
+//	std::string strType;
+//	std::string name;
+//	int index;
+//	void* value = nullptr;
+//};
+class ShaderUniform;
 
 class Shader
 {
@@ -43,13 +44,12 @@ private:
 	/*Gets all the uniform variables*/
 	void VariableParser();
 
-	std::string VariableEnumToString(uint type);
 public:
 	uint ID;
 	std::string uuid;
 	std::string name;
 
-	std::vector<ShaderUniform> uniforms;
+	std::vector<ShaderUniform*> uniforms;
 
 private:
 	std::string vertexCode;
