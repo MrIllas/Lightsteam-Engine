@@ -6,8 +6,6 @@
 
 ResourceTexture::ResourceTexture(std::string uuid) : Resource(uuid, RESOURCE_TYPE::TEXTURE)
 {
-	/*std::string aux = LIB_TEXTURES;
-	libraryFile = aux;*/
 }
 
 ResourceTexture::~ResourceTexture()

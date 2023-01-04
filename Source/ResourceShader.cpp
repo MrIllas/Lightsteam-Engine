@@ -4,7 +4,6 @@
 
 ResourceShader::ResourceShader(std::string uuid) : Resource(uuid, RESOURCE_TYPE::SHADER)
 {
-
 }
 
 ResourceShader::~ResourceShader()

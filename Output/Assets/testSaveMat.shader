@@ -9,11 +9,13 @@ uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model; 
 
+uniform float testingFloat;
+
 out vec2 TextureCoords;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+	gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, testingFloat);
 	TextureCoords = texCoord; 
 }
 
@@ -32,3 +34,8 @@ void main()
 } 
 
 #endif
+
+
+
+
+

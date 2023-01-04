@@ -16,7 +16,7 @@ Material::Material(std::string name)
 
 Material::~Material()
 {
-
+	if (this->shader != nullptr) ResourceProperties::Instance()->resources.at(shader->uuid)->DecreaseRC();
 }
 
 #pragma region Save&Load
@@ -31,7 +31,7 @@ void Material::Save(std::string filepath)
 	if (shader != nullptr)
 	{
 		data.SetString("Shader Uuid", shader->uuid);
-
+		data.SetString("Shader Compile Version", ResourceProperties::Instance()->resources.at(shader->uuid)->GetVersion());
 
 		std::vector<nlohmann::ordered_json> aux;
 		//Save uniforms variables
@@ -60,6 +60,28 @@ void Material::Load(nlohmann::JsonData data)
 	if (res != nullptr)
 	{
 		this->shader = ShaderManager::ImportFromLibrary(res);
+
+		//If same version load uniforms
+		if (res->GetVersion() == data.GetString("Shader Compile Version"))
+		{
+			std::vector<nlohmann::ordered_json> aux;
+
+			aux = data.data["Uniforms"].get<nlohmann::ordered_json>();
+
+			if (aux.size() > 0)
+			{
+				for (int i = 0; i < aux.size(); ++i)
+				{
+					nlohmann::JsonData uniData;
+					uniData.data = aux.at(i);
+
+					shader->uniforms[i]->SetJSON(uniData);
+				}
+			}
+		}
+
+		//Increase reference count
+		res->IncreaseRC();
 	}
 }
 

@@ -11,6 +11,9 @@
 #include "ModuleResources.h"
 #include "LibraryFolder.h"
 
+#include "ResourceTexture.h"
+#include "ModuleResources.h"
+
 ShaderUniform::ShaderUniform()
 {
 
@@ -153,7 +156,16 @@ void ShaderUniform::VariableDeleting()
 		case GL_SAMPLER_2D:
 		{
 			Texture* s2d = static_cast<Texture*>(value);
-			RELEASE(s2d);
+			
+			if (!s2d->resUuid.empty())
+			{
+				ResourceTexture* res = (ResourceTexture*)ResourceProperties::Instance()->resources.at(s2d->resUuid);
+				if (res != nullptr)
+				{
+					res->DecreaseRC();
+				}
+			}
+			else RELEASE(s2d);
 		}
 		break;
 		case GL_FLOAT_MAT4:
@@ -281,6 +293,9 @@ nlohmann::ordered_json ShaderUniform::GetJSON()
 	toReturn.SetString("String Type", strType);
 	toReturn.SetInt("Index", index);
 
+	toReturn.SetInt("Read", read);
+	toReturn.SetInt("Size", size);
+
 	switch (type)
 	{
 		case GL_BOOL: toReturn.SetBool("Value", static_cast<bool*>(value)); break;
@@ -289,11 +304,62 @@ nlohmann::ordered_json ShaderUniform::GetJSON()
 		case GL_FLOAT: toReturn.SetInt("Value", *static_cast<float*>(value)); break;
 		case GL_FLOAT_VEC2: toReturn.SetFloat2("Value", *static_cast<float2*>(value)); break;
 		case GL_FLOAT_VEC3: toReturn.SetFloat3("Value", *static_cast<float3*>(value)); break;
-		//case GL_FLOAT_VEC4: toReturn.SetFloat4("Value", *static_cast<float4*>(value)); break;
-		//case GL_DOUBLE: toReturn.SetDouble("Value", *static_cast<double*>(value)); break;
-		case GL_SAMPLER_2D: toReturn.SetInt("Value", *static_cast<int*>(value)); break;
-		//case GL_FLOAT_MAT4: toReturn.SetFloat4x4("Value", *static_cast<int*>(value)); break;
+		case GL_FLOAT_VEC4: toReturn.SetFloat4("Value", *static_cast<float4*>(value)); break;
+		case GL_DOUBLE: toReturn.SetDouble("Value", *static_cast<double*>(value)); break;
+		case GL_SAMPLER_2D: 
+		{
+			Texture* tex = static_cast<Texture*>(value);
+
+			toReturn.SetString("Value", tex->resUuid);
+		}
+			break;
+		case GL_FLOAT_MAT4: toReturn.SetFloat4x4("Value", *static_cast<float4x4*>(value)); break;
 	}
 
 	return toReturn.data;
+}
+
+void ShaderUniform::SetJSON(nlohmann::JsonData data)
+{
+	name = data.GetString("Name");
+	type = data.GetInt("Type");
+	strType = data.GetString("String Type");
+	index = data.GetInt("Index");
+
+	read = data.GetInt("Read");
+	size = data.GetInt("Size");
+
+
+	//Clean current var & get new one
+	VariableDeleting();
+	switch (type)
+	{
+		case GL_BOOL: value = new bool(data.GetBool("Value")); break;
+		case GL_INT:
+		case GL_UNSIGNED_INT: value = new int(data.GetInt("Value")); break;
+		case GL_FLOAT: value = new float(data.GetFloat("Value")); break;
+		case GL_FLOAT_VEC2: value = new float2(data.GetFloat2("Value")); break;
+		case GL_FLOAT_VEC3: value = new float3(data.GetFloat3("Value")); break;
+		case GL_FLOAT_VEC4: value = new float4(data.GetFloat4("Value")); break;
+		case GL_DOUBLE: value = new double(data.GetDouble("Value")); break;
+		case GL_SAMPLER_2D:
+		{
+			std::string texUuid = data.GetString("Value");
+			if (!texUuid.empty())
+			{
+				ResourceTexture* res = nullptr;
+				if (ResourceProperties::Instance()->resources.count(texUuid) == 1)
+					res = (ResourceTexture*)ResourceProperties::Instance()->resources.at(texUuid);
+
+				if (res != nullptr)
+				{
+					TextureImporter::ImportFromLibrary(res);
+					value = res->texture;
+				}
+			}
+			else value = new Texture();
+		}
+			break;
+		case GL_FLOAT_MAT4: value = new float4x4(data.GetFloat4x4("Value"));  break;
+	}
 }

@@ -11,7 +11,6 @@
 
 #include "ShaderUniform.h"
 
-
 /// <summary>
 /// Constructor used for shaders binary.
 /// </summary>
@@ -156,6 +155,8 @@ void Shader::CompileShader()
 
 		//Get ActiveUniforms
 		VariableParser();
+
+		//compilationVersion = LS_UUID::Generate();
 	}
 
 	//Delete the shaders as they're linked into our program now and no longer necessary
@@ -169,7 +170,7 @@ void Shader::VariableParser()
 
 	glGetProgramiv(ID, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxNameLen);
 	glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &count);
-	LOG(LOG_TYPE::ATTENTION, "Number of uniforms %i", count);
+	//LOG(LOG_TYPE::ATTENTION, "Number of uniforms %i", count);
 
 	ShaderUniform* uni = nullptr;
 	std::vector<GLchar>uniName(maxNameLen, 0);
@@ -183,7 +184,7 @@ void Shader::VariableParser()
 		uni->name = uniName.data();
 		uni->VariableSetting();
 
-		LOG(LOG_TYPE::ATTENTION, "%i | %i | %i | %s | %s", uni->read, uni->size, uni->type, uni->strType.c_str(), uni->name.c_str());
+		//LOG(LOG_TYPE::ATTENTION, "%i | %i | %i | %s | %s", uni->read, uni->size, uni->type, uni->strType.c_str(), uni->name.c_str());
 		uniforms.emplace_back(uni);
 	}
 	LOG(LOG_TYPE::ATTENTION, "__");

@@ -59,6 +59,7 @@ void Resource::Save()
 	data.SetString("Library Filepath", this->libraryFile);
 	data.SetString("UUID", this->uuid);
 	data.SetString("Name", this->name);
+	data.SetString("Version", this->version);
 	data.SetInt("Type", (int)this->type);
 
 	LibraryManager::SaveJSON(savePath, SaveUnique(data).data.dump(4));
@@ -88,6 +89,7 @@ bool Resource::Load()
 	libraryFile = data.GetString("Library Filepath");
 	uuid = data.GetString("UUID");
 	name = data.GetString("Name");
+	version = data.GetString("Version");
 	type = (RESOURCE_TYPE) data.GetInt("Type");
 
 	LoadUnique(data);

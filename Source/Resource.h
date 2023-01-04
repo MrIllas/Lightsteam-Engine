@@ -44,6 +44,9 @@ public:
 	std::string GetName() { return name; }
 	void SetName(std::string value) { this->name = value; }
 
+	std::string GetVersion() { return version; }
+	void SetVersion(std::string version) { this->version = version; }
+
 	void Save();
 	bool Load();
 
@@ -57,6 +60,7 @@ protected:
 protected:
 	std::string uuid;
 	std::string name;
+	std::string version;
 	std::string assetsFile;
 	std::string libraryFile;
 	
