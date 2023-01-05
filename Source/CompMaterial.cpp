@@ -78,7 +78,7 @@ void CompMaterial::ShaderSelectorCombo()
 	if (this->material == nullptr)return;
 
 	std::string strSelected = "Select a shader";
-	if(material->GetShader() != nullptr) strSelected = material->GetShader()->name;
+	if (material->GetShader() != nullptr) strSelected = material->GetShader()->name;
 
 	std::vector<ResourceShader*> shaderPool;
 
@@ -127,7 +127,8 @@ void CompMaterial::ShaderCustomGUI()
 	//Custom Shader properties
 	for (int i = 0; i < shader->uniforms.size(); ++i)
 	{
-		if (shader->name == "projection" || shader->name == "view" || shader->name == "model") continue;
+		if (shader->uniforms[i] == nullptr) continue;
+		if (shader->uniforms[i]->name == "projection" || shader->uniforms[i]->name == "view" || shader->uniforms[i]->name == "model") continue;
 		shader->uniforms[i]->HandleShaderGUI();
 	}
 }

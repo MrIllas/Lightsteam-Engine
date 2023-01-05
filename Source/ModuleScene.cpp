@@ -140,7 +140,7 @@ bool ModuleScene::Start()
 	InitGameObjects(sProps->root);
 
 	sProps->loadSceneRequest = true;
-	sProps->scenePath = "/Library/Scenes/Street.sc";
+	//sProps->scenePath = "/Library/Scenes/Street.sc";
 	return true;
 }
 

@@ -249,11 +249,11 @@ void ShaderUniform::HandleShaderGUI()
 
 					ResourceTexture* res = (ResourceTexture*)ResourceProperties::Instance()->resources.at(item.resUuid);
 
-					if (!tex->resUuid.empty()) //Decrease current RC
-						ResourceProperties::Instance()->resources[tex->resUuid]->DecreaseRC();
+					//Clean current
+					VariableDeleting();
 
-					RELEASE(tex);
-					value = new Texture(TextureImporter::ImportFromLibrary(res));
+					TextureImporter::ImportFromLibrary(res);
+					value = res->texture;
 					tex = static_cast<Texture*>(value);
 				}
 			}

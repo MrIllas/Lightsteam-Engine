@@ -56,11 +56,18 @@ Shader::Shader(const char* shaderPath, std::string name)
 
 Shader::~Shader()
 {
+	Clear();
+}
+
+void Shader::Clear()
+{
 	for (int i = 0; i < uniforms.size(); ++i)
 	{
 		RELEASE(uniforms[i]);
 	}
 	glDeleteShader(ID);
+
+	uniforms.clear();
 }
 
 void Shader::RetriveShader(const char* shaderPath)
@@ -162,6 +169,13 @@ void Shader::CompileShader()
 	//Delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+}
+
+void Shader::Recompile(const char* shaderPath, std::string name)
+{
+	Clear();
+	RetriveShader(shaderPath);
+	CompileShader();
 }
 
 void Shader::VariableParser()

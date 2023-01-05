@@ -29,6 +29,8 @@ public:
 	void Use();
 	std::string GetBinary();
 
+	void Recompile(const char* shaderPath, std::string name);
+
 	void SetBool(const std::string &name, bool value) const;
 	void SetInt(const std::string &name, int value) const;
 	void SetFloat(const std::string &name, float value) const;
@@ -40,6 +42,8 @@ private:
 	void RetriveShader(const char* shaderPath);
 	void CompileShader();
 	void LoadBinary(char* buffer, uint size, uint format);
+
+	void Clear();
 
 	/*Gets all the uniform variables*/
 	void VariableParser();

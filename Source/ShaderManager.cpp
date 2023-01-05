@@ -48,6 +48,7 @@ void ShaderManager::Shutdown()
 bool ShaderManager::ImportToLibrary(ResourceShader* resource)
 {
 	bool isError = false;
+
 	if (resource->shader == nullptr)
 	{
 		//Get name
@@ -55,8 +56,8 @@ bool ShaderManager::ImportToLibrary(ResourceShader* resource)
 
 		//Compile Shader
 		resource->shader = new Shader(resource->GetAssetsFile().c_str(), resource->GetName());
-		resource->SetVersion(LS_UUID::Generate());
 	}
+	else resource->shader->Recompile(resource->GetAssetsFile().c_str(), resource->GetName());
 
 	//Generate and save binary
 	GLint size = 0;
@@ -81,8 +82,9 @@ bool ShaderManager::ImportToLibrary(ResourceShader* resource)
 	resource->SetLibraryFile(filePath);
 	resource->binaryFormat = format;
 	resource->SetName(resource->shader->name);
+	resource->SetVersion(LS_UUID::Generate());
 
-	RELEASE(resource->shader);
+	if(resource->GetRC() < 1) RELEASE(resource->shader);
 
 	return isError;
 }
