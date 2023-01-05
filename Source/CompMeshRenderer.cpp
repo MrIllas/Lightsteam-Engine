@@ -6,7 +6,9 @@
 
 #include "GameObject.h"
 #include "CompTexture.h"
+#include "CompMaterial.h"
 #include "CompTransform.h"
+#include "Material.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -155,19 +157,24 @@ void CompMeshRenderer::Render(Shader* shader, Shader* debugShader, Camera* camer
 {
 	if (!active || mesh == NULL) return;
 
-	if (owner->GetComponent<CompTexture>(MATERIAL) != nullptr && owner->GetComponent<CompTransform>(TRANSFORM) != nullptr)
+	if (owner->GetComponent<CompMaterial>(MATERIAL) != nullptr && owner->GetComponent<CompTransform>(TRANSFORM) != nullptr)
 	{
-		if (game)
-			mesh->LiteDraw(shader,
-				camera,
-				owner->GetComponent<CompTexture>(MATERIAL)->GetTexture(),
-				owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix());
-		else
-			mesh->FullDraw(shader,
-				debugShader,
-				camera,
-				owner->GetComponent<CompTexture>(MATERIAL)->GetTexture(),
-				owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix(), normals);
+		Material* mat = owner->GetComponent<CompMaterial>(MATERIAL)->material;
+
+		if (mat != nullptr)
+		{
+			if (game)
+				mesh->LiteDraw(mat->GetShader(),
+					owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix(),
+				camera);
+			else
+				mesh->FullDraw(mat->GetShader(),
+					debugShader,
+					owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix(),
+					camera,
+					normals);
+		}
+		
 	}
 }
 

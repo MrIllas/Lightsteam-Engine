@@ -4,6 +4,7 @@ typedef unsigned int uint;
 #include <string>
 #include "JsonUtils.h"
 
+class Shader;
 
 class ShaderUniform
 {
@@ -11,6 +12,7 @@ public:
 	ShaderUniform();
 	~ShaderUniform();
 
+	void Update(Shader* shader);
 
 	int read, size;
 	uint type;
@@ -20,6 +22,8 @@ public:
 	void* value = nullptr;
 
 public:
+
+
 	void VariableSetting();
 	void VariableDeleting();
 	void HandleShaderGUI();

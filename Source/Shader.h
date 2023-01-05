@@ -34,9 +34,11 @@ public:
 	void SetBool(const std::string &name, bool value) const;
 	void SetInt(const std::string &name, int value) const;
 	void SetFloat(const std::string &name, float value) const;
+	void SetDouble(const std::string& name, double value) const;
 	void SetMat4(const std::string& name, const float* value) const;
-	void SetVec3(const std::string& name, const float* value) const;
 	void SetVec2(const std::string& name, const float* value) const;
+	void SetVec3(const std::string& name, const float* value) const;
+	void SetVec4(const std::string& name, const float* value) const;
 
 private:
 	void RetriveShader(const char* shaderPath);

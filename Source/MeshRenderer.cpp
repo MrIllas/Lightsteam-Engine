@@ -4,6 +4,7 @@
 #include "MeshImporter.h"
 
 #include "Shader.h"
+#include "ShaderUniform.h"
 
 #include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
@@ -85,53 +86,61 @@ MeshRenderer::~MeshRenderer()
 }
 
 #pragma region Drawing
-void MeshRenderer::LiteDraw(Shader* shader, Camera* camera, Texture text, float4x4 model)
+void MeshRenderer::LiteDraw(Shader* shader, float4x4 model, Camera* camera)
 {
 	if (this->shader == nullptr) this->shader = shader;
 
-	DrawMesh(shader, camera, text, model);
+	DrawMesh(shader, camera, model);
 }
 
-void MeshRenderer::FullDraw(Shader* shader, Shader* debugShader, Camera* camera, Texture text, float4x4 model, Debug_Normals normals)
+void MeshRenderer::FullDraw(Shader* shader, Shader* debugShader, float4x4 model, Camera* camera, Debug_Normals normals)
 {
 	if (this->shader == nullptr) this->shader = shader;
 	if (this->debugShader == nullptr) this->debugShader = shader;
 
-	DrawMesh(shader, camera, text, model);
+	DrawMesh(shader, camera, model);
 
 	//Debug
 	debugShader->Use();
-	debugShader->SetMat4("projection", camera->GetProjectionMatrix());
-	debugShader->SetMat4("view", camera->GetViewMatrix());
-	debugShader->SetMat4("model", &model.v[0][0]);
+	debugShader->SetMat4("Projection", camera->GetProjectionMatrix());
+	debugShader->SetMat4("View", camera->GetViewMatrix());
+	debugShader->SetMat4("Model", &model.v[0][0]);
 
 	if (normals != Debug_Normals::OFF) DrawNormals(debugShader, camera, model, normals);
 
 	DrawBBox(debugShader, camera, model);
 }
 
-void MeshRenderer::DrawMesh(Shader* shader, Camera* camera, Texture text, float4x4 model)
+void MeshRenderer::DrawMesh(Shader* shader, Camera* camera, float4x4 model)
 {
+	if (shader == nullptr) return;
 	if (EBO != 0)
 	{
-		this->shader->Use();
+		shader->Use();
 
-		if (RenderProperties::Instance()->texture2D)
+		//Must have uniforms
+		shader->SetMat4("Projection", camera->GetProjectionMatrix());
+		shader->SetMat4("View", camera->GetViewMatrix());
+		shader->SetMat4("Model", &model.v[0][0]);
+
+		for (int i = 0; i < shader->uniforms.size(); ++i)
+		{
+			if (shader->uniforms[i]->name == "Projection" || shader->uniforms[i]->name == "View" || shader->uniforms[i]->name == "Model") continue;
+			shader->uniforms[i]->Update(shader);
+		}
+
+		/*if (RenderProperties::Instance()->texture2D)
 		{
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, text.id);
 			shader->SetInt("texture_albedo", 0);
-		}
-
-		this->shader->SetMat4("projection", camera->GetProjectionMatrix());
-		this->shader->SetMat4("view", camera->GetViewMatrix());
-		this->shader->SetMat4("model", &model.v[0][0]);
+		}*/
 
 		//Light
-		if (RenderProperties::Instance()->lighting)
+		/*if (RenderProperties::Instance()->lighting)
 		{
 			RenderProperties::Instance()->worldLight->SetShaderData(this->shader);
-		}
+		}*/
 		
 		//Draw Mesh
 		glBindVertexArray(VAO);
@@ -170,9 +179,9 @@ void MeshRenderer::DrawFrustumBox(Shader* shader, Camera* camera, float4x4 model
 	if (this->debugShader == nullptr) this->debugShader = shader;
 
 	debugShader->Use();
-	debugShader->SetMat4("projection", camera->GetProjectionMatrix());
-	debugShader->SetMat4("view", camera->GetViewMatrix());
-	debugShader->SetMat4("model", &model.v[0][0]);
+	debugShader->SetMat4("Projection", camera->GetProjectionMatrix());
+	debugShader->SetMat4("View", camera->GetViewMatrix());
+	debugShader->SetMat4("Model", &model.v[0][0]);
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_LINES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);

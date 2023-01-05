@@ -63,10 +63,10 @@ public:
 	MeshRenderer(Meshe meshData, bool debug = true);
 	~MeshRenderer();
 
-	void LiteDraw(Shader* shader, Camera* camera, Texture text, float4x4 model = float4x4::identity);
-	void FullDraw(Shader* shader, Shader* debugShader, Camera* camera, Texture text, float4x4 model = float4x4::identity, Debug_Normals normals = Debug_Normals::OFF);
+	void LiteDraw(Shader* shader, float4x4 model, Camera* camera);
+	void FullDraw(Shader* shader, Shader* debugShader, float4x4 model, Camera* camera, Debug_Normals normals = Debug_Normals::OFF);
 
-	void DrawMesh(Shader* shader, Camera* camera, Texture text, float4x4 model = float4x4::identity);
+	void DrawMesh(Shader* shader, Camera* camera, float4x4 model = float4x4::identity);
 
 	void DrawNormals(Shader* shader, Camera* camera, float4x4 model, Debug_Normals normals);
 	void DrawBBox(Shader* shader, Camera* camera, float4x4 model);

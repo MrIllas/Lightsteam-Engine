@@ -87,6 +87,7 @@ void MeshImporter::CleanUp()
 
 MeshRenderer* MeshImporter::ImportMeshFromLibrary(ResourceModel* model, std::string meshUuid)
 {
+	if (meshUuid == "NULL") return nullptr;
 	MeshRenderer* toReturn = nullptr;
 	SubMeshResource* subMesh = model->meshRendererMap->at(meshUuid);
 	if (subMesh != nullptr)

@@ -25,15 +25,15 @@ layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 texCoord;
 
-uniform mat4 projection;
-uniform mat4 view;
-uniform mat4 model; 
+uniform mat4 Projection;
+uniform mat4 View;
+uniform mat4 Model; 
 
 out vec2 TextureCoords;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+	gl_Position = Projection * View * Model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
 	TextureCoords = texCoord; 
 }
 	)";
@@ -57,13 +57,13 @@ void main()
 
 	layout (location = 0) in vec3 aPos; 
 
-	uniform mat4 projection;
-	uniform mat4 view;
-	uniform mat4 model; 
+	uniform mat4 Projection;
+	uniform mat4 View;
+	uniform mat4 Model; 
 
 	void main()
 	{
-		gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+		gl_Position = Projection * View * Model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
 	}
 	)";
 #pragma endregion Debug Shader
@@ -75,15 +75,15 @@ layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 texCoord;
 
-uniform mat4 projection;
-uniform mat4 view;
-uniform mat4 model; 
+uniform mat4 Projection;
+uniform mat4 View;
+uniform mat4 Model; 
 
 out vec2 TextureCoords;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
+	gl_Position = Projection * View * Model * vec4(aPos.x, aPos.y, aPos.z, 1.0f);
 	TextureCoords = texCoord; 
 }
 

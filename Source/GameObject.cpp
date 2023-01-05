@@ -117,13 +117,13 @@ Component* GameObject::CreateComponent(CO_TYPE type)
 			toReturn = new CompMeshRenderer(this, LS_UUID::Generate());
 			break;
 		case MATERIAL:
-			toReturn = new CompTexture(this, LS_UUID::Generate());
+			toReturn = new CompMaterial(this, LS_UUID::Generate());
 			break;
 		case CAMERA:
 			toReturn = new CompCamera(this, LS_UUID::Generate());
 			break;
 		case TESTING:
-			toReturn = new CompMaterial(this, LS_UUID::Generate());
+			toReturn = new CompTexture(this, LS_UUID::Generate());
 			break;
 	}
 
