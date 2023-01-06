@@ -134,10 +134,10 @@ UpdateStatus Application::Update()
 	}
 
 	G_Time->deltaTime = timer.getDeltaTime();
-	float frameTime = 1.0f / G_Time->frameCap;
-	if (G_Time->deltaTime < frameTime)
+	G_Time->frameTime = 1.0f / G_Time->frameCap;
+	if (G_Time->deltaTime < G_Time->frameTime)
 	{
-		float sleepTime = (frameTime - G_Time->deltaTime) * 1000;
+		float sleepTime = (G_Time->frameTime - G_Time->deltaTime) * 1000;
 		Sleep(sleepTime);
 	}
 	

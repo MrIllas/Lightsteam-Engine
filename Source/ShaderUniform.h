@@ -30,5 +30,8 @@ public:
 
 	nlohmann::ordered_json GetJSON();
 	void SetJSON(nlohmann::JsonData data);
+
+private:
+	float time;
 };
 

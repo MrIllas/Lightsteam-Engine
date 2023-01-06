@@ -9,7 +9,6 @@
 #include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
 
-
 MeshRenderer::MeshRenderer()
 {
 }
@@ -62,6 +61,7 @@ MeshRenderer::MeshRenderer(Meshe meshData, bool debug)
 		CreateBoundingBox();
 	}
 	
+	time = 0;
 }
 
 

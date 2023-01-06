@@ -14,6 +14,7 @@ struct Texture {
 	std::string resUuid;
 	std::string path;
 	uint w, h;
+	int count = -1;
 };
 
 struct TextureData

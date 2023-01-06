@@ -132,7 +132,6 @@ GameObject* MeshImporter::ImportFromLibrary(ResourceModel* resource)
 		return nullptr;
 	}
 
-	
 	//Load model root
 	std::map<std::string, GameObject*> modelMap;
 	std::vector<nlohmann::ordered_json> aux;
@@ -258,7 +257,8 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 
 			if (textMat != nullptr && !matUuid.empty())
 			{
-				textMat->SetTextureUuid(matUuid[aimesh->mMaterialIndex]);
+				if (matUuid[aimesh->mMaterialIndex] != "")
+					textMat->SetTextureUuid(matUuid[aimesh->mMaterialIndex]);
 			}
 
 			Meshe mesh;

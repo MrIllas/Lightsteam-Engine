@@ -16,6 +16,7 @@ typedef unsigned int uint;
 //	void* value = nullptr;
 //};
 class ShaderUniform;
+struct Texture;
 
 class Shader
 {
@@ -40,6 +41,8 @@ public:
 	void SetVec3(const std::string& name, const float* value) const;
 	void SetVec4(const std::string& name, const float* value) const;
 
+	void SetTexture(const std::string& name, Texture* value);
+
 private:
 	void RetriveShader(const char* shaderPath);
 	void CompileShader();
@@ -49,7 +52,6 @@ private:
 
 	/*Gets all the uniform variables*/
 	void VariableParser();
-
 public:
 	uint ID;
 	std::string uuid;
@@ -60,6 +62,8 @@ public:
 private:
 	std::string vertexCode;
 	std::string fragmentCode;
+
+	uint textureCount = 0;
 };
 
 #endif

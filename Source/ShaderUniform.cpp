@@ -17,9 +17,10 @@
 
 #include "Shader.h"
 
+#include "Application.h"
 ShaderUniform::ShaderUniform()
 {
-
+	time = 0;
 }
 
 ShaderUniform::~ShaderUniform()
@@ -29,6 +30,13 @@ ShaderUniform::~ShaderUniform()
 
 void ShaderUniform::Update(Shader* shader)
 {
+	if (name == "LssTime")
+	{
+		time += Time::Instance()->frameTime;
+		shader->SetFloat(name, time);
+		return;
+	}
+
 
 	switch (type)
 	{
@@ -44,10 +52,9 @@ void ShaderUniform::Update(Shader* shader)
 	{
 		if (RenderProperties::Instance()->texture2D)
 		{
+
 			Texture* tex = static_cast<Texture*>(value);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, tex->id);
-			shader->SetInt(name, 0);
+			shader->SetTexture(name, tex);
 		}
 	}
 	break;
@@ -210,7 +217,7 @@ void ShaderUniform::VariableDeleting()
 
 void ShaderUniform::HandleShaderGUI()
 {
-	if (name == "Projection" || name == "View" || name == "Model") return;
+	if (name == "LssTime" || name == "Projection" || name == "View" || name == "Model") return;
 
 	ImGui::Text("Type: %s", strType.c_str());
 	std::string name = this->name + "##" + std::to_string(index);
@@ -266,7 +273,7 @@ void ShaderUniform::HandleShaderGUI()
 	break;
 	case GL_FLOAT_VEC4:
 	{
-		if (name.find("Colour") || name.find("Color") || name.find("color") || name.find("colour"))
+		if (!name.find("Colour") || !name.find("Color") || !name.find("color") || !name.find("colour"))
 		{
 			float4 color = *static_cast<float4*>(value);
 			if (ImGui::ColorButton(name.c_str(), (ImVec4&) color, 0, {50, 50}))
