@@ -26,7 +26,7 @@
 		<Console value="true" />
 		<Scene value="true" />
 		<Game value="false" />
-		<Hierarchy value="false" />
+		<Hierarchy value="true" />
 		<Inspector value="true" />
 		<Library value="true" />
 		<ColorMode value="2" />

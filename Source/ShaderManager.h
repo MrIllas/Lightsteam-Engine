@@ -3,6 +3,8 @@
 #include "Shader.h"
 #include "ResourceShader.h"
 
+#define BASE_SHADER_KEY "BASE SHADER"
+
 namespace ShaderManager
 {
 	void Init();

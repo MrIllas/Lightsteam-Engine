@@ -8,6 +8,7 @@
 #include "ResourceModel.h"
 #include "ResourceShader.h"
 #include "ResourceMaterial.h"
+#include "Material.h"
 #include "LibraryManager.h"
 #include "LibraryFolder.h"
 

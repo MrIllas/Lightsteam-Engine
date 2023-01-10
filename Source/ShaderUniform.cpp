@@ -62,6 +62,8 @@ void ShaderUniform::Update(Shader* shader)
 	}
 }
 
+bool ShaderUniform::isTexture(){ return type == GL_SAMPLER_2D;}
+
 void ShaderUniform::VariableSetting()
 {
 	switch (type)
@@ -253,15 +255,16 @@ void ShaderUniform::HandleShaderGUI()
 	{
 		if (name.find("Colour") || name.find("Color") || name.find("color") || name.find("colour"))
 		{
+			std::string popName = "ColorPicker##" + index;
 			float4 color = { *static_cast<float3*>(value), 1.0f };
 			if (ImGui::ColorButton(name.c_str(), (ImVec4&)color, 0, { 50, 50 }))
 			{
-				ImGui::OpenPopup("ColorPicker");
+				ImGui::OpenPopup(popName.c_str());
 			}
 			ImGui::SameLine();
 			ImGui::Text(name.c_str());
 
-			if (ImGui::BeginPopup("ColorPicker"))
+			if (ImGui::BeginPopup(popName.c_str()))
 			{
 				ImGui::ColorPicker3(name.c_str(), (float*) static_cast<float3*>(value), 0 | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview);
 
@@ -374,7 +377,7 @@ nlohmann::ordered_json ShaderUniform::GetJSON()
 		case GL_BOOL: toReturn.SetBool("Value", static_cast<bool*>(value)); break;
 		case GL_INT:
 		case GL_UNSIGNED_INT: toReturn.SetInt("Value", *static_cast<int*>(value)); break;
-		case GL_FLOAT: toReturn.SetInt("Value", *static_cast<float*>(value)); break;
+		case GL_FLOAT: toReturn.SetFloat("Value", *static_cast<float*>(value)); break;
 		case GL_FLOAT_VEC2: toReturn.SetFloat2("Value", *static_cast<float2*>(value)); break;
 		case GL_FLOAT_VEC3: toReturn.SetFloat3("Value", *static_cast<float3*>(value)); break;
 		case GL_FLOAT_VEC4: toReturn.SetFloat4("Value", *static_cast<float4*>(value)); break;

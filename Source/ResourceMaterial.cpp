@@ -1,6 +1,7 @@
 #include "ResourceMaterial.h"
 
 #include "JsonUtils.h"
+#include "Material.h"
 
 ResourceMaterial::ResourceMaterial(std::string uuid) : Resource(uuid, RESOURCE_TYPE::MATERIAL)
 {
@@ -26,11 +27,19 @@ void ResourceMaterial::PlanDelete()
 
 }
 
-void ResourceMaterial::ImportToLibrary()
+void ResourceMaterial::ImportToLibrary(Material* material)
 {
 	SetName(LibraryManager::GetFilename(assetsFile));
-	this->material = new Material(name);
-	this->material->uuid = uuid;
+	if (material != nullptr)
+	{
+		this->material = material;
+		this->material->uuid = uuid;
+	}
+	else
+	{
+		this->material = new Material(name);
+		this->material->uuid = uuid;
+	}
 
 	std::string libDir = LIB_MATERIALS;
 	libDir += "/" + uuid + ".material";

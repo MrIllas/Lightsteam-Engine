@@ -98,9 +98,12 @@ void CompMaterial::ShaderSelectorCombo()
 				//Clean current Shader
 				if (material->GetShader() != nullptr)
 				{
-					ResourceShader* ress = (ResourceShader*) resInstance->resources.at(material->GetShader()->uuid);
-					if (ress != nullptr) ress->DecreaseRC();
-					if (ress->shader == nullptr) LOG(LOG_TYPE::ATTENTION, "RC 0: Unloading shader '%s' from memory!", ress->GetLibraryFile().c_str());
+					if (!material->GetShader()->uuid.empty())
+					{
+						ResourceShader* ress = (ResourceShader*)resInstance->resources.at(material->GetShader()->uuid);
+						if (ress != nullptr) ress->DecreaseRC();
+						if (ress->shader == nullptr) LOG(LOG_TYPE::ATTENTION, "RC 0: Unloading shader '%s' from memory!", ress->GetLibraryFile().c_str());
+					}
 				}
 
 				//Set new shader
@@ -149,6 +152,7 @@ void CompMaterial::LoadUnique(nlohmann::JsonData data)
 	std::string materialUuid = data.GetString("Material Uuid");
 	ResourceMaterial* res = nullptr;
 
+	ResourceProperties* resP = ResourceProperties::Instance();
 	if (ResourceProperties::Instance()->resources.count(materialUuid) == 1)
 		res = (ResourceMaterial*)ResourceProperties::Instance()->resources.at(materialUuid);
 	

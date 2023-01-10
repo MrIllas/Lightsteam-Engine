@@ -6,7 +6,7 @@
 #include <vector>
 #
 class Shader;
-
+class ResourceTexture;
 
 class Material
 {
@@ -16,6 +16,7 @@ public:
 
 	Shader* GetShader() { return shader; }
 	void SetShader(Shader* shader) { this->shader = shader; }
+	void SetDefaultShader(ResourceTexture* texture);
 
 	void Save(std::string filepath);
 	void Load(nlohmann::JsonData data);

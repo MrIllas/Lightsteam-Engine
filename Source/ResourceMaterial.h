@@ -1,7 +1,7 @@
 #pragma once
 #include "Resource.h"
 
-#include "Material.h"
+class Material;
 
 class ResourceMaterial : public Resource
 {
@@ -15,7 +15,7 @@ public:
 	void CleanInstance() override;
 	void PlanDelete() override;
 
-	void ImportToLibrary();
+	void ImportToLibrary(Material* material = nullptr);
 	Material* ImportFromLibrary();
 
 public:
