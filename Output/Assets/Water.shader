@@ -1,6 +1,21 @@
 #version 410 core
 #ifdef VERTEX_PROGRAM
 
+#define NUM_CELLS 20
+
+vec2 gerstnerWave(in float t, in vec2 p, in vec2 dir, in float A, in float w, in float phi)
+{
+    // Compute the wave displacement
+    float disp = A * sin(dot(dir, p) - w * t + phi);
+    float disp2 = A * cos(dot(-dir, p) - w * t + phi);
+
+    // Perturb the vertex position
+    p.x += disp * dir.y;
+    p.y -= disp2 * dir.x;
+
+    return p;
+}
+
 layout (location = 0) in vec3 aPos; 
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 texCoord;
@@ -9,8 +24,15 @@ uniform mat4 Projection;
 uniform mat4 View;
 uniform mat4 Model; 
 
-uniform sampler2D heightMap;
 uniform float LssTime;
+
+uniform float A;
+uniform float w;
+uniform float phi;
+
+uniform float A2;
+uniform float w2;
+uniform float phi2;
 
 
 out vec2 TextureCoords;
@@ -18,18 +40,22 @@ out vec2 TextureCoords;
 
 void main()
 {
-	vec3 pos = aPos;
-	vec2 offset1 = vec2(0.8, 0.4) * LssTime / 10.0f;
-	vec2 offset2 = vec2(0.6, 1.1) * LssTime / 10.0f;
-	float height1 = texture2D(heightMap, texCoord + offset1).r * 0.05;
-	float height2 = texture2D(heightMap, texCoord + offset2).r * 0.05;
+	// Get the vertex position and normal
+    vec3 pos = aPos;
+    vec3 norm = normal;
+
+    // Compute the time
+    float t = LssTime;
+
+    // Set the wave parameters
+    vec2 dir = vec2(norm.z, norm.z);
+
+    // Generate the Gerstner wave
+    pos.xz = gerstnerWave(t, pos.xz, dir, A, w, phi) + gerstnerWave(-t, pos.xz, dir, A2, w2, phi2);
 	
-	pos.z += height1 + height2;
-	vec4 mvPosition = View * Model* vec4(pos, 1.0f);
+	vec4 mvPosition = View * Model* vec4(pos, 1.0f);	
 	
-	
-	
-	gl_Position = Projection * mvPosition;
+	gl_Position = Projection * View * Model* vec4(pos, 1.0f);
 	TextureCoords = texCoord;
 }
 
@@ -49,6 +75,8 @@ void main()
 } 
 
 #endif
+
+
 
 
 
