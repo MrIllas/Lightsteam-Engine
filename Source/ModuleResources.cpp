@@ -102,6 +102,8 @@ bool ModuleResources::CleanUp()
 	resProps->resources.clear();
 
 	RELEASE(resProps);
+
+	ShaderManager::Shutdown();
 	return true;
 }
 
@@ -132,7 +134,6 @@ UpdateStatus ModuleResources::PreUpdate()
 		resProps->planDeleteLib.clear();
 	}
 	
-
 	return UPDATE_CONTINUE;
 }
 

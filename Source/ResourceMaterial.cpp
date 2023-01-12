@@ -39,6 +39,7 @@ void ResourceMaterial::ImportToLibrary(Material* material)
 	{
 		this->material = new Material(name);
 		this->material->uuid = uuid;
+		this->material->SetDefaultShader(nullptr);
 	}
 
 	std::string libDir = LIB_MATERIALS;

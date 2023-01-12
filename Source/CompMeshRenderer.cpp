@@ -164,11 +164,11 @@ void CompMeshRenderer::Render(Shader* shader, Shader* debugShader, Camera* camer
 		if (mat != nullptr)
 		{
 			if (game)
-				mesh->LiteDraw(mat->GetShader(),
+				mesh->LiteDraw(mat,
 					owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix(),
 				camera);
 			else
-				mesh->FullDraw(mat->GetShader(),
+				mesh->FullDraw(mat,
 					debugShader,
 					owner->GetComponent<CompTransform>(TRANSFORM)->GetWorldMatrix(),
 					camera,

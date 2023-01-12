@@ -25,7 +25,9 @@ ShaderUniform::ShaderUniform()
 
 ShaderUniform::~ShaderUniform()
 {
-	VariableDeleting();
+	//if (type != GL_SAMPLER_2D) 
+		VariableDeleting();
+	//else RELEASE(value);
 }
 
 void ShaderUniform::Update(Shader* shader)

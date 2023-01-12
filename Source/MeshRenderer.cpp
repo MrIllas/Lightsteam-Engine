@@ -4,6 +4,7 @@
 #include "MeshImporter.h"
 
 #include "Shader.h"
+#include "Material.h"
 #include "ShaderUniform.h"
 
 #include "ModuleCamera3D.h"
@@ -86,19 +87,19 @@ MeshRenderer::~MeshRenderer()
 }
 
 #pragma region Drawing
-void MeshRenderer::LiteDraw(Shader* shader, float4x4 model, Camera* camera)
+void MeshRenderer::LiteDraw(Material* material, float4x4 model, Camera* camera)
 {
 	if (this->shader == nullptr) this->shader = shader;
 
-	DrawMesh(shader, camera, model);
+	DrawMesh(material, camera, model);
 }
 
-void MeshRenderer::FullDraw(Shader* shader, Shader* debugShader, float4x4 model, Camera* camera, Debug_Normals normals)
+void MeshRenderer::FullDraw(Material* material, Shader* debugShader, float4x4 model, Camera* camera, Debug_Normals normals)
 {
 	if (this->shader == nullptr) this->shader = shader;
 	if (this->debugShader == nullptr) this->debugShader = shader;
 
-	DrawMesh(shader, camera, model);
+	DrawMesh(material, camera, model);
 
 	//Debug
 	debugShader->Use();
@@ -111,11 +112,12 @@ void MeshRenderer::FullDraw(Shader* shader, Shader* debugShader, float4x4 model,
 	DrawBBox(debugShader, camera, model);
 }
 
-void MeshRenderer::DrawMesh(Shader* shader, Camera* camera, float4x4 model)
+void MeshRenderer::DrawMesh(Material* material, Camera* camera, float4x4 model)
 {
-	if (shader == nullptr) return;
+	if (material == nullptr || material->GetShader() == nullptr) return;
 	if (EBO != 0)
 	{
+		Shader* shader = material->GetShader();
 		shader->Use();
 
 		//Must have uniforms
@@ -123,10 +125,10 @@ void MeshRenderer::DrawMesh(Shader* shader, Camera* camera, float4x4 model)
 		shader->SetMat4("View", camera->GetViewMatrix());
 		shader->SetMat4("Model", &model.v[0][0]);
 
-		for (int i = 0; i < shader->uniforms.size(); ++i)
+		for (int i = 0; i < material->uniforms.size(); ++i)
 		{
-			if (shader->uniforms[i]->name == "Projection" || shader->uniforms[i]->name == "View" || shader->uniforms[i]->name == "Model") continue;
-			shader->uniforms[i]->Update(shader);
+			if (material->uniforms[i]->name == "Projection" || material->uniforms[i]->name == "View" || material->uniforms[i]->name == "Model") continue;
+			material->uniforms[i]->Update(shader);
 		}
 
 		/*if (RenderProperties::Instance()->texture2D)

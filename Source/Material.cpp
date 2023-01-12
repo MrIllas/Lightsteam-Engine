@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "ShaderUniform.h"
 #include "ResourceTexture.h"
+
 Material::Material(std::string name)
 {
 	this->name = name;
@@ -19,7 +20,7 @@ Material::~Material()
 {
 	if (this->shader != nullptr)
 	{
-		if (this->shader->uuid.empty())
+		if (this->shader->uuid.empty() || this->shader->uuid == "")
 		{ //Base Shader
 			//RELEASE(this->shader);
 		}
@@ -28,20 +29,41 @@ Material::~Material()
 			ResourceProperties::Instance()->resources.at(shader->uuid)->DecreaseRC();
 		}	
 	}
+
+	CleanUniforms();
+}
+
+void Material::CleanUniforms()
+{
+	for (int i = 0; i < uniforms.size(); ++i)
+	{
+		RELEASE(uniforms[i]);
+	}
+	uniforms.clear();
 }
 
 void Material::SetDefaultShader(ResourceTexture* resource)
 {
 	this->shader = ShaderManager::BaseShader();
+	CleanUniforms();
+	this->shader->VariableParser(this->uniforms);
 	
-	for (int i = 0; i < this->shader->uniforms.size(); ++i)
+	for (int i = 0; i < uniforms.size(); ++i)
 	{
-		if (shader->uniforms[i]->isTexture())
+		if (uniforms[i]->isTexture() && resource != nullptr)
 		{
-			shader->uniforms[i]->VariableDeleting();
-			shader->uniforms[i]->value = resource->texture;
+			uniforms[i]->VariableDeleting();
+			uniforms[i]->value = resource->texture;
 		}
 	}
+}
+
+void Material::SetShader(Shader* shader)
+{
+	this->shader = shader;
+
+	CleanUniforms();
+	shader->VariableParser(this->uniforms);
 }
 
 #pragma region Save&Load
@@ -66,9 +88,9 @@ void Material::Save(std::string filepath)
 
 		std::vector<nlohmann::ordered_json> aux;
 		//Save uniforms variables
-		for (int i = 0; i < shader->uniforms.size(); ++i)
+		for (int i = 0; i < uniforms.size(); ++i)
 		{
-			aux.push_back(shader->uniforms[i]->GetJSON());
+			aux.push_back(uniforms[i]->GetJSON());
 		}
 		data.data.emplace("Uniforms", aux);
 	}
@@ -109,12 +131,14 @@ void Material::Load(nlohmann::JsonData data)
 
 		if (aux.size() > 0)
 		{
+			CleanUniforms();
+			this->shader->VariableParser(this->uniforms);
 			for (int i = 0; i < aux.size(); ++i)
 			{
 				nlohmann::JsonData uniData;
 				uniData.data = aux.at(i);
 
-				shader->uniforms[i]->SetJSON(uniData);
+				uniforms[i]->SetJSON(uniData);
 			}
 		}
 	}

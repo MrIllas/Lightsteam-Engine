@@ -43,21 +43,21 @@ public:
 
 	void SetTexture(const std::string& name, Texture* value);
 
+	/*Gets all the uniform variables*/
+	void VariableParser(std::vector<ShaderUniform*>& uniforms);
+
 private:
 	void RetriveShader(const char* shaderPath);
 	void CompileShader();
 	void LoadBinary(char* buffer, uint size, uint format);
 
 	void Clear();
-
-	/*Gets all the uniform variables*/
-	void VariableParser();
 public:
 	uint ID;
 	std::string uuid;
 	std::string name;
 
-	std::vector<ShaderUniform*> uniforms;
+	//std::vector<ShaderUniform*> uniforms;
 
 private:
 	std::string vertexCode;

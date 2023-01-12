@@ -1,6 +1,6 @@
 {
-    "Name": "Baker_house",
-    "UUID": "f562d67e-5e62-a6ac-d843-40e2bd5276ad",
+    "Name": "building05 _c",
+    "UUID": "5f62dd06-9ffd-b0e1-be34-5fc359371162",
     "Shader Uuid": "",
     "Shader Compile Version": "BASE SHADER",
     "Uniforms": [
@@ -89,7 +89,7 @@
             "Index": 3,
             "Read": 14,
             "Size": 1,
-            "Value": "7608b596-66dc-701e-96ee-7610de43ca8f"
+            "Value": ""
         }
     ]
 }
