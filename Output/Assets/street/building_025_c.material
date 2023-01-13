@@ -1,6 +1,6 @@
 {
     "Name": "building_025_c",
-    "UUID": "f0593650-b17b-9f86-ea4c-c25c24c90fdc",
+    "UUID": "fea550bf-ef69-e9f6-4817-b508fda33140",
     "Shader Uuid": "",
     "Shader Compile Version": "BASE SHADER",
     "Uniforms": [
@@ -89,7 +89,7 @@
             "Index": 3,
             "Read": 14,
             "Size": 1,
-            "Value": ""
+            "Value": "b2946f75-fd78-6b66-1396-9664c923b62b"
         }
     ]
 }

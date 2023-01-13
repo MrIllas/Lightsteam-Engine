@@ -324,6 +324,8 @@ void ShaderUniform::HandleShaderGUI()
 				case str2int("dds"):
 				case str2int("jpg"):
 				case str2int("JPG"):
+				case str2int("tga"):
+				case str2int("TGA"):
 
 					ResourceTexture* res = (ResourceTexture*)ResourceProperties::Instance()->resources.at(item.resUuid);
 

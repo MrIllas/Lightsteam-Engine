@@ -89,4 +89,14 @@ public:
 
 		return false;
 	}
+
+	LibraryItem* GetFile(std::string path)
+	{
+		for (int i = 0; i < libItem.size(); ++i)
+		{
+			if (libItem[i]->path == path) return libItem[i];
+		}
+
+		return nullptr;
+	}
 };
