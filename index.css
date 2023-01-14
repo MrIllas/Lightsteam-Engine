@@ -76,6 +76,12 @@ main .row
   font-size: 18px;
 }
 
+code
+{
+  background-color: black;
+  padding: 5px;
+  border-radius: 5px;
+}
 /*Row Me*/
 #row-Me
 {
@@ -95,7 +101,7 @@ main .row
 
 #row-Me .col img
 {
-  border-radius: 1000px;
+  border-radius: 100px;
 }
 
 /*Row Systems*/
