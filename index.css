@@ -1,0 +1,136 @@
+
+.container
+{
+  max-width: 1500px;
+}
+
+/*Header*/
+header
+{
+  position: relative;
+  background-color: black;
+  height: 100vh;
+  min-height: 25rem;
+  width: 100%;
+  overflow: hidden;
+}
+header video
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+header .container
+{
+  position: relative;
+  z-index: 2;
+}
+
+#title
+{
+  color: white;
+  font-size: 75px;
+  transform: translateY(50%);
+}
+
+.btn
+{
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#About
+{
+  transform: translateY(115%);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/*Main*/
+main
+{
+  position: relative;
+  background-color: black;
+  min-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+main .row
+{
+  min-width: 100%;
+  color: white;
+  font-size: 18px;
+}
+
+/*Row Me*/
+#row-Me
+{
+  position: relative;
+  background-color: #0d405d;
+  padding: 25px;
+}
+#Me-Text
+{
+  transform: translateY(25%);
+}
+
+.col h1
+{
+  font-weight: bold;
+}
+
+#row-Me .col img
+{
+  border-radius: 1000px;
+}
+
+/*Row Systems*/
+#row-Systems
+{
+  position: relative;
+  padding: 25px;
+  background-color: #36454F;
+}
+
+#row-Systems .container .row .col
+{
+  padding-top: 75px;
+}
+
+/*Row Shader-System*/
+#row-Shader-System
+{
+  position:relative;
+  padding: 25px;
+  background-color: #0d405d;
+}
+
+/*Row video*/
+#row-Video
+{
+  position:relative;
+  padding: 25px;
+  background-color: #36454F;
+}
+
+/*Licence*/
+#row-Licence
+{
+  position:relative;
+  padding: 25px;
+  background-color: #0d405d;
+}
