@@ -301,9 +301,9 @@ int SegmentLibrary::RightClickMenuContent(LibraryItem* item)
 		LibraryManager::RemoveFile(iterator->second->GetLibraryFile());
 		LibraryManager::RemoveFile(iterator->second->GetAssetsFile());
 		LibraryManager::RemoveFile(item->GetMeta());
-
-		currentFolder->libItem.erase(std::find(currentFolder->libItem.begin(), currentFolder->libItem.end(), item));
 		
+		currentFolder->libItem.erase(std::find(currentFolder->libItem.begin(), currentFolder->libItem.end(), item));
+
 		resInstance->resources.erase(iterator);
 
 		RELEASE(item);

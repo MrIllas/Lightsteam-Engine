@@ -217,16 +217,16 @@ bool GameObject::CheckParentsOfParent(GameObject* go, GameObject* checkGO)
 void GameObject::DeleteGameObject()
 {
 	parent->RemoveChildren(this);
-	for (int i = 0; i < children.size(); ++i)
+	while(children.size() != 0)
 	{
-		if (children[i] != nullptr)
+		if (children[0] != nullptr)
 		{
-			children[i]->DeleteGameObject();
-			RELEASE(children[i]);
+			GameObject* go = children[0];
+			go->DeleteGameObject();
+			RELEASE(go);
+
 		}
 	}
-
-	this->~GameObject();
 	children.clear();
 }
 

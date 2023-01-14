@@ -64,14 +64,21 @@ void CompMaterial::UpdateDragDrop()
 				ResourceMaterial* res = (ResourceMaterial*)ResourceProperties::Instance()->resources.at(item.resUuid);
 
 				//Clean previous (if there is one)
-				if (this->material != nullptr) ResourceProperties::Instance()->resources.at(material->uuid)->DecreaseRC();
+				if (this->material != nullptr)
+				{
+					ResourceMaterial* delRes = (ResourceMaterial*) ResourceProperties::Instance()->resources.at(material->uuid);
+					delRes->RemoveMaterialToComp(this);
 
+				}
 				//Import
-				if (res->material == nullptr) this->material = res->ImportFromLibrary();
+				if (res->GetMaterial() == nullptr)
+				{
+					res->ImportFromLibrary(this);
+				}
 				else
 				{
-					this->material = res->material;
-					res->IncreaseRC();
+					res->SetMaterialToComp(this);
+					//res->IncreaseRC();
 				}
 
 			}
@@ -164,12 +171,13 @@ void CompMaterial::LoadUnique(nlohmann::JsonData data)
 	
 	if (res != nullptr)
 	{
-		if (res->material == nullptr)
-			this->material = res->ImportFromLibrary();
+		if (res->GetMaterial() == nullptr)
+			res->ImportFromLibrary(this);
 		else
 		{
-			this->material = res->material;
-			res->IncreaseRC();
+			res->SetMaterialToComp(this);
+			/*this->material = res->material;
+			res->IncreaseRC();*/
 		}
 			
 	}

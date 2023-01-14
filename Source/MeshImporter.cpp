@@ -266,14 +266,15 @@ GameObject* MeshImporter::GenerateGameObjects(aiNode* node, const aiScene* scene
 					
 					if (res != nullptr)
 					{
-						if (res->material == nullptr)
+						if (res->GetMaterial() == nullptr)
 						{
-							mat->material = res->ImportFromLibrary();
+							res->ImportFromLibrary(mat);
 						}
 						else
 						{
-							mat->material = res->material;
-							res->IncreaseRC();
+							res->SetMaterialToComp(mat);
+							/*mat->material = res->material;
+							res->IncreaseRC();*/
 						}
 					}
 				}

@@ -1,11 +1,12 @@
 #include "ResourceMaterial.h"
 
 #include "JsonUtils.h"
+#include "CompMaterial.h"
 #include "Material.h"
 
 ResourceMaterial::ResourceMaterial(std::string uuid) : Resource(uuid, RESOURCE_TYPE::MATERIAL)
 {
-
+	compRef = new std::vector<CompMaterial*>();
 }
 
 ResourceMaterial::~ResourceMaterial()
@@ -15,6 +16,12 @@ ResourceMaterial::~ResourceMaterial()
 
 void ResourceMaterial::CleanInstance()
 {
+	if (compRef != nullptr)
+	{
+		compRef->clear();
+		RELEASE(compRef);
+	}
+
 	if (material != nullptr)
 	{
 		LOG(LOG_TYPE::ATTENTION, "RC 0: Unloading material '%s' from memory!", libraryFile.c_str());
@@ -24,7 +31,12 @@ void ResourceMaterial::CleanInstance()
 
 void ResourceMaterial::PlanDelete()
 {
-
+	for (int i = 0; i < compRef->size(); ++i)
+	{
+		compRef->at(i)->material = nullptr;
+		compRef->at(i) = nullptr;
+	}
+	compRef->clear();
 }
 
 void ResourceMaterial::ImportToLibrary(Material* material)
@@ -54,10 +66,8 @@ void ResourceMaterial::ImportToLibrary(Material* material)
 	RELEASE(this->material);
 }
 
-Material* ResourceMaterial::ImportFromLibrary()
+void ResourceMaterial::ImportFromLibrary(CompMaterial* comp)
 {
-	IncreaseRC();
-
 	this->material = new Material("Material");
 	nlohmann::JsonData data;
 
@@ -72,12 +82,31 @@ Material* ResourceMaterial::ImportFromLibrary()
 	catch (nlohmann::json::parse_error& ex)
 	{
 		LOG(LOG_TYPE::ERRO, "Error: Material parse at byte %i: %s", ex.byte, ex.what());
-		return this->material;
+		comp->material = nullptr;
 	}
 
 	this->material->Load(data);
+	
+	SetMaterialToComp(comp);
+}
 
-	return this->material;
+void ResourceMaterial::SetMaterialToComp(CompMaterial* comp)
+{
+	comp->material = this->material;
+	IncreaseRC();
+	compRef->push_back(comp);
+}
+
+void ResourceMaterial::RemoveMaterialToComp(CompMaterial* comp)
+{
+	auto it = std::find(compRef->begin(), compRef->end(), comp);
+	
+	if (it != compRef->end())
+	{
+		compRef->erase(it);
+	}
+
+	DecreaseRC();
 }
 
 #pragma region Save&Load

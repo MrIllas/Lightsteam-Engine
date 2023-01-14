@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Output</OutDir>
-    <IntDir>$(SolutionDir)Output</IntDir>
+    <OutDir>$(SolutionDir)Output/Release</OutDir>
+    <IntDir>$(SolutionDir)Output/Release</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
