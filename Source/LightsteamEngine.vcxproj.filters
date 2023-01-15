@@ -295,6 +295,9 @@
     <ClCompile Include="ShaderUniform.cpp">
       <Filter>Source\Core\Render\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Source\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Light.h">
@@ -878,6 +881,9 @@
     </ClInclude>
     <ClInclude Include="ShaderUniform.h">
       <Filter>Header\Core\Render\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Header\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

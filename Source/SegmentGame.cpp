@@ -52,8 +52,6 @@ void SegmentGame::Update()
 				segmentSize.y = aux.y;
 				Resize();
 			}
-
-			
 		}
 		RenderSpace();
 	}

@@ -30,6 +30,8 @@ struct Time
 
 	static void Delete();
 
+	float GetActiveDeltaTime();
+
 private:
 	static Time* G_Time;
 };

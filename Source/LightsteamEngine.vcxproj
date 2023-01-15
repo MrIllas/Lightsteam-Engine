@@ -176,6 +176,7 @@
     <ClCompile Include="External\ImGuizmo\ImSequencer.cpp" />
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="LibraryManager.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
@@ -335,6 +336,7 @@
     <ClInclude Include="External\Nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="External\Nlohmann\thirdparty\hedley\hedley_undef.hpp" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameTime.h" />
     <ClInclude Include="JsonUtils.h" />
     <ClInclude Include="LibraryFolder.h" />
     <ClInclude Include="LibraryManager.h" />

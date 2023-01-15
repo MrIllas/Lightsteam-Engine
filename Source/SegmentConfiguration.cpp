@@ -13,6 +13,7 @@
 
 #include "CompCamera.h"
 #include "GameObject.h"
+#include "GameTime.h"
 
 #include "Glew/include/glew.h"
 #include <gl/GL.h>
@@ -250,6 +251,18 @@ void SegmentConfiguration::EditorHeader()
 
 void SegmentConfiguration::GameHeader()
 {
+	//Simulation time
+	ImGui::Text("Simulation Time");
+	std::string times = "Game Time Since Start: " + std::to_string(GameTime::GetGameTimeSinceStart());
+	ImGui::Text(times.c_str());
+	times = "Game Time Delta Time: " + std::to_string(GameTime::GetGameTimeDeltaTime());
+	ImGui::Text(times.c_str());
+	times = "Frame Count: " + std::to_string(GameTime::GetFrameCount());
+	ImGui::Text(times.c_str());
+	
+	ImGui::Separator();
+	
+	//Cameras
 	if (cProps->gameCameras.size() == 0)
 	{
 		ImGui::Text("There are no game objects with a Camera component.");

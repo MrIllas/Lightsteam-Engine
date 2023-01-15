@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
 	<Application>
-		<FpsCap value="180" />
+		<FpsCap value="60" />
 	</Application>
 	<Window>
 		<Brightness value="1" />
@@ -25,7 +25,7 @@
 		<About value="false" />
 		<Console value="true" />
 		<Scene value="true" />
-		<Game value="false" />
+		<Game value="true" />
 		<Hierarchy value="true" />
 		<Inspector value="true" />
 		<Library value="true" />

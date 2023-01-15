@@ -17,9 +17,12 @@
 #include "SegmentLibrary.h"
 #include "SegmentShaderText.h"
 
+#include "GameTime.h"
+
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
+#include "ImGui/imgui_internal.h"
 #include "ImGuizmo/ImGuizmo.h"
 
 
@@ -178,6 +181,7 @@ void ModuleEditor::DrawEditorGui()
 
 	//Menus
 	MainMenuBar();
+	SubMenuBar();
 	RequestSwitchHandler();
 	UpdateSegments();
 	FileDialogMenu();
@@ -281,6 +285,58 @@ void ModuleEditor::MainMenuBar()
 		}
 
 		ImGui::EndMainMenuBar();
+	}
+}
+
+void ModuleEditor::SubMenuBar()
+{
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar;
+	if (ImGui::BeginViewportSideBar("##Toolbar1", viewport, ImGuiDir_Up, ImGui::GetFrameHeight() * 1.5, flags))
+	{
+		ImVec2 btnSize = { 80, 25 };
+		ImGui::SetCursorPos(ImVec2(ImGui::GetContentRegionAvail().x / 2 - (btnSize.x*1.5), 4));
+
+		if (GameTime::IsStopped())
+		{
+			if (ImGui::Button("Play##Toolbar1", btnSize))
+			{
+				GameTime::Play();
+			}
+		}
+		else
+		{
+			if (ImGui::Button("Stop##Toolbar1", btnSize))
+			{
+				GameTime::Stop();
+			}
+		}
+		
+		ImGui::SameLine();
+
+		if (GameTime::IsPaused())
+		{
+			if (ImGui::Button("Unpause##Toolbar1", btnSize))
+			{
+				GameTime::Unpause();
+			}	
+		}
+		else
+		{
+			if (ImGui::Button("Pause##Toolbar1", btnSize))
+			{
+				GameTime::Pause();
+			}
+		}
+		
+		ImGui::SameLine();
+
+		if (ImGui::Button("Tick##Toolbar1", btnSize))
+		{
+			GameTime::Tick(Time::Instance()->frameTime);
+		}
+
+		ImGui::End();
 	}
 }
 

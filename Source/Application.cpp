@@ -11,6 +11,7 @@
 #include "ModuleEditor.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleScene.h"
+#include "GameTime.h"
 
 
 #pragma region Time
@@ -30,6 +31,12 @@ void Time::Delete()
 	{
 		RELEASE(G_Time);
 	}
+}
+
+float Time::GetActiveDeltaTime()
+{
+	if (GameTime::IsStopped()) return frameTime;
+	else return GameTime::GetDeltaTime();
 }
 
 Time* Time::G_Time = nullptr;
@@ -104,6 +111,7 @@ void Application::AddModule(Module* mod)
 void Application::PrepareUpdate()
 {
 	//ms_timer.Start();
+	GameTime::Update(G_Time->frameTime);
 }
 
 // ---------------------------------------------

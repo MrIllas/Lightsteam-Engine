@@ -34,7 +34,7 @@ void ShaderUniform::Update(Shader* shader)
 {
 	if (name == "LssTime")
 	{
-		time += Time::Instance()->frameTime;
+		time += Time::Instance()->GetActiveDeltaTime();
 		shader->SetFloat(name, time);
 		return;
 	}

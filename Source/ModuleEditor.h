@@ -84,6 +84,7 @@ private:
 	void UpdateSegments();
 
 	void MainMenuBar();
+	void SubMenuBar();
 	void FileDialogMenu();
 
 	void SaveSettingsData(pugi::xml_node& save) override;
