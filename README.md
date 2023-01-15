@@ -54,17 +54,24 @@ Version 0.1:
 When importing a model to the library the default shader will be automatically applied to its material(if there is one in the model's fbx).
 Every ".shader" file created inside the editor starts with a basic template containing the most basic configuration. The template is the same default shader used by the engine every time a new FBX is imported to the library (in case it contains a material).
 
+You can see the default shader inside the engine's GLSL editor [HERE](https://raw.githubusercontent.com/MrIllas/Lightsteam-Engine/main/docs/default_shader_editor.png)
+
 ### Shader file creation
  1. Right click inside the assets window.
  2. Create->Shader
  3. Type the desired name and click create.
-  
+ 
+ ![Menu assets](docs/menu_assets.png)
+ ![Shader creation](docs/shader_creation.png)
  
  ### Shader editing
   1. Double click a shader to open the GLSL editor.
   2. Edit the shader.
   3. Ctrl+S or File->Save to save and compile the shader.
    * Check the console in case of compilation error.
+ 
+ ![Menu assets](docs/menu_assets.png)
+ ![Menu assets](docs/material_creation.png)
  
  ### Shader usage
   1. Select a Game Object.
