@@ -10,7 +10,7 @@
 		<Borderless value="false" />
 		<Resizable value="true" />
 		<Maximized value="false" />
-		<Resolution Width="1551" Height="815" />
+		<Resolution Width="640" Height="427" />
 	</Window>
 	<Renderer3D>
 		<Vsync value="false" />
