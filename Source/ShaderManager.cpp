@@ -58,7 +58,6 @@ bool ShaderManager::ImportToLibrary(ResourceShader* resource)
 
 		//Compile Shader
 		shader = new Shader(resource->GetAssetsFile().c_str(), resource->GetName());
-		//resource->SetShader(shader);
 	}
 	else shader->Recompile(resource->GetAssetsFile().c_str(), resource->GetName());
 

@@ -33,6 +33,12 @@ CompCamera::CompCamera(GameObject* owner, std::string uuid) : Component(owner, u
 
 CompCamera::~CompCamera()
 {
+	if (isMainCamera)
+	{
+		camInstance->gameCameras.erase(camInstance->gameCameras.begin() + camInstance->mainCameraId);
+		camInstance->mainCameraId = -1;
+	}
+
 	RELEASE(frustumMesh->mesh);
 	RELEASE(frustumMesh);
 }

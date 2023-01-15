@@ -36,8 +36,6 @@ void SegmentLibrary::Start()
 
 	currentFolder = fsIntance->rootFolder;
 	fsIntance->currentFolder = currentFolder;
-	////Checks firsts when the app loads 
-	//resInstance->requestFullFolderFileCheck = true; Moved to ModuleResources
 
 	leftWin = 0;
 	rightWin = 0;
@@ -70,10 +68,7 @@ void SegmentLibrary::Update()
 			RightClickMenuContextWindow();
 		}
 
-		//if (newFileData != nullptr)
-		//{
-			PopUpFileName();
-		//}
+		PopUpFileName();
 
 	}
 	ImGui::End();
@@ -174,16 +169,7 @@ void SegmentLibrary::BoxView()
 			}
 
 			//POPUP MENU over item
-
-			/*bool pop = ImGui::BeginPopupContextItem("LibraryItemMenu", ImGuiPopupFlags_NoOpenOverExistingPopup | ImGuiPopupFlags_MouseButtonDefault_);
-			if (pop)
-			{
-				k += RightClickMenuContent(currentFolder->libItem[k]);
-
-				ImGui::EndPopup();
-			}*/
 			k += RightClickMenuContextItem(currentFolder->libItem[k]);
-
 
 			//Drag
 			if (ImGui::BeginDragDropSource())

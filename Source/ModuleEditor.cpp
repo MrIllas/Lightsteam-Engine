@@ -118,6 +118,7 @@ bool ModuleEditor::Start()
 	segments.emplace_back(new SegmentConsole());
 	segments.emplace_back(new SegmentScene());
 	segments.emplace_back(new SegmentGame());
+	segmentGameCount = segments.size() - 1;
 	segments.emplace_back(new SegmentHierarchy());
 	segments.emplace_back(new SegmentInspector());
 	segments.emplace_back(new SegmentLibrary());
@@ -302,6 +303,8 @@ void ModuleEditor::SubMenuBar()
 			if (ImGui::Button("Play##Toolbar1", btnSize))
 			{
 				GameTime::Play();
+				segments[segmentGameCount]->enabled = true;
+				ImGui::SetWindowFocus(segments[segmentGameCount]->name.c_str());
 			}
 		}
 		else

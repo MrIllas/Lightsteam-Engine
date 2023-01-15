@@ -18,7 +18,7 @@ WindowProperties::WindowProperties()
 	hMin = 360;
 	wMax = 1920;
 	hMax = 1080;
-	flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MAXIMIZED;
+	flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;//SDL_WINDOW_MAXIMIZED
 	brightness = 1.0f;
 }
 
@@ -152,7 +152,16 @@ void ModuleWindow::LoadSettingsData(pugi::xml_node& load)
 	wProps->fullscreen = load.child("Fullscreen").attribute("value").as_bool();
 	wProps->resizable = load.child("Resizable").attribute("value").as_bool();
 	wProps->borderless = load.child("Borderless").attribute("value").as_bool();
+	wProps->maximized = load.child("Maximized").attribute("value").as_bool();
 
+	if (wProps->maximized) SDL_MaximizeWindow(wProps->window);
+	else
+	{
+		wProps->w = load.child("Resolution").attribute("Width").as_int();
+		wProps->h = load.child("Resolution").attribute("Height").as_int();
+		SDL_SetWindowSize(wProps->window, wProps->w, wProps->h);
+		SDL_SetWindowPosition(wProps->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	}
 	//SDL_SetWindowBrightness(wProps->window, wProps->brightness);
 	wProps->ToggleBorderless();
 	wProps->ToggleFullscreen();
@@ -167,6 +176,11 @@ void ModuleWindow::SaveSettingsData(pugi::xml_node& save)
 	save.child("Fullscreen").attribute("value") = wProps->fullscreen;
 	save.child("Resizable").attribute("value") = wProps->resizable;
 	save.child("Borderless").attribute("value") = wProps->borderless;
+	save.child("Maximized").attribute("value") = SDL_GetWindowFlags(wProps->window) & SDL_WINDOW_MAXIMIZED ? true : false;
+
+	SDL_GetWindowSize(wProps->window, &wProps->w, &wProps->h);
+	save.child("Resolution").attribute("Width") = wProps->w;
+	save.child("Resolution").attribute("Height") = wProps->h;
 }
 
 #pragma endregion Save & Load of Settings

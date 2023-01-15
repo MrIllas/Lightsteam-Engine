@@ -1,8 +1,6 @@
 #pragma once
 #include "Segment.h"
 
-//#include "LibraryManager.h"
-
 struct FileSystemProperties;
 struct SceneProperties;
 struct ResourceProperties;

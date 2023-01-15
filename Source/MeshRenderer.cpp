@@ -130,19 +130,6 @@ void MeshRenderer::DrawMesh(Material* material, Camera* camera, float4x4 model)
 			if (material->uniforms[i]->name == "Projection" || material->uniforms[i]->name == "View" || material->uniforms[i]->name == "Model") continue;
 			material->uniforms[i]->Update(shader);
 		}
-
-		/*if (RenderProperties::Instance()->texture2D)
-		{
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, text.id);
-			shader->SetInt("texture_albedo", 0);
-		}*/
-
-		//Light
-		/*if (RenderProperties::Instance()->lighting)
-		{
-			RenderProperties::Instance()->worldLight->SetShaderData(this->shader);
-		}*/
 		
 		//Draw Mesh
 		glBindVertexArray(VAO);

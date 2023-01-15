@@ -67,7 +67,7 @@ void CompMeshRenderer::Update()
 
 	camInstance->editorCamera.renderer->QueueMesh(this);
 
-	if (camInstance->gameCameras.size() != 0)
+	if (camInstance->gameCameras.size() != 0 && camInstance->mainCameraId != -1)
 	{
 		if (camInstance->gameCameras.at(camInstance->mainCameraId)->camera.renderer != nullptr)
 			camInstance->gameCameras.at(camInstance->mainCameraId)->camera.renderer->QueueMesh(this);

@@ -95,6 +95,7 @@ private:
 	std::vector<Segment*> segments;
 	SegmentShaderText* segmentShaderText = nullptr;
 	int segmentViewPoolOff;
+	int segmentGameCount;
 
 	EditorProperties* eProps = nullptr;
 };

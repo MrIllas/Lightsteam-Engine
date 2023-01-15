@@ -16,7 +16,7 @@ enum class LOG_TYPE
 };
 
 #define ENGINE_VERSION_MAJOR 0
-#define ENGINE_VERSION_MINOR 2
+#define ENGINE_VERSION_MINOR 3
 
 #define LOG(type, format, ...) log(__FILE__, __LINE__, type, format, __VA_ARGS__);
 

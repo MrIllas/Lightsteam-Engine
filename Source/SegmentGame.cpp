@@ -28,11 +28,10 @@ void SegmentGame::Start()
 void SegmentGame::Update()
 {
 	if (cameraID != camInstance->mainCameraId) LookForCamera();
-	//if (mainCamera == nullptr) LookForCamera();
-
 
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar;
 	flags |= ImGuiWindowFlags_NoScrollWithMouse;
+	
 	if (ImGui::Begin(name.c_str(), 0, flags))
 	{
 		if (mainCamera != nullptr)
@@ -63,7 +62,6 @@ void SegmentGame::Resize()
 	if (mainCamera->camera.renderer == nullptr)
 	{
 		mainCamera->camera.SetRenderer({ segmentSize.x, segmentSize.y });
-		//mainCamera->camera.renderer = new Renderer({ segmentSize.x, segmentSize.y });
 	}
 	else
 	{
@@ -73,11 +71,17 @@ void SegmentGame::Resize()
 
 void SegmentGame::LookForCamera()
 {
-	if (camInstance->gameCameras.size() != 0)
+	if (camInstance->gameCameras.size() != 0 && camInstance->mainCameraId != -1)
 	{
 		cameraID = camInstance->mainCameraId;
 		mainCamera = camInstance->gameCameras.at(cameraID);
 		Resize();
+	}
+	else
+	{
+		mainCamera = nullptr;
+		cameraID = -1;
+		camInstance->mainCameraId = 0;
 	}
 }
 		
@@ -86,6 +90,8 @@ void SegmentGame::RenderSpace()
 {
 	if (mainCamera != nullptr)
 	{
+		if (mainCamera->isMainCamera == false) mainCamera->isMainCamera = true;
+
 		float aux = (ImGui::GetWindowHeight() + 20 - segmentSize.y) * 0.5f;
 		ImGui::SetCursorPosY(aux);
 		ImTextureID texID = (ImTextureID) mainCamera->camera.renderer->GetFrameBufffer()->GetTextureBuffer();

@@ -37,6 +37,7 @@ public:
 	bool fullscreen = false;
 	bool resizable = false;
 	bool borderless = false;
+	bool maximized = false;
 
 private:
 	static WindowProperties* wProps;

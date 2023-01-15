@@ -7,6 +7,7 @@
 #include "CompCamera.h"
 #include "CompMeshRenderer.h"
 #include "CompTexture.h"
+#include "CompCamera.h"
 
 SegmentHierarchy::SegmentHierarchy(bool enabled) : Segment(enabled)
 {

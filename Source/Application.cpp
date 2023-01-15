@@ -182,8 +182,6 @@ void Application::LoadEditorConfiguration()
 
 	pugi::xml_parse_result result = config.load_file(CONFIG_FILENAME);
 
-	//LOG("%s", result.description());
-
 	for (int i = 0, count = list_modules.count(); i < count; i++)
 	{
 		pugi::xml_node data = config.child("config").child(list_modules[i]->name.c_str());
