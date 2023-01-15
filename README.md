@@ -36,7 +36,7 @@ Version 0.2:
  - Move meshes with gizmo.
 
 Version 0.1:
- - Load of fbx by drag & drop.
+ - Load of FBX by drag & drop.
  - Load of image/textures by drag & drop.
  - Custom shader with simple light.
  - Translation, rotation and scaling of objects (without parent-to-child).
@@ -51,7 +51,7 @@ Version 0.1:
 
 ## Special feature - Shader Pipeline
 
-When importing a model to the library the default shader will be automatically applied to its material(if there is one in the model's fbx).
+When importing a model to the library, the default shader will be automatically applied to its material(if there is one in the model's FBX).
 Every ".shader" file created inside the editor starts with a basic template containing the most basic configuration. The template is the same default shader used by the engine every time a new FBX is imported to the library (in case it contains a material).
 
 You can see the default shader inside the engine's GLSL editor [HERE](https://raw.githubusercontent.com/MrIllas/Lightsteam-Engine/main/docs/default_shader_editor.png)
@@ -65,7 +65,7 @@ You can see the default shader inside the engine's GLSL editor [HERE](https://ra
  ![Shader creation](docs/shader_creation.png)
  
  ### Shader editing
-  1. Double click a shader to open the GLSL editor.
+  1. Double-click a shader to open the GLSL editor.
   2. Edit the shader.
   3. Ctrl+S or File->Save to save and compile the shader.
    * Check the console in case of compilation error.
@@ -76,7 +76,7 @@ You can see the default shader inside the engine's GLSL editor [HERE](https://ra
  ### Shader usage
   1. Select a Game Object.
     * Follow "Material file creation and usage" in case of not having a Material.
-  2. Inside the "Material" component unfold the combo and select the name of the desired shader.
+  2. Inside the "Material" component, unfold the combo and select the name of the desired shader.
   3. Edit the uniform values as desired.
     * For 'Sampler_2D', drag a texture from the assets window into the uniforms box.
     * For 'Vec3' and 'Vec4' colour, click the box to open a colour picker pop-up.
@@ -107,7 +107,7 @@ You can see the default shader inside the engine's GLSL editor [HERE](https://ra
 
 ### Uniform list
 
-GLSL(401) has a total of 105 different uniforms due to the current engine capavilities not all uniforms are currently supported, only the most essential ones can be used and updated from the inspector.
+GLSL(401) has a total of 105 different uniforms due to the current engine capabilities not all uniforms are currently supported, only the most essential ones can be used and updated from the inspector.
 This is the list of supported uniforms:
  - bool
  - int/uint
@@ -120,7 +120,7 @@ This is the list of supported uniforms:
  - float mat4 (mat4)
 
 ### Special Uniforms
-This are uniforms that are used natively by the engine and that every shader must use if presice functionly wants to be achieved.
+These are uniforms that are used natively by the engine and that every shader must have if certain functionalities need to be achieved.
 
 **Projection**
 ```GLSL
@@ -157,8 +157,8 @@ Every time a shader is saved in compiled, the compiled binary is saved directly 
 
 ### Macro
 
-Encapsulate the vertex and framgent code inside the following macros to compile shader with only one file.
-NOTE: The shader template used every time a new shader is created inside the editor already uses this macros. Currently there is no way to compile shaders with separeted files for vertex and fragment without accessing the engine's code, but the functions and methods to do so exists..
+Encapsulate the vertex and fragment code inside the following macros to compile the shader with only one file.
+NOTE: The shader template used every time a new shader is created inside the editor already uses these macros. Currently, there is no way to compile shaders with separated files for vertex and fragment without accessing the engine's code, but the functions and methods to do so exists.
 
 ```
 #ifdef VERTEX_PROGRAM
@@ -175,7 +175,7 @@ NOTE: The shader template used every time a new shader is created inside the edi
 
 ### Scene
 
- - Click fbx with the mouse on the scene viewport.
+ - Click FBX with the mouse on the scene viewport.
 
 ### Scene Camera Controls
 
@@ -222,9 +222,9 @@ All components and inspector have an 'Active' checkbox that turn off and on the 
 
 - Mesh Renderer: The checkbox "Display normals" draws a line representing every vertex normal of the mesh. It also adds two new options to the component.
 	- Checkbox "Face normals" draws the face normals instead of the vertex normals.
-	- The Dragbar "Line Magnitude" modifies the length of the lines.
+	- The Drag bar "Line Magnitude" modifies the length of the lines.
 	- The mesh render component also shows the number of vertices, indices and face of the mesh.
-	- FBX files can be dragged to the button the inspector to switch the texture.
+	- FBX files can be dragged to the button in the inspector to switch the texture.
 
 -  Textures:
 
@@ -235,12 +235,11 @@ All components and inspector have an 'Active' checkbox that turn off and on the 
 
 ### Drag and Drop functionality
 
- - When draging an external file into the engine, the engine adds a copy of the file to the currently open content browser folder and performs a file check to import everything to the library.
+ - When dragging an external file into the engine, the engine adds a copy of the file to the currently open content browser folder and performs a file check to import everything to the library.
  
  
 ### Content browser
 
  - The square with names are folder that can be opened with a left click.
- - The the black square with no names insides are files. You can hold the file to read it's complete name in case it's cutted by the content browser columns.
+ - The black square with no names insides are files. You can hold the file to read its complete name in case it's cut by the content browser columns.
  - FBX files can be clicked to open and see the meshes inside.
- 
