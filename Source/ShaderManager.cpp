@@ -49,24 +49,27 @@ bool ShaderManager::ImportToLibrary(ResourceShader* resource)
 {
 	bool isError = false;
 
-	if (resource->shader == nullptr)
+	Shader* shader = resource->GetShader();
+
+	if (shader == nullptr)
 	{
 		//Get name
 		resource->SetName(LibraryManager::GetFilename(resource->GetAssetsFile()));
 
 		//Compile Shader
-		resource->shader = new Shader(resource->GetAssetsFile().c_str(), resource->GetName());
+		shader = new Shader(resource->GetAssetsFile().c_str(), resource->GetName());
+		//resource->SetShader(shader);
 	}
-	else resource->shader->Recompile(resource->GetAssetsFile().c_str(), resource->GetName());
+	else shader->Recompile(resource->GetAssetsFile().c_str(), resource->GetName());
 
 	//Generate and save binary
 	GLint size = 0;
 	GLenum format = 0;
 
 	//Binary code
-	glGetProgramiv(resource->shader->ID, GL_PROGRAM_BINARY_LENGTH, &size);
+	glGetProgramiv(shader->ID, GL_PROGRAM_BINARY_LENGTH, &size);
 	std::vector<GLubyte> buffer(size);
-	glGetProgramBinary(resource->shader->ID, size, NULL, &format, buffer.data());
+	glGetProgramBinary(shader->ID, size, NULL, &format, buffer.data());
 
 	//Write to a library file
 	std::string filePath = LIB_SHADERS;
@@ -81,10 +84,10 @@ bool ShaderManager::ImportToLibrary(ResourceShader* resource)
 
 	resource->SetLibraryFile(filePath);
 	resource->binaryFormat = format;
-	resource->SetName(resource->shader->name);
+	resource->SetName(shader->name);
 	resource->SetVersion(LS_UUID::Generate());
 
-	if(resource->GetRC() < 1) RELEASE(resource->shader);
+	if(resource->GetRC() < 1) RELEASE(shader);
 
 	return isError;
 }
@@ -99,11 +102,13 @@ Shader* ShaderManager::ImportFromLibrary(ResourceShader* resource)
 
 	size = LibraryManager::Load(resource->GetLibraryFile(), &buffer);
 
-	if (resource->shader != nullptr) RELEASE(resource->shader); //Clean current shader(if there is one)
-	resource->shader = new Shader(buffer, size, resource->binaryFormat, resource->GetName());
-	resource->shader->uuid = resource->GetUUID();
+	Shader* shader = resource->GetShader();
 
+	if (shader != nullptr) RELEASE(shader); //Clean current shader(if there is one)
+	shader = new Shader(buffer, size, resource->binaryFormat, resource->GetName());
+	
+	resource->SetShader(shader);
 	RELEASE(buffer);
 
-	return resource->shader;
+	return shader;
 }

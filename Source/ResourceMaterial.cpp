@@ -6,7 +6,6 @@
 
 ResourceMaterial::ResourceMaterial(std::string uuid) : Resource(uuid, RESOURCE_TYPE::MATERIAL)
 {
-	compRef = new std::vector<CompMaterial*>();
 }
 
 ResourceMaterial::~ResourceMaterial()
@@ -31,6 +30,7 @@ void ResourceMaterial::CleanInstance()
 
 void ResourceMaterial::PlanDelete()
 {
+	if (compRef == nullptr) return;
 	for (int i = 0; i < compRef->size(); ++i)
 	{
 		compRef->at(i)->material = nullptr;
@@ -94,6 +94,9 @@ void ResourceMaterial::SetMaterialToComp(CompMaterial* comp)
 {
 	comp->material = this->material;
 	IncreaseRC();
+
+	if(compRef == nullptr) compRef = new std::vector<CompMaterial*>();
+
 	compRef->push_back(comp);
 }
 
