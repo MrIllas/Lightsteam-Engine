@@ -14,6 +14,18 @@ header
   width: 100%;
   overflow: hidden;
 }
+
+#videoBack
+{
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(54, 69, 79, 0.8);
+}
+
 header video
 {
   position: absolute;
@@ -54,7 +66,7 @@ header .container
 
 #About
 {
-  transform: translateY(115%);
+  transform: translateY(185%);
   color: white;
   font-weight: bold;
   font-size: 18px;
@@ -91,7 +103,7 @@ code
 }
 #Me-Text
 {
-  transform: translateY(25%);
+  transform: translateY(8%);
 }
 
 .col h1
@@ -140,3 +152,25 @@ code
   padding: 25px;
   background-color: #0d405d;
 }
+
+.btn-linkedin {
+	  background: #0E76A8;
+	  border-radius: 0;
+	  color: #fff;
+	  border-width: 1px;
+	  border-style: solid;
+	  border-color: #084461;
+    border-radius: 10px;
+	}
+	.btn-linkedin:link, .btn-linkedin:visited {
+	  color: #fff;
+	}
+	.btn-linkedin:active, .btn-linkedin:hover {
+	  background: #084461;
+	  color: #fff;
+    cursor:pointer;
+	}
+  a:hover
+  {
+    text-decoration: none;
+  }

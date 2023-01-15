@@ -12,40 +12,38 @@
   </head>
   <body>
     <header>
-      <!--<nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-          <h1 class="navbar-brand"> Lightsteam Engine</h1>
-        </div>
-      </nav>-->
       <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-        <source src="Assets/Lightsteam_header.mp4" type="video/mp4">
+        <source src="Assets/Lightsteam_header.mp4" type="video/mp4" />
       </video>
+      <div id="videoBack">
+      </div>
       <div class="container" fill="currentColor">
         <div class="row">
           <div class="col title font-weight-bold" id="title">
             Lightsteam Engine</br>
-            <button class="btn btn-primary" onclick="window.open('https://github.com/MrIllas/Lightsteam-Engine/releases/tag/v0.2','_blank')">
-              <svg xmlns="http://www.w3.org/2000/svg" width="50" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+            <button class="btn" id="btn-linkedin" onclick="window.open('https://github.com/MrIllas/Lightsteam-Engine/releases/tag/v0.3','_blank')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="50"  fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
               </svg></br>
               Download
             </button>
-            <button class="btn btn-primary" onclick="window.open('https://github.com/MrIllas/Lightsteam-Engine','_blank')">
-              <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+            <button class="btn" id="btn-linkedin" onclick="window.open('https://github.com/MrIllas/Lightsteam-Engine','_blank')">
+              <svg xmlns="http://www.w3.org/2000/svg"  width="50" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
               </svg></br>
-              Github
+                &#160;&#160;Github&#160;  &#160;
             </button>
           </div>
           <div class="col" id="About">
-            <h1>The Engine</h1>
+            <!--<h1>The Engine</h1>-->
             <p>
-            A 3D video game engine written in C++ and powered by Open Gl with a custom render pipeline.
+            A 3D video game engine written in C++ and powered by Open GL with a custom render pipeline.
             </br>
             </br>
-            Lightsteam engine is an university project made in 4< months during the 3rd year class on Engine Development at UPC CITM bachelor's degree in Video game Design and Development.
+            Lightsteam engine is an university project made in less than 4 months during the 3rd year class on Engine Development at UPC CITM bachelor's degree in Video game Design and Development.
             </p>
+            <p>Read the <a href="https://github.com/MrIllas/Lightsteam-Engine/blob/main/README.md" target="_blank">README</a> for more information about the last version of the engine.
           </div>
         </div>
       </div>
@@ -55,14 +53,23 @@
       <div class="row" id="row-Me">
         <div class="container">
           <div class="row">
-            <div class="col">
-              <img width="500" src="Assets/picture.jpg"/>
+            <div class="col text-center">
+              <img width="300" src="Assets/picture.jpg"/>
             </div>
-            <div class="col" id="Me-Text">
+            <div class="col text-left" id="Me-Text">
                 <h1>About me</h1>
                 <p>
-                   I am Robert Recordà i Illas (aka. MrIllas) the author and solo developer of Lightsteam Engine.
+                   I am Robert Recordà i Illas the author and solo developer of Lightsteam Engine.</br>
+                   I started programing back in 2019 with Java when I was doing a vocational training in cross-platform application. When I finished the two years of the course, the only ideas I had in mind were always related to games.
+                   That's when I decided to study a video game degree in a university that bouth enhance my ideas and my programming skills.
+                 </br></br>
+                   This project is a milestone in my career and the final result of a personal challenge that I gave to myself.
+
                 </p>
+                <a href="https://www.linkedin.com/in/robertrecorda/" target="_blank" title="LinkedIn" class="btn btn-linkedin btn-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                </svg> LinkedIn</a>
             </div>
           </div>
         </div>
@@ -86,7 +93,7 @@
               <h3 class="text-center"> Shader text editor </h3>
             </br>
             <p>
-              A GLSL editor powered by <a href="https://github.com/BalazsJako/ImGuiColorTextEdit"> ImGuiColorTextEdit </a> that allows Vertex and Fragment shader programing on the same file, improving reliabilty inside the engine and easing the coding.
+              A GLSL editor powered by <a href="https://github.com/BalazsJako/ImGuiColorTextEdit" target="_blank"> ImGuiColorTextEdit </a> that allows Vertex and Fragment shader programing on the same file, improving reliabilty inside the engine and easing the coding.
             </p>
             </div>
           </div>
@@ -103,6 +110,8 @@
               <h3 class="text-center"> Components </h3>
             </br>
             <p>
+              Components give functionalities to the Game Object, like becoming a camera (Camera Component) or having a 3D model (Mesh Component).
+            </br>
               Game objects without a Transform component can exist in the scene.
             </p>
             </div>
@@ -117,13 +126,31 @@
               </p>
             </div>
             <div class="col">
-              <h3 class="text-center"> Material and Shaders </h3>
+              <h3 class="text-center">Materials and Shaders </h3>
             </br>
             <p>
               Inside the assets window materials and shaders can be created. By applying materials to a game object, shaders can be assigned to those making every uniform variable can be modified from the inspector without the need of recompiling the shader.
             </p>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col">
+              <h3 class="text-center">Multiple Game Cameras</h3>
+              </br>
+              <p>
+                The engine support multiple cameras to render in the same scene. Inside the configuration menu there is an option to change the active camera.
+              </p>
+            </div>
+            <div class="col">
+              <h3 class="text-center">Assets Window</h3>
+              </br>
+              <p>
+                All assets used by the engine are stored and displayed inside an intuitive and responsive Assets Window.
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -139,30 +166,49 @@
           <div class="row">
             <div class="row">
               <p>
-                Lightseam engine uses a custom Render pipeline that allows the use of GLSL written shaders.
+                Lightseam engine uses a custom Render pipeline that dynamically allows the use of GLSL written shaders by just attaching shaders to materials.
               </br></br>
-                Shader and Material Creation </br>
+                <b>Shader and Material Creation</b> </br>
                 Right click inside the assets manager for a pop-up menu with the options to Create a new Shader or Material.</br>
                 Once one of the options is selected, just input the desired name and select create.
               </br></br>
-                Shader editor</br>
-                Double click any ".shader" file inside the manager to open a shader editor window.
+                <b>Shader editor</b></br>
+                Double click any ".shader" file inside the manager to open a shader editor window.</br>
+                The editor allows Vertex and Fragment shader programing on the same file, improving reliabilty inside the engine and easing the coding.
               </br></br>
-                Default Shader</br>
-                When importing a model to the library the default shader will be automatically applied to its material(if there is one in the model's fbx).
+                <b>Default Shader</b></br>
+                When importing a model to the library the default shader will be automatically applied to its material(if there is one in the model's fbx).</br>
+                You can see the default shader inside the engine's GLSL editor <a href="https://raw.githubusercontent.com/MrIllas/Lightsteam-Engine/main/docs/default_shader_editor.png" target="_blank">HERE</a>.
               </br></br>
-                Template Shader</br>
+                <b>Template Shader</b></br>
                 The very same default shader is also applied to every new GLSL shader file created inside the assets manager. This shader contains the most basic configuration and serves as a template for every new shader.
               </br></br>
-                Material</br>
+                <b>Material</b></br>
                 Allows the use of shaders by a game object by linking a shader to a mesh. </br>
                 Every material is unique meaning that two game objects with the same material will have the same uniform configuration, updating the values from one will transfer to the others, while having different materials with the same shader but with different values will result in different configurations of the same shader.
               </br></br>
-                Uniforms</br>
+                <b>Uniforms</b></br>
                 When a shader is applied to a material, almost all uniforms (except KEY uniforms) are shown in the inspector where they can be modified dynamically with real-time feedback. The save button must be pressed once the desired values are set.
+              </br>
+                GLSL(401) has a total of 105 different uniforms due to the current engine capabilities not all uniforms are currently supported, only the most essential ones can be used and updated from the inspector. </br>This is the list of supported uniforms:
+              </p>
+              <div class="row">
+                <ul>
+                   <li>bool</li>
+                   <li>int/uint</li>
+                   <li>float</li>
+                   <li>float vec2 (vec2)</li>
+                   <li>float vec3 (vec3)</li>
+                   <li>float vec4 (vec4)</li>
+                   <li>double</li>
+                   <li>sampler2D</li>
+                   <li>float mat4 (mat4)</li>
+                </ul>
+              </div>
+              <p>
               </br></br>
-                Special Uniforms</br>
-                This are uniforms that are used natively by the engine and that every shader must use if presice functionly wants to be achieved.
+                <b>Special Uniforms</b></br>
+                This are uniforms that are used natively by the engine and that every shader must use if presice functionality wants to be achieved.
               </p>
               <div class="row">
                 <ul>
@@ -180,7 +226,7 @@
                     Every shader must have it inside the Vertex macro. Allows the use of the camera view matrix.
                   </li>
                   </br>
-                  <li> View
+                  <li> Model
                     </br>
                     <code>uniform mat4 View;</code>
                     </br>
@@ -204,11 +250,12 @@
 
                 </ul>
               </div>
-              </br></br>
+              </br>
               <p>
-                Binary Shader loading</br>
-                Every time a shader is compiled a binary is created inside the library. Every time that a shader is loaded, it is done using the binary.
+                <b>Binaries</b></br>
+                Every time a shader is saved in compiled, the compiled binary is saved directly into the library. Every time that an already compiled shader is loaded by the resource system, it checks if the current binary version is the last (if it is not, it recompiles) and loads the binary directly from the library.
               </p>
+            </br>
             </div>
             <div class="container">
               <div class="row">
@@ -228,7 +275,7 @@
       <div class="row" id="row-Video">
         <div class="container text-center">
           <video class="w-100" muted controls>
-            <source src="Assets/Lightsteam_header.mp4" type="video/mp4">
+            <source src="Assets/trailer.mp4" type="video/mp4">
           </video>
         </div>
       </div>
