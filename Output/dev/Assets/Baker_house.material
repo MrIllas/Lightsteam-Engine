@@ -1,0 +1,95 @@
+{
+    "Name": "Baker_house",
+    "UUID": "133c1a4a-3dbb-6a62-d3d2-08fd13052fa5",
+    "Shader Uuid": "",
+    "Shader Compile Version": "BASE SHADER",
+    "Uniforms": [
+        {
+            "Name": "Model",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 0,
+            "Read": 5,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "Projection",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 1,
+            "Read": 10,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "View",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 2,
+            "Read": 4,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "texture_albedo",
+            "Type": 35678,
+            "String Type": "sampler2D",
+            "Index": 3,
+            "Read": 14,
+            "Size": 1,
+            "Value": "63ae048a-aea2-e49a-c8e6-86ec088d5170"
+        }
+    ]
+}

@@ -5,7 +5,7 @@
 #include "Timer.hpp"
 
 
-#define CONFIG_FILENAME "Settings/config.xml"
+#define CONFIG_FILENAME "Resources/config.xml"
 
 class Module;
 class ModuleWindow;

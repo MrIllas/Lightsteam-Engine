@@ -1,0 +1,95 @@
+{
+    "Name": "building03_c",
+    "UUID": "64490237-cd0b-d279-ebf3-d9e9d4209de8",
+    "Shader Uuid": "",
+    "Shader Compile Version": "BASE SHADER",
+    "Uniforms": [
+        {
+            "Name": "Model",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 0,
+            "Read": 5,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "Projection",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 1,
+            "Read": 10,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "View",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 2,
+            "Read": 4,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "texture_albedo",
+            "Type": 35678,
+            "String Type": "sampler2D",
+            "Index": 3,
+            "Read": 14,
+            "Size": 1,
+            "Value": "4a659a98-08de-a687-9522-73de18720e6a"
+        }
+    ]
+}

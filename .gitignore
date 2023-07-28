@@ -354,4 +354,5 @@ Output/*.tlog
 Lightsteam Engine.exe.recipe
 */Lightsteam Engine.exe
 */LightsteamEngine.vcxproj.FileListAbsolute.txt
-Output/Library/
+Output/dev/Library/
+Output/bin/

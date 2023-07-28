@@ -1,0 +1,95 @@
+{
+    "Name": "Building_V01_C",
+    "UUID": "ef8366e7-cc97-2f5e-52ef-16a12b6ad741",
+    "Shader Uuid": "",
+    "Shader Compile Version": "BASE SHADER",
+    "Uniforms": [
+        {
+            "Name": "Model",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 0,
+            "Read": 5,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "Projection",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 1,
+            "Read": 10,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "View",
+            "Type": 35676,
+            "String Type": "mat4",
+            "Index": 2,
+            "Read": 4,
+            "Size": 1,
+            "Value": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "Name": "texture_albedo",
+            "Type": 35678,
+            "String Type": "sampler2D",
+            "Index": 3,
+            "Read": 14,
+            "Size": 1,
+            "Value": "83335469-acb4-8cea-3284-9d02ff56b67e"
+        }
+    ]
+}
